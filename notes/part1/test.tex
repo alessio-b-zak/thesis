@@ -1,0 +1,46 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=1.00in]{geometry}
+\usepackage{cite}
+\usepackage{titling}
+\usepackage{indentfirst}
+\usepackage[textwidth=3.7cm]{todonotes}
+\setlength{\marginparwidth}{3.7cm}
+\usepackage{etoolbox}
+\lstset{breaklines}
+
+\usepackage[compact]{titlesec}         % you need this package
+\titlespacing{\section}{0pt}{0pt}{0pt} % this reduces space between (sub)sections to 0pt, for example
+\titlespacing{\subsection}{0pt}{0pt}{0pt} % this reduces space between (sub)sections to 0pt, for example
+\titlespacing{\subsubsection}{0pt}{0pt}{0pt} % this reduces space between (sub)sections to 0pt, for example
+\AtBeginDocument{%                     % this will reduce spaces between parts (above and below) of texts within a (sub)section to 0pt, for example - like between an 'eqnarray' and text
+    \setlength\abovedisplayskip{0pt}
+    \setlength\belowdisplayskip{0pt}
+}
+
+\setlength{\droptitle}{-5em} % This is your set scream
+\setlength{\parindent}{1em}
+\setlength{\parskip}{0.3em}
+\setlength{\parindent}{0in}
+
+
+\title{Temp}
+
+\begin{document}
+\maketitle
+A common notion in Category theory is that of a universal construction. Universal constructions are common patterns that occur throughout mathematics. Universal constructions aim to capture the essence of these notions at the categorical level. Universal constructions allow the examination the core essence of these constructions. Before attempting to abstract these ideas it is useful to consider some examples.
+\section{Products}
+Products capture the notion of combining the
+
+
+\section{Initial Morphisms}
+An initial morphism is an initial object in the category $X \downarrow U$ where $U : C \rightarrow D$ is a functor and $X$ is an object in $C$. More precisely, an initial morphism is a pair $(A, \varphi)$ such that the following diagram commutes.
+
+A terminal morphism is a terminal object in the category $U \downarrow X$
+
+\end{document}
+
+
