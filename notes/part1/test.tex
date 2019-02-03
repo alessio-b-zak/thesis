@@ -28,17 +28,17 @@
 \setlength{\parindent}{0in}
 \date{}
 
-\title{Temp}
+\title{Temp\vspace{-3.5em}}
 
 \begin{document}
 \maketitle
 A common notion in Category theory is that of a universal construction.
-Universal constructions are common patterns that occur throughout mathematics.
-Universal constructions aim to capture the essence of these notions at the
-categorical level. Universal constructions allow the examination the core
-essence of these constructions. Before attempting to abstract these ideas it is
-useful to consider some examples. Only the constructions most relevant to the
-heart of the thesis will be discussed here.
+Universal constructions are common patterns that occur throughout mathematics
+that aim to capture the essence of these patterns at the categorical level.
+Before attempting to abstract these ideas it is useful to consider some
+examples. Only the constructions most relevant to the heart of the thesis will
+be discussed here.  After looking at the individual constructions we will look
+at three ways of abstracting them and look at the links between them.
 
 \section{Products}
 Products exemplify a common construction in categories of combining the
@@ -89,7 +89,42 @@ isomorphism.
 
 Examples of terminal objects in common categories include any singleton in
 \textbf{Set} and the one element group in \textbf{Group}
-\section{Initial Morphisms}
+
+\section{Exponential Objects}
+\section{Limits/Colimits}
+Limts and colimits are an abstract way of looking at universal constructions.
+
+A limit/colimit captures the notion that, for most universal constructions, a
+particular canonical object that satisfies a certain diagram is desired. The
+canonicity of this object is obtained by formulating the object as an initial
+or terminal object in some category of objects that satisfy the diagram.
+
+A treatment of limits will be provided with colimits as the dual notion.
+
+For limits, the category of objects that satisfy the diagram is the category of
+cones to a diagram.
+
+A diagram is a functor from some indexing category (most often finite) that allows
+us to pattern the category we are working with.
+
+A cone to a diagram, $F: J \rightarrow C$, is an object $A: C$ such that for
+all objects, $Y$, in $J$ there exists an arrow $\phi_{Y}$ such that the
+following diagram commutes:
+
+\begin{tikzcd}[sep=huge]
+     & A \arrow[ld, "\phi_X"'] \arrow[rd, "\phi_Y"] &  \\
+     F(X) \arrow[rr, "F(f)"] &  & F(Y)
+ \end{tikzcd}
+
+The application of this construction can already be seen if the indexing
+category is taken to be a discrete category (a category with only objects and
+no morphisms). In this case we have 
+\section{Universal Properties}
+As is the norm in category theory, if a common pattern is found the aim is to
+abstract it to find its underlying mechanism. Universal properties can
+be abstracted as initial or terminal morphisms.
+
+\subsection{Initial Morphisms}
 An initial morphism is an initial object in the category $X \downarrow U$ where
 $U : C \rightarrow D$ is a functor and $X$ is an object in $C$. More precisely,
 an initial morphism is a pair $(A, \varphi)$ such that the following diagram
@@ -102,6 +137,8 @@ A terminal morphism is a terminal object in the category $U \downarrow X$
                                    & C
 \end{tikzcd}
 
+\section{Adjunctions}
+\section{Yoneda}
 
 
 \end{document}
