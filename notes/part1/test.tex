@@ -26,19 +26,74 @@
 \setlength{\parindent}{1em}
 \setlength{\parskip}{0.3em}
 \setlength{\parindent}{0in}
-
+\date{}
 
 \title{Temp}
 
 \begin{document}
 \maketitle
-A common notion in Category theory is that of a universal construction. Universal constructions are common patterns that occur throughout mathematics. Universal constructions aim to capture the essence of these notions at the categorical level. Universal constructions allow the examination the core essence of these constructions. Before attempting to abstract these ideas it is useful to consider some examples.
+A common notion in Category theory is that of a universal construction.
+Universal constructions are common patterns that occur throughout mathematics.
+Universal constructions aim to capture the essence of these notions at the
+categorical level. Universal constructions allow the examination the core
+essence of these constructions. Before attempting to abstract these ideas it is
+useful to consider some examples. Only the constructions most relevant to the
+heart of the thesis will be discussed here.
+
 \section{Products}
-Products exemplify a common construction in categories of combining the structure of two objects (in some canonical way) within the category to produce an object of the same category. In more concrete terms the product of two objects $A$ and $B$ in the category $\textbf{C}$ is an triple $(A \times B, \pi_{1}, \pi_{2})$ where for all other objects $C$ in $\textbf{C}$ with projections $f: C \rightarrow A$ and $g: C \rightarrow B$ we can form the unique arrow 
+Products exemplify a common construction in categories of combining the
+structure of two objects (in some canonical way) within the category to produce
+an object of the same category. In more concrete terms the product of two
+objects $A$ and $B$ in the category $\textbf{C}$ is an triple $(A \times B,
+\pi_{1}, \pi_{2})$ where for all other objects $C$ in $\textbf{C}$ with
+projections $f: C \rightarrow A$ and $g: C \rightarrow B$ the unique arrow
+$\langle f, g\rangle : C \rightarrow A \times B$ can be formed such that the
+following diagram commutes:
 
+\begin{tikzcd}[sep=huge]
+ & C \arrow[ld, "f"'] \arrow[rd, "g"] \arrow[d, "{\langle f, g\rangle}" description, dashed] &  \\
+A & A \times B \arrow[l, "\pi_2"] \arrow[r, "\pi_1"'] & B
+\end{tikzcd}
 
+where the dashed arrow indicates uniqueness. This can be extended to
+\textit{n}-ary products in the obvious way.
+
+As is common with universal constructions, products (via the unique arrow
+$\langle f, g \rangle$) are unique up to unique isomorphism.
+
+Examples of products within familiar categories include the cartesian product
+$\times$ in \textbf{Set}, defined as the set of all tuples of elements from two
+separate sets.
+
+If products can be formed for every finite set of objects in a category it is
+said to be cartesian.
+
+\section{Terminal Objects}
+Terminal objects are constructions that capture the
+minimal structure required to be an object within a category. They often
+correspond to the trivial examples of certain constructions.
+
+A terminal object of a category \textbf{C} is an object, T, such that, for all
+other objects, $A$ in the category, there exists a unique arrow $!_{A}: A
+\rightarrow T$.
+
+As a commutative diagram:
+
+\begin{tikzcd}[sep=huge]
+A \arrow[d, "!_A", dashed] \\
+T
+\end{tikzcd}
+
+As with products, terminal objects in categories are unique up to unique
+isomorphism.
+
+Examples of terminal objects in common categories include any singleton in
+\textbf{Set} and the one element group in \textbf{Group}
 \section{Initial Morphisms}
-An initial morphism is an initial object in the category $X \downarrow U$ where $U : C \rightarrow D$ is a functor and $X$ is an object in $C$. More precisely, an initial morphism is a pair $(A, \varphi)$ such that the following diagram commutes.
+An initial morphism is an initial object in the category $X \downarrow U$ where
+$U : C \rightarrow D$ is a functor and $X$ is an object in $C$. More precisely,
+an initial morphism is a pair $(A, \varphi)$ such that the following diagram
+commutes.
 
 A terminal morphism is a terminal object in the category $U \downarrow X$
 
