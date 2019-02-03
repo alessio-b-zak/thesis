@@ -4,6 +4,7 @@
 \usepackage[utf8]{inputenc}
 
 \usepackage[margin=1.00in]{geometry}
+\usepackage{tikz-cd}
 \usepackage{cite}
 \usepackage{titling}
 \usepackage{indentfirst}
@@ -33,13 +34,20 @@
 \maketitle
 A common notion in Category theory is that of a universal construction. Universal constructions are common patterns that occur throughout mathematics. Universal constructions aim to capture the essence of these notions at the categorical level. Universal constructions allow the examination the core essence of these constructions. Before attempting to abstract these ideas it is useful to consider some examples.
 \section{Products}
-Products capture the notion of combining the
+Products exemplify a common construction in categories of combining the structure of two objects (in some canonical way) within the category to produce an object of the same category. In more concrete terms the product of two objects $A$ and $B$ in the category $\textbf{C}$ is an triple $(A \times B, \pi_{1}, \pi_{2})$ where for all other objects $C$ in $\textbf{C}$ with projections $f: C \rightarrow A$ and $g: C \rightarrow B$ we can form the unique arrow 
 
 
 \section{Initial Morphisms}
 An initial morphism is an initial object in the category $X \downarrow U$ where $U : C \rightarrow D$ is a functor and $X$ is an object in $C$. More precisely, an initial morphism is a pair $(A, \varphi)$ such that the following diagram commutes.
 
 A terminal morphism is a terminal object in the category $U \downarrow X$
+
+\begin{tikzcd}
+    A \arrow[rd] \arrow[r, "\phi"] & B \\
+                                   & C
+\end{tikzcd}
+
+
 
 \end{document}
 
