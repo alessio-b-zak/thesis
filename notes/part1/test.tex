@@ -1,4 +1,4 @@
-\documentclass[a4paper,10pt]{article}
+\documentclass[a4paper,12pt]{article}
 
 \usepackage{listings}
 \usepackage[utf8]{inputenc}
@@ -116,9 +116,31 @@ following diagram commutes:
      F(X) \arrow[rr, "F(f)"] &  & F(Y)
  \end{tikzcd}
 
+For some indexing category, \textbf{J}, the category of cones to a diagram can be
+considered. The objects in this category are objects in the underlying category,
+\textbf{C}, with a family of morphisms $\phi_{X}$ for all objects $X, Y: J$ in the indexing
+category. Morphisms in this category are arrows between objects in \textbf{C}
+such that the following diagram commutes.
+
+\begin{tikzcd}[sep=huge]
+     & A \arrow[ldd, "\psi_{X}"', bend right] \arrow[rdd, "\psi_Y", bend left]
+     \arrow[d, "g" description] &  \\
+      & B \arrow[ld, "\phi_X"'] \arrow[rd, "\phi_Y"] &  \\
+      F(X) \arrow[rr, "F(f)" description] &  & F(Y)
+\end{tikzcd}
+
+A limit to a diagram is a terminal object in the category of cones to the
+diagram.
+
 The application of this construction can already be seen if the indexing
 category is taken to be a discrete category (a category with only objects and
-no morphisms). In this case we have 
+no morphisms). In this case, a cone to a functor from a discrete category will
+appear as the bottom half of the diagram for products. Taking the terminal
+object in the category of cones to this functor becomes the whole product
+diagram.
+
+If we take our indexing category to be the empty category, (i.e. the category
+with no objects). The limit of this diagram is the terminal object.
 \section{Universal Properties}
 As is the norm in category theory, if a common pattern is found the aim is to
 abstract it to find its underlying mechanism. Universal properties can
