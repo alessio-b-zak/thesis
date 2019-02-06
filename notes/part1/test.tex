@@ -8,6 +8,7 @@
 \usepackage{cite}
 \usepackage{titling}
 \usepackage{indentfirst}
+\usepackage{amsmath}
 \usepackage[textwidth=3.7cm]{todonotes}
 \setlength{\marginparwidth}{3.7cm}
 \usepackage{etoolbox}
@@ -160,9 +161,80 @@ A terminal morphism is a terminal object in the category $U \downarrow X$
 \end{tikzcd}
 
 \section{Adjunctions}
-\section{Yoneda}
+\section{Yoneda Lemma and Embedding}
+The Yoneda lemma is a core result in Category Theory. In a liberal sense it can
+be thought to justify that by examining the ways in which an object can be
+manipulated we can totally determine the object. This is a consequence of the
+Yoneda Embedding, a functor from a (locally small) category $C$ to the category of
+\textit{presheaves} (functors of type : $C \rightarrow \textbf{Set}$) on $C$.
+The Yoneda lemma guarantees that this functor is fully faithful and injective on
+objects, allowing the category of presheaves to be worked with in place of the
+category itself. The complexity of this theorem in comparison to other
+categorical constructs motivates a full treatment below.
+
+Concretely the Yoneda lemma is the following statement:
+
+\begin{equation}
+    Nat(h^{A}, F) \cong FA
+    \label{Yoneda}
+\end{equation}
+
+and that this isomorphism is natural in both $A$ and $F$.
+
+The left hand side of \ref{Yoneda} can be understood as follows. $\phi : Nat(h^{A},
+F)$ are natural transformations between the covariant hom-functor and some other
+functor $F$, both presheaves on some underlying category $C$. Components of
+$\phi$ at $X$ take morphisms from $A$ to $X$ to elements of the set $FX$.
+
+Naturality will be dealt with after first establishing the isomorphism in
+\ref{Yoneda}.
+
+To establish the isomorphism, two functions must be defined. $Y: Nat(h^{A}, F)
+\rightarrow FA$ and $Y^{op}: FA \rightarrow Nat(h^{A}, F)$ that are mutual
+inverses.
+
+The two functions are (using $\lambda$ abstraction for convenience):
+
+% Y(\phi) = \phi_{A}(id_{A})
+% Y^{op}(u) = \lambda f . F f u
+\begin{align*}
+    Y(\phi) = \phi_{A}(id_{A}) \\
+    Y^{op}(u) = \lambda f . F f u
+\end{align*}
+
+$Y \circ Y^{op}$ can be shown to be $id$ as follows:
+
+\begin{align*}
+    (Y \circ Y^{op}) \ u &= Y (\lambda f \,.\, F f \ u) \\
+    &= (\lambda f \,.\, F f \: u ) \ id_{A} \\
+    &= (F \ id_{A}) \ u \\
+    &=  id_{FA} u \\
+    &= u
+\end{align*}
+
+To show $Y^{op} \circ Y \ = \ id$ proceed with:
+
+\begin{align*}
+    (Y^{op} \circ Y) (\phi) &= Y^{op} (\phi_{A}(id_{A})) \\
+    &= \lambda f \, . \, F f \ (\phi_{A}( id_{A}))) \\
+    &= \lambda f \, . \, \phi_{Y}(f) \\
+    &= \phi
+\end{align*}
+
+
+Where the second and third lines come from the fact that $\phi$ is a natural
+transformation such that the following diagram commutes.
+
+\begin{tikzcd}[sep=huge]
+    {Hom(A, X)} \arrow[d, "{Hom(A,f)}"'] \arrow[rr, "\phi_{X}"] &  & FX
+    \arrow[d, "Ff"] \\
+    {Hom(A,Y)} \arrow[rr, "\phi_{Y}"] &  & FY
+\end{tikzcd}
+
+
 
 
 \end{document}
+
 
 
