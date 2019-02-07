@@ -19,13 +19,13 @@
 \titlespacing{\subsection}{0pt}{0pt}{0pt} % this reduces space between (sub)sections to 0pt, for example
 \titlespacing{\subsubsection}{0pt}{0pt}{0pt} % this reduces space between (sub)sections to 0pt, for example
 \AtBeginDocument{%                     % this will reduce spaces between parts (above and below) of texts within a (sub)section to 0pt, for example - like between an 'eqnarray' and text
-    \setlength\abovedisplayskip{0pt}
-    \setlength\belowdisplayskip{0pt}
+    \setlength\abovedisplayskip{-12pt}
+    \setlength\belowdisplayskip{3pt}
 }
 
 \setlength{\droptitle}{-5em} % This is your set scream
 \setlength{\parindent}{1em}
-\setlength{\parskip}{0.3em}
+\setlength{\parskip}{0.8em}
 \setlength{\parindent}{0in}
 \date{}
 
@@ -51,10 +51,10 @@ projections $f: C \rightarrow A$ and $g: C \rightarrow B$ the unique arrow
 $\langle f, g\rangle : C \rightarrow A \times B$ can be formed such that the
 following diagram commutes:
 
-\begin{tikzcd}[sep=huge]
+\[\begin{tikzcd}[sep=huge]
  & C \arrow[ld, "f"'] \arrow[rd, "g"] \arrow[d, "{\langle f, g\rangle}" description, dashed] &  \\
 A & A \times B \arrow[l, "\pi_2"] \arrow[r, "\pi_1"'] & B
-\end{tikzcd}
+\end{tikzcd}\]
 
 where the dashed arrow indicates uniqueness. This can be extended to
 \textit{n}-ary products in the obvious way.
@@ -112,10 +112,10 @@ A cone to a diagram, $F: J \rightarrow C$, is an object $A: C$ such that for
 all objects, $Y$, in $J$ there exists an arrow $\phi_{Y}$ such that the
 following diagram commutes:
 
-\begin{tikzcd}[sep=huge]
+\[\begin{tikzcd}[sep=huge]
      & A \arrow[ld, "\phi_X"'] \arrow[rd, "\phi_Y"] &  \\
      F(X) \arrow[rr, "F(f)"] &  & F(Y)
- \end{tikzcd}
+ \end{tikzcd}\]
 
 For some indexing category, \textbf{J}, the category of cones to a diagram can be
 considered. The objects in this category are objects in the underlying category,
@@ -123,12 +123,12 @@ considered. The objects in this category are objects in the underlying category,
 category. Morphisms in this category are arrows between objects in \textbf{C}
 such that the following diagram commutes.
 
-\begin{tikzcd}[sep=huge]
+\[\begin{tikzcd}[sep=huge]
      & A \arrow[ldd, "\psi_{X}"', bend right] \arrow[rdd, "\psi_Y", bend left]
      \arrow[d, "g" description] &  \\
       & B \arrow[ld, "\phi_X"'] \arrow[rd, "\phi_Y"] &  \\
       F(X) \arrow[rr, "F(f)" description] &  & F(Y)
-\end{tikzcd}
+\end{tikzcd}\]
 
 A limit to a diagram is a terminal object in the category of cones to the
 diagram.
@@ -155,10 +155,10 @@ commutes.
 
 A terminal morphism is a terminal object in the category $U \downarrow X$
 
-\begin{tikzcd}
+\[\begin{tikzcd}
     A \arrow[rd] \arrow[r, "\phi"] & B \\
                                    & C
-\end{tikzcd}
+\end{tikzcd}\]
 
 \section{Adjunctions}
 \section{Yoneda Lemma and Embedding}
@@ -225,14 +225,14 @@ To show $Y^{op} \circ Y \ = \ id$ proceed with:
 Where the second to third line come from the fact that $\phi$ is a natural
 transformation such that the following diagram commutes.
 
-\begin{tikzcd}[sep=huge]
+\[\begin{tikzcd}[sep=huge]
     {Hom(A, X)} \arrow[d, "{Hom(A,f)}"'] \arrow[rr, "\phi_{X}"] &  & FX
     \arrow[d, "Ff"] \\
     {Hom(A,Y)} \arrow[rr, "\phi_{Y}"] &  & FY
-\end{tikzcd}
+\end{tikzcd}\]
 
 Now it must be shown that $Y^{op}(u)$ is a natural transformation i.e for some
-$g: A \rightarrow Z$: .
+$g: A \rightarrow Z$: 
 
 \begin{align*}
     \lambda f \, . \, F f u  \circ hom(A, g) = F g \circ \lambda f \, . \, F f u
@@ -259,22 +259,54 @@ And now the right hand side:
 
 Thus establishing $Y^{op}(u)$ as a natural transformation.
 
-We must finally establish naturality in $A$ and $F$ in \ref{Yoneda}
+Finally naturality in $A$ and $F$ in \ref{Yoneda} must be established.
 
-\todo{I have no idea how to do this}
+To establish naturality in $A$ it must be shown that, for all $f: C \rightarrow D$, the
+following diagram commutes:
 
-We can fix $F$ to be certain functors to examine what the Yoneda lemma means in
-certain contexts.
+\[\begin{tikzcd}[sep=huge]
+    {hom(h^C, F)} \arrow[d, "{hom(h^f, F)}"'] \arrow[rr, "Y"] &  & {F \,C}
+    \arrow[d, "{F \, f}"] \\
+    {hom(h^D, F)} \arrow[rr, "Y"] &  & {F \, D}
+\end{tikzcd}\]
+
+i.e.
+
+\begin{align*}
+    F \, f \circ Y = Y \circ hom(h^{f}, F)
+\end{align*}
+
+Beginning with the left hand side
+
+\begin{align*}
+    F \, f \ ( Y(\phi)) &= F \, f \ (\phi \ (id_{C})) \\
+    &= (F \, f \circ \phi) \ (id_{C}) \\
+    &= (\phi \circ h^{A}(f)) \ (id_{C}) \\
+    &= \phi \ ((h^{A}(f) \ (id_{C})) \\
+    &= \phi \ (f \circ id_{C}) \\
+    &= \phi \, f
+\end{align*}
+
+And now the right
+
+\begin{align*}
+    (Y \circ hom(h^{f}, F)) \ (\phi) &= Y \ (hom(h^{f}, F) \, (\phi)) \\
+    &= Y \, (\phi \circ h^{f}) \\
+    &= (\phi \circ h^{f}) \ (id_{C}) \\
+    &= \phi \ (h^{f} \, (id_{C})) \\ 
+    &=  \phi \, f
+\end{align*}
 
 A contravariant version of Yoneda can be proven which states the following:
 
 \begin{equation}
     Nat(h_{A}, F) \cong FA
-    \label{Yoneda}
+    \label{coyoneda}
 \end{equation}
 
-If we take
 
+We can fix $F$ to be certain functors to examine what the Yoneda lemma means in
+certain contexts.
 
 
 \end{document}
