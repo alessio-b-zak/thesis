@@ -222,7 +222,7 @@ To show $Y^{op} \circ Y \ = \ id$ proceed with:
 \end{align*}
 
 
-Where the second and third lines come from the fact that $\phi$ is a natural
+Where the second to third line come from the fact that $\phi$ is a natural
 transformation such that the following diagram commutes.
 
 \begin{tikzcd}[sep=huge]
@@ -231,6 +231,49 @@ transformation such that the following diagram commutes.
     {Hom(A,Y)} \arrow[rr, "\phi_{Y}"] &  & FY
 \end{tikzcd}
 
+Now it must be shown that $Y^{op}(u)$ is a natural transformation i.e for some
+$g: A \rightarrow Z$: .
+
+\begin{align*}
+    \lambda f \, . \, F f u  \circ hom(A, g) = F g \circ \lambda f \, . \, F f u
+\end{align*}
+
+Taking the left hand side on some $h: A \rightarrow X$:
+
+\begin{align*}
+    (\lambda f \, . \, F f u  \circ hom(A, g)) \ h &= (\lambda f \, . \, F f u) \ (
+    hom(A, g) \ h) \\
+    &= (\lambda f \, . \, F f u) \ (g \circ h) \\
+    &=  F \ (g \circ h) \ u
+\end{align*}
+
+And now the right hand side:
+
+\begin{align*}
+    (F g \circ \lambda f \, . \, F f u) \ h &= F \ g \ ( (\lambda f \, . \, F f
+        u) \
+    h) \\
+    &= F \ g \ (F \, h \, u) \\
+    &= F \ (g \circ h) \ u
+\end{align*}
+
+Thus establishing $Y^{op}(u)$ as a natural transformation.
+
+We must finally establish naturality in $A$ and $F$ in \ref{Yoneda}
+
+\todo{I have no idea how to do this}
+
+We can fix $F$ to be certain functors to examine what the Yoneda lemma means in
+certain contexts.
+
+A contravariant version of Yoneda can be proven which states the following:
+
+\begin{equation}
+    Nat(h_{A}, F) \cong FA
+    \label{Yoneda}
+\end{equation}
+
+If we take
 
 
 
