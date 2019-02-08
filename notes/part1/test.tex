@@ -304,12 +304,35 @@ A contravariant version of Yoneda can be proven which states the following:
     \label{coyoneda}
 \end{equation}
 
-
-We can fix $F$ to be certain functors to examine what the Yoneda lemma means in
+$F$ can be fixed to certain functors to examine what Yoneda lemma means in
 certain contexts.
 
+Using the contravariant Yoneda and setting $F$ to be $h_{B}$ the equation
 
+\begin{equation}
+    Nat(h_{A}, h_{B}) \cong hom(A,B)
+    \label{yonembedding}
+\end{equation}
+
+
+An obvious functor from any category \textbf{C} to the categor of presheafs from
+\textbf{C} assigns the functor $h^{A}$ for all objects $A:\textbf{C}$ and
+assigns the natural transformation $h^{f}$ to all morphisms $f$ in \textbf{C}.
+
+\ref{yonembedding} states precisely that the image of the above described
+functor on morphisms is bijective showing that the functor is fully faithful. It
+is for this reason that is is known as the Yoneda embedding. The functor is also
+injective on objects given that, by convention, hom-sets are disjoint\todo{check}. In this way, the Yoneda embedding allows a category \textbf{C} to
+be examined by its embedding in the category of presheafs. We also have that two
+objects are equal if the set of morphisms into and out of the objects are equal.
+This justifies the statement that objects can be completely understood by the
+way they relate to other objects.
+
+Examples of the utility of Yoneda abound. Good illustrations can be found in
+\todo{WhatAWhat you need to know about Yoneda}. As is a theme in Category
+theory, Yoneda can be used to transport a problem into a simpler world.
 \end{document}
+
 
 
 
