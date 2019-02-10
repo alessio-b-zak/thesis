@@ -319,20 +319,28 @@ An obvious functor from any category \textbf{C} to the categor of presheafs from
 \textbf{C} assigns the functor $h^{A}$ for all objects $A:\textbf{C}$ and
 assigns the natural transformation $h^{f}$ to all morphisms $f$ in \textbf{C}.
 
-\ref{yonembedding} states precisely that the image of the above described
-functor on morphisms is bijective showing that the functor is fully faithful. It
-is for this reason that is is known as the Yoneda embedding. The functor is also
-injective on objects given that, by convention, hom-sets are disjoint\todo{check}. In this way, the Yoneda embedding allows a category \textbf{C} to
-be examined by its embedding in the category of presheafs. We also have that two
-objects are equal if the set of morphisms into and out of the objects are equal.
-This justifies the statement that objects can be completely understood by the
-way they relate to other objects.
+It can be shown, using the Yoneda lemma, that this functor is fully faithful on
+arrows and injective on objects.
 
-Examples of the utility of Yoneda abound. Good illustrations can be found in
-\todo{WhatAWhat you need to know about Yoneda}. As is a theme in Category
-theory, Yoneda can be used to transport a problem into a simpler world.
+\section{Category of Boolean Algebras}
+A boolean algebra is a partial order (reflexive and transitive), $(S, \leq)$ such that that
+there exist three operations $\land, \lor: S\times S \rightarrow S$  and $\neg:
+S \rightarrow S$ known as meet, join and complementation respectively such that
+the folliwng equations hold.
+
+\begin{align*}
+    &\forall \, a, b, c \in S. \ a \leq c \, , \ b \leq c \ \Leftrightarrow \ a \,
+    \lor \, b \leq c \\
+    &\forall \, a, b, c  \in S. \ c \leq a \, , \ c \leq b \ \Leftrightarrow \ c
+    \leq a \, \land \, b \\
+    &\forall \, a, b \in S. \ a \leq \neg \, b \ \Leftrightarrow \ a \, \land \,
+    b = 0
+\end{align*}
+
+\section{Subobjects}
+
+
 \end{document}
-
 
 
 
