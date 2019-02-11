@@ -10,6 +10,8 @@
 \usepackage{indentfirst}
 \usepackage{amsmath}
 \usepackage[textwidth=3.7cm]{todonotes}
+\usepackage{faktor}
+
 \setlength{\marginparwidth}{3.7cm}
 \usepackage{etoolbox}
 \lstset{breaklines}
@@ -387,16 +389,22 @@ $U$. This function is an equaliser similar to $i$ above.
 
 The correspondence between equalisers and subsets can be made more clear by
 first acknowledging the fact that equalisers are monic. This can be seen by
-establishing that if an object has an arrow to the equaliser 
-
-The equali
-
-
+establishing that if an object, $Z$ has an arrow, $g$ to the equaliser $E$, this
+must be unique, as the composition of this arrow with $e$ equalises the two
+arrows that $E$ equalises. This induces the property that there exists a unique
+arrow from $Z$ to $E$ so any two arrows to $E$ must in fact be the same arrow.
 
 \section{Subobjects}
 
+Given that subsets coincide with concept of equalisers and that equalisers are
+all mono, within categories without explicit notions of subset relations,
+monomorphisms can be regarded as an abstrac subset notion. When viewed in this
+light, monomorphisms are called subobjects. A monomorphism $m: A \rightarrow X$
+is called a subobject of $X$.
 
+Subobjects ($A \rightarrow X)$ can themselves be compared to each other by considering the
+\todo{work out quotient notation} slice category of arrows to $X$.
+
+Arrows between subobject domains are morphisms in this slice category and can be
+viewed as subset relations themselves.
 \end{document}
-
-
-
