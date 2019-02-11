@@ -329,14 +329,50 @@ S \rightarrow S$ known as meet, join and complementation respectively such that
 the folliwng equations hold.
 
 \begin{align*}
+    &\exists \ \textbf{0}, \textbf{1} \ s.t. \ \forall \ c \in S. \ \textbf{0}
+    \leq c \, , \ c \leq \ \textbf{1} \\
     &\forall \, a, b, c \in S. \ a \leq c \, , \ b \leq c \ \Leftrightarrow \ a \,
     \lor \, b \leq c \\
     &\forall \, a, b, c  \in S. \ c \leq a \, , \ c \leq b \ \Leftrightarrow \ c
     \leq a \, \land \, b \\
     &\forall \, a, b \in S. \ a \leq \neg \, b \ \Leftrightarrow \ a \, \land \,
-    b = 0
+    b = 0 \\
+    &\forall \, a \in S. \   a = \neg \, \neg \, a
 \end{align*}
 
+Some familiar objects in the category of boolean algebras include the powerset
+of a set $\mathcal{P}(A)$ with the subset relation $\subseteq$. This object has
+its meet as $\cap$, its join as $\cup$, its complementation as set
+complementation $A^c$, the \textbf{0} as $\emptyset$, the \textbf{1} as the set
+itself, $A$.
+
+The initial object in this category is the familiar two-element boolean algebra
+\textbf{2} which contains $ \{\textbf{0}, \textbf{1}\}$ under the normal logical
+interpretation of the operators $\land$, $\lor$ and $\neg$ under the obvious
+ordering.
+
+Morphisms into the initial object are precisely the ultrafilters on a boolean
+algebra.
+\section{Equalisers}
+Equalisers are universal constructions that correspond to notions such as the
+kernel of homomorphisms and the objects that are mapped to the same place by
+multiple arrows.
+
+Given arrows $f, g : A \rightarrow B $ the equaliser of the two arrows an object
+$E$ and the morphism $e: E \rightarrow A$ such that the following diagram
+commutes:
+
+\[\begin{tikzcd}[sep=huge]
+    E \arrow[r, "e"] & A \arrow[r, "f", bend left] \arrow[r, "g"', bend right] &
+    B
+\end{tikzcd}\]
+
+
+Equalizers can be used to specify subsets via the following construction:
+
+For each subset, $U$ of a set $A$ we can form the the canonical mapping
+$\chi_{U}: X \rightarrow \textbf{2}$ which takes all the elements of $U$ in
+$X$ to \textbf{1}
 \section{Subobjects}
 
 
