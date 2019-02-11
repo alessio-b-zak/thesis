@@ -367,12 +367,32 @@ commutes:
     B
 \end{tikzcd}\]
 
-
 Equalizers can be used to specify subsets via the following construction:
 
 For each subset, $U$ of a set $A$ we can form the the canonical mapping
 $\chi_{U}: X \rightarrow \textbf{2}$ which takes all the elements of $U$ in
-$X$ to \textbf{1}
+$X$ to \textbf{1} and all elements of $X$ not in $U$ to \textbf{0}.
+
+The inclusion mapping $i: U \rightarrow A$ equalises the above defined
+$\chi_{U}$ and the the constant map from $A$ to the $\textbf{1} \in \textbf{2}$.
+
+An inverse, $V$ can be produced for the mapping $\chi$ showing that these
+functions are in a one-to-one mapping with the subsets of $X$ establishing an
+isomorphism between the functions from $A \rightarrow \textbf{2}$ and the
+powerset of $A$.
+
+The, $V$, for a function of type $A \rightarrow \textbf{2}$ returns the set of
+objects in $A$ that map to the value \textbf{1} i.e. precisely the elements of
+$U$. This function is an equaliser similar to $i$ above.
+
+The correspondence between equalisers and subsets can be made more clear by
+first acknowledging the fact that equalisers are monic. This can be seen by
+establishing that if an object has an arrow to the equaliser 
+
+The equali
+
+
+
 \section{Subobjects}
 
 
