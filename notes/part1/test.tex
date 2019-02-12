@@ -82,10 +82,10 @@ other objects, $A$ in the category, there exists a unique arrow $!_{A}: A
 
 As a commutative diagram:
 
-\begin{tikzcd}[sep=huge]
+\[\begin{tikzcd}[sep=huge]
 A \arrow[d, "!_A", dashed] \\
 T
-\end{tikzcd}
+\end{tikzcd}\]
 
 As with products, terminal objects in categories are unique up to unique
 isomorphism.
@@ -93,57 +93,7 @@ isomorphism.
 Examples of terminal objects in common categories include any singleton in
 \textbf{Set} and the one element group in \textbf{Group}
 
-\section{Exponential Objects}
-\section{Limits/Colimits}
-Limts and colimits are an abstract way of looking at universal constructions.
 
-A limit/colimit captures the notion that, for most universal constructions, a
-particular canonical object that satisfies a certain diagram is desired. The
-canonicity of this object is obtained by formulating the object as an initial
-or terminal object in some category of objects that satisfy the diagram.
-
-A treatment of limits will be provided with colimits as the dual notion.
-
-For limits, the category of objects that satisfy the diagram is the category of
-cones to a diagram.
-
-A diagram is a functor from some indexing category (most often finite) that allows
-us to pattern the category we are working with.
-
-A cone to a diagram, $F: J \rightarrow C$, is an object $A: C$ such that for
-all objects, $Y$, in $J$ there exists an arrow $\phi_{Y}$ such that the
-following diagram commutes:
-
-\[\begin{tikzcd}[sep=huge]
-     & A \arrow[ld, "\phi_X"'] \arrow[rd, "\phi_Y"] &  \\
-     F(X) \arrow[rr, "F(f)"] &  & F(Y)
- \end{tikzcd}\]
-
-For some indexing category, \textbf{J}, the category of cones to a diagram can be
-considered. The objects in this category are objects in the underlying category,
-\textbf{C}, with a family of morphisms $\phi_{X}$ for all objects $X, Y: J$ in the indexing
-category. Morphisms in this category are arrows between objects in \textbf{C}
-such that the following diagram commutes.
-
-\[\begin{tikzcd}[sep=huge]
-     & A \arrow[ldd, "\psi_{X}"', bend right] \arrow[rdd, "\psi_Y", bend left]
-     \arrow[d, "g" description] &  \\
-      & B \arrow[ld, "\phi_X"'] \arrow[rd, "\phi_Y"] &  \\
-      F(X) \arrow[rr, "F(f)" description] &  & F(Y)
-\end{tikzcd}\]
-
-A limit to a diagram is a terminal object in the category of cones to the
-diagram.
-
-The application of this construction can already be seen if the indexing
-category is taken to be a discrete category (a category with only objects and
-no morphisms). In this case, a cone to a functor from a discrete category will
-appear as the bottom half of the diagram for products. Taking the terminal
-object in the category of cones to this functor becomes the whole product
-diagram.
-
-If we take our indexing category to be the empty category, (i.e. the category
-with no objects). The limit of this diagram is the terminal object.
 \section{Universal Properties}
 As is the norm in category theory, if a common pattern is found the aim is to
 abstract it to find its underlying mechanism. Universal properties can
@@ -353,8 +303,41 @@ The initial object in this category is the familiar two-element boolean algebra
 interpretation of the operators $\land$, $\lor$ and $\neg$ under the obvious
 ordering.
 
+\todo{products as meet}
+
 Morphisms into the initial object are precisely the ultrafilters on a boolean
 algebra.
+
+
+\section{$\omega$-CPOs}
+
+\section{Exponential Objects}
+Exponential objects are universal constructions that capture the notion of
+function spaces or higher order objects.
+
+The object $B^{A}$ indicates the mappings from the object $A$ to $B$. This is
+paired with the morphism $eval: B^{A} \times A \rightarrow B$ such that for any
+object $Z$ and morphism $f : Z\times A \rightarrow B$ there exists a unique
+morphism $\tilde{f}: Z \rightarrow B^{A}$ such that the following diagram
+commutes:
+
+\todo{exponential diagram}
+
+$\tilde{f}$, or transposition, can be thought of as currying in the functional
+programming sense, taking a function in multiple arguments to a sequence of
+functions in one argument.
+
+If exponents can be formed for every pair of objects in a category, \textbf{C},
+exponentiation under a given object, $A$, forms a functor $\_^{A}: \textbf{C}
+\rightarrow \textbf{C}$.
+
+$\_^{A}$ takes an object, $B$, to the exponential object, $B^{A}$ and arrows
+$\alpha: C \rightarrow D$ to the transposition of $\beta \circ eval$.
+
+For any boolean algebra regarded as a poset category itself we have the
+exponential $B^{A}$ defined as the object $\neg \, A \ \lor B$ otherwise
+understood as the implication $A \implies B$
+\section{Heyting Algebras}
 \section{Equalisers}
 Equalisers are universal constructions that correspond to notions such as the
 kernel of homomorphisms and the objects that are mapped to the same place by
