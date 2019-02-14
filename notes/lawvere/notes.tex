@@ -1,0 +1,128 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath}
+\usepackage[margin=1.00in]{geometry}
+\usepackage{cite}
+\usepackage{titling}
+\usepackage{indentfirst}
+\usepackage[textwidth=3.7cm]{todonotes}
+\setlength{\marginparwidth}{3.7cm}
+\usepackage{etoolbox}
+\lstset{breaklines}
+
+\usepackage[compact]{titlesec}         % you need this package
+\titlespacing{\section}{0pt}{0pt}{0pt} % this reduces space between (sub)sections to 0pt, for example
+\titlespacing{\subsection}{0pt}{0pt}{0pt} % this reduces space between (sub)sections to 0pt, for example
+\titlespacing{\subsubsection}{0pt}{0pt}{0pt} % this reduces space between (sub)sections to 0pt, for example
+\AtBeginDocument{%                     % this will reduce spaces between parts (above and below) of texts within a (sub)section to 0pt, for example - like between an 'eqnarray' and text
+    \setlength\abovedisplayskip{0pt}
+    \setlength\belowdisplayskip{0pt}
+}
+
+\setlength{\droptitle}{-5em} % This is your set scream
+\setlength{\parindent}{1em}
+\setlength{\parskip}{0.3em}
+\setlength{\parindent}{0in}
+
+\date{}
+
+\title{Diagonal Arguments and Cartesian Closed Categories\vspace{-20mm}}
+
+\begin{document}
+\maketitle
+\section{Test}
+
+A morphism, $f: A \rightarrow B$ is point surjective if for all points
+$a: 1 \rightarrow A$ there exists a point $b: 1 \rightarrow B$ such that
+$f \circ a = b$. This is not quite onto as there exists some categories that
+have to much structure to spread all points i.e. categories with zero objects.
+
+A fixed point of a morphism $f: B \rightarrow B$ is a point $s : 1 \rightarrow
+B$ such that $f \circ s = s$.
+
+In a cartesian closed category if there exists an object
+$A$ and a point-surjective morphism $\phi: A \rightarrow B^{A}$ then every
+endomorphism $f: B \rightarrow B$ has a fixed point.
+
+For any $f$ we construct our fixed point $s$ as follows:
+
+We must first consider the natural isomorphism induced by the tensor-hom
+adjunction.
+
+\begin{align*}
+    hom(A\times B, Z) \cong hom(A, B^Z)
+\end{align*}
+
+Setting $A$ to be $\textbf{1}$ yields the isomorphism between morphisms from
+$B \rightarrow Z$ and points to $B^{Z}$.
+
+The fixed point construction works by precomposing our endomorphism $f: B
+\rightarrow B$ with a function from $A \rightarrow B$ (We will call this
+composition $g$). This means, from the point surjective $\phi$, that we can find
+a point to $A$ associated with this arrow i.e. a $u: \textbf{1} \rightarrow A$
+such that $\phi \circ u = f \circ g$.
+
+If we now consider \textit{recomposing} $u$ to $g$ we get a point to $B$ we can
+posit this object to be our fixed point. By writing out the equation that must
+hold we can attempt to work out the necessary structure of $g$.
+
+\begin{align*}
+    &f \circ (g \circ u) = g \circ u \\
+    &(f \circ g) \circ u = g \circ u \\
+    &\phi \circ u \circ u = g \circ u \\
+    &f \circ (\phi \circ u \circ u) = g \circ u
+\end{align*}
+
+Taking the last of these equations we can see for $g \circ u$ to be a fixed point it needs to take a point,
+duplicate it, and apply both to the point surjective $\phi$ followed by
+$f$. The cartesian
+closedness of the category allows an arrow that does this to be constructed
+directly.
+
+Duplication can be done using $\delta(a): A \rightarrow A \times A \ = (a, a)$
+guaranteed by the adjoint pair $\Delta  \dashv \times$.
+
+for some $h: A \times A \rightarrow B$
+\begin{align*}
+    g \circ u &= h \circ \delta \circ u \\
+    &= h \circ \langle u, u \rangle
+\end{align*}
+
+$h$ must take this pair of points and postcompose $f \circ \phi$ with each of them
+individually. The first $u$ can be composed with $ f \circ \phi $ through the fusion rule
+for composing products of morphisms.
+
+\begin{align*}
+    \langle f \circ \phi, id_A \rangle \circ \langle u, u \rangle &=
+    \langle f \circ \phi \circ u, u \rangle \\
+\end{align*}
+
+Having composed the first $u$ with $\phi$, only the $u$ in the second projection
+remains. Is is here that the adjoint property of the exponential is used by
+utilising the evaluation map $eval: B^{A} \times A \rightarrow B$. Postcomposing
+by the evaluation map yields a point to $B$ i.e.
+
+\begin{align*}
+    eval \ \circ \langle f \circ \phi \circ u, u \rangle
+    &= eval \circ \langle f \circ \phi \circ u, u \rangle \\
+    &= f \circ \phi \circ u \circ u
+\end{align*}
+
+
+\todo{is there a law here}
+
+Unrolling what was just done yields
+\begin{align*}
+    g = eval \circ \langle f \circ \phi, id_A \rangle \circ \delta
+\end{align*}
+
+The existence of a fixed point combinator can be guaranteed by working within a
+cartesian closed category where there is an iso $\psi: A \rightarrow B^A$
+(although a split epi $D \rightarrow D^D$ will suffice) \todo{cite} 
+
+\end{document}
+
+
