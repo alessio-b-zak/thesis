@@ -21,11 +21,9 @@ record Monoid (A : Set) : Set where
   field
     _◓_ : A → A → A
     𝑒 : A
-
   field
     ◓-assoc : {a b c : A} → ((a ◓ b) ◓ c) ≡ (a ◓ (b ◓ c))
     𝑒-left-neutral : {a : A} → 𝑒 ◓ a ≡ a
     𝑒-right-neutral : {a : A} → a ◓ 𝑒 ≡ a
 
-     
 
