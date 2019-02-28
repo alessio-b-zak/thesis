@@ -38,8 +38,7 @@ record MonoidHomomorphism {L L'} (M : Monoid L) (M' : Monoid L') : Set ( L ⊔ L
   field
     f : Underlying → Underlying'
     𝑒-preserved : f 𝑒 ≡ 𝑒'
-    ◓-preserved : {X Y : Underlying} → (f (X ◓ Y)) ≡ (f X ◓' f Y)
-
+    ◓-preserved : (X Y : Underlying) → (f (X ◓ Y)) ≡ (f X ◓' f Y)
 
 zero-left-neutral : {a : ℕ} → ℕ.zero + a ≡ a
 zero-left-neutral = refl
@@ -59,7 +58,47 @@ nat-mon = record { Underlying = ℕ ;
                   𝑒-right-neutral = zero-right-neutral;
                   𝑒-left-neutral = zero-left-neutral;
                   ◓-assoc  = +-assoc}
-                    
+
+
+true-left-neutral : {b : Bool} → (true ∧ b) ≡ b
+true-left-neutral = refl
+
+true-right-neutral : {b : Bool} → (b ∧ true) ≡ b
+true-right-neutral {false} = refl
+true-right-neutral {true} = refl
+
+∧-assoc : (a b c : Bool) → ((a ∧ b) ∧ c) ≡ (a ∧ (b ∧ c))
+∧-assoc false b c = refl
+∧-assoc true b c = refl
+
+
+bool-mon : Monoid Level.zero
+bool-mon = record { Underlying = Bool;
+                    _◓_ = _∧_;
+                    𝑒 = Bool.true;
+                    ◓-assoc = ∧-assoc;
+                    𝑒-left-neutral = true-left-neutral;
+                    𝑒-right-neutral = true-right-neutral}
+
+
+nat-to-bool : ℕ → Bool
+nat-to-bool ℕ.zero = true
+nat-to-bool (ℕ.suc x) = false
+
+nat2bool-op-preserve : (x y : ℕ) → ((nat-to-bool (x + y)) ≡ (nat-to-bool x) ∧ (nat-to-bool y))
+nat2bool-op-preserve ℕ.zero y = refl
+nat2bool-op-preserve (ℕ.suc x) y = refl
+
+nat2bool-neutral-preserve : nat-to-bool ℕ.zero ≡ true
+nat2bool-neutral-preserve = refl
+
+nat-to-bool-Monoid : MonoidHomomorphism nat-mon bool-mon
+nat-to-bool-Monoid = record {
+                            f = nat-to-bool;
+                            𝑒-preserved = nat2bool-neutral-preserve; 
+                            ◓-preserved = nat2bool-op-preserve
+                            }
+
 
 mon : {a : Level} → Category a 
 mon {a} = record { Obj = Monoid a; _↣_ = MonoidHomomorphism}
