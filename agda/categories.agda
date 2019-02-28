@@ -7,11 +7,11 @@ open import Data.Nat hiding (_⊔_)
 open import Relation.Binary.PropositionalEquality
 open import Level
 
---record Category (a : Level) : Set (Level.suc (Level.suc a)) where
---  field
---    -- Levels are probably messed up
---    Obj : Set (suc a)
---    _↣_ : Rel Obj a
+record Category (a : Level) : Set (Level.suc (Level.suc a)) where
+  field
+    -- Levels are probably messed up
+    Obj : Set (Level.suc a)
+    _↣_ : Rel Obj a
 --    _∘_  : {A B C : Obj} → (B ↣ C) → (A ↣ B) → (A ↣ C)
 --    ι : {X : Obj} → (X ↣ X)
 --
@@ -32,11 +32,13 @@ record Monoid (a : Level) : Set (Level.suc a) where
     𝑒-left-neutral : {a : Underlying} → 𝑒 ◓ a ≡ a
     𝑒-right-neutral : {a : Underlying} → a ◓ 𝑒 ≡ a
 
-record MonoidHomomorphism {L L'} (M : Monoid L) (M' : Monoid L') : Set (Level.suc( L ⊔ L')) where
+record MonoidHomomorphism {L L'} (M : Monoid L) (M' : Monoid L') : Set ( L ⊔ L') where
   open Monoid M
   open Monoid M' renaming ( 𝑒 to 𝑒'; _◓_ to _◓'_ ; Underlying to Underlying')
   field
     f : Underlying → Underlying'
+    𝑒-preserved : f 𝑒 ≡ 𝑒'
+    ◓-preserved : {X Y : Underlying} → (f (X ◓ Y)) ≡ (f X ◓' f Y)
 
 
 zero-left-neutral : {a : ℕ} → ℕ.zero + a ≡ a
@@ -50,7 +52,7 @@ zero-right-neutral {ℕ.suc a} = cong ℕ.suc (zero-right-neutral)
 +-assoc ℕ.zero b c = refl
 +-assoc (ℕ.suc a) b c = cong ℕ.suc (+-assoc a b c) 
 
-nat-mon : Monoid _ 
+nat-mon : Monoid Level.zero
 nat-mon = record { Underlying = ℕ ;
                   _◓_ = _+_;
                   𝑒 = ℕ.zero;
@@ -59,6 +61,5 @@ nat-mon = record { Underlying = ℕ ;
                   ◓-assoc  = +-assoc}
                     
 
---nat-mon
---mon : {a : Level} → Category a 
---mon {a} = record { Obj = Monoid a}
+mon : {a : Level} → Category a 
+mon {a} = record { Obj = Monoid a; _↣_ = MonoidHomomorphism}
