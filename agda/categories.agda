@@ -32,6 +32,17 @@ record Monoid (a : Level) : Set (Level.suc a) where
     𝑒-left-neutral : {a : Underlying} → 𝑒 ◓ a ≡ a
     𝑒-right-neutral : {a : Underlying} → a ◓ 𝑒 ≡ a
 
+
+id : ∀ {a} {A : Set a} → A → A
+id x = x
+
+id-preserve : ∀ {a}(A : Set a) → (x : A) → (id x) ≡ x
+id-preserve A x = refl
+
+id-preserves-op : ∀ {a}{G : Set a} (_∘_ : G → G → G)(A B : G)  → id (A ∘ B) ≡ (id A) ∘ (id B)
+id-preserves-op {a} {G} _∘_ A B  = refl
+
+
 record MonoidHomomorphism {L L'} (M : Monoid L) (M' : Monoid L') : Set ( L ⊔ L') where
   open Monoid M
   open Monoid M' renaming ( 𝑒 to 𝑒'; _◓_ to _◓'_ ; Underlying to Underlying')
@@ -80,7 +91,6 @@ bool-mon = record { Underlying = Bool;
                     𝑒-left-neutral = true-left-neutral;
                     𝑒-right-neutral = true-right-neutral}
 
-
 nat-to-bool : ℕ → Bool
 nat-to-bool ℕ.zero = true
 nat-to-bool (ℕ.suc x) = false
@@ -100,5 +110,21 @@ nat-to-bool-Monoid = record {
                             }
 
 
+
+id-homo : ∀ {a}{A : Monoid a} → MonoidHomomorphism A A
+MonoidHomomorphism.f (id-homo {A}) = id
+MonoidHomomorphism.𝑒-preserved (id-homo {A} {B}) = id-preserve _ (Monoid.𝑒 B)
+MonoidHomomorphism.◓-preserved (id-homo {A} {B}) = id-preserves-op (Monoid._◓_ B)
+
+--record {
+--                 f = id;                 
+--                 𝑒-preserved = id-preserve;
+--                 ◓-preserved = id-preserves-op
+--                 }
+
+
 mon : {a : Level} → Category a 
 mon {a} = record { Obj = Monoid a; _↣_ = MonoidHomomorphism}
+
+
+
