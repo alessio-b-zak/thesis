@@ -22,7 +22,7 @@ record MonHom {L L'} (M : Monoid L) (M' : Monoid L') : Set ( L ⊔ L') where
   field
     f : Underlying → Underlying'
     𝑒-preserved : f 𝑒 ≡ 𝑒'
-    ◓-preserved : (X Y : Underlying) → (f (X ◓ Y)) ≡ (f X ◓' f Y)
+    ◓-preserved : (X Y : Underlying) → (f (X ◓ Y)) ≡ (f X ◓' f Y) 
 
 
 id-pres-id : ∀ {a b c} → (M : Monoid a) → (M' : Monoid b) →
@@ -34,26 +34,24 @@ id-pres-id {a} {b} {c} M M' M''
              (record { f = first ; 𝑒-preserved = refl ; ◓-preserved = ◓-preserved1 })
              (record { f = second ; 𝑒-preserved = refl ; ◓-preserved = ◓-preserved2 }) = refl
 
-id-pres-comp : ∀ {a b c} {M : Monoid a} {M' : Monoid b}
-                 {M'' : Monoid c} {f : MonHom M M'} {g : MonHom M' M''}
+id-pres-comp : ∀ {a b c} (M : Monoid a) (M' : Monoid b)
+                 (M'' : Monoid c) (f : MonHom M M') (g : MonHom M' M'')
                  (X Y : Monoid.Underlying M) →
                MonHom.f g (MonHom.f f ((M Monoid.◓ X) Y)) ≡
                (M'' Monoid.◓ MonHom.f g (MonHom.f f X))
                (MonHom.f g (MonHom.f f Y))
 -- (g ∘ f) (X ◓ Y) ≡ ((g ∘ f) X) ◓' ((g ∘ f)
-id-pres-comp {a} {b} {c} {M} {M'} {M''}
-             {record { f = f1 ; 𝑒-preserved = id-pres1 ; ◓-preserved = comp-pres1 }}
-             {record { f = g2 ; 𝑒-preserved = id-pres2 ; ◓-preserved = comp-pres2 }}
-             X Y = case (comp-pres1 X Y) of
-                        refl → ?
-
-
--- I'm not sure if there should be a case for the constructor refl,
--- because I get stuck when trying to solve the following unification
--- problems (inferred index ≟ expected index):
---   f1 ((M Monoid.◓ X) Y) ≟ (M' Monoid.◓ f1 X) (f1 Y)
--- when checking that the pattern refl has type
--- f1 ((M Monoid.◓ X) Y) ≡ (M' Monoid.◓ f1 X) (f1 Y)
+id-pres-comp {a} {b} {c} M M' M''
+             (record { f = f1 ; 𝑒-preserved = id-pres1 ; ◓-preserved = comp-pres1 })
+             (record { f = g2 ; 𝑒-preserved = id-pres2 ; ◓-preserved = comp-pres2 })
+             X Y  = let
+               first = (comp-pres1 X Y)
+               f1X = f1 X
+               f2Y = f1 Y
+               second = cong g2 first
+               third = (comp-pres2 f1X f2Y)
+               fourth = trans second third 
+               in fourth
 
 
 MonoidComp : ∀ {a b c}{M : Monoid a}{M' : Monoid b}{ M'' : Monoid c} (f : MonHom M M')
@@ -61,4 +59,4 @@ MonoidComp : ∀ {a b c}{M : Monoid a}{M' : Monoid b}{ M'' : Monoid c} (f : MonH
            → (MonHom M M'')
 MonHom.f (MonoidComp f g) = (MonHom.f g) ∘ (MonHom.f f)
 MonHom.𝑒-preserved (MonoidComp {a} {b} {c} {M} {M'} {M''} f g) = id-pres-id M M' M'' f g 
-MonHom.◓-preserved (MonoidComp f g) = {!!}
+MonHom.◓-preserved (MonoidComp {a} {b} {c} {M} {M'} {M''} f g) = id-pres-comp M M' M'' f g
