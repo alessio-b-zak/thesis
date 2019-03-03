@@ -3,6 +3,7 @@ module categories where
 open import Relation.Binary
 open import Data.Bool
 open import Data.Nat hiding (_⊔_)
+open import Function hiding (id)
 
 open import Relation.Binary.PropositionalEquality
 open import Level
@@ -13,7 +14,7 @@ record Category (a : Level) : Set (Level.suc (Level.suc a)) where
     Obj : Set (Level.suc a)
     _↣_ : Rel Obj a
 --    _∘_  : {A B C : Obj} → (B ↣ C) → (A ↣ B) → (A ↣ C)
---    ι : {X : Obj} → (X ↣ X)
+    ι : {X : Obj} → (X ↣ X)
 --
 --  field
 --    ∘-assoc : {A B C D : Obj}{f : A ↣ B}{g : B ↣ C}{h : C ↣ D}
@@ -50,6 +51,21 @@ record MonoidHomomorphism {L L'} (M : Monoid L) (M' : Monoid L') : Set ( L ⊔ L
     f : Underlying → Underlying'
     𝑒-preserved : f 𝑒 ≡ 𝑒'
     ◓-preserved : (X Y : Underlying) → (f (X ◓ Y)) ≡ (f X ◓' f Y)
+
+
+comp-pres-id : ∀ {a b c} {M : Monoid a} {M' : Monoid b}
+                 {M'' : Monoid c} {f : MonoidHomomorphism M M'}
+                 {g : MonoidHomomorphism M' M''} →
+               MonoidHomomorphism.f g (MonoidHomomorphism.f f (Monoid.𝑒 M)) ≡
+               Monoid.𝑒 M''
+comp-pres-id {a} {b} {c} {M} {M'} {M''} {f} {g} = {!!}
+
+
+
+MonoidComp : ∀ {a b c}{M : Monoid a}{M' : Monoid b}{ M'' : Monoid c} (f : MonoidHomomorphism M M')
+           → (g : MonoidHomomorphism M' M'')
+           → (MonoidHomomorphism M M'')
+MonoidComp f g = record { f =  (MonoidHomomorphism.f g) ∘ (MonoidHomomorphism.f f) ; 𝑒-preserved = {!!} ; ◓-preserved = {!!} }
 
 zero-left-neutral : {a : ℕ} → ℕ.zero + a ≡ a
 zero-left-neutral = refl
@@ -123,8 +139,7 @@ MonoidHomomorphism.◓-preserved (id-homo {A} {B}) = id-preserves-op (Monoid._�
 --                 }
 
 
-mon : {a : Level} → Category a 
-mon {a} = record { Obj = Monoid a; _↣_ = MonoidHomomorphism}
+
 
 
 
