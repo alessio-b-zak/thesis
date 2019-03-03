@@ -4,7 +4,7 @@ open import Relation.Binary
 open import Monoids
 open import Data.Bool
 open import Data.Nat hiding (_⊔_)
-open import Function hiding (id)
+open import Function hiding (id; _∘_)
 
 open import Relation.Binary.PropositionalEquality
 open import Level
@@ -14,7 +14,7 @@ record Category (a : Level) : Set (Level.suc (Level.suc a)) where
     -- Levels are probably messed up
     Obj : Set (Level.suc a)
     _↣_ : Rel Obj a
---    _∘_  : {A B C : Obj} → (B ↣ C) → (A ↣ B) → (A ↣ C)
+    _∘_  : {A B C : Obj} → (B ↣ C) → (A ↣ B) → (A ↣ C)
     ι : {X : Obj} → (X ↣ X)
 --
 --  field
@@ -22,3 +22,7 @@ record Category (a : Level) : Set (Level.suc (Level.suc a)) where
 --            → ((h ∘ g) ∘ f) ≡ (h ∘ (g ∘ f))
 --    ι-left-neutral : {A B : Obj}{f : A ↣ B} → ι ∘ f ≡ f
 --    ι-right-neutral : {A B : Obj}{f : A ↣ B} → f ∘ ι ≡ f
+
+
+moncat : {a : Level} → Category a
+moncat {a} = record { Obj = Monoid a; _↣_ = MonHom; ι = id-homo; _∘_  = MonoidComp }

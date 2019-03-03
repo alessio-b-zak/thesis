@@ -55,12 +55,12 @@ id-pres-comp {a} {b} {c} M M' M''
                in trans g2ap-id-pres1 id-pres2 
 
 
-MonoidComp : ∀ {a b c}{M : Monoid a}{M' : Monoid b}{ M'' : Monoid c} (f : MonHom M M')
-           → (g : MonHom M' M'')
+MonoidComp : ∀ {a b c}{M : Monoid a}{M' : Monoid b}{ M'' : Monoid c} (g : MonHom M' M'')
+           → (f : MonHom M M')
            → (MonHom M M'')
-MonHom.f (MonoidComp f g) = (MonHom.f g) ∘ (MonHom.f f)
-MonHom.𝑒-preserved (MonoidComp {a} {b} {c} {M} {M'} {M''} f g) = id-pres-id M M' M'' f g 
-MonHom.◓-preserved (MonoidComp {a} {b} {c} {M} {M'} {M''} f g) = id-pres-comp M M' M'' f g
+MonHom.f (MonoidComp g f) = (MonHom.f g) ∘ (MonHom.f f)
+MonHom.𝑒-preserved (MonoidComp {a} {b} {c} {M} {M'} {M''} g f) = id-pres-id M M' M'' f g 
+MonHom.◓-preserved (MonoidComp {a} {b} {c} {M} {M'} {M''} g f) = id-pres-comp M M' M'' f g
 
 
 zero-left-neutral : {a : ℕ} → ℕ.zero + a ≡ a
