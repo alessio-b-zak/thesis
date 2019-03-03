@@ -1,6 +1,6 @@
 module categories where
 
-open import Relation.Binary
+open import Relation.Binary 
 open import Data.Bool
 open import Data.Nat hiding (_⊔_)
 open import Function hiding (id)
@@ -44,7 +44,7 @@ id-preserves-op : ∀ {a}{G : Set a} (_∘_ : G → G → G)(A B : G)  → id (A
 id-preserves-op {a} {G} _∘_ A B  = refl
 
 
-record MonoidHomomorphism {L L'} (M : Monoid L) (M' : Monoid L') : Set ( L ⊔ L') where
+record MonHom {L L'} (M : Monoid L) (M' : Monoid L') : Set ( L ⊔ L') where
   open Monoid M
   open Monoid M' renaming ( 𝑒 to 𝑒'; _◓_ to _◓'_ ; Underlying to Underlying')
   field
@@ -53,19 +53,36 @@ record MonoidHomomorphism {L L'} (M : Monoid L) (M' : Monoid L') : Set ( L ⊔ L
     ◓-preserved : (X Y : Underlying) → (f (X ◓ Y)) ≡ (f X ◓' f Y)
 
 
-comp-pres-id : ∀ {a b c} {M : Monoid a} {M' : Monoid b}
-                 {M'' : Monoid c} {f : MonoidHomomorphism M M'}
-                 {g : MonoidHomomorphism M' M''} →
-               MonoidHomomorphism.f g (MonoidHomomorphism.f f (Monoid.𝑒 M)) ≡
+id-pres-id : ∀ {a b c} → (M : Monoid a) → (M' : Monoid b) →
+                 (M'' : Monoid c) → (first : MonHom M M') →
+                 (second : MonHom M' M'') →
+               MonHom.f second (MonHom.f first (Monoid.𝑒 M)) ≡
                Monoid.𝑒 M''
-comp-pres-id {a} {b} {c} {M} {M'} {M''} {f} {g} = {!!}
+id-pres-id {a} {b} {c} M M' M''
+             (record { f = first ; 𝑒-preserved = refl ; ◓-preserved = ◓-preserved1 })
+             (record { f = second ; 𝑒-preserved = refl ; ◓-preserved = ◓-preserved2 }) = refl
 
 
-
-MonoidComp : ∀ {a b c}{M : Monoid a}{M' : Monoid b}{ M'' : Monoid c} (f : MonoidHomomorphism M M')
-           → (g : MonoidHomomorphism M' M'')
-           → (MonoidHomomorphism M M'')
-MonoidComp f g = record { f =  (MonoidHomomorphism.f g) ∘ (MonoidHomomorphism.f f) ; 𝑒-preserved = {!!} ; ◓-preserved = {!!} }
+id-pres-comp : ∀ {a b c} {M : Monoid a} {M' : Monoid b}
+                 {M'' : Monoid c} {f : MonHom M M'}
+                 {g : MonHom M' M''} (X Y : Monoid.Underlying M) →
+               MonHom.f g (MonHom.f f ((M Monoid.◓ X) Y))
+               ≡
+               (M'' Monoid.◓ MonHom.f g (MonHom.f f X))
+               (MonHom.f g (MonHom.f f Y))
+id-pres-comp {a} {b} {c} {M} {M'} {M''}
+             {record { f = first ; 𝑒-preserved = refl ; ◓-preserved = op-preserved1 }}
+             {record { f = second ; 𝑒-preserved = 𝑒-preserved ; ◓-preserved = op-preserved2 }} X Y  with (op-preserved1 X Y)
+... | p = {!!}           
+MonoidComp : ∀ {a b c}{M : Monoid a}{M' : Monoid b}{ M'' : Monoid c} (f : MonHom M M')
+           → (g : MonHom M' M'')
+           → (MonHom M M'')
+MonHom.f (MonoidComp f g) = (MonHom.f g) ∘ (MonHom.f f)
+MonHom.𝑒-preserved (MonoidComp {a} {b} {c} {M} {M'} {M''} f g) = id-pres-id M M' M'' f g
+MonHom.◓-preserved (MonoidComp f g) = {!!}
+--record { f =  (MonHom.f g) ∘ (MonHom.f f);
+--                          𝑒-preserved = comp-pres-id 
+--                          ◓-preserved = {!!} }
 
 zero-left-neutral : {a : ℕ} → ℕ.zero + a ≡ a
 zero-left-neutral = refl
@@ -118,7 +135,7 @@ nat2bool-op-preserve (ℕ.suc x) y = refl
 nat2bool-neutral-preserve : nat-to-bool ℕ.zero ≡ true
 nat2bool-neutral-preserve = refl
 
-nat-to-bool-Monoid : MonoidHomomorphism nat-mon bool-mon
+nat-to-bool-Monoid : MonHom nat-mon bool-mon
 nat-to-bool-Monoid = record {
                             f = nat-to-bool;
                             𝑒-preserved = nat2bool-neutral-preserve; 
@@ -127,10 +144,10 @@ nat-to-bool-Monoid = record {
 
 
 
-id-homo : ∀ {a}{A : Monoid a} → MonoidHomomorphism A A
-MonoidHomomorphism.f (id-homo {A}) = id
-MonoidHomomorphism.𝑒-preserved (id-homo {A} {B}) = id-preserve _ (Monoid.𝑒 B)
-MonoidHomomorphism.◓-preserved (id-homo {A} {B}) = id-preserves-op (Monoid._◓_ B)
+id-homo : ∀ {a}{A : Monoid a} → MonHom A A
+MonHom.f (id-homo {A}) = id
+MonHom.𝑒-preserved (id-homo {A} {B}) = id-preserve _ (Monoid.𝑒 B)
+MonHom.◓-preserved (id-homo {A} {B}) = id-preserves-op (Monoid._◓_ B)
 
 --record {
 --                 f = id;                 
