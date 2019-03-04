@@ -17,12 +17,12 @@ record Category (a : Level) : Set (Level.suc (Level.suc a)) where
     _∘_  : {A B C : Obj} → (B ↣ C) → (A ↣ B) → (A ↣ C)
     ι : {X : Obj} → (X ↣ X)
 --
---  field
+  field
 --    ∘-assoc : {A B C D : Obj}{f : A ↣ B}{g : B ↣ C}{h : C ↣ D}
 --            → ((h ∘ g) ∘ f) ≡ (h ∘ (g ∘ f))
---    ι-left-neutral : {A B : Obj}{f : A ↣ B} → ι ∘ f ≡ f
+    ι-left-neutral : {A B : Obj}{f : A ↣ B} → ι ∘ f ≡ f
 --    ι-right-neutral : {A B : Obj}{f : A ↣ B} → f ∘ ι ≡ f
 
 
 moncat : {a : Level} → Category a
-moncat {a} = record { Obj = Monoid a; _↣_ = MonHom; ι = id-homo; _∘_  = MonoidComp }
+moncat {a} = record { Obj = Monoid a; _↣_ = MonHom; ι = id-homo; _∘_  = MonoidComp; ι-left-neutral = {!!} }
