@@ -23,6 +23,7 @@ idcomp : ∀ {a}{b} {A : Set a}{B : Set b} {X : A}(f : A → B) → id (f X) ≡
 idcomp f = refl 
 
 record MonHom {L L'} (M : Monoid L) (M' : Monoid L') : Set ( L ⊔ L') where
+  constructor Monny
   open Monoid M
   open Monoid M' renaming ( 𝑒 to 𝑒'; _◓_ to _◓'_ ; Underlying to Underlying')
   field
@@ -30,6 +31,8 @@ record MonHom {L L'} (M : Monoid L) (M' : Monoid L') : Set ( L ⊔ L') where
     𝑒-preserved : f 𝑒 ≡ 𝑒'
     ◓-preserved : (X Y : Underlying) → (f (X ◓ Y)) ≡ (f X ◓' f Y) 
 
+
+open Monoid
 
 id-pres-id : ∀ {a b c} → (M : Monoid a) → (M' : Monoid b) →
                  (M'' : Monoid c) → (first : MonHom M M') →
@@ -94,7 +97,6 @@ MonHom.𝑒-preserved (id-homo {A} {B}) = id-preserve _ (Monoid.𝑒 B)
 MonHom.◓-preserved (id-homo {A} {B}) = id-preserves-op (Monoid._◓_ B)
 
 
-
 --thing : ∀ {a b}{A : Monoid a}{B : Monoid b}(first : MonHom A B) → MonHom.f (MonoidComp id-homo first) ≡ MonHom.f first 
 --thing first = refl
 --
@@ -102,12 +104,17 @@ MonHom.◓-preserved (id-homo {A} {B}) = id-preserves-op (Monoid._◓_ B)
 --thing' {a} {b} {A} {B} first with (id-pres-id A B B first id-homo)
 --thing' {a} {b} {A} {B} record { f = f ; 𝑒-preserved = 𝑒-preserved ; ◓-preserved = ◓-preserved } | p = {!!}
 
-MonHomEq : ∀ {a b}(A : Monoid a)(B : Monoid b)(s t : MonHom A B)
-         → (MonHom.f s) ≡ (MonHom.f t)
-         → (MonHom.𝑒-preserved s) ≡ (MonHom.𝑒-preserved t)
-         → (MonHom.◓-preserved s) ≡ (MonHom.◓-preserved t)
-         → s ≡ t
-MonHomEq = ?
+MonHom-Intro : ∀ {a b}{M : Monoid a}(M' : Monoid b){A B : Underlying M}
+               {f f' : (Underlying M) → (Underlying M')}
+               {s : f (𝑒 M) ≡ 𝑒 M'}
+               → {s' : f' (𝑒 M) ≡ 𝑒 M'}
+               → (fp : f ≡ f')
+               → subst (λ f → (f (𝑒 M) ≡ (𝑒 M'))) fp s ≡ s'
+               → {x : ((X Y : Underlying M) → f ((_◓_ M) X Y) ≡ (_◓_ M')(f X) (f Y))}
+               → {x' : ((X Y : Underlying M) → f' ((_◓_ M) X Y) ≡ (_◓_ M') (f' X) (f' Y))}
+               → subst (λ g → ((X Y : Underlying M) → g ((_◓_ M) X Y) ≡ (_◓_ M') (g X) (g Y))) fp x ≡ x'
+               → (Monny f s x) ≡ (Monny f' s' x')
+MonHom-Intro M' refl refl refl = {!!}
 
 monhom-left-neutral : ∀ {a} (A B : Monoid a) (first : MonHom A B) →
                       MonoidComp id-homo first ≡ first
