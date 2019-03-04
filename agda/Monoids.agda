@@ -15,9 +15,12 @@ record Monoid (a : Level) : Set (Level.suc a) where
     𝑒-right-neutral : {a : Underlying} → a ◓ 𝑒 ≡ a
 
 
+
 id : ∀ {a} {A : Set a} → A → A
 id x = x
 
+idcomp : ∀ {a}{b} {A : Set a}{B : Set b} {X : A}(f : A → B) → id (f X) ≡ f X
+idcomp f = refl 
 
 record MonHom {L L'} (M : Monoid L) (M' : Monoid L') : Set ( L ⊔ L') where
   open Monoid M
@@ -91,9 +94,22 @@ MonHom.𝑒-preserved (id-homo {A} {B}) = id-preserve _ (Monoid.𝑒 B)
 MonHom.◓-preserved (id-homo {A} {B}) = id-preserves-op (Monoid._◓_ B)
 
 
+
+--thing : ∀ {a b}{A : Monoid a}{B : Monoid b}(first : MonHom A B) → MonHom.f (MonoidComp id-homo first) ≡ MonHom.f first 
+--thing first = refl
+--
+--thing' : ∀ {a b}{A : Monoid a}{B : Monoid b}(first : MonHom A B) → MonHom.𝑒-preserved (MonoidComp id-homo first) ≡ MonHom.𝑒-preserved first
+--thing' {a} {b} {A} {B} first with (id-pres-id A B B first id-homo)
+--thing' {a} {b} {A} {B} record { f = f ; 𝑒-preserved = 𝑒-preserved ; ◓-preserved = ◓-preserved } | p = {!!}
+
+MonHomEq : ∀ {a b}(A : Monoid a)(B : Monoid b)(s t : MonHom A B)
+         → (MonHom.f s) ≡ (MonHom.f t)
+         → (MonHom.𝑒-preserved s) ≡ (MonHom.𝑒-preserved t)
+         → (MonHom.◓-preserved s) ≡ (MonHom.◓-preserved t)
+         → s ≡ t
+MonHomEq = ?
+
 monhom-left-neutral : ∀ {a} (A B : Monoid a) (first : MonHom A B) →
                       MonoidComp id-homo first ≡ first
-monhom-left-neutral A B first with MonoidComp id-homo first
-monhom-left-neutral A B record { f = in0 ; 𝑒-preserved = id0 ; ◓-preserved = co1 } | record { f = in1 ; 𝑒-preserved = id1 ; ◓-preserved = co0 }
-  = {!!} 
-                      
+monhom-left-neutral A B first with (MonoidComp id-homo first)
+... | p = {!!}
