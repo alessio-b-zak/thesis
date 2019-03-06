@@ -2,17 +2,13 @@ module Points where
 
 open import Cats.Category.Base
 open import Level
-
-open import Cats.Category.Constructions.Terminal
-
-open import Cats.Functor.Yoneda
+open import Cats.Category.Constructions.Terminal as Terminal using (HasTerminal)
 
 
-
-module _ {lo la l=} (C : Category lo la l=) (term : HasTerminal C) where
+module Build {lo la l=} (C : Category lo la l=) {{hasTerminal : HasTerminal C}} where
 
   open Category C
-  open HasTerminal term 
+  open HasTerminal hasTerminal 
 
   Point : Obj → Set la
   Point X = One ⇒ X
@@ -39,5 +35,12 @@ module _ {lo la l=} (C : Category lo la l=) (term : HasTerminal C) where
   FixedPointProperty B = ∀ f → HasFixedPoint {B} f
 
   -- point surjective f : A ⇒ B if  ∀ (Point B) 
-  PointSurjective : {A B : Obj} → (f : A ⇒ B) → Set (lo ⊔ la ⊔ l=)
-  PointSurjective f = ∀ b → HasSolution f b
+  IsPointSurjective : {A B : Obj} → (f : A ⇒ B) → Set (lo ⊔ la ⊔ l=)
+  IsPointSurjective f = ∀ b → HasSolution f b
+
+  record HasPointSurjective (A : Obj) (B : Obj) : Set (lo ⊔ la ⊔ l=) where
+
+    field
+      arr : (A ⇒ B)
+      isPointSurjective : IsPointSurjective arr
+   
