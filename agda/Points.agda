@@ -38,7 +38,7 @@ module Build {lo la l=} (C : Category lo la l=) {{hasTerminal : HasTerminal C}} 
   IsPointSurjective : {A B : Obj} → (f : A ⇒ B) → Set (lo ⊔ la ⊔ l=)
   IsPointSurjective f = ∀ b → HasSolution f b
 
-  record HasPointSurjective (A : Obj) (B : Obj) : Set (lo ⊔ la ⊔ l=) where
+  record PointSurjective (A : Obj) (B : Obj) : Set (lo ⊔ la ⊔ l=) where
 
     field
       arr : (A ⇒ B)
