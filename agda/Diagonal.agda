@@ -34,6 +34,8 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
           ps = isPointSurjective h
           u = (HasSolution.X ps)
           ps-proof = HasSolution.isSolution ps
+          unc-ps-proof = uncurry-resp ps-proof
+          collapse-unc-ps-proof = collapseToOne-resp unc-ps-proof
           -- ϕ ∘ u ≈ h
           ﹝ϕ∘u﹞ = ( collapseToOne (uncurry (ϕ ∘ u)))
           fixedPoint = ﹝ϕ∘u﹞ ∘ u

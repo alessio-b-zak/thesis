@@ -33,5 +33,5 @@ module Ext {lo la l=} (C : Category lo la l=)
   collapseToOne : ∀ {A B} → (One × A ⇒ B) → (A ⇒ B)
   collapseToOne x = x ∘ oneIso
 
-  extendThing : ∀ {A B} {u v : One × A ⇒ B}  → (u ≈ v) → (collapseToOne u) ≈ (collapseToOne v)
-  extendThing x = ∘-resp-l x
+  collapseToOne-resp : ∀ {A B} {u v : One × A ⇒ B}  → (u ≈ v) → (collapseToOne u) ≈ (collapseToOne v)
+  collapseToOne-resp x = ∘-resp-l x
