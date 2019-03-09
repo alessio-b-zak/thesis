@@ -45,7 +45,11 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
           fixedPoint = ﹝ϕ∘u﹞ ∘ u
           proof = begin fixedPoint
                 ≈⟨ ∘-resp-l collapse-unc-ps-proof ⟩ 
-                   (collapseToOne (uncurry (curry (extendToOne (f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ ))))) ∘ u
+                  (collapseToOne (uncurry (curry (extendToOne (f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ ))))) ∘ u
+                ≈⟨ {!!} ⟩
+                  (collapseToOne (extendToOne ( f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ))) ∘ u
+                ≈⟨ {!!} ⟩
+                 ( f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ) ∘ u
                 ≈⟨ {!!} ⟩
                   f ∘ fixedPoint
                 ∎
