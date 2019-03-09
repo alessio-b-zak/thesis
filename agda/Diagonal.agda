@@ -8,7 +8,6 @@ open import Cats.Category.Constructions.Terminal
 open import Cats.Category.Constructions.Exponential
 open import Extension
 
-open import Cats.Functor.Yoneda
 
 module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
 
@@ -46,9 +45,17 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
                 ≈⟨ ∘-resp-l (∘-resp-l uncurry∘curry)⟩
                   (collapseToOne (extendToOne ( f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ))) ∘ u
                 ≈⟨ ∘-resp-l (collapseExtendIso)  ⟩
-                  ( f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ) ∘ u
-                ≈⟨ {! ∘-resp-r ?!} ⟩
-                  ( f ∘ eval ∘ ⟨ ϕ × id ⟩) ∘ δ ∘ u 
+                  ( f ∘ (eval ∘ (⟨ ϕ × id ⟩ ∘ δ))) ∘ u
+                ≈⟨ ∘-resp-l unassoc  ⟩
+                  ( (f ∘ eval) ∘ (⟨ ϕ × id ⟩ ∘ δ)) ∘ u
+                ≈⟨ ∘-resp-l {!!} ⟩
+                  ( (f ∘ eval ∘ ⟨ ϕ × id ⟩) ∘ δ) ∘ u
+                ≈⟨ assoc  ⟩
+                  ( f ∘ eval ∘ ⟨ ϕ × id ⟩) ∘ (δ ∘ u)
+                ≈⟨ ≈.refl  ⟩
+                  ( f ∘ eval ∘ ⟨ ϕ × id ⟩) ∘ (⟨ id , id ⟩ ∘ u)
+                ≈⟨ {!!}  ⟩
+                  ( f ∘ eval ∘ ⟨ ϕ × id ⟩) ∘ (⟨ (id ∘ u) , (id ∘ u) ⟩)
                 ≈⟨ {!!} ⟩
                   f ∘ fixedPoint
                 ∎
