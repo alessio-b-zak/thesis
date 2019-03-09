@@ -47,16 +47,18 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
                 ≈⟨ ∘-resp-l (collapseExtendIso)  ⟩
                   ( f ∘ (eval ∘ (⟨ ϕ × id ⟩ ∘ δ))) ∘ u
                 ≈⟨ ∘-resp-l unassoc  ⟩
-                  ( (f ∘ eval) ∘ (⟨ ϕ × id ⟩ ∘ δ)) ∘ u
-                ≈⟨ ∘-resp-l {!!} ⟩
-                  ( (f ∘ eval ∘ ⟨ ϕ × id ⟩) ∘ δ) ∘ u
+                  ( (f ∘ eval) ∘ ((⟨ ϕ × id ⟩) ∘ δ)) ∘ u
+                ≈⟨ ∘-resp-l unassoc ⟩
+                  ( ((f ∘ eval) ∘ (⟨ ϕ × id ⟩)) ∘ δ) ∘ u
+                ≈⟨ ∘-resp-l (∘-resp-l assoc) ⟩
+                  ( (f ∘ (eval ∘ ⟨ ϕ × id ⟩)) ∘ δ) ∘ u
                 ≈⟨ assoc  ⟩
                   ( f ∘ eval ∘ ⟨ ϕ × id ⟩) ∘ (δ ∘ u)
-                ≈⟨ ≈.refl  ⟩
+                ≈⟨ ≈.refl ⟩
                   ( f ∘ eval ∘ ⟨ ϕ × id ⟩) ∘ (⟨ id , id ⟩ ∘ u)
-                ≈⟨ {!!}  ⟩
+                ≈⟨ ∘-resp-r ⟨,⟩-∘  ⟩
                   ( f ∘ eval ∘ ⟨ ϕ × id ⟩) ∘ (⟨ (id ∘ u) , (id ∘ u) ⟩)
-                ≈⟨ {!!} ⟩
+                ≈⟨ {!  !} ⟩
                   f ∘ fixedPoint
                 ∎
           in record { X = fixedPoint ; isFixedPoint = ≈.sym proof }
