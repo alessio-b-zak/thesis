@@ -45,7 +45,7 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
                   (collapseToOne (uncurry (curry (extendToOne (f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ ))))) ∘ u
                 ≈⟨ ∘-resp-l (∘-resp-l uncurry∘curry)⟩
                   (collapseToOne (extendToOne ( f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ))) ∘ u
-                ≈⟨ {!!} ⟩
+                ≈⟨ {!∘-resp-l (collapseExtendIso) !} ⟩
                  ( f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ) ∘ u
                 ≈⟨ {!!} ⟩
                   f ∘ fixedPoint
