@@ -43,7 +43,8 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
           -- collapseToOne (uncurry ( ϕ ∘ u)) ≈ collapseToOne( uncurry h)
           ﹝ϕ∘u﹞ = ( collapseToOne (uncurry (ϕ ∘ u)))
           fixedPoint = ﹝ϕ∘u﹞ ∘ u
-          in record { X = fixedPoint ; isFixedPoint = {!!} }
+          proof = begin fixedPoint ≈⟨ ? ⟩ f ∘ fixedPoint ∎
+          in record { X = fixedPoint ; isFixedPoint = ≈.sym proof }
 
 
     -- ~ ﹝h﹞ ∘ u
