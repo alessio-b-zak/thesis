@@ -13,6 +13,7 @@ open import Cats.Functor.Yoneda
 module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
 
   open Category C
+  open ≈-Reasoning
   open HasExponentials (IsCCC.hasExponentials isCCC) 
   open HasBinaryProducts hasBinaryProducts
   open Points.Build C
@@ -42,23 +43,12 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
           -- collapseToOne (uncurry ( ϕ ∘ u)) ≈ collapseToOne( uncurry h)
           ﹝ϕ∘u﹞ = ( collapseToOne (uncurry (ϕ ∘ u)))
           fixedPoint = ﹝ϕ∘u﹞ ∘ u
-          -- ~ ﹝h﹞ ∘ u
+          in record { X = fixedPoint ; isFixedPoint = {!!} }
+
+
+    -- ~ ﹝h﹞ ∘ u
           -- ~ f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ ∘ u   
           -- ~ f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ ⟨ u × u ⟩
           -- ~ f ∘ eval ∘ ⟨ ϕ ∘ u × u ⟩
           -- ...
           -- ~ f ∘ ﹝ϕ∘u﹞ ∘ u 
-      in record { X = fixedPoint ; isFixedPoint = {!!} }
-
-
-
-
-
-
-
-    -- f ∘ eval ∘ <ϕ idₐ> ∘ δ
-    -- construct pullback of f to A then use ps property
-    -- 
-
--- Open CCC, postulate - point surjective function
--- PS A Bᴬ → {x :  Endo B} → FixedPointx
