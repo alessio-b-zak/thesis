@@ -36,17 +36,14 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
           ps = isPointSurjective h
           u = (HasSolution.X ps)
           ps-proof = HasSolution.isSolution ps
-          -- ϕ ∘ u ≈ h
           unc-ps-proof = uncurry-resp ps-proof
-          -- uncurry (ϕ ∘ u) ≈ uncurry h
           collapse-unc-ps-proof = collapseToOne-resp unc-ps-proof
-          -- collapseToOne (uncurry ( ϕ ∘ u)) ≈ collapseToOne( uncurry h)
           ﹝ϕ∘u﹞ = ( collapseToOne (uncurry (ϕ ∘ u)))
           fixedPoint = ﹝ϕ∘u﹞ ∘ u
           proof = begin fixedPoint
                 ≈⟨ ∘-resp-l collapse-unc-ps-proof ⟩ 
                   (collapseToOne (uncurry (curry (extendToOne (f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ ))))) ∘ u
-                ≈⟨ {!!} ⟩
+                ≈⟨ ∘-resp-l {!∘-resp-l ?!} ⟩
                   (collapseToOne (extendToOne ( f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ))) ∘ u
                 ≈⟨ {!!} ⟩
                  ( f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ) ∘ u
@@ -54,8 +51,6 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
                   f ∘ fixedPoint
                 ∎
           in record { X = fixedPoint ; isFixedPoint = ≈.sym proof }
-
-
     -- ~ ﹝h﹞ ∘ u
           -- ~ f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ ∘ u   
           -- ~ f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ ⟨ u × u ⟩
