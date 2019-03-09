@@ -8,6 +8,7 @@ open import Cats.Category.Constructions.Terminal
 open import Cats.Category.Constructions.Exponential
 open import Extension
 
+open import Cats.Functor.Yoneda
 
 module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
 
@@ -34,9 +35,11 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
           ps = isPointSurjective h
           u = (HasSolution.X ps)
           ps-proof = HasSolution.isSolution ps
-          unc-ps-proof = uncurry-resp ps-proof
-          collapse-unc-ps-proof = collapseToOne-resp unc-ps-proof
           -- ϕ ∘ u ≈ h
+          unc-ps-proof = uncurry-resp ps-proof
+          -- uncurry (ϕ ∘ u) ≈ uncurry h
+          collapse-unc-ps-proof = collapseToOne-resp unc-ps-proof
+          -- collapseToOne (uncurry ( ϕ ∘ u)) ≈ collapseToOne( uncurry h)
           ﹝ϕ∘u﹞ = ( collapseToOne (uncurry (ϕ ∘ u)))
           fixedPoint = ﹝ϕ∘u﹞ ∘ u
           -- ~ ﹝h﹞ ∘ u
