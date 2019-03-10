@@ -21,7 +21,6 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
  
   module _ (A B : Obj) where
 
-
     ⟨×⟩-resp-f : ∀ {A B D} {f g : A ⇒ B ↝ D} → f ≈ g → ⟨ f × id {B} ⟩ ≈ ⟨ g × id {B} ⟩
     ⟨×⟩-resp-f x = ⟨×⟩-resp x ≈.refl
 
@@ -40,25 +39,38 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
           ﹝ϕ∘u﹞ = ( collapseToOne (uncurry (ϕ ∘ u)))
           fixedPoint = ﹝ϕ∘u﹞ ∘ u
           proof = begin fixedPoint
+                -- isos
                 ≈⟨ ∘-resp-l collapse-unc-ps-proof ⟩ 
                   (collapseToOne (uncurry (curry (extendToOne (f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ ))))) ∘ u
-                ≈⟨ ∘-resp-l (∘-resp-l uncurry∘curry)⟩
+                ≈⟨ ∘-resp-l (∘-resp-l uncurry∘curry) ⟩
                   (collapseToOne (extendToOne ( f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ))) ∘ u
-                ≈⟨ ∘-resp-l (collapseExtendIso)  ⟩
+                ≈⟨ ∘-resp-l (collapseExtendIso) ⟩
                   ( f ∘ (eval ∘ (⟨ ϕ × id ⟩ ∘ δ))) ∘ u
-                ≈⟨ ∘-resp-l unassoc  ⟩
+                -- reassos
+                ≈⟨ ∘-resp-l unassoc ⟩
                   ( (f ∘ eval) ∘ ((⟨ ϕ × id ⟩) ∘ δ)) ∘ u
                 ≈⟨ ∘-resp-l unassoc ⟩
                   ( ((f ∘ eval) ∘ (⟨ ϕ × id ⟩)) ∘ δ) ∘ u
                 ≈⟨ ∘-resp-l (∘-resp-l assoc) ⟩
                   ( (f ∘ (eval ∘ ⟨ ϕ × id ⟩)) ∘ δ) ∘ u
-                ≈⟨ assoc  ⟩
+                ≈⟨ assoc ⟩
+                -- proof
                   ( f ∘ eval ∘ ⟨ ϕ × id ⟩) ∘ (δ ∘ u)
                 ≈⟨ ≈.refl ⟩
-                  ( f ∘ eval ∘ ⟨ ϕ × id ⟩) ∘ (⟨ id , id ⟩ ∘ u)
-                ≈⟨ ∘-resp-r ⟨,⟩-∘  ⟩
+                  ( f ∘ eval ∘ ⟨ ϕ × id ⟩) ∘ ⟨ id , id ⟩ ∘ u
+                ≈⟨ ∘-resp-r ⟨,⟩-∘ ⟩
                   ( f ∘ eval ∘ ⟨ ϕ × id ⟩) ∘ (⟨ (id ∘ u) , (id ∘ u) ⟩)
-                ≈⟨ {!  !} ⟩
+                ≈⟨ ∘-resp-r (⟨,⟩-resp id-l id-l) ⟩
+                  ( f ∘ eval ∘ ⟨ ϕ × id ⟩) ∘ ⟨ u , u ⟩
+                -- reassoc
+                ≈⟨ ∘-resp-l unassoc ⟩
+                  ((f ∘ eval) ∘ ⟨ ϕ × id ⟩) ∘ ⟨ u , u ⟩
+                ≈⟨ assoc ⟩
+                --proof
+                  (f ∘ eval) ∘ (⟨ ϕ × id ⟩ ∘ ⟨ u , u ⟩)
+                ≈⟨ {!!} ⟩
+                  f ∘ eval ∘ ⟨ ϕ ∘ u , u ⟩
+                ≈⟨ {!!} ⟩
                   f ∘ fixedPoint
                 ∎
           in record { X = fixedPoint ; isFixedPoint = ≈.sym proof }
