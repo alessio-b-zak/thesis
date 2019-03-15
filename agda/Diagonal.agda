@@ -68,8 +68,8 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
                 ≈⟨ assoc ⟩
                 --proof
                   (f ∘ eval) ∘ (⟨ ϕ × id ⟩ ∘ ⟨ u , u ⟩)
-                ≈⟨ {!!} ⟩
-                  f ∘ eval ∘ ⟨ ϕ ∘ u , u ⟩
+                ≈⟨ ∘-resp-r ⟨×⟩-∘-⟨,⟩ ⟩
+                  (f ∘ eval) ∘ ⟨ ϕ ∘ u , id ∘ u ⟩
                 ≈⟨ {!!} ⟩
                   f ∘ fixedPoint
                 ∎
