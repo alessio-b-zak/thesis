@@ -352,6 +352,16 @@ commutes:
     B
 \end{tikzcd}\]
 
+\[\begin{tikzcd}[sep=huge]
+    B^A \times A \arrow[r, "eval"]                         & B \arrow[r, "g"]
+    & B \\
+    A \times A \arrow[u, "\langle \phi \times id \rangle"] &
+    &   \\
+    A \arrow[u, "\delta", no head]                         & 1 \arrow[l, "u"]
+    \arrow[ruu, "\phi \ \circ \ u \ \circ \ u"'] &  
+\end{tikzcd}\]
+
+
 Equalizers can be used to specify subsets via the following construction:
 
 For each subset, $U$ of a set $A$ we can form the the canonical mapping
