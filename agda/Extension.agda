@@ -3,10 +3,10 @@ module Extension where
 open import Cats.Category.Base
 open import Cats.Category.Constructions.CCC
 open import Cats.Category.Constructions.Product 
-open import Cats.Category.Constructions.Terminal
+open import Cats.Category.Constructions.Terminal as Terminal
 open import Cats.Category.Constructions.Exponential
 import Cats.Category.Constructions.Unique as Unique
-
+import Cats.Category.Constructions.Iso as Iso
 open import Cats.Util.Conv
 
 module Ext {lo la l=} (C : Category lo la l=)
@@ -15,7 +15,9 @@ module Ext {lo la l=} (C : Category lo la l=)
 
   open Category C
   open HasBinaryProducts hasBinaryProducts
+  open Iso.Build C
   open HasTerminal hasTerminal
+  open Terminal.Build C
   open Unique.Build C
   open ≈-Reasoning
 
@@ -38,7 +40,23 @@ module Ext {lo la l=} (C : Category lo la l=)
                ≈⟨ ⟨,⟩-projr ⟩
                  id
                ∎
-                
+
+  One×A⇒A : {A : Obj} → (oneIso ∘ otherIso {A}) ≈ id {(One × A)}
+  One×A⇒A {A} = begin
+                   oneIso ∘ otherIso
+                 ≈⟨ ≈.refl ⟩
+                    ⟨ isTerminal A ⃗ , id ⟩  ∘ projr 
+                 ≈⟨ ⟨,⟩-∘ ⟩
+                    ⟨ ((isTerminal A ⃗) ∘ projr) , (id ∘ projr) ⟩
+                 ≈⟨ ⟨,⟩-resp ≈.refl id-l ⟩
+                    ⟨ ((isTerminal A ⃗) ∘ projr) , projr ⟩
+                 ≈⟨ ⟨,⟩-resp (X⇒Terminal-unique isTerminal ) ≈.refl ⟩
+                    ⟨ ((isTerminal (One × A) ⃗)) , projr ⟩
+                ≈⟨ ⟨,⟩-resp (X⇒Terminal-unique isTerminal) ≈.refl ⟩
+                    ⟨ projl , projr ⟩
+                 ≈⟨ ⟨projr,projl⟩-id ⟩
+                   id
+                 ∎
 
   extendToOne  : ∀ {A B} → (A ⇒ B) → (One × A ⇒ B)
   extendToOne x = x ∘ otherIso
@@ -61,3 +79,9 @@ module Ext {lo la l=} (C : Category lo la l=)
 
   collapseToOne-resp : ∀ {A B} {u v : One × A ⇒ B}  → (u ≈ v) → (collapseToOne u) ≈ (collapseToOne v)
   collapseToOne-resp x = ∘-resp-l x
+
+  oneIsoA : ∀{A} →  (One × A) ≅ A
+  oneIsoA = record { forth = otherIso ;
+                     back = oneIso ;
+                     back-forth = One×A⇒A ;
+                     forth-back = isoIso }

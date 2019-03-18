@@ -70,7 +70,24 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
                   (f ∘ eval) ∘ (⟨ ϕ × id ⟩ ∘ ⟨ u , u ⟩)
                 ≈⟨ ∘-resp-r ⟨×⟩-∘-⟨,⟩ ⟩
                   (f ∘ eval) ∘ ⟨ ϕ ∘ u , id ∘ u ⟩
-                ≈⟨ {!!} ⟩
+                ≈⟨ ∘-resp-r (⟨,⟩-resp (≈.sym id-r) ≈.refl)  ⟩
+                  (f ∘ eval) ∘ ⟨ (ϕ ∘ u) ∘ id , id ∘ u ⟩
+                ≈⟨ ∘-resp-r (≈.sym ⟨×⟩-∘-⟨,⟩)  ⟩
+                  (f ∘ eval) ∘ (⟨ (ϕ ∘ u) × id ⟩ ∘ ⟨ id , u ⟩)
+                ≈⟨ unassoc ⟩
+                  ((f ∘ eval) ∘ ⟨ (ϕ ∘ u) × id ⟩) ∘ ⟨ id , u ⟩
+                ≈⟨ ∘-resp-l (∘-resp-r (⟨×⟩-resp (≈.sym curry∘uncurry) ≈.refl )) ⟩
+                  ((f ∘ eval) ∘ ⟨ (curry (uncurry (ϕ ∘ u))) × id ⟩) ∘ ⟨ id , u ⟩
+                ≈⟨ ∘-resp-l assoc ⟩
+                  (f ∘ (eval ∘ ⟨ (curry (uncurry (ϕ ∘ u))) × id ⟩)) ∘ ⟨ id , u ⟩
+                ≈⟨ ∘-resp-l (∘-resp-r eval-curry) ⟩
+                  (f ∘ (uncurry (ϕ ∘ u))) ∘ ⟨ id , u ⟩
+                ≈⟨ assoc ⟩
+                  (f ∘ ((uncurry (ϕ ∘ u)) ∘ ⟨ id , u ⟩))
+                ≈⟨ ∘-resp-r (∘-resp-l (≈.sym id-r)) ⟩
+                  (f ∘ (((uncurry (ϕ ∘ u)) ∘ id) ∘ ⟨ id , u ⟩))
+                ≈⟨ ∘-resp-r {!!} ⟩
+
                   f ∘ fixedPoint
                 ∎
           in record { X = fixedPoint ; isFixedPoint = ≈.sym proof }
