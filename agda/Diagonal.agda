@@ -86,8 +86,17 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
                   (f ∘ ((uncurry (ϕ ∘ u)) ∘ ⟨ id , u ⟩))
                 ≈⟨ ∘-resp-r (∘-resp-l (≈.sym id-r)) ⟩
                   (f ∘ (((uncurry (ϕ ∘ u)) ∘ id) ∘ ⟨ id , u ⟩))
-                ≈⟨ ∘-resp-r {!!} ⟩
-
+                ≈⟨ ∘-resp-r (∘-resp-l (∘-resp-r (≈.sym One×A⇒A))) ⟩
+                  (f ∘ (((uncurry (ϕ ∘ u)) ∘ oneIso ∘ otherIso) ∘ ⟨ id , u ⟩))
+                ≈⟨ ∘-resp-r (∘-resp-l unassoc) ⟩
+                  (f ∘ ((((uncurry (ϕ ∘ u)) ∘ oneIso) ∘ otherIso) ∘ ⟨ id , u ⟩))
+                ≈⟨  ≈.refl ⟩
+                  (f ∘ (((collapseToOne (uncurry (ϕ ∘ u))) ∘ otherIso) ∘ ⟨ id , u ⟩))
+                ≈⟨ ∘-resp-r assoc ⟩
+                  (f ∘ (((collapseToOne (uncurry (ϕ ∘ u)))) ∘ (otherIso ∘ ⟨ id , u ⟩)))
+                ≈⟨ ≈.refl ⟩
+                  (f ∘ (((collapseToOne (uncurry (ϕ ∘ u)))) ∘ (projr ∘ ⟨ id , u ⟩)))
+                ≈⟨ ∘-resp-r (∘-resp-r ⟨,⟩-projr) ⟩
                   f ∘ fixedPoint
                 ∎
           in record { X = fixedPoint ; isFixedPoint = ≈.sym proof }
