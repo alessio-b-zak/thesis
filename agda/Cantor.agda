@@ -2,6 +2,7 @@ module Cantor where
 
 open import Cats.Category.Constructions.Terminal as Terminal
 open import Cats.Category.Constructions.Product as Product
+open import Cats.Category.Constructions.Exponential as Exponential
 open import Cats.Category.Sets using (Sets)
 open import Data.Bool using (true ; false; Bool)
 open import Level renaming (suc to lsuc ; zero to lzero)
@@ -63,12 +64,22 @@ proj-Sets1-prf {A} {B} {X} {x₁} {false} {x} = refl
 proj-Sets1-prf {A} {B} {X} {x₁} {true} {x} = refl
 
 
+pairPrf : {X A B : Set} → {g : X → Pair A B} → {y : X}
+        → mkPair (proj-Sets1 true (g y)) (proj-Sets1 false (g y)) ≡ g y
+pairPrf {X} {A} {B} {g₁} {y} with (g₁ y)
+... | mkPair x x₁ = refl
+
+
+mkPair-resp : {X Y : Set} → {x x₁ : X} → {y y₁ : Y}
+            → (x ≡ x₁) → (y ≡ y₁) → mkPair x y ≡ mkPair x₁ y₁
+mkPair-resp {X} {Y} {x} {.x} {y} {.y} refl refl = refl
+
 isProdHelp :  {A B X : Set} {x : ∀ i → X → Bool-elim A B i}
            {g₁ : X → Pair A B} →
          (∀ i (x₁ : X) → x i x₁ ≡ proj-Sets1 i (g₁ x₁)) →
          (x₁ : X) → mkPair (x true x₁) (x false x₁) ≡ g₁ x₁
-isProdHelp x y with (x true y) | (x false y)
-... | p | q  = {!!}
+isProdHelp {A} {B} {X} {x₁} {g₁} x y with (x true y) | (x false y)
+... | p | q  = trans (mkPair-resp p q) (pairPrf {X} {A} {B} {g₁})
 
 
 
@@ -81,6 +92,24 @@ instance
                               isProduct = λ x → Unique.Build.∃!-intro
                                             (λ x₁ → mkPair (x true x₁) (x false x₁))
                                             (λ i x₁ → proj-Sets1-prf {A} {B} {_} {x₁} {i} {x})
-                                            {!!} }
+                                            λ x₁ x₂ → isProdHelp x₁ x₂ }
                             }
-  
+
+
+-- TODO: have finite products, have exponentials, isCCC
+
+
+sets1Eval : ∀ {B C} → Pair (B → C) B → C
+sets1Eval (mkPair x x₁) = x x₁
+
+
+sets1Curry : {A B C : Set} → (Pair A B → C) → (A → B → C)
+sets1Curry x x₁ x₂ = x (mkPair x₁ x₂)
+
+instance
+  setsHasExponentials : HasExponentials (Sets1)
+  setsHasExponentials = record { _↝′_
+                        = λ B C → record { Cᴮ = B → C ;
+                                           eval = sets1Eval ;
+                                           curry′ = λ f →
+                                             Unique.Build.∃!-intro {!sets1Curry f!} {!!} {!!} } }
