@@ -127,11 +127,19 @@ open ≡-Reasoning
 
 
 
+-- Postulate extensionality perhaps not necessary
+postulate
+  ext : Extensionality lzero lzero
+
+
 go : {B C A : Set} {f : Pair A B → C} {g₁ : A → B → C} →
-     ((x : Pair A B) →
-      g₁ (proj-Sets1 true x) (proj-Sets1 false x) ≡ f x) →
-     (x : A) → (λ x₂ → f (mkPair x x₂)) ≡ g₁ x
-go {B} {C} {A} {f} {g₁} x x₁ = let boom = λ a → x (mkPair x₁ a) in {!!}
+     ((x : Pair A B) → g₁ (proj-Sets1 true x) (proj-Sets1 false x) ≡ f x)
+     → (x : A) → (λ x₂ → f (mkPair x x₂)) ≡ g₁ x
+go {B} {C} {A} {f} {g₁} x x₁
+  = let boom = λ a → sym (x (mkPair x₁ a))
+        foo = ext x 
+        foo′ = ext boom
+    in foo′
 
 instance
   setsHasExponentials : HasExponentials (Sets1)
