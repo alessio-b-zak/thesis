@@ -1,6 +1,8 @@
 open import Cats.Category.Constructions.CCC
+open import Relation.Nullary using (¬_)
 open import Cats.Category.Base
 open import Points
+open import Relation.Nullary.Negation using (contraposition)
 open import Data.Bool
 open import Cats.Category.Constructions.Product
 open import Relation.Binary.PropositionalEquality using (_≡_; refl)
@@ -100,9 +102,7 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
                   f ∘ fixedPoint
                 ∎
           in record { X = fixedPoint ; isFixedPoint = ≈.sym proof }
-    -- ~ ﹝h﹞ ∘ u
-          -- ~ f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ ∘ u   
-          -- ~ f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ ⟨ u × u ⟩
-          -- ~ f ∘ eval ∘ ⟨ ϕ ∘ u × u ⟩
-          -- ...
-          -- ~ f ∘ ﹝ϕ∘u﹞ ∘ u 
+
+    cantor : ¬ FixedPointProperty B → ¬ PointSurjective A (A ↝ B)
+    cantor = contraposition diagonal
+  
