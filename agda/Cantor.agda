@@ -2,12 +2,18 @@ module Cantor where
 
 open import Cats.Category.Constructions.Terminal as Terminal
 open import Cats.Category.Constructions.Product as Product
+open import Cats.Category.Constructions.CCC as CCC
+open import Relation.Binary.PropositionalEquality.Core using (_≢_)
 open import Cats.Category.Constructions.Exponential as Exponential
 open import Cats.Category.Sets using (Sets)
 open import Data.Bool using (true ; false; Bool)
+open import Relation.Nullary using (¬_)
+open import Relation.Nullary.Negation using (contradiction)
 open import Level renaming (suc to lsuc ; zero to lzero)
 open import Extension
 open import Diagonal
+open import Points
+open import Data.Empty using (⊥)
 open import Data.Unit.Base using (⊤)
 import Cats.Category.Constructions.Unique as Unique
 open import Cats.Category.Cat.Facts
@@ -20,7 +26,7 @@ Sets1 = Sets lzero
 
 open Terminal.Build Sets1
 open Unique.Build Sets1
-
+open Points.Build Sets1
 
 data Pair (A : Set) (B : Set) : Set where
   mkPair : A → B → Pair A B
@@ -89,13 +95,13 @@ isProdHelp′ :  {A B X : Set} {x : ∀ i → X → Bool-elim A B i}
 isProdHelp′ {A} {B} {X} {x₁} {g₁} x y with (x true y) | (x false y)
 ... | p | q = trans (mkPair-resp p q) (pairPrf′ {A} {B})
 
+
 isProdHelp :  {A B X : Set} {x : ∀ i → X → Bool-elim A B i}
            {g₁ : X → Pair A B} →
          (∀ i (x₁ : X) → x i x₁ ≡ proj-Sets1 i (g₁ x₁)) →
          (x₁ : X) → mkPair (x true x₁) (x false x₁) ≡ g₁ x₁
 isProdHelp {A} {B} {X} {x₁} {g₁} x y with (x true y) | (x false y)
 ... | p | q  = trans (mkPair-resp p q) (pairPrf {X} {A} {B} {g₁})
-
 
 
 instance
@@ -112,7 +118,6 @@ instance
 
 -- TODO: have finite products, have exponentials, isCCC
 
-
 sets1Eval : ∀ {B C} → Pair (B → C) B → C
 sets1Eval (mkPair x x₁) = x x₁
 
@@ -121,10 +126,6 @@ sets1Curry : {A B C : Set} → (Pair A B → C) → (A → B → C)
 sets1Curry x x₁ x₂ = x (mkPair x₁ x₂)
 
 open ≡-Reasoning
-
---    ∀ (X : Pair A B) → (g (projl x) (projr x) ≡ f x
--- ⇒ ∀ (x₁ : A) → (∀ (x₂ : B) → g x₁ x₂) ≡ (∀ (x₂ : B) → f (mkPair x₁ x₂))
-
 
 
 -- Postulate extensionality perhaps not necessary
@@ -142,7 +143,7 @@ go {B} {C} {A} {f} {g₁} x x₁
     in foo′
 
 instance
-  setsHasExponentials : HasExponentials (Sets1)
+  setsHasExponentials : HasExponentials Sets1
   setsHasExponentials = record { _↝′_
                         = λ B C → record { Cᴮ = B → C ;
                                            eval = sets1Eval ;
@@ -150,3 +151,28 @@ instance
                                              Unique.Build.∃!-intro (sets1Curry f)
                                                                    (λ x → cong f pairPrf′) 
                                                                    go } }
+
+
+instance
+  setsHasFiniteProducts : HasFiniteProducts Sets1
+  setsHasFiniteProducts = record {}
+
+instance
+  setsHasIsCCC : IsCCC Sets1
+  setsHasIsCCC = record {}
+
+not : Bool → Bool
+not false = true
+not true = false
+
+not-fx-pt : ∀ {x} → (not x) ≢ x
+not-fx-pt {false} ()
+not-fx-pt {true} ()
+
+bool-no-fix-pt : {X : ⊤ → Bool} → not (X ⊤.tt) ≡ X ⊤.tt → ⊥
+bool-no-fix-pt x = not-fx-pt x
+
+noFixPtBool : ¬ FixedPointProperty Bool
+noFixPtBool x with (x not)
+... | record { X = X ; isFixedPoint = isFixedPoint } = contradiction (isFixedPoint ⊤.tt) bool-no-fix-pt
+

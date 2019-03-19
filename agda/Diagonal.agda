@@ -103,6 +103,6 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
                 ∎
           in record { X = fixedPoint ; isFixedPoint = ≈.sym proof }
 
+
     cantor : ¬ FixedPointProperty B → ¬ PointSurjective A (A ↝ B)
     cantor = contraposition diagonal
-  

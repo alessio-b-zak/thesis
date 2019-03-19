@@ -43,4 +43,3 @@ module Build {lo la l=} (C : Category lo la l=) {{hasTerminal : HasTerminal C}} 
     field
       arr : (A ⇒ B)
       isPointSurjective : IsPointSurjective arr
-   
