@@ -64,6 +64,14 @@ proj-Sets1-prf {A} {B} {X} {x₁} {false} {x} = refl
 proj-Sets1-prf {A} {B} {X} {x₁} {true} {x} = refl
 
 
+pairPrf′ : {A B : Set} → {g : Pair A B} 
+        → mkPair (proj-Sets1 true g) (proj-Sets1 false g) ≡ g 
+pairPrf′ {A} {B} {mkPair x x₁} = refl
+--with (g₁)
+--... | mkPair x x₁ = refl
+
+
+
 pairPrf : {X A B : Set} → {g : X → Pair A B} → {y : X}
         → mkPair (proj-Sets1 true (g y)) (proj-Sets1 false (g y)) ≡ g y
 pairPrf {X} {A} {B} {g₁} {y} with (g₁ y)
@@ -73,6 +81,13 @@ pairPrf {X} {A} {B} {g₁} {y} with (g₁ y)
 mkPair-resp : {X Y : Set} → {x x₁ : X} → {y y₁ : Y}
             → (x ≡ x₁) → (y ≡ y₁) → mkPair x y ≡ mkPair x₁ y₁
 mkPair-resp {X} {Y} {x} {.x} {y} {.y} refl refl = refl
+
+isProdHelp′ :  {A B X : Set} {x : ∀ i → X → Bool-elim A B i}
+           {g : Pair A B} →
+         (∀ i (x₁ : X) → x i x₁ ≡ proj-Sets1 i (g)) →
+         (x₁ : X) → mkPair (x true x₁) (x false x₁) ≡ g
+isProdHelp′ {A} {B} {X} {x₁} {g₁} x y with (x true y) | (x false y)
+... | p | q = trans (mkPair-resp p q) (pairPrf′ {A} {B})
 
 isProdHelp :  {A B X : Set} {x : ∀ i → X → Bool-elim A B i}
            {g₁ : X → Pair A B} →
@@ -95,7 +110,6 @@ instance
                                             λ x₁ x₂ → isProdHelp x₁ x₂ }
                             }
 
-
 -- TODO: have finite products, have exponentials, isCCC
 
 
@@ -106,10 +120,25 @@ sets1Eval (mkPair x x₁) = x x₁
 sets1Curry : {A B C : Set} → (Pair A B → C) → (A → B → C)
 sets1Curry x x₁ x₂ = x (mkPair x₁ x₂)
 
+open ≡-Reasoning
+
+--    ∀ (X : Pair A B) → (g (projl x) (projr x) ≡ f x
+-- ⇒ ∀ (x₁ : A) → (∀ (x₂ : B) → g x₁ x₂) ≡ (∀ (x₂ : B) → f (mkPair x₁ x₂))
+
+
+
+go : {B C A : Set} {f : Pair A B → C} {g₁ : A → B → C} →
+     ((x : Pair A B) →
+      g₁ (proj-Sets1 true x) (proj-Sets1 false x) ≡ f x) →
+     (x : A) → (λ x₂ → f (mkPair x x₂)) ≡ g₁ x
+go {B} {C} {A} {f} {g₁} x x₁ = let boom = λ a → x (mkPair x₁ a) in {!!}
+
 instance
   setsHasExponentials : HasExponentials (Sets1)
   setsHasExponentials = record { _↝′_
                         = λ B C → record { Cᴮ = B → C ;
                                            eval = sets1Eval ;
                                            curry′ = λ f →
-                                             Unique.Build.∃!-intro {!sets1Curry f!} {!!} {!!} } }
+                                             Unique.Build.∃!-intro (sets1Curry f)
+                                                                   (λ x → cong f pairPrf′) 
+                                                                   go } }
