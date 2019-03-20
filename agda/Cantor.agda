@@ -3,6 +3,7 @@ module Cantor where
 open import Cats.Category.Constructions.Terminal as Terminal
 open import Cats.Category.Constructions.Product as Product
 open import Cats.Category.Constructions.CCC as CCC
+open import Data.Nat
 open import Relation.Binary.PropositionalEquality.Core using (_≢_)
 open import Cats.Category.Constructions.Exponential as Exponential
 open import Cats.Category.Sets using (Sets)
@@ -161,6 +162,7 @@ instance
   setsHasIsCCC : IsCCC Sets1
   setsHasIsCCC = record {}
 
+
 not : Bool → Bool
 not false = true
 not true = false
@@ -176,3 +178,9 @@ noFixPtBool : ¬ FixedPointProperty Bool
 noFixPtBool x with (x not)
 ... | record { X = X ; isFixedPoint = isFixedPoint } = contradiction (isFixedPoint ⊤.tt) bool-no-fix-pt
 
+open HasExponentials setsHasExponentials
+open Diagonal.DBuild {lsuc lzero} {lzero} {lzero} Sets1
+open Diagonal.DBuild.InBuild Sets1 ℕ Bool
+
+cantorsDiagonalTheorem : ¬ PointSurjective ℕ (ℕ ↝ Bool)
+cantorsDiagonalTheorem = cantor noFixPtBool

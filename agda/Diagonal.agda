@@ -1,3 +1,4 @@
+module Diagonal where
 open import Cats.Category.Constructions.CCC
 open import Relation.Nullary using (¬_)
 open import Cats.Category.Base
@@ -11,7 +12,7 @@ open import Cats.Category.Constructions.Exponential
 open import Extension
 
 
-module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
+module DBuild {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
 
   open Category C
   open ≈-Reasoning
@@ -21,7 +22,7 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
   open Extension.Ext C {{hasBinaryProducts}} 
 
  
-  module _ (A B : Obj) where
+  module InBuild (A B : Obj) where
 
     ⟨×⟩-resp-f : ∀ {A B D} {f g : A ⇒ B ↝ D} → f ≈ g → ⟨ f × id {B} ⟩ ≈ ⟨ g × id {B} ⟩
     ⟨×⟩-resp-f x = ⟨×⟩-resp x ≈.refl
