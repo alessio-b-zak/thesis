@@ -2,7 +2,7 @@ module Diagonal where
 open import Cats.Category.Constructions.CCC
 open import Relation.Nullary using (¬_)
 open import Cats.Category.Base
-open import Points
+import Points
 open import Relation.Nullary.Negation using (contraposition)
 open import Data.Bool
 open import Cats.Category.Constructions.Product
@@ -12,24 +12,24 @@ open import Cats.Category.Constructions.Exponential
 open import Extension
 
 
-module DBuild {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
+module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
 
   open Category C
   open ≈-Reasoning
-  open HasExponentials (IsCCC.hasExponentials isCCC) 
+  open HasExponentials (IsCCC.hasExponentials isCCC)
   open HasBinaryProducts hasBinaryProducts
   open Points.Build C
-  open Extension.Ext C {{hasBinaryProducts}} 
+  open Extension.Build C {{hasBinaryProducts}}
 
- 
-  module InBuild (A B : Obj) where
+
+  module _ {A B : Obj} where
 
     ⟨×⟩-resp-f : ∀ {A B D} {f g : A ⇒ B ↝ D} → f ≈ g → ⟨ f × id {B} ⟩ ≈ ⟨ g × id {B} ⟩
     ⟨×⟩-resp-f x = ⟨×⟩-resp x ≈.refl
 
-    uncurry-resp : ∀ {A B D} {f g : A ⇒ B ↝ D} → f ≈ g → uncurry f ≈ uncurry g 
+    uncurry-resp : ∀ {A B D} {f g : A ⇒ B ↝ D} → f ≈ g → uncurry f ≈ uncurry g
     uncurry-resp {A} {B} {D} {f} {g} x = ∘-resp-r (⟨×⟩-resp-f {A} {B} {D} {f} {g} x)
-    
+
     diagonal : PointSurjective A (A ↝ B) → FixedPointProperty B
     diagonal record { arr = ϕ ; isPointSurjective = isPointSurjective } f =
       let
@@ -43,7 +43,7 @@ module DBuild {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
           fixedPoint = ﹝ϕ∘u﹞ ∘ u
           proof = begin fixedPoint
                 -- isos
-                ≈⟨ ∘-resp-l collapse-unc-ps-proof ⟩ 
+                ≈⟨ ∘-resp-l collapse-unc-ps-proof ⟩
                   (collapseToOne (uncurry (curry (extendToOne (f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ ))))) ∘ u
                 ≈⟨ ∘-resp-l (∘-resp-l uncurry∘curry) ⟩
                   (collapseToOne (extendToOne ( f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ))) ∘ u

@@ -2,14 +2,14 @@ module Extension where
 
 open import Cats.Category.Base
 open import Cats.Category.Constructions.CCC
-open import Cats.Category.Constructions.Product 
-open import Cats.Category.Constructions.Terminal as Terminal
-open import Cats.Category.Constructions.Exponential
+open import Cats.Category.Constructions.Product as Produdct using (HasBinaryProducts)
+open import Cats.Category.Constructions.Terminal as Terminal using (HasTerminal)
+import Cats.Category.Constructions.Exponential
 import Cats.Category.Constructions.Unique as Unique
 import Cats.Category.Constructions.Iso as Iso
 open import Cats.Util.Conv
 
-module Ext {lo la l=} (C : Category lo la l=)
+module Build {lo la l=} (C : Category lo la l=)
                       {{hasBinaryProducts : HasBinaryProducts C}}
                       {{hasTerminal : HasTerminal C}} where
 
@@ -21,7 +21,6 @@ module Ext {lo la l=} (C : Category lo la l=)
   open Unique.Build C
   open ≈-Reasoning
 
-  open Cats.Category.Constructions.Product.Build
 
   δ : {A : Obj} → A ⇒ A × A
   δ = ⟨ id , id ⟩
@@ -64,7 +63,7 @@ module Ext {lo la l=} (C : Category lo la l=)
   collapseToOne : ∀ {A B} → (One × A ⇒ B) → (A ⇒ B)
   collapseToOne x = x ∘ oneIso
 
-  collapseExtendIso :  {A B : Obj} {f : A ⇒ B} → collapseToOne (extendToOne f) ≈ f 
+  collapseExtendIso :  {A B : Obj} {f : A ⇒ B} → collapseToOne (extendToOne f) ≈ f
   collapseExtendIso {A} {B} {f} = begin
                                        (collapseToOne (extendToOne f))
                                   ≈⟨ ≈.refl ⟩

@@ -13,7 +13,7 @@ open import Relation.Nullary.Negation using (contradiction)
 open import Level renaming (suc to lsuc ; zero to lzero)
 open import Extension
 open import Diagonal
-open import Points
+import Points
 open import Data.Empty using (⊥)
 open import Data.Unit.Base using (⊤)
 import Cats.Category.Constructions.Unique as Unique
@@ -45,18 +45,18 @@ g x = ⊤.tt
 tterminal :  {X : Set} {g : X → ⊤} → ⊤ → (x : X) → ⊤.tt ≡ g x
 tterminal x x₁ = refl
 
-helper :  (X : Set) → Unique.Build.∃!′ 
+helper :  (X : Set) → Unique.Build.∃!′
           (Sets lzero) {A = X} {B = ⊤}(λ f → ⊤)
 helper X = Unique.Build.∃!-intro g _ tterminal
 
 
-⊤-isTerminal : IsTerminal ⊤  
-⊤-isTerminal = helper 
+⊤-isTerminal : IsTerminal ⊤
+⊤-isTerminal = helper
 
 
 instance
   setsHasTerminal : HasTerminal (Sets1)
-  setsHasTerminal = record { One = ⊤ ; isTerminal = ⊤-isTerminal} 
+  setsHasTerminal = record { One = ⊤ ; isTerminal = ⊤-isTerminal}
 
 
 proj-Sets1 : ∀ {A B} i → Pair A B → Bool-elim A B i
@@ -66,13 +66,13 @@ proj-Sets1 true (mkPair x x₁) = x
 
 proj-Sets1-prf : {A B X : Set} → {x₁ : X}{i : Bool}
                  → {x : (j : Bool) → X → Bool-elim A B j}
-                 → x i x₁ ≡ proj-Sets1 {A} {B} i (mkPair (x true x₁) (x false x₁)) 
+                 → x i x₁ ≡ proj-Sets1 {A} {B} i (mkPair (x true x₁) (x false x₁))
 proj-Sets1-prf {A} {B} {X} {x₁} {false} {x} = refl
 proj-Sets1-prf {A} {B} {X} {x₁} {true} {x} = refl
 
 
-pairPrf′ : {A B : Set} → {g : Pair A B} 
-        → mkPair (proj-Sets1 true g) (proj-Sets1 false g) ≡ g 
+pairPrf′ : {A B : Set} → {g : Pair A B}
+        → mkPair (proj-Sets1 true g) (proj-Sets1 false g) ≡ g
 pairPrf′ {A} {B} {mkPair x x₁} = refl
 --with (g₁)
 --... | mkPair x x₁ = refl
@@ -117,7 +117,7 @@ instance
                                             λ x₁ x₂ → isProdHelp x₁ x₂ }
                             }
 
--- TODO: have finite products, have exponentials, isCCC
+-- TODO: show pt surjective ⇒ surjective
 
 sets1Eval : ∀ {B C} → Pair (B → C) B → C
 sets1Eval (mkPair x x₁) = x x₁
@@ -139,7 +139,7 @@ go : {B C A : Set} {f : Pair A B → C} {g₁ : A → B → C} →
      → (x : A) → (λ x₂ → f (mkPair x x₂)) ≡ g₁ x
 go {B} {C} {A} {f} {g₁} x x₁
   = let boom = λ a → sym (x (mkPair x₁ a))
-        foo = ext x 
+        foo = ext x
         foo′ = ext boom
     in foo′
 
@@ -150,8 +150,8 @@ instance
                                            eval = sets1Eval ;
                                            curry′ = λ f →
                                              Unique.Build.∃!-intro (sets1Curry f)
-                                                                   (λ x → cong f pairPrf′) 
-                                                                   go } }
+                                                                   (λ x → cong f pairPrf′)
+                                                                   go }}
 
 
 instance
@@ -179,8 +179,9 @@ noFixPtBool x with (x not)
 ... | record { X = X ; isFixedPoint = isFixedPoint } = contradiction (isFixedPoint ⊤.tt) bool-no-fix-pt
 
 open HasExponentials setsHasExponentials
-open Diagonal.DBuild {lsuc lzero} {lzero} {lzero} Sets1
-open Diagonal.DBuild.InBuild Sets1 ℕ Bool
+open Diagonal
 
 cantorsDiagonalTheorem : ¬ PointSurjective ℕ (ℕ ↝ Bool)
-cantorsDiagonalTheorem = cantor noFixPtBool
+cantorsDiagonalTheorem = cantor Sets1 noFixPtBool
+
+-- show that (A ↝ Bool) ≅ membership question on A
