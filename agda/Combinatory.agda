@@ -53,3 +53,49 @@ module CombAlg where
   IsWeaklyExtensional : ∀ {lo l≈} →  CombinatoryAlgebra lo l≈ → Set lo
   IsWeaklyExtensional c = {x y z : Obj} → ((x ∙ z ≡ y ∙ z) → (ε ∙ x ≡ ε ∙ y))
     where open CombinatoryAlgebra c
+
+
+module LamAlgebra where
+
+  open CombAlg
+  open Applicative
+
+  record LambdaAlgebra lo l≈ : Set (suc (lo ⊔ l≈)) where
+    field
+      combAlg : CombinatoryAlgebra lo l≈
+
+    open CombinatoryAlgebra combAlg public
+
+    field
+      CurryAxiom1 : K ≡ S ∙ (S ∙ (K ∙ S)) ∙ (S ∙ (K ∙ K) ∙ K) ∙ (K ∙ (S ∙ K ∙ K))
+
+      CurryAxiom2 : S ≡ S ∙ (S ∙ ( K ∙ S)) ∙ (S ∙ (K ∙ ( S ∙ (K ∙ S))) ∙
+                            (S ∙ (K ∙ (S ∙ (K ∙ K))) ∙ S) ∙ (K ∙ (K ∙ (S ∙ K ∙ K))))
+
+      CurryAxiom3 : S ∙ (S ∙ (K ∙ S) ∙ (S ∙ (K ∙ K) ∙ (S ∙ (K ∙ S) ∙ K))) ∙ (K ∙ K)
+                      ≡ S ∙ (K ∙ K)
+
+      CurryAxiom4 : S ∙ (K ∙ S) ∙ (S ∙ (K ∙ K)) ≡
+                      S ∙ (K ∙ K) ∙ (S ∙ (S ∙ (K ∙ S) ∙ (S ∙ (K ∙ K) ∙ (S ∙ K ∙ K)))
+                        ∙ (K ∙ (S ∙ K ∙ K)))
+
+      CurryAxiom5 : S ∙ (K ∙ (S ∙ (K ∙ S))) ∙ (S ∙ (K ∙ S) ∙ (S ∙ (K ∙ S)))
+                    ≡ S ∙ (S ∙ (K ∙ S) ∙ (S ∙ (K ∙ K) ∙
+                      (S ∙ (K ∙ S) ∙ (S ∙ (K ∙ (S ∙ (K ∙ S))) ∙ S)))) ∙ (K ∙ S)
+
+
+
+module LambdaModel where
+  open CombAlg
+  open Applicative
+  open LamAlgebra
+
+  record LambdaModel lo l≈ : Set (suc (lo ⊔ l≈)) where
+    field
+      lambdaAlgebra : LambdaAlgebra lo l≈
+
+    open LambdaAlgebra lambdaAlgebra public
+
+    field
+      isWeaklyExtensional : IsWeaklyExtensional combAlg
+ 
