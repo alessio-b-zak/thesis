@@ -12,12 +12,16 @@ module Applicative where
     infixl 9 _∙_
 
     field
-      Obj : Set lo
+      Underlying : Setoid lo l≈
+
+    open Setoid Underlying public renaming (Carrier to Obj)
+
+    field
       _∙_ : Obj → Obj → Obj
 
 
-  IsExtensional : ∀ {lo l≈} → ApplicativeStruct lo l≈ → Set lo
-  IsExtensional A = {x y z : Obj} → ((x ∙ z ≡ y ∙ z) → x ≡ y)
+  IsExtensional : ∀ {lo l≈} → ApplicativeStruct lo l≈ → Set (lo ⊔ l≈)
+  IsExtensional A = {x y z : Obj} → ((x ∙ z ≈ y ∙ z) → x ≈ y)
     where open ApplicativeStruct A
 
 
@@ -35,8 +39,8 @@ module CombAlg where
     field
       K : Obj
       S : Obj
-      K-axiom : {x y : Obj} → K ∙ x ∙ y ≡ x
-      S-axiom : {x y z : Obj} → S ∙ x ∙ y ∙ z ≡ x ∙ z ∙ (y ∙ z)
+      K-axiom : {x y : Obj} → K ∙ x ∙ y ≈ x
+      S-axiom : {x y z : Obj} → S ∙ x ∙ y ∙ z ≈ x ∙ z ∙ (y ∙ z)
 
     I : Obj
     I = S ∙ K ∙ K
@@ -50,8 +54,8 @@ module CombAlg where
     F : Obj
     F = K ∙ I
 
-  IsWeaklyExtensional : ∀ {lo l≈} →  CombinatoryAlgebra lo l≈ → Set lo
-  IsWeaklyExtensional c = {x y z : Obj} → ((x ∙ z ≡ y ∙ z) → (ε ∙ x ≡ ε ∙ y))
+  IsWeaklyExtensional : ∀ {lo l≈} →  CombinatoryAlgebra lo l≈ → (Set (lo ⊔ l≈))
+  IsWeaklyExtensional c = {x y z : Obj} → ((x ∙ z ≈ y ∙ z) → (ε ∙ x ≈ ε ∙ y))
     where open CombinatoryAlgebra c
 
 
@@ -67,20 +71,20 @@ module LamAlgebra where
     open CombinatoryAlgebra combAlg public
 
     field
-      CurryAxiom1 : K ≡ S ∙ (S ∙ (K ∙ S)) ∙ (S ∙ (K ∙ K) ∙ K) ∙ (K ∙ (S ∙ K ∙ K))
+      CurryAxiom1 : K ≈ S ∙ (S ∙ (K ∙ S)) ∙ (S ∙ (K ∙ K) ∙ K) ∙ (K ∙ (S ∙ K ∙ K))
 
-      CurryAxiom2 : S ≡ S ∙ (S ∙ ( K ∙ S)) ∙ (S ∙ (K ∙ ( S ∙ (K ∙ S))) ∙
+      CurryAxiom2 : S ≈ S ∙ (S ∙ ( K ∙ S)) ∙ (S ∙ (K ∙ ( S ∙ (K ∙ S))) ∙
                             (S ∙ (K ∙ (S ∙ (K ∙ K))) ∙ S) ∙ (K ∙ (K ∙ (S ∙ K ∙ K))))
 
       CurryAxiom3 : S ∙ (S ∙ (K ∙ S) ∙ (S ∙ (K ∙ K) ∙ (S ∙ (K ∙ S) ∙ K))) ∙ (K ∙ K)
-                      ≡ S ∙ (K ∙ K)
+                      ≈ S ∙ (K ∙ K)
 
-      CurryAxiom4 : S ∙ (K ∙ S) ∙ (S ∙ (K ∙ K)) ≡
+      CurryAxiom4 : S ∙ (K ∙ S) ∙ (S ∙ (K ∙ K)) ≈
                       S ∙ (K ∙ K) ∙ (S ∙ (S ∙ (K ∙ S) ∙ (S ∙ (K ∙ K) ∙ (S ∙ K ∙ K)))
                         ∙ (K ∙ (S ∙ K ∙ K)))
 
       CurryAxiom5 : S ∙ (K ∙ (S ∙ (K ∙ S))) ∙ (S ∙ (K ∙ S) ∙ (S ∙ (K ∙ S)))
-                    ≡ S ∙ (S ∙ (K ∙ S) ∙ (S ∙ (K ∙ K) ∙
+                    ≈ S ∙ (S ∙ (K ∙ S) ∙ (S ∙ (K ∙ K) ∙
                       (S ∙ (K ∙ S) ∙ (S ∙ (K ∙ (S ∙ (K ∙ S))) ∙ S)))) ∙ (K ∙ S)
 
 
