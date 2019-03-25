@@ -151,7 +151,17 @@ module KaroubiEnvelope where
 
   karoubi : {lo l≈ a b c : Level}
           → LambdaAlgebra lo l≈
-          → {C : Category a b c}
-          → Σ C (HasRetraction C)
-  karoubi = ?
+          → Σ (Category a b c) HasRetraction 
+  karoubi x = (record
+                 { Obj = {!!}
+                 ; _⇒_ = {!!}
+                 ; _≈_ = {!!}
+                 ; id = {!!}
+                 ; _∘_ = {!!}
+                 ; equiv = {!!}
+                 ; ∘-resp = {!!}
+                 ; id-r = {!!}
+                 ; id-l = {!!}
+                 ; assoc = {!!}
+                 }) , (record { reflexive = ? ; isReflexive = ? })
 --karoubi envelope, has retraction,
