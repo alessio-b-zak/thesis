@@ -139,7 +139,6 @@ module Monom where
   intepret {lo} {l≈} {A} val (y # y₁) = _∙_ A (intepret val y) (intepret val y₁)
 
 
-
 module KaroubiEnvelope where
   open CombAlg
   open Applicative
@@ -149,9 +148,12 @@ module KaroubiEnvelope where
   open ApplicativeStruct
 
 
+-- ε = λ y . λ x . y x
+-- A ● B === λ x . (A (B x)) === S (K A) (S (K B) I)
+
   karoubi : {lo l≈ a b c : Level}
           → LambdaAlgebra lo l≈
-          → Σ (Category a b c) HasRetraction 
+          → Σ (Category a b c) HasRetraction
   karoubi x = (record
                  { Obj = {!!}
                  ; _⇒_ = {!!}
@@ -163,5 +165,5 @@ module KaroubiEnvelope where
                  ; id-r = {!!}
                  ; id-l = {!!}
                  ; assoc = {!!}
-                 }) , (record { reflexive = ? ; isReflexive = ? })
+                 }) , (record { reflexive = {!!} ; isReflexive = {!!} })
 --karoubi envelope, has retraction,
