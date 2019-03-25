@@ -16,7 +16,7 @@ module Applicative where
     infixl 9 _∙_
 
     field
-      Underlying : Setoid lo l≈
+      {{Underlying}} : Setoid lo l≈
 
     open Setoid Underlying public renaming (Carrier to Obj)
 
@@ -36,7 +36,7 @@ module CombAlg where
 
   record CombinatoryAlgebra lo l≈ : Set (suc (lo ⊔ l≈)) where
     field
-      App : ApplicativeStruct lo l≈
+      {{App}} : ApplicativeStruct lo l≈
 
     open ApplicativeStruct App public
 
@@ -58,6 +58,11 @@ module CombAlg where
     F : Obj
     F = K ∙ I
 
+
+-- A ● B === λ x . (A (B x)) === S (K A) (S (K B) I)
+    _●_ : Obj → Obj → Obj
+    _●_ A B = S ∙ (K ∙ A) ∙ (S ∙ (K ∙ B) ∙ I)
+
   IsWeaklyExtensional : ∀ {lo l≈} →  CombinatoryAlgebra lo l≈ → (Set (lo ⊔ l≈))
   IsWeaklyExtensional c = {x y z : Obj} → ((x ∙ z ≈ y ∙ z) → (ε ∙ x ≈ ε ∙ y))
     where open CombinatoryAlgebra c
@@ -70,7 +75,7 @@ module LamAlgebra where
 
   record LambdaAlgebra lo l≈ : Set (suc (lo ⊔ l≈)) where
     field
-      combAlg : CombinatoryAlgebra lo l≈
+     {{combAlg}} : CombinatoryAlgebra lo l≈
 
     open CombinatoryAlgebra combAlg public
 
@@ -145,17 +150,16 @@ module KaroubiEnvelope where
   open LamAlgebra
   open Setoid
   open Retract
-  open ApplicativeStruct
+--  open LambdaAlgebra {{...}}
+--  open ApplicativeStruct {{...}}
+--  open CombinatoryAlgebra {{...}}
 
-
--- ε = λ y . λ x . y x
--- A ● B === λ x . (A (B x)) === S (K A) (S (K B) I)
 
   karoubi : {lo l≈ a b c : Level}
           → LambdaAlgebra lo l≈
           → Σ (Category a b c) HasRetraction
   karoubi x = (record
-                 { Obj = {!!}
+                { Obj = Σ Obj {!!}
                  ; _⇒_ = {!!}
                  ; _≈_ = {!!}
                  ; id = {!!}
@@ -166,4 +170,5 @@ module KaroubiEnvelope where
                  ; id-l = {!!}
                  ; assoc = {!!}
                  }) , (record { reflexive = {!!} ; isReflexive = {!!} })
+          where open LambdaAlgebra x 
 --karoubi envelope, has retraction,
