@@ -63,6 +63,11 @@ module CombAlg where
     _●_ : Obj → Obj → Obj
     _●_ A B = S ∙ (K ∙ A) ∙ (S ∙ (K ∙ B) ∙ I)
 
+    Obj-idem-● : Obj → Set l≈
+    Obj-idem-● A = A ● A ≈ A
+
+
+
   IsWeaklyExtensional : ∀ {lo l≈} →  CombinatoryAlgebra lo l≈ → (Set (lo ⊔ l≈))
   IsWeaklyExtensional c = {x y z : Obj} → ((x ∙ z ≈ y ∙ z) → (ε ∙ x ≈ ε ∙ y))
     where open CombinatoryAlgebra c
@@ -156,10 +161,10 @@ module KaroubiEnvelope where
 
 
   karoubi : {lo l≈ a b c : Level}
-          → LambdaAlgebra lo l≈
-          → Σ (Category a b c) HasRetraction
-  karoubi x = (record
-                { Obj = Σ Obj {!!}
+          → LambdaAlgebra a b
+          → Σ (Category (a ⊔ b) (a ⊔ b) (a ⊔ b)) HasRetraction
+  karoubi {lo} {l≈} x = (record
+                { Obj = Σ Obj Obj-idem-●
                  ; _⇒_ = {!!}
                  ; _≈_ = {!!}
                  ; id = {!!}
@@ -170,5 +175,7 @@ module KaroubiEnvelope where
                  ; id-l = {!!}
                  ; assoc = {!!}
                  }) , (record { reflexive = {!!} ; isReflexive = {!!} })
-          where open LambdaAlgebra x 
+          where open LambdaAlgebra x
+          -- rejig the above line to qualify it
+          -- think about equivalence relation
 --karoubi envelope, has retraction,
