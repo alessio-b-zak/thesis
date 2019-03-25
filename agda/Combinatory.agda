@@ -1,6 +1,10 @@
 module Combinatory where
 
 open import Level
+import Retract
+open import Data.Product
+open import Data.String
+open import Cats.Category.Base
 open import Relation.Binary.PropositionalEquality
 open import Relation.Binary using
   (Rel ; IsEquivalence ; _Preserves_⟶_ ; _Preserves₂_⟶_⟶_ ; Setoid)
@@ -88,7 +92,6 @@ module LamAlgebra where
                       (S ∙ (K ∙ S) ∙ (S ∙ (K ∙ (S ∙ (K ∙ S))) ∙ S)))) ∙ (K ∙ S)
 
 
-
 module LambdaModel where
   open CombAlg
   open Applicative
@@ -102,4 +105,53 @@ module LambdaModel where
 
     field
       isWeaklyExtensional : IsWeaklyExtensional combAlg
- 
+
+-- todo: term model as a lambda model. lamda model to ccc. term model to ccc. diagonal
+
+
+module Monom where
+  open CombAlg
+  open Applicative
+  open LamAlgebra
+  open Setoid
+  open ApplicativeStruct
+
+  infixl 8 _#_
+
+
+  data Monomial {lo l≈} (A : ApplicativeStruct lo l≈) : Set (lo ⊔ l≈) where
+    Term : String → Monomial A
+    Const : (Carrier (Underlying A)) → Monomial A
+    _#_ :  Monomial A → Monomial A → Monomial A
+
+
+
+  Valuation : {lo l≈ : Level} (A : ApplicativeStruct lo l≈) → Set lo
+  Valuation {lo} {l≈} A = String → (Carrier (Underlying A))
+
+
+  intepret : {lo l≈ : Level} {A : ApplicativeStruct lo l≈}
+           → Valuation A
+           → Monomial A
+           → (Carrier (Underlying A))
+  intepret val (Term x₁) = val x₁
+  intepret val (Const x₁) = x₁
+  intepret {lo} {l≈} {A} val (y # y₁) = _∙_ A (intepret val y) (intepret val y₁)
+
+
+
+module KaroubiEnvelope where
+  open CombAlg
+  open Applicative
+  open LamAlgebra
+  open Setoid
+  open Retract
+  open ApplicativeStruct
+
+
+  karoubi : {lo l≈ a b c : Level}
+          → LambdaAlgebra lo l≈
+          → {C : Category a b c}
+          → Σ C (HasRetraction C)
+  karoubi = ?
+--karoubi envelope, has retraction,
