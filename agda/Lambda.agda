@@ -47,27 +47,15 @@ data _⊢_ : Context → Type → Set where
   _∙_ : ∀ {Γ} → Γ ⊢ ★ → Γ ⊢ ★ → Γ ⊢ ★
 
 
-
+--add check for syntactic equality
 count : ∀ {Γ} → ℕ → Γ ∋ ★
 count {Γ , ★} zero = Z
 count {Γ , ★} (suc n) = S (count n)
-count {ø} x = ⊥-elim impossible
+count {ø} _ = ⊥-elim impossible
   where postulate impossible : ⊥
 
 #_ : ∀ {Γ} → ℕ → Γ ⊢ ★
 # x = ` count x
-
-a : ∀ {Γ} → Γ ⊢ ★
-a =  # 0
-
-K : ∀ {Γ} → Γ ⊢ ★
-K = ƛ (ƛ (# 2))
-
-S- : ∀ {Γ} → Γ ⊢ ★
-S- = ƛ ƛ ƛ (# 2 ∙ # 0 ∙ (# 1 ∙ # 0 ))
-
-B : ∀ {Γ} → Γ ⊢ ★
-B {Γ} = ƛ (# 2 ∙ (# 1 ∙ # 0))
 
 -- 1st case when B = A
 ext : ∀ {Γ Δ} → (∀ {A} → Γ ∋ A → Δ ∋ A)
@@ -140,3 +128,68 @@ _ =β⟨ s=βt ⟩ t=βv = β-trans s=βt t=βv
 
 x :  _=β_  {ø , ★} ((ƛ # 0) ∙ # 0) ( # 0 )
 x = begin (ƛ # 0) ∙ # 0 =β⟨ β-β ⟩ # 0 ∎
+
+foo : (ø , ★) ⊢ ★
+foo = (ƛ # 0) ∙ # 0
+
+bar :  ∀ {Γ} → Γ ⊢ ★
+bar = # 0
+
+test : foo =β bar
+test = β-β
+
+
+K :  (ø , ★) ⊢ ★
+K = ƛ (ƛ (# 1))
+
+test1 : ∀ {Γ} → Γ ⊢ ★
+test1 = (ƛ # 1) [ bar ]
+
+K- : K ∙ bar ∙ bar =β # 0
+K- = begin
+        (K ∙ bar) ∙ bar
+      =β⟨ β-app β-β β-refl ⟩
+        (ƛ # 1) ∙ bar
+      =β⟨ β-β ⟩
+        # 0
+      ∎
+
+
+-- a B b = λ x . a (b x)
+-- (a B b) b c = λ x . (λ z . a (b z)) (c x)
+-- a B (b B c) = λ x . (a ((λ z . (b (c z))) x))
+-- λ (λ # 2 ∙ (# 1 ∙ # 0) (# 1 ∙ # 0))
+
+por : ∀ {Γ} → Γ ⊢ ★
+por = (# 4 ∙ # 0)
+
+ror : ∀ {Γ} → Γ ⊢ ★
+ror = (# 3 ∙ (# 2 ∙ # 0))
+
+
+assoc-l : (ø , ★ , ★ , ★ , ★) ⊢ ★
+assoc-l = ƛ ((ƛ # 5 ∙ (# 3 ∙ # 0)) ∙ (# 1 ∙ # 0))
+
+reduce : ∀ {Γ} → Γ ⊢ ★
+reduce = ƛ # 4 ∙ (# 2 ∙ (# 1 ∙ # 0))
+
+as-l : assoc-l =β reduce
+as-l = begin
+              assoc-l
+            =β⟨ β-abs β-β ⟩
+              reduce
+            ∎
+
+-- a B (b B c) = λ x . (a ((λ z . (b (c z))) x))
+assoc-r : (ø , ★ , ★ , ★ , ★) ⊢ ★
+assoc-r = ƛ # 4 ∙ ((ƛ # 3 ∙ (# 2 ∙ # 0 )) ∙ # 0)
+
+as-r : assoc-r =β reduce
+as-r = begin
+         assoc-r
+       =β⟨ β-abs (β-app β-refl β-β) ⟩
+         reduce
+       ∎
+
+assoc : assoc-l =β assoc-r
+assoc = β-trans as-l (β-sym as-r)
