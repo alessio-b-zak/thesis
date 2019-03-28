@@ -135,6 +135,38 @@ module LamAlgebra where
                    (A ∙ (B ∙ C))
                  ∎
 
+
+
+-- K ∙ A ≈ S ∙ (S ∙ (K ∙ S) ∙ (S ∙ (K ∙ K) ∙ K)) ∙ (K ∙ I) ∙ A
+-- K ∙ A ≈ S ∙ (K ∙ S) ∙ (S ∙ (K ∙ K) ∙ K) ∙ A ∙ ((K ∙ I) ∙ A)
+-- K ∙ A ≈ S ∙ (K ∙ S) ∙ (S ∙ (K ∙ K) ∙ K) ∙ A ∙ ((K ∙ I) ∙ A)
+-- K ∙ A ≈ (K ∙ S ∙ A) ∙ ((S ∙ (K ∙ K) ∙ K) ∙ A) ∙ (K ∙ I ∙ A)
+-- K ∙ A ≈  S ∙ ((S ∙ (K ∙ K) ∙ K) ∙ A) ∙ (K ∙ I ∙ A)
+-- K ∙ A ≈  S ∙ (S ∙ (K ∙ K) ∙ K ∙ A) ∙ I
+-- K ∙ A ≈  S ∙ (K ∙ K ∙ A ∙ (K ∙ A)) ∙ I
+-- K ∙ A ≈  S ∙ (K ∙ K ∙ A) ∙ I
+-- K ∙ A ≈  S ∙ K ∙ I
+-- K ∙ A ≈  S ∙ K ∙ (S ∙ K ∙ K)
+
+    C-axiom1-App : {A : Obj} → K ∙ A ≈ S ∙ (K ∙ (K ∙ A)) ∙ I
+    C-axiom1-App {A} = begin
+                         K ∙ A
+                       ≈⟨ ∙-resp-r CurryAxiom1 ⟩
+                         S ∙ (S ∙ (K ∙ S) ∙ (S ∙ (K ∙ K) ∙ K)) ∙ (K ∙ I) ∙ A
+                       ≈⟨ S-axiom ⟩
+                         S ∙ (K ∙ S) ∙ (S ∙ (K ∙ K) ∙ K) ∙ A ∙ ((K ∙ I) ∙ A)
+                       ≈⟨ ∙-resp-r S-axiom ⟩
+                         (K ∙ S ∙ A) ∙ ((S ∙ (K ∙ K) ∙ K) ∙ A) ∙ (K ∙ I ∙ A)
+                       ≈⟨ ∙-resp-r (∙-resp-r K-axiom) ⟩
+                         S ∙ ((S ∙ (K ∙ K) ∙ K) ∙ A) ∙ (K ∙ I ∙ A)
+                       ≈⟨ ∙-resp-l K-axiom ⟩
+                         S ∙ (S ∙ (K ∙ K) ∙ K ∙ A) ∙ I
+                       ≈⟨ ∙-resp-r (∙-resp-l S-axiom) ⟩
+                         S ∙ (K ∙ K ∙ A ∙ (K ∙ A)) ∙ I
+                       ≈⟨ ∙-resp-r (∙-resp-l (∙-resp-r K-axiom)) ⟩
+                         S ∙ (K ∙ (K ∙ A)) ∙ I
+                       ∎
+
 -- A ● B = λ x . a (b x)
 -- (A ● B) ● C = A ● (B ● C)
 -- λ z . ((λ x . a (b x)) z) (c z)
@@ -157,8 +189,6 @@ module LamAlgebra where
                              K ∙ S ∙ (S ∙ (K ∙ A) ∙ B) ∙ (K ∙ (S ∙ (K ∙ A) ∙ B)) ∙ C
                            ≈⟨ ∙-resp-r (∙-resp-r K-axiom) ⟩
                              S ∙ (K ∙ (S ∙ (K ∙ A) ∙ B)) ∙ C
-                           ≈⟨ ∙-resp-r (∙-resp-l Decurry) ⟩
-                             S ∙ (S ∙ (K ∙ (S ∙ (K ∙ A))) ∙ (K ∙ B)) ∙ C
                            ≈⟨ {!!} ⟩
                              S ∙ (K ∙ A) ∙ (S ∙ (K ∙ B) ∙ C)
                            ≈⟨ ≈.sym (∙-resp-r (∙-resp-r K-axiom)) ⟩
@@ -178,7 +208,7 @@ module LamAlgebra where
 
     commutator-arrow : Obj → Obj → Obj → Set l≈
     commutator-arrow a b f = b ● f ● a ≈ f
- 
+
 module LambdaModel where
   open CombAlg
   open Applicative
@@ -244,7 +274,7 @@ module KaroubiEnvelope where
           → Σ (Category (a ⊔ b) (a ⊔ b) (a ⊔ b)) HasRetraction
   karoubi {lo} {l≈} x = (record
                 { Obj = Σ Obj Obj-idem-●
-                 ; _⇒_ = λ x₁ x₂ → Σ Obj ((commutator-arrow (proj₁ x₁) (proj₁ x₂))) 
+                 ; _⇒_ = λ x₁ x₂ → Σ Obj ((commutator-arrow (proj₁ x₁) (proj₁ x₂)))
                  ; _≈_ = {!!}
                  ; id = {!!}
                  ; _∘_ = {!!}
