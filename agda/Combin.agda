@@ -209,7 +209,15 @@ abs-go {.(_ , ★)} {` Z} {` Z} = begin
                                   (ƛ* S ∙* K) ∙* (`* Z*) ∙* ((ƛ* K) ∙* (`* Z*))
                                 =λ⟨ λ*-app (λ*-app λ*-SNI λ*-refl) (λ*-app λ*-KK λ*-refl ) ⟩
                                   S ∙* (ƛ* S) ∙* (ƛ* K) ∙* (`* Z*) ∙* (K ∙* K ∙* (`* Z*))
-                                =λ⟨ {!!} ⟩
+                                =λ⟨ λ*-app S-axiom K-axiom ⟩
+                                  (ƛ* S) ∙* (`* Z*) ∙* ((ƛ* K) ∙* (`* Z*)) ∙* K
+                                =λ⟨ λ*-app (λ*-app (λ*-app λ*-KS λ*-refl ) λ*-refl ) λ*-refl ⟩
+                                  K ∙* S ∙* (`* Z*) ∙* ((ƛ* K) ∙* (`* Z*)) ∙* K
+                                =λ⟨ λ*-app (λ*-app K-axiom (λ*-app λ*-KK λ*-refl)) λ*-refl ⟩
+                                  S ∙* (K ∙* K ∙* (`* Z*)) ∙* K
+                                =λ⟨ λ*-app (λ*-app λ*-refl K-axiom) λ*-refl ⟩
+                                  S ∙* K ∙* K
+                                =λ⟨ λ*-sym λ*-id ⟩
                                   ƛ* (`* Z*)
                                 ∎
 abs-go {.(_ , _)} {` Z} {` S x} = {!!}
