@@ -133,6 +133,16 @@ Free-beta {Γ} {x} {t} =
              ~* x
             ∎
 
+Freeish-beta : ∀{Γ x} {t : Γ ⊢* ✴} → (ƛ* (`* S* x)) ∙* t  =λ* `* x
+Freeish-beta {Γ} {x} {t} =
+  begin
+    (ƛ* (`* S* x)) ∙* t
+  =λ⟨ λ*-app λ*-KB λ*-refl ⟩
+    K ∙* (`* x) ∙* t
+  =λ⟨ K-axiom ⟩
+    `* x
+  ∎
+
 
 ctxt-swtch : Context → λ*Context
 ctxt-swtch ø = ⊖
@@ -152,7 +162,7 @@ ni-sw {Γ , ★} (S x) = S* (ni-sw x)
 helper : ∀ {Γ} {s : Γ , ★ ⊢ ★} {t : Γ ⊢ ★}
        → (ƛ* ⟦ s ⟧*) ∙* ⟦ t ⟧* =λ* ⟦ s [ t ] ⟧*
 helper {Γ} {` Z} {t} = id-id
-helper {Γ} {` S x} {t} = {!!}
+helper {Γ} {` S x} {t} = Freeish-beta
 helper {Γ} {ƛ s} {t} = {!!}
 helper {Γ} {s ∙ s₁} {t} = {!!}
 helper {Γ} {~ x} {t} = Free-beta
