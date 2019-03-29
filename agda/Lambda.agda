@@ -3,6 +3,7 @@ module Lambda where
 
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; sym; trans; cong)
+open import Data.String
 open import Data.Empty using (⊥; ⊥-elim)
 open import Data.Nat using (ℕ; zero; suc; _+_; _∸_)
 open import Data.Product using (_×_) renaming (_,_ to ⟨_,_⟩)
@@ -21,6 +22,7 @@ infixl 5  _,_
 
 infix  6  ƛ_
 infix  6  `_
+infix  8  ~_
 infixl 7  _∙_
 
 
@@ -46,6 +48,7 @@ data _⊢_ : Context → Type → Set where
 
   _∙_ : ∀ {Γ} → Γ ⊢ ★ → Γ ⊢ ★ → Γ ⊢ ★
 
+  ~_ : ∀ {Γ A} → String → Γ ⊢ A
 
 --add check for syntactic equality
 count : ∀ {Γ} → ℕ → Γ ∋ ★
@@ -69,6 +72,7 @@ rename : ∀ {Γ Δ} → (∀ {A} → Γ ∋ A → Δ ∋ A)
 rename ρ (` x) = ` ρ x
 rename ρ (ƛ y) = ƛ rename (ext ρ) y
 rename ρ (L ∙ M) = rename ρ L ∙ rename ρ M
+rename ρ (~ x) = ~ x
 
 exts : ∀ {Γ Δ} → (∀ {A} → Γ ∋ A → Δ ⊢ A)
     → (∀ {A B} → Γ , B ∋ A → Δ , B ⊢ A)
@@ -81,6 +85,7 @@ subst : ∀ {Γ Δ}
 subst σ (` x) = σ x
 subst σ (ƛ x) = ƛ subst (exts σ) x
 subst σ (x ∙ x₁) = (subst σ x) ∙ (subst σ x₁)
+subst σ (~ x) = ~ x
 
 _[_] : ∀ {Γ A B}
     → Γ , B ⊢ A
@@ -125,71 +130,3 @@ _∎ _ = β-refl
 
 _=β⟨_⟩_ : ∀ {Γ} (s {t v} : Γ ⊢ ★) → s =β t → t =β v → s =β v
 _ =β⟨ s=βt ⟩ t=βv = β-trans s=βt t=βv
-
-x :  _=β_  {ø , ★} ((ƛ # 0) ∙ # 0) ( # 0 )
-x = begin (ƛ # 0) ∙ # 0 =β⟨ β-β ⟩ # 0 ∎
-
-foo : (ø , ★) ⊢ ★
-foo = (ƛ # 0) ∙ # 0
-
-bar :  ∀ {Γ} → Γ ⊢ ★
-bar = # 0
-
-test : foo =β bar
-test = β-β
-
-
-K :  (ø , ★) ⊢ ★
-K = ƛ (ƛ (# 1))
-
-test1 : ∀ {Γ} → Γ ⊢ ★
-test1 = (ƛ # 1) [ bar ]
-
-K- : K ∙ bar ∙ bar =β # 0
-K- = begin
-        (K ∙ bar) ∙ bar
-      =β⟨ β-app β-β β-refl ⟩
-        (ƛ # 1) ∙ bar
-      =β⟨ β-β ⟩
-        # 0
-      ∎
-
-
--- a B b = λ x . a (b x)
--- (a B b) b c = λ x . (λ z . a (b z)) (c x)
--- a B (b B c) = λ x . (a ((λ z . (b (c z))) x))
--- λ (λ # 2 ∙ (# 1 ∙ # 0) (# 1 ∙ # 0))
-
-por : ∀ {Γ} → Γ ⊢ ★
-por = (# 4 ∙ # 0)
-
-ror : ∀ {Γ} → Γ ⊢ ★
-ror = (# 3 ∙ (# 2 ∙ # 0))
-
-
-assoc-l : (ø , ★ , ★ , ★ , ★) ⊢ ★
-assoc-l = ƛ ((ƛ # 5 ∙ (# 3 ∙ # 0)) ∙ (# 1 ∙ # 0))
-
-reduce : ∀ {Γ} → Γ ⊢ ★
-reduce = ƛ # 4 ∙ (# 2 ∙ (# 1 ∙ # 0))
-
-as-l : assoc-l =β reduce
-as-l = begin
-              assoc-l
-            =β⟨ β-abs β-β ⟩
-              reduce
-            ∎
-
--- a B (b B c) = λ x . (a ((λ z . (b (c z))) x))
-assoc-r : (ø , ★ , ★ , ★ , ★) ⊢ ★
-assoc-r = ƛ # 4 ∙ ((ƛ # 3 ∙ (# 2 ∙ # 0 )) ∙ # 0)
-
-as-r : assoc-r =β reduce
-as-r = begin
-         assoc-r
-       =β⟨ β-abs (β-app β-refl β-β) ⟩
-         reduce
-       ∎
-
-assoc : assoc-l =β assoc-r
-assoc = β-trans as-l (β-sym as-r)
