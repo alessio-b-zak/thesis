@@ -95,6 +95,8 @@ data _=λ*_ {Γ} : (Γ ⊢* ✴) → (Γ ⊢* ✴) → Set where
 
   λ*-KF : ∀ {x} → ƛ* (~* x) =λ* K ∙* (~* x)
 
+  λ*-KB : ∀ {x} → ƛ* (`* (S* x)) =λ* K ∙* (`* x)
+
 --  λ*-KB : ∀ {Γ} {x : Γ ∋* ✴} → ƛ* (`* (S* x)) =λ* _∙*_ {?} K (`* (S* x))
 
 begin_ : ∀ {Γ} {s t : Γ ⊢* ✴} → s =λ* t → s =λ* t
@@ -107,11 +109,11 @@ _=λ⟨_⟩_ : ∀ {Γ} (s {t v} : Γ ⊢* ✴) → s =λ* t → t =λ* v → s 
 _ =λ⟨ s=λt ⟩ t=λv = λ*-trans s=λt t=λv
 
 
-id : ⊖ ⊢* ✴
+id : ∀ {Γ} → Γ ⊢* ✴
 id = ƛ* #* 0
 
-id-id : ∀ {x} → id ∙* x =λ* x
-id-id {x} = begin
+id-id : ∀ {Γ} {x : Γ ⊢* ✴} → id ∙* x =λ* x
+id-id {Γ} {x} = begin
               id ∙* x
             =λ⟨ λ*-app λ*-id λ*-refl ⟩
               S ∙* K ∙* K ∙* x
@@ -120,6 +122,17 @@ id-id {x} = begin
             =λ⟨ K-axiom ⟩
               x
             ∎
+
+Free-beta : ∀ {Γ x} {t : Γ ⊢* ✴} → (ƛ* (~* x)) ∙* t =λ* ~* x
+Free-beta {Γ} {x} {t} =
+            begin
+             (ƛ* (~* x)) ∙* t
+            =λ⟨ λ*-app λ*-KF λ*-refl ⟩
+              K ∙* ~* x ∙* t
+            =λ⟨ K-axiom ⟩
+             ~* x
+            ∎
+
 
 ctxt-swtch : Context → λ*Context
 ctxt-swtch ø = ⊖
@@ -135,21 +148,21 @@ ni-sw {Γ , ★} (S x) = S* (ni-sw x)
 ⟦_⟧* (x ∙ y) = ⟦ x ⟧* ∙* ⟦ y ⟧*
 ⟦_⟧* (~ x) = ~* x
 
---helper : ∀ {Γ} {s : Γ , ★ ⊢ ★} {t : Γ ⊢ ★}
---       → (ƛ* ⟦ s ⟧*) ∙* ⟦ t ⟧* =λ* ⟦ s [ t ] ⟧*
---helper {Γ} {` Z} {t} = {!id-id!}
---helper {Γ} {` S x} {t} = {!!}
---helper {Γ} {ƛ s} {t} = {!!}
---helper {Γ} {s ∙ s₁} {t} = {!!}
---helper {Γ} {~ x} {t} = {!!}
 
+helper : ∀ {Γ} {s : Γ , ★ ⊢ ★} {t : Γ ⊢ ★}
+       → (ƛ* ⟦ s ⟧*) ∙* ⟦ t ⟧* =λ* ⟦ s [ t ] ⟧*
+helper {Γ} {` Z} {t} = id-id
+helper {Γ} {` S x} {t} = {!!}
+helper {Γ} {ƛ s} {t} = {!!}
+helper {Γ} {s ∙ s₁} {t} = {!!}
+helper {Γ} {~ x} {t} = Free-beta
 
-transp : {x y : ø ⊢ ★}
+transp : ∀ {Γ} → {x y : Γ ⊢ ★}
       → x =β y
       → ⟦ x ⟧* =λ* ⟦ y ⟧*
 transp β-refl = λ*-refl
 transp (β-sym x) = λ*-sym (transp x)
 transp (β-trans x y) = λ*-trans (transp x) (transp y)
 transp (β-app x y) = λ*-app (transp x) (transp y)
-transp (β-abs x) = W-Ext ?
-transp β-β = {!!}
+transp (β-abs x) = W-Ext (transp x)
+transp β-β = helper

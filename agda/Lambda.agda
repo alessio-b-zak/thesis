@@ -122,6 +122,7 @@ data _=β_ {Γ} : (Γ ⊢ ★) → (Γ ⊢ ★) → Set where
 
 
 
+
 begin_ : ∀ {Γ} {s t : Γ ⊢ ★} → s =β t → s =β t
 begin x = x
 
