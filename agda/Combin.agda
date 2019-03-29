@@ -13,7 +13,7 @@ open import Relation.Nullary using (¬_; Dec; yes; no)
 open import Relation.Nullary.Decidable using (map)
 open import Relation.Nullary.Negation using (contraposition)
 open import Relation.Nullary.Product using (_×-dec_)
-open import Lambda hiding (count)
+open import Lambda hiding (count ; begin_ ; _∎ ; _=β⟨_⟩_)
 
 infix  4  _⊢*_
 infix  4  _∋*_
@@ -63,10 +63,13 @@ count {⊖} _ = ⊥-elim impossible
 #*_ : ∀ {Γ} → ℕ → Γ ⊢* ✴
 #* x = `* count x
 
-
 infix 2 _=λ*_
+infix 1 begin_
+infixr 2 _=λ⟨_⟩_
+infix 3 _∎
 
-data _=λ*_ : (⊖ ⊢* ✴) → (⊖ ⊢* ✴) → Set where
+
+data _=λ*_ {Γ} : (Γ ⊢* ✴) → (Γ ⊢* ✴) → Set where
 
   λ*-refl : ∀ {x} → x =λ* x
 
@@ -74,8 +77,8 @@ data _=λ*_ : (⊖ ⊢* ✴) → (⊖ ⊢* ✴) → Set where
 
   λ*-trans : ∀ {x y z} → x =λ* y → y =λ* z → x =λ* z
 
-  λ*-app : ∀ {s s' t t'} → s =λ* t
-        → s' =λ* t' → s ∙* t =λ* s' ∙* t'
+  λ*-app : ∀ {s s' t t'} → s =λ* s'
+        → t =λ* t' → s ∙* t =λ* s' ∙* t'
 
   K-axiom : ∀ {A B} → K ∙* A ∙* B =λ* A
 
@@ -86,14 +89,67 @@ data _=λ*_ : (⊖ ⊢* ✴) → (⊖ ⊢* ✴) → Set where
 
   S-Ext : S =λ* (ƛ* ƛ* ƛ* (S ∙* #* 2 ∙* #* 1 ∙* #* 0))
 
+  W-Ext : ∀ {M N} → M =λ* N → ƛ* M =λ* ƛ* N
+
+  λ*-id : ƛ* #* 0 =λ* S ∙* K ∙* K
+
+  λ*-KF : ∀ {x} → ƛ* (~* x) =λ* K ∙* (~* x)
+
+--  λ*-KB : ∀ {Γ} {x : Γ ∋* ✴} → ƛ* (`* (S* x)) =λ* _∙*_ {?} K (`* (S* x))
+
+begin_ : ∀ {Γ} {s t : Γ ⊢* ✴} → s =λ* t → s =λ* t
+begin x = x
+
+_∎ : ∀ {Γ} (s : Γ ⊢* ✴) → s =λ* s
+_∎ _ = λ*-refl
+
+_=λ⟨_⟩_ : ∀ {Γ} (s {t v} : Γ ⊢* ✴) → s =λ* t → t =λ* v → s =λ* v
+_ =λ⟨ s=λt ⟩ t=λv = λ*-trans s=λt t=λv
+
+
+id : ⊖ ⊢* ✴
+id = ƛ* #* 0
+
+id-id : ∀ {x} → id ∙* x =λ* x
+id-id {x} = begin
+              id ∙* x
+            =λ⟨ λ*-app λ*-id λ*-refl ⟩
+              S ∙* K ∙* K ∙* x
+            =λ⟨ S-axiom ⟩
+              K ∙* x ∙* (K ∙* x)
+            =λ⟨ K-axiom ⟩
+              x
+            ∎
 
 ctxt-swtch : Context → λ*Context
 ctxt-swtch ø = ⊖
-ctxt-swtch (x , x₁) = {!!}
+ctxt-swtch (xs , ★) = ctxt-swtch xs ,, ✴
 
-ni-switching : ∀ {Γ Δ} → Γ ∋ ★ → Δ ∋* ✴
-ni-switching Z = {!Z*!}
-ni-switching (S x) = {!!}
+ni-sw : ∀ {Γ} → Γ ∋ ★ → (ctxt-swtch Γ) ∋* ✴
+ni-sw Z = Z*
+ni-sw {Γ , ★} (S x) = S* (ni-sw x)
 
-β→λ* : ø ⊢ ★ → ⊖ ⊢* ✴
-β→λ* = {!!}
+⟦_⟧* : ∀ {Γ} → Γ ⊢ ★ → (ctxt-swtch Γ)  ⊢* ✴
+⟦_⟧* (` x) = `* (ni-sw x)
+⟦_⟧* {Γ} (ƛ x) = ƛ* ⟦ x ⟧*
+⟦_⟧* (x ∙ y) = ⟦ x ⟧* ∙* ⟦ y ⟧*
+⟦_⟧* (~ x) = ~* x
+
+--helper : ∀ {Γ} {s : Γ , ★ ⊢ ★} {t : Γ ⊢ ★}
+--       → (ƛ* ⟦ s ⟧*) ∙* ⟦ t ⟧* =λ* ⟦ s [ t ] ⟧*
+--helper {Γ} {` Z} {t} = {!id-id!}
+--helper {Γ} {` S x} {t} = {!!}
+--helper {Γ} {ƛ s} {t} = {!!}
+--helper {Γ} {s ∙ s₁} {t} = {!!}
+--helper {Γ} {~ x} {t} = {!!}
+
+
+transp : {x y : ø ⊢ ★}
+      → x =β y
+      → ⟦ x ⟧* =λ* ⟦ y ⟧*
+transp β-refl = λ*-refl
+transp (β-sym x) = λ*-sym (transp x)
+transp (β-trans x y) = λ*-trans (transp x) (transp y)
+transp (β-app x y) = λ*-app (transp x) (transp y)
+transp (β-abs x) = W-Ext ?
+transp β-β = {!!}

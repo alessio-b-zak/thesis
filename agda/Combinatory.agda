@@ -193,6 +193,7 @@ module LamAlgebra where
                              S ∙ (K ∙ A) ∙ (S ∙ (K ∙ B) ∙ C)
                            ≈⟨ ≈.sym (∙-resp-r (∙-resp-r K-axiom)) ⟩
                              K ∙ S ∙ A ∙ (K ∙ A) ∙ (S ∙ (K ∙ B) ∙ C)
+
                            ≈⟨ ≈.sym (∙-resp-r S-axiom) ⟩
                              S ∙ (K ∙ S) ∙ K ∙ A ∙ (S ∙ (K ∙ B) ∙ C)
                            ≈⟨ ≈.sym (∙-resp-l (∙-resp-r (∙-resp-r K-axiom))) ⟩
