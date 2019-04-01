@@ -11,6 +11,7 @@ open import Data.Nat using (ℕ; zero; suc; _+_; _∸_)
 open import Data.Product using (_×_) renaming (_,_ to ⟨_,_⟩)
 open import Data.Unit using (⊤; tt)
 open import Function using (_∘_)
+open import Data.Sum
 open import Function.Equivalence using (_⇔_; equivalence)
 open import Relation.Nullary using (¬_; Dec; yes; no)
 open import Relation.Nullary.Decidable using (map)
@@ -88,23 +89,44 @@ _mv?_ {.(_ , _)} (suc x) (S y) with x mv? y
 ... | yes p = yes (sms p)
 ... | no ¬p = no (¬smvs ¬p)
 
---
---data FIn {Γ} : ℕ → Γ ⊢ ★ → Set where
---
---  xinx : ∀ {n x} → MatchVar Γ n x  → FIn {Γ} n (` x)
---
---  xinλ : ∀ {n x} → FIn (suc n) x → FIn n (ƛ x)
---
---  xin∙ : ∀ {n x y} → FIn n x → FIn n y → FIn n (x ∙ y)
---
---
---_fi?_ : ∀ {Γ} → (x : ℕ) → (y : Γ ⊢ ★) → Dec (FIn x y)
---x fi? (` x₁)  with x mv? x₁
---... | yes p = yes (xinx p)
---... | no ¬p = {!!}
---x fi? (ƛ y) = {!!}
---x fi? (y ∙ y₁) = {!!}
---x fi? (~ x₁) = {!!}
+
+data FIn {Γ} : ℕ → Γ ⊢ ★ → Set where
+
+  xinx : ∀ {n x} → MatchVar Γ n x  → FIn {Γ} n (` x)
+
+  xinλ : ∀ {n x} → FIn (suc n) x → FIn n (ƛ x)
+
+  xin∙ : ∀ {n x y} → (FIn n x) ⊎ (FIn n y) → FIn n (x ∙ y)
+
+
+¬xinx : ∀ {Γ x} {x₁ : Γ ∋ ★} → ¬ MatchVar Γ x x₁ → FIn x (` x₁) → ⊥
+¬xinx x₂ (xinx x₃) = x₂ x₃
+
+¬xinλ : ∀ {Γ x} {y : Γ , ★ ⊢ ★} → ¬ FIn (suc x) y → FIn x (ƛ y) → ⊥
+¬xinλ x₁ (xinλ x) = x₁ x
+
+
+¬xin∙ : ∀ {Γ x} {y₁ y : Γ ⊢ ★} → ¬ FIn x y → ¬ FIn x y₁ → FIn x (y ∙ y₁) → ⊥
+¬xin∙ x₁ x₂ (xin∙ (inj₁ x)) = x₁ x
+¬xin∙ x₁ x₂ (xin∙ (inj₂ y)) = x₂ y
+
+¬xin~ : ∀ {Γ x x₁} → FIn {Γ} x (~ x₁) → ⊥
+¬xin~  ()
+
+
+_fi?_ : ∀ {Γ} → (x : ℕ) → (y : Γ ⊢ ★) → Dec (FIn x y)
+x fi? (` x₁) with (x mv? x₁)
+... | yes p = yes (xinx p)
+... | no ¬p = no (¬xinx ¬p)
+x fi? (ƛ y) with ((suc x) fi? y)
+... | yes p = yes  (xinλ p)
+... | no ¬p = no (¬xinλ ¬p)
+x fi? (y ∙ y₁) with (x fi? y)
+... | yes p = yes (xin∙ (inj₁ p))
+... | no ¬p with (x fi? y₁)
+...         | yes p = yes (xin∙ (inj₂ p))
+...         | no ¬p₁ = no (¬xin∙ ¬p ¬p₁)
+x fi? (~ x₁) = no ¬xin~
 
 #_ : ∀ {Γ} → ℕ → Γ ⊢ ★
 # x = ` count x
