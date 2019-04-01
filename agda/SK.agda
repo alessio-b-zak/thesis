@@ -43,27 +43,44 @@ data FInSK : String → SK → Set where
 
   fIn∙∙ : ∀ {x y z} → (FInSK z x) ⊎ (FInSK z y) → FInSK z (x ∙∙ y)
 
+
+¬finS : ∀ {x} → ¬ FInSK x S
+¬finS ()
+
+
+¬finK : ∀ {x} → ¬ FInSK x K
+¬finK ()
+
+¬fin& : ∀ {x x₁} → ¬ x ≡ x₁  → ¬ FInSK x (& x₁)
+¬fin& x₂ fIn& = x₂ refl
+
+¬fin∙∙ : ∀ {x y z} → ¬ FInSK z x →  ¬ FInSK z y → ¬ FInSK z (x ∙∙ y)
+¬fin∙∙ x₁ x₂ (fIn∙∙ (inj₁ x)) = x₁ x
+¬fin∙∙ x₁ x₂ (fIn∙∙ (inj₂ y)) = x₂ y
+
 _fin?_ : (x : String) → (y : SK) → Dec (FInSK x y)
-x fin? S = no {!!}
-x fin? K = {!!}
-x fin? (& x₁) = {!!}
-x fin? (y ∙∙ y₁) = {!!}
+x fin? S = no ¬finS
+x fin? K = no ¬finK
+x fin? (& x₁) with x ≟ x₁
+... | yes refl = yes fIn&
+... | no ¬p = no (¬fin& ¬p)
+x fin? (y ∙∙ y₁) with (x fin? y)
+... | yes p = yes  (fIn∙∙ (inj₁ p))
+... | no ¬p with (x fin? y₁)
+...             | yes p = yes (fIn∙∙ (inj₂ p ))
+...             | no ¬p₁ = no (¬fin∙∙ ¬p ¬p₁)
 
---fin : String → SK → Bool
---fin x S = false
---fin x K = false
---fin x (& x₁) with x Str.≟ x₁
---... | yes p = true
---... | no ¬p = false
---fin x (y ∙∙ y₁) = fin x y ∨ fin x y₁
 
---eval : String → SK → SK
---eval x y with fin x y
---... | false = K ∙∙ y
---eval x S | true = {!!}
---eval x K | true = {!!}
---eval x (& x₁) | true = {!!}
---eval x (y ∙∙ y₁) | true = {!!}
+eval : String → SK → SK
+eval x y with (x fin? y)
+eval x S | yes ()
+eval x K | yes ()
+eval x (& x₁) | yes p = S ∙∙ K ∙∙ K
+eval x (y ∙∙ y₁) | yes p = S ∙∙ (eval x y) ∙∙ (eval x y₁)
+eval x S | no ¬p = K ∙∙ S
+eval x K | no ¬p = K ∙∙ K
+eval x (& x₁) | no ¬p = K ∙∙ (& x₁)
+eval x (y ∙∙ y₁) | no ¬p = K ∙∙ (y ∙∙ y₁)
 
 data _=sk_ : SK → SK → Set where
 
@@ -76,3 +93,9 @@ data _=sk_ : SK → SK → Set where
   sk-sym : {x y : SK} → x =sk y → y =sk x
 
   sk-trans : {x y z : SK} → x =sk y → y =sk z → x =sk z
+
+  W-Ext : ∀ {x y} → x =sk eval y x
+
+  K-Ext : ∀ {x y} → K =sk eval x (eval y (K ∙∙ (& x) ∙∙ (& y)))
+
+  S-Ext : ∀ {x y z} → S =sk eval x (eval y ( eval z (S ∙∙ (& x) ∙∙ (& y) ∙∙ (& z)) ))
