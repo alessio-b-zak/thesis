@@ -176,77 +176,85 @@ ni-sw {Γ , ★} (S x) = S* (ni-sw x)
 ⟦_⟧* (~ x) = ~* x
 
 
-helper : ∀ {Γ} {s : Γ , ★ ⊢ ★} {t : Γ ⊢ ★}
-  → (ƛ* ⟦ s ⟧*) ∙* ⟦ t ⟧* =λ* ⟦ s [ t ] ⟧*
-
-transp : ∀ {Γ} → {x y : Γ ⊢ ★}
-  → x =β y
-  → ⟦ x ⟧* =λ* ⟦ y ⟧*
-
-
-app-go : ∀ {Γ} {s s₁ : Γ , ★ ⊢ ★} {t : Γ ⊢ ★} →
-       (ƛ* ⟦ s ⟧* ∙* ⟦ s₁ ⟧*) ∙* ⟦ t ⟧* =λ* ⟦ s [ t ] ⟧* ∙* ⟦  s₁ [ t ] ⟧*
-
-app-go {Γ} {s} {s₁} {t}
-  = begin
-      (ƛ* ⟦ s ⟧* ∙* ⟦ s₁ ⟧*) ∙* ⟦ t ⟧*
-    =λ⟨ Free-SK ⟩
-      (ƛ* ⟦ s ⟧*) ∙* ⟦ t ⟧* ∙* ((ƛ* ⟦ s₁ ⟧*) ∙* ⟦ t ⟧*)
-    =λ⟨ λ*-app helper helper ⟩
-      ⟦ s [ t ] ⟧* ∙* ⟦  s₁ [ t ] ⟧*
-    ∎
-
-
-abs-go : ∀ {Γ} {s : Γ , ★ , ★ ⊢ ★} {t : Γ ⊢ ★} →
-  (ƛ* (ƛ* ⟦ s ⟧*)) ∙* ⟦ t ⟧* =λ* ⟦ (ƛ s) [ t ] ⟧*
-abs-go {.(_ , ★)} {` Z} {` Z} = begin
-                                  (ƛ* (ƛ* (`* Z*))) ∙* (`* Z*)
-                                =λ⟨ λ*-app (W-Ext λ*-id) λ*-refl ⟩
-                                  (ƛ* (S ∙* K ∙* K)) ∙* (`* Z*)
-                                =λ⟨ λ*-app λ*-SNI λ*-refl ⟩
-                                  S ∙* (ƛ* S ∙* K) ∙* (ƛ* K) ∙* (`* Z*)
-                                =λ⟨ S-axiom ⟩
-                                  (ƛ* S ∙* K) ∙* (`* Z*) ∙* ((ƛ* K) ∙* (`* Z*))
-                                =λ⟨ λ*-app (λ*-app λ*-SNI λ*-refl) (λ*-app λ*-KK λ*-refl ) ⟩
-                                  S ∙* (ƛ* S) ∙* (ƛ* K) ∙* (`* Z*) ∙* (K ∙* K ∙* (`* Z*))
-                                =λ⟨ λ*-app S-axiom K-axiom ⟩
-                                  (ƛ* S) ∙* (`* Z*) ∙* ((ƛ* K) ∙* (`* Z*)) ∙* K
-                                =λ⟨ λ*-app (λ*-app (λ*-app λ*-KS λ*-refl ) λ*-refl ) λ*-refl ⟩
-                                  K ∙* S ∙* (`* Z*) ∙* ((ƛ* K) ∙* (`* Z*)) ∙* K
-                                =λ⟨ λ*-app (λ*-app K-axiom (λ*-app λ*-KK λ*-refl)) λ*-refl ⟩
-                                  S ∙* (K ∙* K ∙* (`* Z*)) ∙* K
-                                =λ⟨ λ*-app (λ*-app λ*-refl K-axiom) λ*-refl ⟩
-                                  S ∙* K ∙* K
-                                =λ⟨ λ*-sym λ*-id ⟩
-                                  ƛ* (`* Z*)
-                                ∎
-abs-go {.(_ , _)} {` Z} {` S x} = {!!}
-abs-go {Γ} {` S x} {` x₁} = {!!}
-abs-go {Γ} {` Z} {ƛ t} = {!!}
-abs-go {Γ} {` S x} {ƛ t} = {!!}
-abs-go {Γ} {` Z} {t ∙ t₁} = {!!}
-abs-go {Γ} {` S x} {t ∙ t₁} = {!!}
-abs-go {Γ} {` Z} {~ x₁} = {!!}
-abs-go {Γ} {` S x} {~ x₁} = {!!}
-abs-go {Γ} {ƛ s} {t} = {!!}
-abs-go {Γ} {s ∙ s₁} {t} = {!!}
-abs-go {Γ} {~ x} {t} = {!!}
-
---begin
---      (ƛ* (ƛ* ⟦ s ⟧*)) ∙* ⟦ t ⟧*
---    =λ⟨ {!!} ⟩
---      ⟦ (ƛ s) [ t ] ⟧*
+--helper : ∀ {Γ} {s : Γ , ★ ⊢ ★} {t : Γ ⊢ ★}
+--  → (ƛ* ⟦ s ⟧*) ∙* ⟦ t ⟧* =λ* ⟦ s [ t ] ⟧*
+--
+--transp : ∀ {Γ} → {x y : Γ ⊢ ★}
+--  → x =β y
+--  → ⟦ x ⟧* =λ* ⟦ y ⟧*
+--
+--helper2 : ∀ {Γ t} {x y : Γ ⊢ ★} → x =β y → t =λ* ⟦ x ⟧* → t =λ* ⟦ y ⟧*
+--
+--app-go : ∀ {Γ} {s s₁ : Γ , ★ ⊢ ★} {t : Γ ⊢ ★} →
+--       (ƛ* ⟦ s ⟧* ∙* ⟦ s₁ ⟧*) ∙* ⟦ t ⟧* =λ* ⟦ s [ t ] ⟧* ∙* ⟦  s₁ [ t ] ⟧*
+--
+--app-go {Γ} {s} {s₁} {t}
+--  = begin
+--      (ƛ* ⟦ s ⟧* ∙* ⟦ s₁ ⟧*) ∙* ⟦ t ⟧*
+--    =λ⟨ Free-SK ⟩
+--      (ƛ* ⟦ s ⟧*) ∙* ⟦ t ⟧* ∙* ((ƛ* ⟦ s₁ ⟧*) ∙* ⟦ t ⟧*)
+--    =λ⟨ λ*-app helper helper ⟩
+--      ⟦ s [ t ] ⟧* ∙* ⟦  s₁ [ t ] ⟧*
 --    ∎
-
-helper {Γ} {` Z} {t} = id-id
-helper {Γ} {` S x} {t} = Freeish-beta
-helper {Γ} {ƛ s} {t} = abs-go
-helper {Γ} {s ∙ s₁} {t} = app-go
-helper {Γ} {~ x} {t} = Free-beta
-
-transp β-refl = λ*-refl
-transp (β-sym x) = λ*-sym (transp x)
-transp (β-trans x y) = λ*-trans (transp x) (transp y)
-transp (β-app x y) = λ*-app (transp x) (transp y)
-transp (β-abs x) = W-Ext (transp x)
-transp β-β = helper
+--
+--
+--abs-go : ∀ {Γ} {s : Γ , ★ , ★ ⊢ ★} {t : Γ ⊢ ★} →
+--  (ƛ* (ƛ* ⟦ s ⟧*)) ∙* ⟦ t ⟧* =λ* ⟦ (ƛ s) [ t ] ⟧*
+--
+--abs-go {Γ} {` Z} {t} = begin
+--                         (ƛ* (ƛ* (`* Z*))) ∙* ⟦ t ⟧*
+--                       =λ⟨ λ*-app (W-Ext λ*-id) λ*-refl ⟩
+--                         (ƛ* S ∙* K ∙* K) ∙* ⟦ t ⟧*
+--                       =λ⟨ λ*-app λ*-SNI λ*-refl   ⟩
+--                         S ∙* (ƛ* S ∙* K) ∙* (ƛ* K) ∙* ⟦ t ⟧*
+--                       =λ⟨ S-axiom ⟩
+--                         (ƛ* S ∙* K) ∙* ⟦ t ⟧* ∙* ((ƛ* K) ∙* ⟦ t ⟧*)
+--                       =λ⟨ λ*-app (λ*-app λ*-SNI λ*-refl) (λ*-app λ*-KK λ*-refl) ⟩
+--                         S ∙* (ƛ* S) ∙* (ƛ* K) ∙* ⟦ t ⟧* ∙* (K ∙* K ∙* ⟦ t ⟧*)
+--                       =λ⟨ λ*-app S-axiom K-axiom ⟩
+--                         (ƛ* S) ∙* ⟦ t ⟧* ∙* ((ƛ* K) ∙* ⟦ t ⟧*) ∙* K
+--                       =λ⟨ λ*-app (λ*-app (λ*-app λ*-KS λ*-refl ) λ*-refl ) λ*-refl ⟩
+--                         K ∙* S ∙* ⟦ t ⟧* ∙* ((ƛ* K) ∙* ⟦ t ⟧*) ∙* K
+--                       =λ⟨ λ*-app (λ*-app K-axiom (λ*-app λ*-KK λ*-refl)) λ*-refl ⟩
+--                         S ∙* (K ∙* K ∙* ⟦ t ⟧*) ∙* K
+--                       =λ⟨  λ*-app (λ*-app λ*-refl K-axiom) λ*-refl ⟩
+--                         S ∙* K ∙* K
+--                       =λ⟨ λ*-sym λ*-id ⟩
+--                         ƛ* (`* Z*)
+--                       ∎
+--abs-go {Γ} {` S Z} {x} = {!!}
+--abs-go {Γ} {` S (S x)} {t} = {!!}
+--abs-go {Γ} {ƛ s} {x} = {!!}
+--abs-go {Γ} {s ∙ s₁} {x} = {!!}
+--abs-go {Γ} {~ x} {t} = begin
+--                         (ƛ* (ƛ* ~* x)) ∙* ⟦ t ⟧*
+--                       =λ⟨ λ*-app (W-Ext λ*-KF) λ*-refl ⟩
+--                         (ƛ* (K ∙* ~* x)) ∙* ⟦ t ⟧*
+--                       =λ⟨ λ*-app λ*-SNI λ*-refl ⟩
+--                         S ∙* (ƛ* K) ∙* (ƛ* ~* x) ∙* ⟦ t ⟧*
+--                       =λ⟨ S-axiom ⟩
+--                         (ƛ* K) ∙* ⟦ t ⟧* ∙* ((ƛ* ~* x) ∙* ⟦ t ⟧*)
+--                       =λ⟨ λ*-app (λ*-app λ*-KK λ*-refl) (λ*-app λ*-KF λ*-refl) ⟩
+--                         K ∙* K ∙* ⟦ t ⟧* ∙* (K ∙* ~* x ∙* ⟦ t ⟧*)
+--                       =λ⟨ λ*-app K-axiom K-axiom ⟩
+--                         K ∙* ~* x
+--                       =λ⟨ λ*-sym λ*-KF ⟩
+--                         ƛ* ~* x
+--                       ∎
+--
+--
+--helper {Γ} {` Z} {t} = id-id
+--helper {Γ} {` S x} {t} = Freeish-beta
+--helper {Γ} {ƛ s} {t} = {!abs-go!}
+--helper {Γ} {s ∙ s₁} {t} = app-go
+--helper {Γ} {~ x} {t} = Free-beta
+--
+--transp β-refl = λ*-refl
+--transp (β-sym x) = λ*-sym (transp x)
+--transp (β-trans x y) = λ*-trans (transp x) (transp y)
+--transp (β-app x y) = λ*-app (transp x) (transp y)
+--transp (β-abs x) = W-Ext (transp x)
+--transp β-β = helper
+--
+--
+--helper2 x₁ x₂ = let x = transp x₁ in λ*-trans x₂ x
