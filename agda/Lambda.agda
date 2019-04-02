@@ -6,6 +6,7 @@ open Eq using (_≡_; refl; sym; trans; cong)
 open import Data.Bool.Base using (Bool; true; false; T; _∧_; _∨_; not)
 
 open import Data.String
+open import Data.Product hiding (_,_)
 open import Data.Empty using (⊥; ⊥-elim)
 open import Data.Nat using (ℕ; zero; suc; _+_; _∸_)
 open import Data.Product using (_×_) renaming (_,_ to ⟨_,_⟩)
@@ -99,6 +100,13 @@ data FIn {Γ} : ℕ → Γ ⊢ ★ → Set where
   xin∙ : ∀ {n x y} → (FIn n x) ⊎ (FIn n y) → FIn n (x ∙ y)
 
 
+tester : (x : ø , ★ ⊢ ★) → ¬ FIn 0 x → ø ⊢ ★
+tester (` Z) x = {!!}
+tester (` S ()) x
+tester (ƛ y) x = {!!}
+tester (y ∙ y₁) x = {!!}
+tester (~ x₁) x = {!!}
+
 ¬xinx : ∀ {Γ x} {x₁ : Γ ∋ ★} → ¬ MatchVar Γ x x₁ → FIn x (` x₁) → ⊥
 ¬xinx x₂ (xinx x₃) = x₂ x₃
 
@@ -128,18 +136,17 @@ x fi? (y ∙ y₁) with (x fi? y)
 ...         | no ¬p₁ = no (¬xin∙ ¬p ¬p₁)
 x fi? (~ x₁) = no ¬xin~
 
+
+
 #_ : ∀ {Γ} → ℕ → Γ ⊢ ★
 # x = ` count x
+
 
 -- 1st case when B = A
 ext : ∀ {Γ Δ} → (∀ {A} → Γ ∋ A → Δ ∋ A)
    → (∀ {A B} → Γ , B ∋ A → Δ , B ∋ A)
 ext ρ Z = Z
 ext ρ (S x) = S (ρ x)
-
---zzzz : FIn {ø , ★} 0 (ƛ # 1)
---zzzz = xinλ (xinx (sms zmz))
-
 
 
 rename : ∀ {Γ Δ} → (∀ {A} → Γ ∋ A → Δ ∋ A)
@@ -206,13 +213,10 @@ _∎ _ = β-refl
 _=β⟨_⟩_ : ∀ {Γ} (s {t v} : Γ ⊢ ★) → s =β t → t =β v → s =β v
 _ =β⟨ s=βt ⟩ t=βv = β-trans s=βt t=βv
 
-fin : ∀ {Γ} → (x : ℕ) → (y : Γ ⊢ ★) → Bool
-fin x (` x₁) with x mv? x₁
-... | yes p = true
-... | no ¬p = false
-fin x (ƛ y) = fin (suc x) y
-fin x (y ∙ y₁) = fin x y ∨ fin x y₁
-fin x (~ x₁) = false
 
 LambdaTerm : Set
 LambdaTerm = ø ⊢ ★
+
+
+x : LambdaTerm
+x = ƛ ƛ ƛ (# 0 ∙ # 1)
