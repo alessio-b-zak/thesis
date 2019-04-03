@@ -43,7 +43,6 @@ data _∋_ : Context → Type → Set where
   Z : ∀ {Γ A} → Γ , A ∋ A
   S : ∀ {Γ A B} → Γ ∋ A → Γ , B ∋ A
 
-
 data _⊢_ : Context → Type → Set where
 
   `_ : ∀ {Γ A} → Γ ∋ A → Γ ⊢ A
@@ -66,75 +65,104 @@ uncount : ∀ {Γ} → Γ ∋ ★ → ℕ
 uncount Z = zero
 uncount (S x) = suc (uncount x)
 
+--if doesn't work take away proof bigger than ℕ as only will be used for lambdaterms
+data NotMatchVar {B} : (Γ : Context) → ℕ → Γ ∋ B → Set where
+  zms : ∀ {Γ x} → NotMatchVar {B} (Γ , B) (suc x) Z
+  smz : ∀ {Γ A} → {x : Γ ∋ B} → NotMatchVar {B} (Γ , A) zero (S x)
+  sms : ∀ {Γ x y A} → NotMatchVar Γ x y → NotMatchVar {B} (Γ , A) (suc x) (S y)
 
-data MatchVar {B} : (Γ : Context) → ℕ → Γ ∋ B → Set where
-  zmz : ∀ {Γ} → MatchVar {B} (Γ , B) zero Z
-  sms : ∀ {Γ B x y} → MatchVar Γ x y → MatchVar (Γ , B) (suc x) (S y)
-
-
-¬zmvs : ∀ {Γ B} {y : Γ ∋ ★} → ¬ MatchVar (Γ , B) zero (S y)
-¬zmvs ()
-
-¬smvz : ∀ {Γ x} → ¬ MatchVar (Γ , ★) (suc x) Z
-¬smvz ()
-
-¬smvs : ∀ {Γ x} {y : Γ ∋ ★} {B} → ¬ MatchVar Γ x y → ¬ MatchVar (Γ , B) (suc x) (S y)
-¬smvs x₁ (sms x) = x₁ x
+¬zmz : ∀ {B Γ} → NotMatchVar (Γ , B) 0 Z → ⊥
+¬zmz ()
 
 
-_mv?_ : ∀ {Γ} → (x : ℕ) → (y : Γ ∋ ★) → Dec (MatchVar Γ x y)
-_mv?_ {.(_ , ★)} zero Z = yes zmz
-_mv?_ {.(_ , _)} zero (S y) = no ¬zmvs
-_mv?_ {.(_ , ★)} (suc x) Z = no ¬smvz
-_mv?_ {.(_ , _)} (suc x) (S y) with x mv? y
+¬sms : ∀ {Γ B B₁ x} {y : Γ ∋ B} → ¬ NotMatchVar Γ x y → NotMatchVar (Γ , B₁) (suc x) (S y) → ⊥
+¬sms x₁ (sms x) = x₁ x
+
+
+_mv?_ : ∀ {Γ B} → (x : ℕ) → (y : Γ ∋ B)  → Dec (NotMatchVar Γ x y)
+_mv?_ {.(_ , B)} {B} zero Z = no ¬zmz
+_mv?_ {.(_ , B)} {B} (suc x) Z = yes zms
+_mv?_ {.(_ , _)} {B} zero (S y) = yes smz
+_mv?_ {.(_ , _)} {B} (suc x) (S y) with (x mv? y)
 ... | yes p = yes (sms p)
-... | no ¬p = no (¬smvs ¬p)
+... | no ¬p = no (¬sms ¬p)
 
 
-data FIn {Γ} : ℕ → Γ ⊢ ★ → Set where
+data ¬FIn {Γ} : ℕ → Γ ⊢ ★ → Set where
 
-  xinx : ∀ {n x} → MatchVar Γ n x  → FIn {Γ} n (` x)
+  xin~ : ∀ {n x} → ¬FIn n (~ x)
 
-  xinλ : ∀ {n x} → FIn (suc n) x → FIn n (ƛ x)
+  xinx : ∀ {n x} → NotMatchVar Γ n x → ¬FIn {Γ} n (` x)
 
-  xin∙ : ∀ {n x y} → (FIn n x) ⊎ (FIn n y) → FIn n (x ∙ y)
+  xinλ : ∀ {n x} → ¬FIn (suc n) x → ¬FIn n (ƛ x)
+
+  xin∙ : ∀ {n x y} → (¬FIn n x) × (¬FIn n y) → ¬FIn n (x ∙ y)
 
 
-tester : (x : ø , ★ ⊢ ★) → ¬ FIn 0 x → ø ⊢ ★
-tester (` Z) x = {!!}
-tester (` S ()) x
-tester (ƛ y) x = {!!}
-tester (y ∙ y₁) x = {!!}
-tester (~ x₁) x = {!!}
-
-¬xinx : ∀ {Γ x} {x₁ : Γ ∋ ★} → ¬ MatchVar Γ x x₁ → FIn x (` x₁) → ⊥
+¬xinx : ∀ {Γ x} {x₁ : Γ ∋ ★} → ¬ NotMatchVar Γ x x₁ → ¬FIn x (` x₁) → ⊥
 ¬xinx x₂ (xinx x₃) = x₂ x₃
 
-¬xinλ : ∀ {Γ x} {y : Γ , ★ ⊢ ★} → ¬ FIn (suc x) y → FIn x (ƛ y) → ⊥
+
+¬xinλ : ∀ {Γ x} {y : Γ , ★ ⊢ ★} → ¬ ¬FIn (suc x) y → ¬FIn x (ƛ y) → ⊥
 ¬xinλ x₁ (xinλ x) = x₁ x
 
 
-¬xin∙ : ∀ {Γ x} {y₁ y : Γ ⊢ ★} → ¬ FIn x y → ¬ FIn x y₁ → FIn x (y ∙ y₁) → ⊥
-¬xin∙ x₁ x₂ (xin∙ (inj₁ x)) = x₁ x
-¬xin∙ x₁ x₂ (xin∙ (inj₂ y)) = x₂ y
+¬xin∙ : ∀ {Γ x} {y y₁ : Γ ⊢ ★} → ¬ ¬FIn x y → ¬FIn x (y ∙ y₁) → ⊥
+¬xin∙ x₁ (xin∙ ⟨ fst , snd ⟩) = x₁ fst
 
-¬xin~ : ∀ {Γ x x₁} → FIn {Γ} x (~ x₁) → ⊥
-¬xin~  ()
+¬xin∙` : ∀ {Γ x} {y₁ y : Γ ⊢ ★} → ¬ ¬FIn x y₁ → ¬FIn x (y ∙ y₁) → ⊥
+¬xin∙` x₁ (xin∙ ⟨ fst , snd ⟩) = x₁ snd
 
 
-_fi?_ : ∀ {Γ} → (x : ℕ) → (y : Γ ⊢ ★) → Dec (FIn x y)
+_fi?_ : ∀ {Γ} → (x : ℕ) → (y : Γ ⊢ ★) → Dec (¬FIn x y)
 x fi? (` x₁) with (x mv? x₁)
 ... | yes p = yes (xinx p)
 ... | no ¬p = no (¬xinx ¬p)
 x fi? (ƛ y) with ((suc x) fi? y)
-... | yes p = yes  (xinλ p)
+... | yes p = yes (xinλ p)
 ... | no ¬p = no (¬xinλ ¬p)
 x fi? (y ∙ y₁) with (x fi? y)
-... | yes p = yes (xin∙ (inj₁ p))
-... | no ¬p with (x fi? y₁)
-...         | yes p = yes (xin∙ (inj₂ p))
-...         | no ¬p₁ = no (¬xin∙ ¬p ¬p₁)
-x fi? (~ x₁) = no ¬xin~
+... | no ¬p = no (¬xin∙ ¬p)
+... | yes p with (x fi? y₁)
+...        | yes p₁ = yes (xin∙ ⟨ p , p₁ ⟩)
+...        | no ¬p = no (¬xin∙` ¬p)
+x fi? (~ x₁) = yes xin~
+
+
+reduceContxt : ℕ → Context → Context
+reduceContxt zero x₁ = x₁
+reduceContxt (suc x) ø = ø
+reduceContxt (suc x) (y , x₁) = reduceContxt x y
+
+
+data ConxtSize : ℕ → Context → Set where
+  1mz : ConxtSize 0 ( ø , ★ )
+  sucms : ∀ {Γ x} → ConxtSize x Γ → ConxtSize (suc x) (Γ , ★)
+
+
+fuck : ∀ {Γ x} → (t : Γ , ★ ⊢ ★) → ConxtSize x Γ → (¬FIn x t) → (Γ ⊢ ★) 
+fuck {ø} {zero} (~ x) x₁ xin~ = ~ x
+fuck {ø} {zero} .(` S _) () (xinx smz)
+fuck {ø} {zero} .(ƛ _) () (xinλ x)
+fuck {ø} {zero} .(_ ∙ _) () (xin∙ x₂)
+fuck {.ø , .★} {zero} (` Z) 1mz (xinx ())
+fuck {.ø , .★} {zero} (` S x) 1mz (xinx y) = ` x
+fuck {.ø , .★} {zero} (ƛ t) 1mz (xinλ x) with (fuck t (sucms 1mz) x)
+... | p = ƛ p
+fuck {.ø , .★} {zero} (t ∙ t₁) 1mz (xin∙ ⟨ fst , snd ⟩) = (fuck t 1mz fst) ∙ (fuck t₁ 1mz snd)
+fuck {.ø , .★} {zero} (~ x) 1mz xin~ = ~ x
+fuck {ø} {suc x} t x₁ x₂ = {!!}
+fuck {y , x₃} {suc x} t x₁ x₂ = {!!}
+
+-- all this could be avoided by using contexts as Fin
+--add size datatype
+--add reduce datatype size
+tester : (x : ø , ★ ⊢ ★) → ¬FIn 0 x → ø ⊢ ★
+tester (` Z) (xinx ())
+tester (` S ()) y
+tester (ƛ x) (xinλ y) = {!!}
+tester (x ∙ x₁) (xin∙ ⟨ fst , snd ⟩) = ( tester x fst ) ∙ ( tester x₁ snd )
+tester (~ x) y₁ = ~ x
 
 
 
