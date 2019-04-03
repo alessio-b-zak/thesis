@@ -105,16 +105,29 @@ data _=sk_ : SK → SK → Set where
 
 --two functions one that takes empty context extended and next
 --if var does not appear can reduce context
-
 --evalNum x y with (x fi? y)
 --evalNum x .(` _) | yes (xinx x₂) = S ∙∙ K ∙∙ K
 --evalNum x (ƛ t) | yes (xinλ p) = evalNum (suc x) t
 --evalNum x (c ∙ d) | yes (xin∙ x₂) = S ∙∙ (evalNum x c) ∙∙ (evalNum x d)
 --evalNum x y | no p =  {!K ∙∙ (convert y) !}
 
+--evalNum : ∀ {Γ} → (x : ℕ) → ConxtSize x Γ → Γ , ★ ⊢ ★ → SK
 
-convert : LambdaTerm → SK
-convert (` ())
-convert (ƛ x) = {!!}
-convert (x ∙ x₁) = convert x ∙∙ convert x₁
-convert (~ x) = & x
+--evalNum x x₁ with (x fi? x₁)
+--evalNum x x₁ | yes p = K ∙∙ {!convert ?!}
+--evalNum x (` x₁) | no ¬p = S ∙∙ K ∙∙ K
+--evalNum x (ƛ p) | no ¬p = evalNum (suc x) p
+--evalNum x (p ∙ p₁) | no ¬p = S ∙∙ (evalNum x p) ∙∙ (evalNum x p₁)
+--evalNum x (~ x₁) | no ¬p = & x₁
+
+--convert : LambdaTerm → SK
+--convert (` ())
+--convert (ƛ x) with (0 fi? x)
+--... | no ¬p = {!!}
+--... | yes p with (test x 1mz p)
+--...      | ` x₁ = K ∙∙ {!convert (` x₁)!}
+--...      | ƛ q = {!!}
+--...      | q ∙ q₁ = {!!}
+--...      | ~ x₁ = {!!}
+--convert (x ∙ x₁) = convert x ∙∙ convert x₁
+--convert (~ x) = & x
