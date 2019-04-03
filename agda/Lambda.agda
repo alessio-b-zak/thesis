@@ -136,33 +136,49 @@ reduceContxt (suc x) (y , x₁) = reduceContxt x y
 
 
 data ConxtSize : ℕ → Context → Set where
-  1mz : ConxtSize 0 ( ø , ★ )
+  1mz : ConxtSize 0 ø
   sucms : ∀ {Γ x} → ConxtSize x Γ → ConxtSize (suc x) (Γ , ★)
 
 
-fuck : ∀ {Γ x} → (t : Γ , ★ ⊢ ★) → ConxtSize x Γ → (¬FIn x t) → (Γ ⊢ ★) 
-fuck {ø} {zero} (~ x) x₁ xin~ = ~ x
-fuck {ø} {zero} .(` S _) () (xinx smz)
-fuck {ø} {zero} .(ƛ _) () (xinλ x)
-fuck {ø} {zero} .(_ ∙ _) () (xin∙ x₂)
-fuck {.ø , .★} {zero} (` Z) 1mz (xinx ())
-fuck {.ø , .★} {zero} (` S x) 1mz (xinx y) = ` x
-fuck {.ø , .★} {zero} (ƛ t) 1mz (xinλ x) with (fuck t (sucms 1mz) x)
+--fuck : ∀ {Γ x} → (t : Γ , ★ ⊢ ★) → ConxtSize x Γ → (¬FIn x t) → (Γ ⊢ ★)
+--fuck {ø} {zero} (~ x) x₁ xin~ = ~ x
+--fuck {ø} {zero} .(` S _) () (xinx smz)
+--fuck {ø} {zero} .(ƛ _) () (xinλ x)
+--fuck {ø} {zero} .(_ ∙ _) () (xin∙ x₂)
+--fuck {.ø , .★} {zero} (` Z) 1mz (xinx ())
+--fuck {.ø , .★} {zero} (` S x) 1mz (xinx y) = ` x
+--fuck {.ø , .★} {zero} (ƛ t) 1mz (xinλ x) with (fuck t (sucms 1mz) x)
+--... | p = ƛ p
+--fuck {.ø , .★} {zero} (t ∙ t₁) 1mz (xin∙ ⟨ fst , snd ⟩) = (fuck t 1mz fst) ∙ (fuck t₁ 1mz snd)
+--fuck {.ø , .★} {zero} (~ x) 1mz xin~ = ~ x
+--fuck {ø} {suc x} t () x₂
+--fuck {y , .★} {suc x} (~ t) (sucms a) xin~ = ~ t
+--fuck {y , .★} {suc x} (` Z) (sucms a) (xinx x₂) = ` Z
+--fuck {y , .★} {suc x} (` S v) (sucms a) (xinx x₂) = ` v
+--fuck {y , .★} {suc x} (ƛ p) (sucms a) (xinλ q) with (fuck p (sucms (sucms a)) q)
+--... | t = ƛ t
+--fuck {y , .★} {suc x} (f ∙ s) (sucms a) (xin∙ ⟨ fst , snd ⟩) = (fuck f (sucms a) fst) ∙ fuck s (sucms a) snd
+
+test : ∀ {Γ x} → (t : Γ , ★ ⊢ ★) → ConxtSize x Γ → (¬FIn x t) → (Γ ⊢ ★)
+test {ø} {zero} (` Z) 1mz (xinx ())
+test {ø} {zero} (` S q) 1mz (xinx smz) = ` q
+test {ø} {zero} (ƛ t) 1mz (xinλ y) with (test t (sucms 1mz) y)
 ... | p = ƛ p
-fuck {.ø , .★} {zero} (t ∙ t₁) 1mz (xin∙ ⟨ fst , snd ⟩) = (fuck t 1mz fst) ∙ (fuck t₁ 1mz snd)
-fuck {.ø , .★} {zero} (~ x) 1mz xin~ = ~ x
-fuck {ø} {suc x} t x₁ x₂ = {!!}
-fuck {y , x₃} {suc x} t x₁ x₂ = {!!}
+test {ø} {zero} (t ∙ t₁) 1mz (xin∙ ⟨ fst , snd ⟩) = test t 1mz fst ∙ test t₁ 1mz snd
+test {ø} {zero} (~ x₁) x y = ~ x₁
+test {ø} {suc x} t () q
+test {y , .★} {.(suc _)} (` Z) (sucms q) (xinx zms) = ` Z
+test {y , .★} {.(suc _)} (` S t) (sucms q) (xinx p) = ` t
+test {y , x₃} {x} (ƛ t) q (xinλ pp) with (test t (sucms q) pp)
+... | p = ƛ p
+test {y , x₃} {x} (t ∙ t₁) q (xin∙ ⟨ fst , snd ⟩) = test t q fst ∙ test t₁ q snd
+test {y , x₃} {x} (~ x₁) q x₂ = ~ x₁
 
 -- all this could be avoided by using contexts as Fin
 --add size datatype
 --add reduce datatype size
 tester : (x : ø , ★ ⊢ ★) → ¬FIn 0 x → ø ⊢ ★
-tester (` Z) (xinx ())
-tester (` S ()) y
-tester (ƛ x) (xinλ y) = {!!}
-tester (x ∙ x₁) (xin∙ ⟨ fst , snd ⟩) = ( tester x fst ) ∙ ( tester x₁ snd )
-tester (~ x) y₁ = ~ x
+tester x x₁ = test x  1mz x₁
 
 
 
