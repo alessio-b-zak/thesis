@@ -139,6 +139,7 @@ data ConxtSize : ℕ → Context → Set where
   1mz : ConxtSize 0 ø
   sucms : ∀ {Γ x} → ConxtSize x Γ → ConxtSize (suc x) (Γ , ★)
 
+
 test : ∀ {Γ x} → (t : Γ , ★ ⊢ ★) → ConxtSize x Γ → (¬FIn x t) → (Γ ⊢ ★)
 test {ø} {zero} (` Z) 1mz (xinx ())
 test {ø} {zero} (` S ()) 1mz (xinx smz)
@@ -149,14 +150,15 @@ test {ø} {zero} (~ x₁) x y = ~ x₁
 test {ø} {suc x} t () q
 test {y , .★} {.(suc _)} (` Z) (sucms q) (xinx zms) = ` Z
 test {y , .★} {.(suc _)} (` S t) (sucms q) (xinx (sms p)) with (test (` t) q (xinx p))
-test {y , .★} {.(suc _)} (` S t) (sucms q) (xinx (sms p)) | ` x₁ = ` S x₁
-test {y , .★} {.(suc _)} (` S t) (sucms q) (xinx (sms p)) | ƛ qq = qq
-test {y , .★} {.(suc _)} (` S t) (sucms q) (xinx (sms p)) | qq ∙ qq₁ = ` t
-test {y , .★} {.(suc _)} (` S t) (sucms q) (xinx (sms p)) | ~ x₁ = ~ x₁
+... | ` x₁ = ` S x₁
+... | ƛ qq = qq
+... | qq ∙ qq₁ = ` t
+... | ~ x₁ = ~ x₁
 test {y , x₃} {x} (ƛ t) q (xinλ pp) with (test t (sucms q) pp)
 ... | p = ƛ p
 test {y , x₃} {x} (t ∙ t₁) q (xin∙ ⟨ fst , snd ⟩) = test t q fst ∙ test t₁ q snd
 test {y , x₃} {x} (~ x₁) q x₂ = ~ x₁
+
 
 -- all this could be avoided by using contexts as Fin
 --add size datatype
@@ -245,10 +247,8 @@ _ =β⟨ s=βt ⟩ t=βv = β-trans s=βt t=βv
 LambdaTerm : Set
 LambdaTerm = ø ⊢ ★
 
-
 x : ø , ★ ⊢ ★
 x = ƛ ƛ (# 0 ∙ # 1)
 
-
-t : ¬FIn 0 x
-t = xinλ (xinλ (xin∙ ⟨ xinx zms , xinx (sms zms) ⟩))
+v : ø , ★ ⊢ ★
+v = ƛ ƛ ƛ (# 0 ∙ # 1 ∙ # 2)

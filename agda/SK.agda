@@ -1,6 +1,7 @@
 module SK where
 
 
+
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; sym; trans; cong)
 open import Data.Empty using (⊥; ⊥-elim)
@@ -111,7 +112,13 @@ data _=sk_ : SK → SK → Set where
 --evalNum x (c ∙ d) | yes (xin∙ x₂) = S ∙∙ (evalNum x c) ∙∙ (evalNum x d)
 --evalNum x y | no p =  {!K ∙∙ (convert y) !}
 
---evalNum : ∀ {Γ} → (x : ℕ) → ConxtSize x Γ → Γ , ★ ⊢ ★ → SK
+convert : LambdaTerm → SK
+
+evalNum : ∀ {Γ} → (x : ℕ)  → Γ , ★ ⊢ ★ → SK
+evalNum x (` x₁) = {!!}
+evalNum x (ƛ j) = {!!}
+evalNum x (j ∙ j₁) = {!!}
+evalNum x (~ x₁) = {!!}
 
 --evalNum x x₁ with (x fi? x₁)
 --evalNum x x₁ | yes p = K ∙∙ {!convert ?!}
@@ -120,14 +127,9 @@ data _=sk_ : SK → SK → Set where
 --evalNum x (p ∙ p₁) | no ¬p = S ∙∙ (evalNum x p) ∙∙ (evalNum x p₁)
 --evalNum x (~ x₁) | no ¬p = & x₁
 
---convert : LambdaTerm → SK
---convert (` ())
---convert (ƛ x) with (0 fi? x)
---... | no ¬p = {!!}
---... | yes p with (test x 1mz p)
---...      | ` x₁ = K ∙∙ {!convert (` x₁)!}
---...      | ƛ q = {!!}
---...      | q ∙ q₁ = {!!}
---...      | ~ x₁ = {!!}
---convert (x ∙ x₁) = convert x ∙∙ convert x₁
---convert (~ x) = & x
+convert (` ())
+convert (ƛ x) with (0 fi? x)
+convert (ƛ x) | yes p = K ∙∙ convert {!!}
+convert (ƛ x) | no ¬p = evalNum 0 x
+convert (x ∙ x₁) = convert x ∙∙ convert x₁
+convert (~ x) = & x
