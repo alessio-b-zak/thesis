@@ -1,69 +1,47 @@
 % !TEX root = ./dissertation.tex
-{\bf A topic-specific chapter, of roughly $15$ pages}
-\vspace{1cm}
+\section{Agda-fying Categories}
 
-\noindent
-This chapter is intended to describe what you did: the goal is to explain
-the main activity or activities, of any type, which constituted your work
-during the project.  The content is highly topic-specific, but for many
-projects it will make sense to split the chapter into two sections: one
-will discuss the design of something (e.g., some hardware or software, or
-an algorithm, or experiment), including any rationale or decisions made,
-and the other will discuss how this design was realised via some form of
-implementation.
+\subsection{Categories}
 
-This is, of course, far from ideal for {\em many} project topics.  Some
-situations which clearly require a different approach include:
+Categories can be constructed in Agda with relative simplicity. The initial
+concepts introduced here are taken from \verb|cats|, a Category Theory library
+in Agda by Jannis Limpberg. \AgdaBound{lo}, \AgdaBound{la} and \AgdaBound{l≈}
+are used in the following section as variables of type \AgdaDatatype{Level}.
 
-\begin{itemize}
-\item In a project where asymptotic analysis of some algorithm is the goal,
-      there is no real ``design and implementation'' in a traditional sense
-      even though the activity of analysis is clearly within the remit of
-      this chapter.
-\item In a project where analysis of some results is as major, or a more
-      major goal than the implementation that produced them, it might be
-      sensible to merge this chapter with the next one: the main activity
-      is such that discussion of the results cannot be viewed separately.
-\end{itemize}
+Categories can be introduced as a record parameterised by the level of their
+objects, arrows and type of morphism equality respectively
+\ExecuteMetaData[../agda/latex/ThesisCategory.tex]{cat-def}
 
-\noindent
-Note that it is common to include evidence of ``best practice'' project
-management (e.g., use of version control, choice of programming language
-and so on).  Rather than simply a rote list, make sure any such content
-is useful and/or informative in some way: for example, if there was a
-decision to be made then explain the trade-offs and implications
-involved.
+Categories are typed at a level above the largest of objects, arrows and
+equalities in order to present equality on morphisms as relations on types as
+per the Agda standard library. The axioms of a category are presented as fields
+of the record. Objects are permitted to be any type of any level and mophisms
+typed as any function that takes two objects and returns a type.
 
-\section{Example Section}
+Identity arrows and composition take their obvious definitions. The identity
+arrow provides a distinguished morphsim for each object implicitly and
+composition is a function that takes two morphisms of the correct shape and
+returns the appropriate morphism
+\ExecuteMetaData[../agda/latex/ThesisCategory.tex]{cat-field-comp-id}
 
-This is an example section;
-the following content is auto-generated dummy text.
-\lipsum
+To codify the associativity of composition and the neutrality of identity it is
+not practical to use propositional equality. Proving these as propositional
+equalities of the structures that are often categorified is often a difficult
+task. Propositional equality for a structure amounts to showing propositional
+equality on its constituent components. That two terms are propositionally equal
+implies the terms have the same normal form. There are often situations where it
+is desirable to equate two different terms that do not have the same normal
+forms. As an example, consider equating propositionally two monoid
+homomorphisms. In a dependently typed setting this requires that the proofs of
+preservation for the two morphisms are also equal in addition to the functions
+between the underlying monoids. This is a tedious requirement that is often
+undesired. \todo{Axiom K?}To remedy this, the earlier mentioned setoid model is
+used whereby structures are equated by an equivalence relation.\todo{hott} For
+categories an equivalence relation for morphism must be provided
+\ExecuteMetaData[../agda/latex/ThesisCategory.tex]{cat-field-rel}
 
-\subsection{Example Sub-section}
-
-\begin{figure}[t]
-\centering
-foo
-\caption{This is an example figure.}
-\label{fig}
-\end{figure}
-
-\begin{table}[t]
-\centering
-\begin{tabular}{|cc|c|}
-\hline
-foo      & bar      & baz      \\
-\hline
-$0     $ & $0     $ & $0     $ \\
-$1     $ & $1     $ & $1     $ \\
-$\vdots$ & $\vdots$ & $\vdots$ \\
-$9     $ & $9     $ & $9     $ \\
-\hline
-\end{tabular}
-\caption{This is an example table.}
-\label{tab}
-\end{table}
+The \AgdaFunction{IsEquivalence} function provides the appropriate proofs of
+reflexivity, transitivity and symmetry.
 
 \begin{algorithm}[t]
 \For{$i=0$ {\bf upto} $n$}{

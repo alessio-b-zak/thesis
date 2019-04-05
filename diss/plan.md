@@ -1,3 +1,7 @@
+Important
+
+ - Remember to say what parameterised things are
+
 ## Markdown Plan
 
 Automated Theorem Proving in Mathematical Logic and Category Theory
@@ -43,15 +47,29 @@ Automated Theorem Proving in Mathematical Logic and Category Theory
 # Execution
 
   - Topics
-    Cats
-    - Cartesian Closure
-    - Points 
+    - Cats
+        - introduce the category record
+        - Discuss parameterisation by equality of morphisms
+        - Unique arrows
+        - Terminals
+        - Products
+        - Exponentials
+    - Points
+        - Point
+        - Point Surjective
+        - Fixed Point Property
     - Go through proof
+        - Statement of proof
+        - Contrapositive
+        - Work through line by line
     - bring in other proofs
     - Category of Small types
+        - As a pseudo category of Sets using Sets
     - Cantor
     - Category of Bigger types
+        - TODO
     - Russell
+        - TODO
     - CCCS and U-lambda
       - Combinatory Algs
       - Karoubi
@@ -66,7 +84,10 @@ Automated Theorem Proving in Mathematical Logic and Category Theory
   - Discussion of HoTT
 
 
+fugma
+
+
 # Conclusion
 
   - THM proving and its importance
-  - Limitations, future work
+  - Limitat   love u   ions, future work

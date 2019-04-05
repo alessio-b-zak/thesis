@@ -43,6 +43,7 @@
 % http://www.ctan.org/tex-archive/macros/latex/required/amslatex
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
+\RequirePackage{catchfilebetweentags}
 % http://www.ctan.org/tex-archive/macros/latex/contrib/adjustbox
 \RequirePackage{adjustbox}
 % http://www.ctan.org/tex-archive/macros/latex/contrib/etoolbox
