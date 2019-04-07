@@ -40,30 +40,53 @@ used whereby structures are equated by an equivalence relation.\todo{hott} For
 categories an equivalence relation for morphism must be provided
 \ExecuteMetaData[../agda/latex/ThesisCategory.tex]{cat-field-rel}
 
-The \AgdaFunction{IsEquivalence} function provides the appropriate proofs of
+The \AgdaFunction{IsEquivalence} function establishes the appropriate proofs of
 reflexivity, transitivity and symmetry.
 
-\begin{algorithm}[t]
-\For{$i=0$ {\bf upto} $n$}{
-  $t_i \leftarrow 0$\;
-}
-\caption{This is an example algorithm.}
-\label{alg}
-\end{algorithm}
+With the notion of equality of morphisms in place it is possible to state the
+properties of composition and identity
 
-\begin{lstlisting}[float={t},caption={This is an example listing.},label={lst},language=C]
-for( i = 0; i < n; i++ ) {
-  t[ i ] = 0;
-}
-\end{lstlisting}
+\ExecuteMetaData[../agda/latex/ThesisCategory.tex]{cat-field-comp}
 
-This is an example sub-section;
-the following content is auto-generated dummy text.
-Notice the examples in Figure~\ref{fig}, Table~\ref{tab}, Algorithm~\ref{alg}
-and Listing~\ref{lst}.
-\lipsum
+The field \AgdaField{∘{-}resp} is a necessary and inconvenient aspect of
+utilising equivalence relations over propositional equality. Preserves2
+indicates that composition is congruent in both of its arguments. This allows us
+to target individual compositions in a large categorical term to apply an
+equality. This is given for free when using propositional equality as functions
+are unable to distinguish terms with the same normal form. This can be seen as
+one of the downsides to using equivalence relations as congruence must be proven
+for every each individual equivalence relation.\todo{congruence}
 
-\subsubsection{Example Sub-sub-section}
+
+\subsection{Uniqueness}
+
+The next step in the categorical journey is a critical component of many of the
+more complex abstractions, the notion of unique arrow
+
+\ExecuteMetaData[../agda/latex/ThesisUnique.tex]{unique-def-unique}
+
+Uniqueness is often given with respect to a property (hence universa
+properties). In Agda this amounts to formualating the property as type
+parameterised by the property and an arrow satisfying the property. The type
+encodes a function which, given any other arrow satisfying the property
+expresses equaltiy to the parameterised arrow. Using this a general unique arrow
+can be encoded using a trivial function that always returns the unit.
+
+Universal properties can now be given as an object, a proposition and a proof of
+uniqueness
+
+\ExecuteMetaData[../agda/latex/ThesisUnique.tex]{unique-def-exun}
+
+Agda's syntax directive can be used to create a universal property like type
+\todo{syntax}, as in the characterisation of an object as terminal whereby an
+object is terminal if, for any other object in the category, there is an arrow
+from the object to the terminal alongside a proof of uniqueness.
+
+\ExecuteMetaData[../agda/latex/ThesisUnique.tex]{unique-def-terminal}
+
+A Category 
+
+
 
 This is an example sub-sub-section;
 the following content is auto-generated dummy text.

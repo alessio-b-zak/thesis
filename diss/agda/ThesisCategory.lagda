@@ -56,7 +56,6 @@ record Category lo la l≈ : Set (suc (lo ⊔ la ⊔ l≈)) where
     _≈_  : ∀ {A B} → Rel (A ⇒ B) l≈
     equiv : ∀ {A B} → IsEquivalence (_≈_ {A} {B})
 \end{code}
-\end{AgdaAlign}
 %</cat-field-rel>
 
 %<*cat-field-comp>
@@ -65,13 +64,15 @@ record Category lo la l≈ : Set (suc (lo ⊔ la ⊔ l≈)) where
     id-r : ∀ {A B} {f : A ⇒ B} → f ∘ id ≈ f
     id-l : ∀ {A B} {f : A ⇒ B} → id ∘ f ≈ f
 
-    ∘-resp : ∀ {A B C}
-      → (_∘_ {A} {B} {C}) Preserves₂ _≈_ ⟶ _≈_ ⟶ _≈_
     assoc : ∀ {A B C D} {f : C ⇒ D} {g : B ⇒ C} {h : A ⇒ B}
       → (f ∘ g) ∘ h ≈ f ∘ (g ∘ h)
-\end{code}
 
-%<\cat-field-comp>
+    ∘-resp : ∀ {A B C}
+      → (_∘_ {A} {B} {C}) Preserves₂ _≈_ ⟶ _≈_ ⟶ _≈_
+
+  \end{code}
+\end{AgdaAlign}
+%</cat-field-comp>
 
 
 \end{document}

@@ -22,6 +22,7 @@ open Category Cat
 
 open import Data.Unit using (⊤)
 \end{code}
+%<*unique-def-unique>
 \begin{code}
 IsUniqueSuchThat : ∀ {lp A B}
   → (A ⇒ B → Set lp)
@@ -32,6 +33,8 @@ IsUniqueSuchThat P f = ∀ {g} → P g → f ≈ g
 IsUnique : ∀ {A B} → A ⇒ B → Set (la ⊔ l≈)
 IsUnique {A} {B} = IsUniqueSuchThat {A = A} {B} (λ _ → ⊤)
 \end{code}
+%</unique-def-unique>
+%<*unique-def-exun>
 \begin{code}
 record ∃!′ {lp A B} (P : A ⇒ B → Set lp) : Set (la ⊔ l≈ ⊔ lp) where
   field
@@ -39,6 +42,7 @@ record ∃!′ {lp A B} (P : A ⇒ B → Set lp) : Set (la ⊔ l≈ ⊔ lp) wher
     prop : P arr
     unique : IsUniqueSuchThat P arr
 \end{code}
+%</unique-def-exun>
 \begin{code}
 ∃!″ : ∀ {lp A B} (P : A ⇒ B → Set lp) → Set (la ⊔ l≈ ⊔ lp)
 ∃!″ = ∃!′
@@ -51,8 +55,10 @@ syntax ∃!″ {A = A} {B} (λ f → P) = ∃![ f ∈ A ⇒ B ] P
 ∃! A B = ∃![ f ∈ A ⇒ B ] ⊤
 \end{code}
 
+%<*unique-def-terminal>
 \begin{code}
 IsTerminal : Obj → Set (lo ⊔ la ⊔ l≈)
 IsTerminal One = ∀ X → ∃! X One
 \end{code}
+%</unique-def-terminal>
 \end{document}
