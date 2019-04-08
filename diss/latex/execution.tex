@@ -84,13 +84,60 @@ from the object to the terminal alongside a proof of uniqueness.
 
 \ExecuteMetaData[../agda/latex/ThesisUnique.tex]{unique-def-terminal}
 
-A Category 
+A category having a terminal object can now be encoded as a proposition which
+takes a category and provides an object alongside a proof that it is terminal
+
+\ExecuteMetaData[../agda/latex/ThesisTerminal.tex]{terminal-def-has}
+
+To prove Lawvere's Fixed Point Theorem within Agda and the various surrounding
+proofs in logic, Cartesian Closed Categories must be formalised. For this, in
+addition to terminal objects, binary products and exponentials will be needed
+
+\ExecuteMetaData[../agda/latex/ThesisCCC.tex]{ccc-def-is-ccc}
+
+Products and exponentials have slightly more involved definitions. Beginning
+with the uniqueness principle for products
+
+\ExecuteMetaData[../agda/latex/ThesisProduct.tex]{product-def-product}
+
+\AgdaFunction{IsProduct} takes an indexing function, a product object, and some
+projections out of the product into the components of the indexing
+category. \AgdaFunction{IsProduct} returns a functon type which, upon being
+supplied a set of projections from an object to the indexing set, returns a
+unique arrow from the the object to the previously supplied product object
+satisfying the commuting diagrams for the product.
+
+
+\subsection{Points}
+All that follows is work done during this thesis. The theorem makes use of the
+notion of points and some surrounding definitions
+
+Points are a categorical abstraction that generalise the notion of elements of
+a set. A point is an arrow from the terminal object to any other object
+
+\ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-point}
+
+Given the name of Lawvere's theorem it makes sense to formalise the notion of a
+fixed point categorically
+
+\ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-fixed-point}
+
+A fixed point of a morphsism is a point that is idempotent under composition to
+the right with the morphsim. As is common within the \verb|cats| library this is
+then wrapped up in a record as a sigma type to express that a given function has
+a fixed point
+
+\ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-has-fixed-point}
+
+Now the fixed point point property which features in Lawvere's theorem can be
+formalised which is a predicate on a object in a category expressing that all
+endomorphisms on the object have a fixed point.
+
+\ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-fixed-point-property}
 
 
 
-This is an example sub-sub-section;
-the following content is auto-generated dummy text.
-\lipsum
+
 
 \paragraph{Example paragraph.}
 
