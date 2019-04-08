@@ -69,8 +69,11 @@
 % http://www.ctan.org/tex-archive/usergrps/dante/dtk
 \RequirePackage{dtk-logos}
 \RequirePackage{todonotes}
+\RequirePackage{textgreek}
 \RequirePackage{catchfilebetweentags}
 \RequirePackage{agda}
+\RequirePackage[greek,english]{babel}
+\RequirePackage{autofe}
 
 
 % =============================================================================
@@ -97,6 +100,9 @@
 % configure style of table of contents
 
 \setcounter{tocdepth}{1}
+
+\RequirePackage{ucs}
+\RequirePackage[utf8x]{inputenc}
 
 % configure style of bibliography
 
@@ -195,6 +201,8 @@
   \noindent {\dissertation@author}, \today
 }
 
+
+
 % define macros to mark front, main and back matter
 
 \renewcommand{\frontmatter}{
@@ -211,6 +219,8 @@
   \cleardoublepage
   \pagestyle{marked}
 }
+
+
 
 % -----------------------------------------------------------------------------
 

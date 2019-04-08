@@ -129,13 +129,69 @@ a fixed point
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-has-fixed-point}
 
-Now the fixed point point property which features in Lawvere's theorem can be
+Now the fixed point property which features in Lawvere's theorem can be
 formalised which is a predicate on a object in a category expressing that all
 endomorphisms on the object have a fixed point.
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-fixed-point-property}
+ on the object have a fixed point.
 
+Another useful feature in lawvere's theorem is the notion of point surjectivity
+which itself requires some machinery. First the notion of a solved equation with
+points
 
+\ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-solution}
+
+Point surjectivity expresses the notion that given a point to $B$, $b : 1
+\rightarrow B$, and a morphism $f : A \rightarrow B$, we can produce a point to
+$A$, $a : 1 \rightarrow A$, that satisfies the equation $f \circ a = b$.
+
+Packaging this up into a sigma type which, given a morphism from an object A to
+an object B and a point to B contains a point to A and a proof that is
+constitues a solution to the triple.
+
+\ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-has-solution}
+
+A point surjective morphism is a function for which every point to B there
+exists a solution
+
+\ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-is-point-surjective}
+
+The formulation of the point surjectivity used in the theorem as a record
+confirming the existence of a point surjective funtion between two objects
+
+\ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-point-surjective}
+
+It is now possible to state Lawvere's theorem precisely, working within a
+Cartesian Closed Category.
+
+\begin{AgdaAlign}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-type-diagonal}
+
+Or mathematically that in a Cartesian Closed Category, given a point-surjective
+function from some object $A$ to the exponential object, $B^A$, from $A$ to some object
+$B$, every endomorphism on $B$ has a fixed point.
+
+The proof of the theorem will be developed line by line. The first step is to
+pattern match on the arguments to the proof and bring in the constructors for
+the the output type.
+
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-pattern}
+
+\end{AgdaAlign}
+
+The first argument to the proof is the point-surjective morphism constituting
+the morphism and the proof of point-surjectivity, and the second argument is the
+endomorphism on \verb|B|. The output, a record with holes, requires a point to
+\verb|B| alongside a proof that it is a fixed point of \verb|f|.
+
+To produce a fixed-point the goal is to create a morphism, \verb|g|,  from \verb|A| to
+\verb|B| and then exploit the point-surjective morphism to find a point to
+\verb|A|. With the correctly chosen \verb|g| the composition of this point to A
+with \verb|g| will be a fixed-point. \verb|g| will be constructed such that is
+in some way "self-replicating".
+
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-h-def}
 
 
 
