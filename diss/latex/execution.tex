@@ -19,7 +19,7 @@ of the record. Objects are permitted to be any type of any level and mophisms
 typed as any function that takes two objects and returns a type.
 
 Identity arrows and composition take their obvious definitions. The identity
-arrow provides a distinguished morphsim for each object implicitly and
+aerow provides a distinguished morphsim for each object implicitly and
 composition is a function that takes two morphisms of the correct shape and
 returns the appropriate morphism
 \ExecuteMetaData[../agda/latex/ThesisCategory.tex]{cat-field-comp-id}
@@ -162,6 +162,8 @@ confirming the existence of a point surjective funtion between two objects
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-point-surjective}
 
+\subsection{Lawvere's Fixed Point Theorem}
+
 It is now possible to state Lawvere's theorem precisely, working within a
 Cartesian Closed Category.
 
@@ -193,7 +195,15 @@ in some way "self-replicating".
 
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-h-def}
 
+Categorically, \verb|g| represents the following diagram
 
+\[\begin{tikzcd}[sep=huge]
+    B & B \arrow[l, "f"] & B^A \times A \arrow[l, "eval"] & A \times A \arrow[l,
+    "{\langle \phi \, , id\rangle}"] & A \arrow[l, "\delta"]
+\end{tikzcd}\]
+
+In order to push this morphism back through the point-surjective morphism.
+\verb|g| needs to be turned into a point to the exponential object.
 
 \paragraph{Example paragraph.}
 

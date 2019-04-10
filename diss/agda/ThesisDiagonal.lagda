@@ -59,7 +59,7 @@ lawvere' record { arr = ϕ ; isPointSurjective = isPointSurjective } f =
 \end{code}
 %<*diagonal-h-def>
 \begin{code}
-  let h = (curry (extendToOne (f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ )))
+  let g = (f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ )
 \end{code}
 %</diagonal-h-def>
 \begin{code}

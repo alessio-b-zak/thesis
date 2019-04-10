@@ -1,11 +1,18 @@
 \documentclass[a4paper, 12pt]{article}
+
 \usepackage{agda}
-\usepackage{ucs}
-\usepackage[utf8x]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage{newunicodechar}
+\usepackage{amssymb}
+\usepackage{autofe}
+\usepackage{catchbetweenfiles}
+
+
+\input{utf.tex}
 \usepackage{amssymb}
 \usepackage{bbm}
 \usepackage[greek,english]{babel}
-\usepackage{autofe}
+
 
 \date{}
 
@@ -50,7 +57,6 @@ record ∃!′ {lp A B} (P : A ⇒ B → Set lp) : Set (la ⊔ l≈ ⊔ lp) wher
 syntax ∃!′ (λ f → P) = ∃![ f ] P
 
 syntax ∃!″ {A = A} {B} (λ f → P) = ∃![ f ∈ A ⇒ B ] P
-
 ∃! : (A B : Obj) → Set (la ⊔ l≈)
 ∃! A B = ∃![ f ∈ A ⇒ B ] ⊤
 \end{code}

@@ -41,8 +41,6 @@
 % http://www.ctan.org/tex-archive/macros/latex/required/graphics
 \RequirePackage{graphicx}
 % http://www.ctan.org/tex-archive/macros/latex/required/amslatex
-\RequirePackage{amsmath}
-\RequirePackage{amssymb}
 \RequirePackage{catchfilebetweentags}
 % http://www.ctan.org/tex-archive/macros/latex/contrib/adjustbox
 \RequirePackage{adjustbox}
@@ -69,11 +67,13 @@
 % http://www.ctan.org/tex-archive/usergrps/dante/dtk
 \RequirePackage{dtk-logos}
 \RequirePackage{todonotes}
-\RequirePackage{textgreek}
+
 \RequirePackage{catchfilebetweentags}
 \RequirePackage{agda}
-\RequirePackage[greek,english]{babel}
-\RequirePackage{autofe}
+\RequirePackage{newunicodechar}
+\RequirePackage{amssymb}
+\RequirePackage{tikz-cd}
+\input{./utf.tex}
 
 
 % =============================================================================
@@ -101,8 +101,6 @@
 
 \setcounter{tocdepth}{1}
 
-\RequirePackage{ucs}
-\RequirePackage[utf8x]{inputenc}
 
 % configure style of bibliography
 

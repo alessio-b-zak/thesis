@@ -32,6 +32,6 @@ IsProduct : ∀ {li} {I : Set li} (O : I → Obj) P → (∀ i → P ⇒ O i)
 IsProduct O P proj
   = ∀ {X} (x : ∀ i → X ⇒ O i) → ∃![ u ] (∀ i → x i ≈ proj i ∘ u)
 \end{code}
-%</product-def-product>
+  %</product-def-product>
 
 \end{document}
