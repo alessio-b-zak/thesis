@@ -73,6 +73,12 @@ lawvere' record { arr = ϕ ; isPointSurjective = isPointSurjective } f =
       u = (HasSolution.X ps)
 \end{code}
 %</diagonal-ps-def>
+%<*diagonal-isos-proof>
+\begin{code}
+      ϕ∘u = ( collapseToOne (uncurry (ϕ ∘ u)))
+      fixedPoint = ϕ∘u ∘ u
+\end{code}
+%</diagonal-isos-proof>
 \begin{code}
   in record { X = {!!} ; isFixedPoint = {!!} }
 \end{code}
