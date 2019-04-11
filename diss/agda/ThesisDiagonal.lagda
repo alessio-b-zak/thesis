@@ -62,6 +62,17 @@ lawvere' record { arr = ϕ ; isPointSurjective = isPointSurjective } f =
   let g = (f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ )
 \end{code}
 %</diagonal-h-def>
+%<*diagonal-g'-def>
+\begin{code}
+      g' = (curry (extendToOne (f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ )))
+\end{code}
+%</diagonal-g'-def>
+%<*diagonal-ps-def>
+\begin{code}
+      ps = isPointSurjective g'
+      u = (HasSolution.X ps)
+\end{code}
+%</diagonal-ps-def>
 \begin{code}
   in record { X = {!!} ; isFixedPoint = {!!} }
 \end{code}

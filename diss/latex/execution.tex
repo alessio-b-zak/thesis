@@ -15,11 +15,11 @@ objects, arrows and type of morphism equality respectively
 Categories are typed at a level above the largest of objects, arrows and
 equalities in order to present equality on morphisms as relations on types as
 per the Agda standard library. The axioms of a category are presented as fields
-of the record. Objects are permitted to be any type of any level and mophisms
+of the record. Objects are permitted to be any type of any level and morphisms
 typed as any function that takes two objects and returns a type.
 
 Identity arrows and composition take their obvious definitions. The identity
-aerow provides a distinguished morphsim for each object implicitly and
+arrow provides a distinguished morphism for each object implicitly and
 composition is a function that takes two morphisms of the correct shape and
 returns the appropriate morphism
 \ExecuteMetaData[../agda/latex/ThesisCategory.tex]{cat-field-comp-id}
@@ -65,11 +65,11 @@ more complex abstractions, the notion of unique arrow
 
 \ExecuteMetaData[../agda/latex/ThesisUnique.tex]{unique-def-unique}
 
-Uniqueness is often given with respect to a property (hence universa
-properties). In Agda this amounts to formualating the property as type
+Uniqueness is often given with respect to a property (hence universal
+properties). In Agda this amounts to formulating the property as type
 parameterised by the property and an arrow satisfying the property. The type
 encodes a function which, given any other arrow satisfying the property
-expresses equaltiy to the parameterised arrow. Using this a general unique arrow
+expresses equality to the parameterised arrow. Using this a general unique arrow
 can be encoded using a trivial function that always returns the unit.
 
 Universal properties can now be given as an object, a proposition and a proof of
@@ -102,7 +102,7 @@ with the uniqueness principle for products
 
 \AgdaFunction{IsProduct} takes an indexing function, a product object, and some
 projections out of the product into the components of the indexing
-category. \AgdaFunction{IsProduct} returns a functon type which, upon being
+category. \AgdaFunction{IsProduct} returns a function type which, upon being
 supplied a set of projections from an object to the indexing set, returns a
 unique arrow from the the object to the previously supplied product object
 satisfying the commuting diagrams for the product.
@@ -122,8 +122,8 @@ fixed point categorically
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-fixed-point}
 
-A fixed point of a morphsism is a point that is idempotent under composition to
-the right with the morphsim. As is common within the \verb|cats| library this is
+A fixed point of a morphism is a point that is idempotent under composition to
+the right with the morphism. As is common within the \verb|cats| library this is
 then wrapped up in a record as a sigma type to express that a given function has
 a fixed point
 
@@ -148,7 +148,7 @@ $A$, $a : 1 \rightarrow A$, that satisfies the equation $f \circ a = b$.
 
 Packaging this up into a sigma type which, given a morphism from an object A to
 an object B and a point to B contains a point to A and a proof that is
-constitues a solution to the triple.
+constitutes a solution to the triple.
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-has-solution}
 
@@ -158,7 +158,7 @@ exists a solution
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-is-point-surjective}
 
 The formulation of the point surjectivity used in the theorem as a record
-confirming the existence of a point surjective funtion between two objects
+confirming the existence of a point surjective function between two objects
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-point-surjective}
 
@@ -176,7 +176,7 @@ $B$, every endomorphism on $B$ has a fixed point.
 
 The proof of the theorem will be developed line by line. The first step is to
 pattern match on the arguments to the proof and bring in the constructors for
-the the output type.
+the output type.
 
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-pattern}
 
@@ -202,9 +202,30 @@ Categorically, \verb|g| represents the following diagram
     "{\langle \phi \, , id\rangle}"] & A \arrow[l, "\delta"]
 \end{tikzcd}\]
 
-In order to push this morphism back through the point-surjective morphism.
-\verb|g| needs to be turned into a point to the exponential object.
+In order to push \verb|g| morphism back through the point-surjective morphism
+it needs to be turned into a point to the exponential object. This can be
+achieved via two isomorphisms, $1 \times A \cong A$ and $hom(A \times B \: , \, C)
+\cong hom(A \: , \, C^B)$, the types and directions that are used proof as
+follows
 
+\begin{AgdaMultiCode}
+\ExecuteMetaData[../agda/latex/ThesisExtension.tex]{extension-types-collapseToOne}
+\ExecuteMetaData[../agda/latex/ThesisTypes.tex]{types-type-curry}
+\end{AgdaMultiCode}
+
+By applying the first isomorphism followed by the second, a point to $B^A$ can
+be acquired
+\begin{AgdaAlign}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-g'-def}
+
+The point-surjectivity of $\phi$ can now be used to acquire the associated point
+to \verb|A| with \verb|g'|
+
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-ps-def}
+\end{AgdaAlign}
+
+The fixed point construction can now be achieved by composing $\phi$ with
+\verb|u| twice.
 \paragraph{Example paragraph.}
 
 This is an example paragraph; note the trailing full-stop in the title,

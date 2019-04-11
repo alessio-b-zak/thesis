@@ -1,4 +1,21 @@
-module Extension where
+\documentclass[a4paper, 12pt]{article}
+\usepackage{agda}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage{amssymb}
+\usepackage{bbm}
+\usepackage[greek,english]{babel}
+\usepackage{autofe}
+
+\date{}
+
+\title{Thesis}
+
+\begin{document}
+\maketitle
+
+\begin{code}
+module ThesisExtension where
 
 open import Cats.Category.Base
 open import Cats.Category.Constructions.CCC
@@ -59,8 +76,15 @@ module Build {lo la l=} (C : Category lo la l=)
 
   extendToOne  : ∀ {A B} → (A ⇒ B) → (One × A ⇒ B)
   extendToOne x = x ∘ otherIso
+\end{code}
 
+%<*extension-types-collapseToOne>
+\begin{code}
   collapseToOne : ∀ {A B} → (One × A ⇒ B) → (A ⇒ B)
+\end{code}
+%</extension-types-collapseToOne>
+
+\begin{code}
   collapseToOne x = x ∘ oneIso
 
   collapseExtendIso :  {A B : Obj} {f : A ⇒ B} → collapseToOne (extendToOne f) ≈ f
@@ -84,4 +108,6 @@ module Build {lo la l=} (C : Category lo la l=)
                      back = oneIso ;
                      back-forth = One×A⇒A ;
                      forth-back = isoIso }
-  
+
+\end{code}
+\end{document}
