@@ -1,6 +1,5 @@
 module Lambda where
 
-
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl; sym; trans; cong)
 open import Data.Bool.Base using (Bool; true; false; T; _∧_; _∨_; not)
