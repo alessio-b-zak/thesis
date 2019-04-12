@@ -100,8 +100,19 @@ module Build {lo la l=} (C : Category lo la l=)
                                        f
                                    ∎
 
+\end{code}
+
+%<*extension-coll21-r-type>
+\begin{code}
   collapseToOne-resp : ∀ {A B} {u v : One × A ⇒ B}  → (u ≈ v) → (collapseToOne u) ≈ (collapseToOne v)
+\end{code}
+%</extension-coll21-r-type>
+
+\begin{code}
   collapseToOne-resp x = ∘-resp-l x
+\end{code}
+
+\begin{code}
 
   oneIsoA : ∀{A} →  (One × A) ≅ A
   oneIsoA = record { forth = otherIso ;

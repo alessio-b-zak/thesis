@@ -27,7 +27,7 @@ module Build {lo la l=} (C : Category lo la l=)
 
   oneIso : {A : Obj} → A ⇒ (One × A)
   oneIso {A} = ⟨  isTerminal A ⃗ , id ⟩
- 
+
   otherIso : {A : Obj} → (One × A ⇒ A)
   otherIso {A} = projr {One} {A}
 
@@ -84,4 +84,3 @@ module Build {lo la l=} (C : Category lo la l=)
                      back = oneIso ;
                      back-forth = One×A⇒A ;
                      forth-back = isoIso }
-  

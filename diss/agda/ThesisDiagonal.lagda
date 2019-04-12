@@ -33,7 +33,17 @@ open Points.Build C
 open ≈-Reasoning
 open HasBinaryProducts hasBinaryProducts
 open Extension.Build C {{hasBinaryProducts}}
-
+open ≈-Reasoning
+⟨×⟩-resp-f : ∀ {A B D} {f g : A ⇒ B ↝ D} → f ≈ g → ⟨ f × id {B} ⟩ ≈ ⟨ g × id {B} ⟩
+⟨×⟩-resp-f x = ⟨×⟩-resp x ≈.refl
+\end{code}
+%<*diagonal-uncurry-resp-prf>
+\begin{code}
+uncurry-resp : ∀ {A B D} {f g : A ⇒ B ↝ D} → f ≈ g → uncurry f ≈ uncurry g
+\end{code}
+%</diagonal-uncurry-resp-prf>
+\begin{code}
+uncurry-resp {A} {B} {D} {f} {g} x = ∘-resp-r (⟨×⟩-resp-f {A} {B} {D} {f} {g} x)
 \end{code}
 
 %<*diagonal-type-diagonal>
@@ -46,9 +56,31 @@ lawvere : {A B : Obj} → PointSurjective A (A ↝ B) → FixedPointProperty B
 \begin{code}
 lawvere record { arr = ϕ ;
                  isPointSurjective = isPointSurjective } f =
-                 record { X = {!!} ; isFixedPoint = {!!} }
 \end{code}
 %</diagonal-pattern>
+\begin{code}
+  let g = (f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ )
+      g' = (curry (extendToOne (f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ )))
+      ps = isPointSurjective g'
+      u = (HasSolution.X ps)
+      ϕ∘u = ( collapseToOne (uncurry (ϕ ∘ u)))
+      fixedPoint = ϕ∘u ∘ u
+\end{code}
+%<*diagonal-fix-proof>
+\begin{code}
+      proof
+        = begin
+            f ∘ fixedPoint
+          ≈⟨ {!!} ⟩
+            fixedPoint
+          ∎
+\end{code}
+%</diagonal-fix-proof>
+%<*diagonal-pattern-end>
+\begin{code}
+      in record { X = {!!} ; isFixedPoint = {!!} }
+\end{code}
+%</diagonal-pattern-end>
 
 \begin{AgdaAlign}
 \begin{code}
@@ -73,14 +105,44 @@ lawvere' record { arr = ϕ ; isPointSurjective = isPointSurjective } f =
       u = (HasSolution.X ps)
 \end{code}
 %</diagonal-ps-def>
+%<*diagonal-ps-proof>
+\begin{code}
+      ps-proof = HasSolution.isSolution ps
+\end{code}
+%</diagonal-ps-proof>
 %<*diagonal-isos-proof>
 \begin{code}
       ϕ∘u = ( collapseToOne (uncurry (ϕ ∘ u)))
       fixedPoint = ϕ∘u ∘ u
 \end{code}
 %</diagonal-isos-proof>
+
+%<*diagonal-col-unc-ps>
 \begin{code}
-  in record { X = {!!} ; isFixedPoint = {!!} }
+      col-unc-ps-proof = collapseToOne-resp ( uncurry-resp ps-proof )
+\end{code}
+%</diagonal-col-unc-ps>
+
+\begin{code}
+      proof
+        = begin
+\end{code}
+
+%<*diagonal-col-unc-ps-trans>
+\begin{code}
+            fixedPoint
+          ≈⟨ ∘-resp-l col-unc-ps-proof ⟩
+            (collapseToOne (uncurry g')) ∘ u
+\end{code}
+%</diagonal-col-unc-ps-trans>
+
+\begin{code}
+          ≈⟨ {!!} ⟩
+            fixedPoint
+          ∎
+\end{code}
+\begin{code}
+  in record { X = fixedPoint ; isFixedPoint = {!!} }
 \end{code}
 \end{AgdaAlign}
 

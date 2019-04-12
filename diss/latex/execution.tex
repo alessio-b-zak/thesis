@@ -167,7 +167,6 @@ confirming the existence of a point surjective function between two objects
 It is now possible to state Lawvere's theorem precisely, working within a
 Cartesian Closed Category.
 
-\begin{AgdaAlign}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-type-diagonal}
 
 Or mathematically that in a Cartesian Closed Category, given a point-surjective
@@ -178,9 +177,10 @@ The proof of the theorem will be developed line by line. The first step is to
 pattern match on the arguments to the proof and bring in the constructors for
 the output type.
 
+\begin{AgdaMultiCode}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-pattern}
-
-\end{AgdaAlign}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-pattern-end}
+\end{AgdaMultiCode}
 
 The first argument to the proof is the point-surjective morphism constituting
 the morphism and the proof of point-surjectivity, and the second argument is the
@@ -226,13 +226,48 @@ to \verb|A| with \verb|g'|
 
 The fixed point construction can now be achieved by composing $\phi$ with
 \verb|u| twice to obtain a point to \verb|B|. After composing once with \verb|u|
- a point to $B^A$ is obtained. This must be pushed through the aformentioned
- isomorphisms to get a morphism, $A \rightarrow B$, to compose with \verb|u|
- again.
+a point to $B^A$ is obtained. This must be pushed through the aformentioned
+isomorphisms to get a morphism, $A \rightarrow B$, to compose with \verb|u|
+again.
 
- \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-isos-proof}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-isos-proof}
 
+Now it must be shown that \verb|f| $\circ$ \verb|fixedPoint| $\approx$
+\verb|fixedPoint|. This proof will be developed using equational reasoning. The
+proof starts with the word \AgdaFunction{begin} and the left-hand side of the
+equality, with expressions separated by
+equalities on morphisms, put inside
+\AgdaOperator{\AgdaFunction{≈⟨}}\AgdaSpace{}\AgdaOperator{\AgdaFunction{⟩}}, and
+ends with the right-hand side of the equality followed by
+\AgdaOperator{\AgdaFunction{∎}}. In the case of the required proof
 
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-fix-proof}
 
-This is an example paragraph; note the trailing full-stop in the title,
-which is intended to ensure it does not run into the text.
+The first transformation in the proof is to use the point-surjectivity of
+$\phi$ to expand the the $\phi$ $\circ$ \verb|u| within the definition of
+\verb|fixedPoint| to \verb|g'|.
+
+The proof of point-surjectivity is extracted as follows
+
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-ps-proof}
+
+This cannot be used directly due to the application of \AgdaFunction{curry} and
+\AgdaFunction{extendToOne} to the expression. The usage of equivlance relations
+means that congruence must be proved separately for every function on
+morphisms. These two proofs have the following types but the proofs are elided
+due to unecessary complexity.
+
+\begin{AgdaSuppressSpace}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-uncurry-resp-prf}
+\ExecuteMetaData[../agda/latex/ThesisExtension.tex]{extension-coll21-r-type}
+\end{AgdaSuppressSpace}
+
+To make \verb|ps-proof| work within the nested function applications they are
+wrapped in the two proofs of congruence necessary
+
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-col-unc-ps}
+
+This can then be used by targeting the lefthand morphism of the outermost
+composition and change this to \verb|g'|
+
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-col-unc-ps-trans}
