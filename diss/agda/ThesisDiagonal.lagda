@@ -70,9 +70,9 @@ lawvere record { arr = ϕ ;
 \begin{code}
       proof
         = begin
-            f ∘ fixedPoint
-          ≈⟨ {!!} ⟩
             fixedPoint
+          ≈⟨ {!!} ⟩
+            f ∘ fixedPoint
           ∎
 \end{code}
 %</diagonal-fix-proof>
@@ -132,9 +132,23 @@ lawvere' record { arr = ϕ ; isPointSurjective = isPointSurjective } f =
 \begin{code}
             fixedPoint
           ≈⟨ ∘-resp-l col-unc-ps-proof ⟩
-            (collapseToOne (uncurry g')) ∘ u
 \end{code}
 %</diagonal-col-unc-ps-trans>
+
+%<*diagonal-col-unc-ps-trans2>
+\begin{code}
+            (collapseToOne (uncurry g')) ∘ u
+\end{code}
+%</diagonal-col-unc-ps-trans2>
+
+%<*diagonal-g'-reduc>
+\begin{code}
+          ≈⟨ ∘-resp-l (∘-resp-l uncurry∘curry) ⟩
+            (collapseToOne (extendToOne ( f ∘ eval ∘ ⟨ ϕ × id ⟩ ∘ δ))) ∘ u
+          ≈⟨ ∘-resp-l (collapseExtendIso) ⟩
+            ( f ∘ (eval ∘ (⟨ ϕ × id ⟩ ∘ δ))) ∘ u
+\end{code}
+%</diagonal-g'-reduc>
 
 \begin{code}
           ≈⟨ {!!} ⟩

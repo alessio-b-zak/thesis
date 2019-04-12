@@ -270,4 +270,21 @@ wrapped in the two proofs of congruence necessary
 This can then be used by targeting the lefthand morphism of the outermost
 composition and change this to \verb|g'|
 
+\begin{AgdaMultiCode}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-col-unc-ps-trans}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-col-unc-ps-trans2}
+\end{AgdaMultiCode}
+
+The next transformation is accomplished by utilising that \AgdaFunction{curry}
+is an isomorphism with respect to \AgdaFunction{uncurry}, and that
+\AgdaFunction{collapseToOne} is an isomorphism with respect to
+\AgdaFunction{extendToOne}. With this \verb|g'| $\circ$ \verb|u| is obtained,
+expanding \verb|g'|,
+
+\begin{AgdaMultiCode}
+    \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-col-unc-ps-trans2}
+    \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-g'-reduc}
+\end{AgdaMultiCode}
+
+Now, after reassociating the expression, universal properties can be applied to
+move \verb|u| through the expression.
