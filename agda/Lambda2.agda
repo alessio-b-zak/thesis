@@ -2,6 +2,9 @@ module Lambda2 where
 
 
 open import Data.String
+open import Relation.Nullary.Negation using (contraposition)
+open import Data.Product using (_×_) renaming (_,_ to ⟨_,_⟩)
+open import Relation.Nullary
 open import Agda.Builtin.Size
 open import Data.Nat
 open import Data.Empty using (⊥; ⊥-elim)
@@ -19,7 +22,6 @@ infixl 7  _∙_
 data Type : Set where
   ★ : Type
 
-
 data Context : Set where
   ø : Context
   _,_ : Context → Type → Context
@@ -29,26 +31,12 @@ data _∋_ : Context → Type → Set where
   Z : ∀ {Γ A} → Γ , A ∋ A
   S : ∀ {Γ A B} → Γ ∋ A → Γ , B ∋ A
 
-data _⊢_ : {i : Size} → Context → Type → Set where
+data _⊢_ : Context → Type → Set where
 
+  `_ : ∀ {Γ A} → Γ ∋ A → Γ ⊢ A
 
-  `_ : ∀ {Γ A i} → Γ ∋ A →  _⊢_ {↑ i} Γ A
+  ƛ_ : ∀ {Γ} → Γ , ★ ⊢ ★ → Γ ⊢ ★
 
-  ƛ_ : ∀ {Γ i} {j : Size< i} →  _⊢_ {j} (Γ , ★) ★ → _⊢_ {i} Γ ★
+  _∙_ : ∀ {Γ} → Γ ⊢ ★ → Γ ⊢ ★ → Γ ⊢ ★
 
-  _∙_ : ∀ {Γ i j} →  _⊢_ {i} Γ ★ →  _⊢_ {j} Γ ★ → _⊢_ {i ⊔ˢ j} Γ ★
-
-  ~_ : ∀ {Γ A i} → String → _⊢_ {↑ i} Γ A
-
---add check for syntactic equality
-count : ∀ {Γ} → ℕ → Γ ∋ ★
-count {Γ , ★} zero = Z
-count {Γ , ★} (suc n) = S (count n)
-count {ø} _ = ⊥-elim impossible
-  where postulate impossible : ⊥
-
-
-uncount : ∀ {Γ} → Γ ∋ ★ → ℕ
-uncount Z = zero
-uncount (S x) = suc (uncount x)
-
+  ~_ : ∀ {Γ A} → String → Γ ⊢ A

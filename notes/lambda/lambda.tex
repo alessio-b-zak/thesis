@@ -123,7 +123,55 @@ show cccsness.
 
 The reflexive object is \textbf{I} as $\textbf{I}^\textbf{I} = \textbf{1}$ where
 $\textbf{I} = \lambda x.x$ and $\textbf{1} = \lambda x \, y . x \, y$ where
-\textbf{1} is itself the arrow both ways between \textbf{1} and \textbf{I}.
+\textbf{1} is itself the arrow both ways between \textbf{1} and \textbf{I} and
+$\textbf{1} \circ \textbf{1} = \textnormal{id}_{\textbf{1}}$.
+
+Via the earlier corollary, every endomorphism on \textbf{I} has a fixed point.
+Endomorphisms on \textbf{I} are $\lambda$-terms, $f$, such that $\textbf{I}
+\circ f \circ \textbf{I} = f$. Expanding this out
+\begin{align*}
+    \textbf{I} \circ f \circ \textbf{I} &= \lambda x . \, \textbf{I} \, (f \, (\textbf{I}
+    \, x)) \\
+    &= \lambda x . \, f \, x
+\end{align*}
+
+For this to encompass all (any?) $\lambda$-terms our equational theory must
+include the $\eta$-rule. Given that this is a construction is for
+$\lambda$-algebras which need not have $\eta$ this rains on the hope that
+Lawvere's fixed point theorem will correspond to the first recursion theorem for
+the untyped $\lambda$-calculus.
+
+A point to \textbf{I}, $p$, in the karoubi'd category corresponds to $\lambda$-terms such
+that $\textbf{I} \circ p \circ t = p$
+
+\begin{align*}
+    \textbf{I} \circ p \circ t &= p \circ t \\
+    &= \lambda x . p (t x) \\
+    &= \lambda x . p (\lambda y . y) \\
+    &= \lambda x . p \textbf{I} \\
+    &= \textbf{K} (p \textbf{I})
+\end{align*}
+
+i.e some constant function.
+
+With this in mind, Lawvere's fixed point theorem ends up representing a
+reasonably strange theorem in the untyped $\lambda$-calculus i.e. for every
+$\lambda$-term, $f$, that satisfies extensionality there exists a constant
+$\lambda$-term, $u$, such that $\lambda x . f (u x) = u$. $u =
+\textbf{K}(p\textbf{I})$ for some $p$.
+
+\begin{align*}
+    \lambda x . f (u x ) &= \lambda x . f(( \textbf{K} (p \textbf{I})) x) \\
+    &= \lambda x . f(p \textbf{I}) \\
+    &= \textbf{K} (f (p \textbf{I})) \\
+    &= \textbf{K} (p \textbf{I})
+\end{align*}
+
+The last line provides some hope for a partial recovery of the first recursion
+theorem. Analysing what $p$ is, as guaranteed by LWFPT, may give sommay also be of use.e insight.
+
+
+Analysing the other direction is a lot more fruitful
 
 \section{Scott-Curry}
   - Diagonalization operator \\
