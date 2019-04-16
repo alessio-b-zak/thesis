@@ -273,18 +273,29 @@ composition and change this to \verb|g'|
 \begin{AgdaMultiCode}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-col-unc-ps-trans}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-col-unc-ps-trans2}
-\end{AgdaMultiCode}
-
+\\
 The next transformation is accomplished by utilising that \AgdaFunction{curry}
 is an isomorphism with respect to \AgdaFunction{uncurry}, and that
 \AgdaFunction{collapseToOne} is an isomorphism with respect to
 \AgdaFunction{extendToOne}. With this \verb|g'| $\circ$ \verb|u| is obtained,
-expanding \verb|g'|,
+expanding \verb|g'|, \\
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-col-unc-ps-trans2}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-g'-reduc}
+\\
+Before begin able to manipulate this expression the expression must be
+reassociated. This is particularly tedious.
 
-\begin{AgdaMultiCode}
-    \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-col-unc-ps-trans2}
-    \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-g'-reduc}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-reassoc}
+\\
+Once this has been achieved, definitions can be expanded and applied.
+\AgdaFunction{$\delta$} is the unit of the diagonal-product adjunction and can
+defined simply as \\
+
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-delta}
+\\
+Intuitively, it can be seen that the precomposition of a morphism by an arrow to
+a product object can fused to push the precomposed morphism into each branch of
+the product object.
+
+
 \end{AgdaMultiCode}
-
-Now, after reassociating the expression, universal properties can be applied to
-move \verb|u| through towards $\phi$.
