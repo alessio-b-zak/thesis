@@ -44,7 +44,7 @@ module Build {lo la l=} (C : Category lo la l=)
   One×A⇒A {A} = begin
                    oneIso ∘ otherIso
                  ≈⟨ ≈.refl ⟩
-                    ⟨ isTerminal A ⃗ , id ⟩  ∘ projr 
+                    ⟨ isTerminal A ⃗ , id ⟩  ∘ projr
                  ≈⟨ ⟨,⟩-∘ ⟩
                     ⟨ ((isTerminal A ⃗) ∘ projr) , (id ∘ projr) ⟩
                  ≈⟨ ⟨,⟩-resp ≈.refl id-l ⟩
