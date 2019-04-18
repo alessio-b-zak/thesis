@@ -113,8 +113,8 @@ data _=sk_ : SK → SK → Set where
 --evalNum x y | no p =  {!K ∙∙ (convert y) !}
 
 convert : LambdaTerm → SK
-
 evalNum : ∀ {Γ} → (x : ℕ)  → Γ , ★ ⊢ ★ → SK
+
 evalNum x (` x₁) = {!!}
 evalNum x (ƛ j) = {!!}
 evalNum x (j ∙ j₁) = {!!}

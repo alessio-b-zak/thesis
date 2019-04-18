@@ -108,7 +108,7 @@ unique arrow from the the object to the previously supplied product object
 satisfying the commuting diagrams for the product.
 
 
-\subsection{Points}
+\subsection{Points} \todo{expand proofs further}
 All that follows is work done during this thesis. The theorem makes use of the
 notion of points and some surrounding definitions
 
@@ -162,7 +162,7 @@ confirming the existence of a point surjective function between two objects
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-point-surjective}
 
-\subsection{Lawvere's Fixed Point Theorem}
+\section{Lawvere's Fixed Point Theorem}
 
 It is now possible to state Lawvere's theorem precisely, working within a
 Cartesian Closed Category.
@@ -204,8 +204,8 @@ Categorically, \verb|g| represents the following diagram
 
 In order to push \verb|g| morphism back through the point-surjective morphism
 it needs to be turned into a point to the exponential object. This can be
-achieved via two isomorphisms, $1 \times A \cong A$ and $hom(A \times B \: , \, C)
-\cong hom(A \: , \, C^B)$, the types and directions that are used proof as
+achieved via two isomorphisms, $1 \times A \cong A$ and $\textnormal{hom}(A \times B \: , \, C)
+\cong \textnormal{hom}(A \: , \, C^B)$, the types and directions that are used proof as
 follows
 
 \begin{AgdaMultiCode}
@@ -268,13 +268,14 @@ wrapped in the two proofs of congruence necessary
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-col-unc-ps}
 
 This can then be used by targeting the lefthand morphism of the outermost
-composition and change this to \verb|g'|
+composition and change this to \verb|g'|. This is done using
+\AgdaFunction{∘-resp-l} which allows a proof to be applied to chang the lefthand
+side of a morphism composition.
 
 \begin{AgdaMultiCode}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-col-unc-ps-trans}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-col-unc-ps-trans2}
-\end{AgdaMultiCode}
-
+\\
 The next transformation is accomplished by utilising that \AgdaFunction{curry}
 is an isomorphism with respect to \AgdaFunction{uncurry}, and that
 \AgdaFunction{collapseToOne} is an isomorphism with respect to
@@ -411,6 +412,8 @@ corollary to Lawvere's fixed point theorem can be stated precisely, working in a
 CCC
 
 \ExecuteMetaData[../agda/latex/ThesisY.tex]{Y-def-corollary}
+
+Formalising this in Agda first requires a formalisation of a reflexive object.
 
 Understanding what this means requires looking at the specific of both models in
 detail. First however what exactly it means to be a model of the
