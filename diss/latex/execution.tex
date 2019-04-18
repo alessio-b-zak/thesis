@@ -375,5 +375,41 @@ theorem is the statement to the effect that the theorem allows for the
 derivation of a fixed point combinator for the untyped $\lambda$-calculus.
 Whilst being a claim repeated in several papers there does not appear to be a
 proof associated with this. In contrast it is somewhat easier to find a proof
-of the first fixed point theorem in the untyped $\lambda$-calculus
-\todo{theorem}.
+of the first fixed point theorem in the untyped $\lambda$-calculus. \todo{theorem}
+
+In this thesis provide a novel proof is provided of the first fixed point
+theorem using Lawvere's fixed point theorem. A simpler proof is also provided.
+The proof in this thesis outlines an interesting phenomena and poses some
+questions in the study of models of the $\lambda$-calculus. Both proofs rest on
+a similar and simple observations of models of the $\lambda$-calculus and a
+simple corollary of Lawvere's fixed point theorem. The observation in the
+theory of the untyped $\lambda$-calculus, first made by Dana Scott in his
+development of domain theory, is that models for the $\lambda$-calculus often
+want to exploit the fact that $\lambda$-terms can be considered as objects of
+the models but that $\lambda$-terms themselves are functions between
+$\lambda$-terms. This naturally engenders a desire for some object $D$ that is
+isomorphic to $D^D$, the function space on $D$. This is impossible for any set,
+as shown by the previous section. Dana Scott solved this by constructing an
+object $D_{\infty}$ as a complete partial order which will be outlined below.
+This was later generalised by Koymans and Scott to be any Cartesian closed
+category with an object $D$ which has a retraction to its own function space,
+termed as a reflexive object.
+
+The relationship between these constructions and Lawvere's theorem can be
+understood by observing that in any CCC with a reflexive object $D$ there is a
+point surjective morphism from $D$ to $D^D$, precisely the retraction.
+Formalising this in Agda first requires a formalisation of a reflexive object.
+
+Understanding what this means requires looking at the specific of both models in
+detail. First however what exactly it means to be a model of the
+$\lambda$-calculus in general.
+\\
+- $\lambda$-models \\
+- syntactic lambda models \\
+- $D_{\infty}$ as a lambda model and a category. Fixed point derivation \\
+- CCCs with a reflexive object Karoubi and reverse. Derivation of fixed point
+combinator for first direction. Discussion of point surjective and what models
+they correspond to. Potential future work.
+
+
+
