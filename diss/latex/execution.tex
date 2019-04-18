@@ -279,12 +279,146 @@ The next transformation is accomplished by utilising that \AgdaFunction{curry}
 is an isomorphism with respect to \AgdaFunction{uncurry}, and that
 \AgdaFunction{collapseToOne} is an isomorphism with respect to
 \AgdaFunction{extendToOne}. With this \verb|g'| $\circ$ \verb|u| is obtained,
-expanding \verb|g'|,
+expanding \verb|g'|, \\
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-col-unc-ps-trans2}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-g'-reduc}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-g'-reduc1}
+\\
+Before begin able to manipulate this expression the expression must be
+reassociated. This is particularly tedious.\\
 
-\begin{AgdaMultiCode}
-    \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-col-unc-ps-trans2}
-    \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-g'-reduc}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-g'-reduc1}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-reassoc}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-reassoc1}
+\\
+Once this has been achieved, definitions can be expanded and applied.
+\AgdaFunction{$\delta$} is the unit of the diagonal-product adjunction and can
+defined simply as \\
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-delta} \\
+Intuitively, it can be seen that the precomposition of a morphism by an arrow to
+a product object can fused to push the precomposed morphism into each branch of
+the product object.
+\\
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-reassoc1}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-in-u}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-in-u1} \\
+To reproduce the original fixed point, $\phi$ should be composed with \verb|u|
+followed by another composition with \verb|u|. To do this, a corollary to the
+universal property of exponentials must be used, however some rearrangement must
+be done. The corollary that needs to be used is \todo{eval-curry}
+
+This requires considerably more work as each transformation of product
+objects must be made explicit \\
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-in-u1}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-product-rearr}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-product-rearr1} \\
+One \verb|u| must be brought into the left-hand product without the right-hand
+one in order to match the universal property of exponentials. Another
+requirement for \AgdaFunction{eval-curry} is that $\phi$ $\circ$ \verb|u| must
+be wrapped inside \AgdaFunction{curry}. This can be done by applying the
+\AgdaFunction{curry∘uncurry} isomorphism \\
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-product-rearr1}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-curryuncurry}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-curryuncurry1} \\
+Now, the universal property can be applied to extract \AgdaFunction{uncurry}
+($\phi$ $\circ$ \verb|u|) from the product object \\
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-curryuncurry1}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-eval-curry}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-eval-curry1} \\
+The end is in sight and all that remains is to extract the second \verb|u|. This
+collapsing $A \times 1$ to $A$ which can be achieved by inserting the identity
+for $A \times 1$ and deconstructing this into the morphisms comprising the
+isomorphism and seeing what happens \\
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-eval-curry1}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-ax1-iso}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-ax1-iso1} \\
+The isomorphisms happen to precisecly be what is needed to recover the fixed
+point \\
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-ax1-iso1}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-iso-app}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-iso-app1} \\
+Applying \AgdaFunction{projr} to the product object  extracts \verb|u| giving us
+the fixed point \\
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-proj-out}
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-end} \\
+The proof can be finished off by filling in the holes in the record \\
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-record}
 \end{AgdaMultiCode}
 
-Now, after reassociating the expression, universal properties can be applied to
-move \verb|u| through the expression.
+The contrapositive of the statement is worth defining as it is useful for some
+of the applications.
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-cantor}
+
+\subsection{Applications}
+
+Lawvere's fixed point theorem is an incredibly broad ranging theorem that
+generalises many important theorems in mathematical logic and foundational
+computer science and mathematics. This thesis will formalise and axiomatise two
+specific instances, Cantor's diagonal argument and the first recursion theorem
+in the $\lambda$-calculus. An analog to Cantor's diagonal argument will be introduced
+alongside a category of small types in place of the category of sets.
+After, categorical models of the $\lambda$-calculus will be explored and the
+consequences of lawvere's fixed point theorem in these models. This theorem has
+many more applications in paradoxes and logic which can be found in (Yanofsky).
+Some limitations in formalising these within theorem provers will be explored in
+the further work section.
+\subsection{Cantor's Diagonal Theorem}
+
+\subsection{The $\lambda$-Calculus}
+
+Despite the deep connection between CCCs and the $\lambda$-calculus \todo{cite}
+Lawvere's fixed point theorem has been relatively underexplored within the
+field. In this section, a focus will be placed on the untyped
+$\lambda$-calculus. A common theme in presentations of Lawvere's fixed point
+theorem is the statement to the effect that the theorem allows for the
+derivation of a fixed point combinator for the untyped $\lambda$-calculus.
+Whilst being a claim repeated in several papers there does not appear to be a
+proof associated with this. In contrast it is somewhat easier to find a proof
+of the first fixed point theorem in the untyped $\lambda$-calculus. \todo{theorem}
+
+In this thesis provide a novel proof is provided of the first fixed point
+theorem using Lawvere's fixed point theorem. A simpler proof is also provided.
+The proof in this thesis outlines an interesting phenomena and poses some
+questions in the study of models of the $\lambda$-calculus. Both proofs rest on
+a similar and simple observations of models of the $\lambda$-calculus and a
+simple corollary of Lawvere's fixed point theorem. The observation in the
+theory of the untyped $\lambda$-calculus, first made by Dana Scott in his
+development of domain theory, is that models for the $\lambda$-calculus often
+want to exploit the fact that $\lambda$-terms can be considered as objects of
+the models but that $\lambda$-terms themselves are functions between
+$\lambda$-terms. This naturally engenders a desire for some object $D$ that is
+isomorphic to $D^D$, the function space on $D$. This is impossible for any set,
+as shown by the previous section. Dana Scott solved this by constructing an
+object $D_{\infty}$ as a complete partial order which will be outlined below.
+This was later generalised by Koymans and Scott to be any Cartesian closed
+category with an object $D$ which has a retraction to its own function space,
+termed as a reflexive object.
+
+The relationship between these constructions and Lawvere's theorem can be
+understood by observing that in any CCC with a reflexive object $D$ there is a
+point surjective morphism from $D$ to $D^D$, precisely the retraction.
+Formalising this in Agda first requires a formalisation of a reflexive object
+and retractions. In an arbitrary category a retraction between two objects
+\verb|A| and \verb|B| is
+
+\ExecuteMetaData[../agda/latex/ThesisRetract.tex]{retract-def-retract}
+
+i.e. A pair of arrows in both directions between \verb|A| and \verb|B| and a
+proof that the composition of the two form the identity in a given direction.
+A reflexive object is simply some object \verb|D| alongside a retraction,
+\AgdaDatatype{Retract} \verb|D| $\verb|D|^{\verb|D|}$. Now the relevant
+corollary to Lawvere's fixed point theorem can be stated precisely, working in a
+CCC
+
+\ExecuteMetaData[../agda/latex/ThesisY.tex]{Y-def-corollary}
+
+Understanding what this means requires looking at the specific of both models in
+detail. First however what exactly it means to be a model of the
+$\lambda$-calculus in general.
+\\
+- $\lambda$-models \\
+- syntactic lambda models \\
+- $D_{\infty}$ as a lambda model and a category. Fixed point derivation \\
+- CCCs with a reflexive object Karoubi and reverse. Derivation of fixed point
+combinator for first direction. Discussion of point surjective and what models
+they correspond to. Potential future work.
