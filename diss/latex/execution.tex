@@ -413,12 +413,56 @@ CCC
 
 \ExecuteMetaData[../agda/latex/ThesisY.tex]{Y-def-corollary}
 
-Formalising this in Agda first requires a formalisation of a reflexive object.
+The proof can be created by creating a point-surjective function from \verb|X|
+to $\verb|X|^{\verb|X|}$ and applying the earlier proof of
+\AgdaFunction{lawvere}. First, the retraction can be pattern matched on and
+lawvere introduced with the arrow from \verb|X| to $\verb|X|^{\verb|X|}$ with
+only a proof of point surjectivity required.
+
+\ExecuteMetaData[../agda/latex/ThesisY.tex]{Y-def-corollary-body}
+
+With \verb|b| being a general point to $\verb|X|^{\verb|X|}$, a point to
+\verb|X| needs to be provided alongside a proof that \verb|b| is the solution to
+the obvious equation \todo{fill in equation}. The point to \verb|X| is found by
+using the retraction. The proof of equality is simply achieved by exploiting the
+definition of a retraction to collapse the identity.
+
+\ExecuteMetaData[../agda/latex/ThesisY.tex]{Y-point-surjective}
+
 
 Understanding what this means requires looking at the specific of both models in
 detail. First however what exactly it means to be a model of the
-$\lambda$-calculus in general.
-\\
+$\lambda$-calculus in general must be explored. \todo{cite $\lambda$-textbook}
+$\bm{\lambda}$ refers to the equational theory of the same name outlined in
+\todo{kerr's notes}. Models, in the model theoretic sense, are helpful for
+exploring properties of the $\lambda$-calculus that are not immediate from the
+equational theory and syntax itself, utilising discoveries from the field of
+model theory. Providing a model for the $\lambda$-calculus was a difficult task,
+primarily due to axioms of ordinary set theory (the axiom of regularity)
+preventing a set from being an element of itself and thus a function from being
+in its domain. With $\lambda$-terms being able to be considered as functions
+between $\lambda$-terms this is an intimate problem with providing a set based
+model. Several concrete models were provided since the first discovery of the
+$\lambda$-calculus inclduing Scott's $D_{\infty}$, to be outlined later, Bohm's
+tree model and Plotkin and Scott's $P\omega$ model. Despite these concrete
+models of the $\lambda$-calculus, what exactly it meant to be a model of the
+$\lambda$-calculus was less clear and only concretely defined later on by
+\todo{who made $\lambda$-models}. For the equational theory $\bm{\lambda}$, the
+class of structures which which constitute models are known as
+$\lambda$-algebras. There are multiple formulations of $\lambda$-algebras, this
+thesis will use several and point to proofs of equivalence within
+\todo{barendregt}.
+
+-Applicative structure
+
+The first presentation of $\lambda$-algebras is a triple $M = (A \, , \, \bullet \,
+, \, \llbracket \, \rrbracket)$ of an underlying set $A$, a binary operation
+$\bullet : A \rightarrow A$ and a syntactical intepretation function $\llbracket
+\, \rrbracket$. Syntactical intepretations in an algebra, $M$,  are functions $I :
+\Lambda(M) \times \textnormal{Val}(M) \rightarrow A$ where $\Lambda(M)$ is the set
+of all $\lambda$-terms, $\Lambda$, extended with constants for each element in
+$M$ and Val$(M)$ is a function from Strings to elements of $M$.
+
 - $\lambda$-models \\
 - syntactic lambda models \\
 - $D_{\infty}$ as a lambda model and a category. Fixed point derivation \\
