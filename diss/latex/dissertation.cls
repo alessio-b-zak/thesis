@@ -69,10 +69,13 @@
 \RequirePackage{todonotes}
 
 \RequirePackage{catchfilebetweentags}
+\RequirePackage{amsmath}
 \RequirePackage{agda}
 \RequirePackage{newunicodechar}
 \RequirePackage{amssymb}
 \RequirePackage{tikz-cd}
+\RequirePackage{bm}
+\RequirePackage{stmaryrd}
 \input{./utf.tex}
 
 

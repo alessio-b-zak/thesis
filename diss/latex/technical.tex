@@ -1,21 +1,37 @@
 % !TEX root = ./dissertation.tex
-{\bf A compulsory chapter, of roughly $10$ pages}
-\vspace{1cm}
+\section{Martin Lof Type Theory}
+The approach to theorem proving taken in this thesis is a type theoretic
+approach exploiting the curry-howard correspondence. This will be done in a
+dependent type theory designed by Per Martin Lof, a logician working in
+intutionistic logic. Martin Lof's type theory, here on abbreviated as MLTT, was
+intended to be an entirely constructive foundation in which mathematics could be
+done. Just as, inline with the curry-howard correspondence, the intutionistic
+fragment of natural deduction has an interpretation within the simply-typed
+$\lambda$-calculus, MLTT has a logical interpretation as first-order
+intuitionistic predicate logic by including dependent types in the theory.
 
-\noindent
-This chapter is intended to describe the technical basis on which execution
-of the project depends.  The goal is to provide a detailed explanation of
-the specific problem at hand, and existing work that is relevant (e.g., an
-existing algorithm that you use, alternative solutions proposed, supporting
-technologies).
+MLTT adopts the Church-style view of typing in which terms cannot be brought in
+without a unique type. This is done by introducing typing as a judgement of the
+type theory. The judgements of a theory are the conclusions that can be made
+from the theory given the deductive rules of said theory. The judgement that a
+term $a$ has type $A$ is written
 
-Per the same advice in the handbook, note there is a subtly difference from
-this and a full-blown literature review (or survey).  The latter might try
-to capture and organise (e.g., categorise somehow) {\em all} related work,
-potentially offering meta-analysis, whereas here the goal is simple to
-ensure the dissertation is self-contained.  Put another way, after reading
-this chapter a non-expert reader should have obtained enough background to
-understand what {\em you} have done (by reading subsequent sections), then
-accurately assess your work.  You might view an additional goal as giving
-the reader confidence that you are able to absorb, understand and clearly
-communicate highly technical material.
+\begin{align*}
+    a: \, A
+\end{align*}
+
+The other primary judgement of MLTT is that of judgemental equality. Judgemental
+equality is used to introduce new constructions into the theory as definitional
+equalities to allow us to introduce and name new constructions and to establish
+when two terms normalise to the same term. The judgement that two terms are
+equal (at a type) 
+
+
+correspondence, presentation of the type theory. intensional vs extensional.
+choices could have made, nurpl, cedille, coq, calculus of constructions.
+
+Agda: syntax, semantics, type theory
+
+Proving in Agda: small examples
+
+Setoids: limitations of propositional equality
