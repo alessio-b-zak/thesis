@@ -23,14 +23,47 @@ term $a$ has type $A$ is written
 The other primary judgement of MLTT is that of judgemental equality. Judgemental
 equality is used to introduce new constructions into the theory as definitional
 equalities to allow us to introduce and name new constructions and to establish
-when two terms normalise to the same term. The judgement that two terms are
-equal (at a type) 
+when two terms normalise to the same term. The judgement that two terms,
+$a$ and $b$ are equal (at type $A$) is written
+
+\begin{align*}
+    a \equiv b \, : \, A
+\end{align*}
 
 
-correspondence, presentation of the type theory. intensional vs extensional.
-choices could have made, nurpl, cedille, coq, calculus of constructions.
+Agda is a dependently typed functional language in which theorem can be done.
+Agda can be used as a proof assistant through the lens of the curry-howard
+correspondance given it's type system. Agda uses Haskell like syntax and its
+underlying type theory is based of that of Per Martin-Lof.
 
-Agda: syntax, semantics, type theory
+Types are introduced by introducing definitional equalities that define how to
+form and use the types within the context of the theory. In the section that
+follows, only a limited number of types will be introduced so as to understand
+how the type theory can be used in theorem proving.
+
+sigma type
+
+product
+
+coproduct
+
+natural numbers
+
+equality
+
+intensional vs extensional.
+
+Agda:
+
+pattern matching
+
+basic syntax
+
+introducing datatypes
+
+records
+
+
 
 Proving in Agda: small examples
 

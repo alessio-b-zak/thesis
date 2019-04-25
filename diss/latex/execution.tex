@@ -367,7 +367,7 @@ the further work section.
 
 \subsection{The $\lambda$-Calculus}
 
-Despite the deep connection between CCCs and the $\lambda$-calculus \todo{cite}
+Despite the deep connection between $CCCs$ and the $\lambda$-calculus \todo{cite}
 Lawvere's fixed point theorem has been relatively underexplored within the
 field. In this section, a focus will be placed on the untyped
 $\lambda$-calculus. A common theme in presentations of Lawvere's fixed point
@@ -396,7 +396,7 @@ category with an object $D$ which has a retraction to its own function space,
 termed as a reflexive object.
 
 The relationship between these constructions and Lawvere's theorem can be
-understood by observing that in any CCC with a reflexive object $D$ there is a
+understood by observing that in any $CCC$ with a reflexive object $D$ there is a
 point surjective morphism from $D$ to $D^D$, precisely the retraction.
 Formalising this in Agda first requires a formalisation of a reflexive object
 and retractions. In an arbitrary category a retraction between two objects
@@ -457,16 +457,109 @@ The definition of $\lambda$-algebras are predicated on the definition of an
 applicative structure. An applicative structure is a tuple $M = (A \, , \,
 \bullet)$ where $A$ is a set and $\bullet$ is a binary operation on $A$.
 
-The first presentation of $\lambda$-algebras is of the so called environment or
-syntactical type as a triple $M = (A \, , \, \bullet \, , \, \llbracket \,
-\rrbracket)$ of an underlying set $A$, a binary operation $\bullet : A
-\rightarrow A$ and a syntactical intepretation function $\llbracket \,
-\rrbracket$. Syntactical intepretations in an algebra, $M$,  are functions $I :
-\Lambda(M) \times \textnormal{Val}(M) \rightarrow A$ where $\Lambda(M)$ is the
-set of all $\lambda$-terms, $\Lambda$, extended with constants for each element
-in $M$ and Val$(M)$ is a function from Strings to elements of $M$.
+terms over a applicative structure
 
-- $D_{\infty}$ as a lambda model and a category. Fixed point derivation \\
-- CCCs with a reflexive object Karoubi and reverse. Derivation of fixed point
-combinator for first direction. Discussion of point surjective and what models
-they correspond to. Potential future work.
+valuations in an applicative structure
+
+The first set of models provided are the class known as environment or syntactic
+models. A syntactic applicative structure adds a method of intepreting terms in
+the $\lambda$-calculus, elements of the set $\Lambda$, into the applicative
+struture. In other words a syntactic applicative structure is a triple $M = (A
+\, , \, \bullet \, , \, \llbracket \, \rrbracket)$ of an underlying set $A$, a
+binary operation $\bullet : A \rightarrow A$ and a syntactical intepretation
+function $\llbracket \, \rrbracket$. Syntactical intepretations in an algebra,
+$M$,  are functions $I : \Lambda(M) \times \textnormal{Val}(M) \rightarrow A$
+where $\Lambda(M)$ is the set of all $\lambda$-terms, $\Lambda$, extended with
+constants for each element in $M$ and Val$(M)$ is a function from strings to
+elements of $M$, or a valuation.
+
+definition of syntatic brackets.
+
+satisfaction for syntactic structures
+
+The constraint which turns a syntactic applicative structure, \textit{P}, into a
+syntactic $\lambda$-algebra is
+\begin{align*}
+    \bm{\lambda} \vdash M = N \Rightarrow P \models \llbracket M \rrbracket = \llbracket N
+    \rrbracket
+\end{align*}
+
+Or that every two $\lambda$-terms that are equal under $\bm{\lambda}$ are equal
+under their intepretation within the $\lambda$-algebra. There is a close
+relationship between $\lambda$-algebras and $CCCs$. Every $\lambda$-algebra can be
+transformed into a $CCC$ with a reflexive object via the karoubi
+envelope.\todo{karoubi} Furthermore, every $CCC$ with a reflexive object can be
+turned into a $\lambda$-algebra such that taking a $\lambda$-algebra to a $CCC$
+and back to $\lambda$-algebra again produces an isomorphic $\lambda$-algebra.
+This indicates that every $\lambda$-algebra can be obtained by a $CCC$ with a
+reflexive object. This relationship hints at an application of Lawvere's fixed
+point theorem within the context of the $\lambda$-calculus. To examine this more
+closely the implications of the corollary must be examined within the context of
+both directions of the transformations.
+
+A (locally small) $CCC$ with a reflexive object, $D$, with arrows $F : D
+\rightarrow D^D$ and $G : D^D \rightarrow D$ can be turned into a
+$\lambda$-algebra as follows. The underlying set of the $\lambda$-algebra are
+the points to $D$, written $|D|$. The binary operation, $\star$, of the
+generated $\lambda$-algebra that operates on points, $a$, $b$ to $D$ is as
+follows:
+\begin{align*}
+    a \star b = eval \circ \langle \, F \times id \, \rangle \circ \langle a \,
+    , \, b \,
+    \rangle
+\end{align*}
+
+Barendregt defines a semantic intepretation function for $\lambda$-terms for
+which the triple of $( \, |D| \, , \, \star \, , \, \llbracket \rrbracket \,)$
+forms a $\lambda$-algebra.
+
+
+Using the earlier corollary and the aformentioned transformation, lawvere's
+fixed point theorem can be used to prove the first recursion theorem in every
+$\lambda$-model. This can be shown in Agda as follows. In some Cartesian Closed
+Category with a point surjective arrow, \AgdaFunction{PS.arr}, the operation
+constituting $\star$ in the generated $\lambda$-algebra can be written as
+follows
+
+\ExecuteMetaData[../agda/latex/ThesisExtra.tex]{extra-applicative-op}
+
+Proving the first fixed point theorem in every $\lambda$-algebra amounts to
+showing that the following type is inhabited
+\ExecuteMetaData[../agda/latex/ThesisExtra.tex]{extra-ffpt}
+
+Or that every point to the reflexive object has a fixed point under $\star$. To
+prove this, the fixed point must be provided and a proof that it is a fixed
+point. The fixed point can be constructed as follows beginning by precomposing the
+point-surjective arrow with the given point to \verb|f|
+
+\begin{AgdaMultiCode}
+\ExecuteMetaData[../agda/latex/ThesisExtra.tex]{extra-x-def}
+\\
+This gives a point to $\texttt{D}^\texttt{D}$. This can be turned into a
+endomorphism on \verb|D| as follows by passing it through two familiar
+isomorphisms
+\\
+\ExecuteMetaData[../agda/latex/ThesisExtra.tex]{extra-x-isos}
+\\
+Lawvere's fixed point theorem can now be used to find a fixed point for
+\verb|y|
+\\
+\ExecuteMetaData[../agda/latex/ThesisExtra.tex]{extra-x-law}
+\\
+The fixed point and proof can be extracted as follows
+\\
+\ExecuteMetaData[../agda/latex/ThesisExtra.tex]{extra-x-fix}
+\\
+\verb|fixedPoint| is the fixed point for $\star$. Now, it needs to be shown that
+\verb|fixedPoint| is in fact a fixed point for \verb|f| under $\star$ i.e.
+\\
+\ExecuteMetaData[../agda/latex/ThesisExtra.tex]{extra-fix-proof}
+The definition of $\star$ can be expanded to
+\\
+\ExecuteMetaData[../agda/latex/ThesisExtra.tex]{extra-expand-pre}
+\ExecuteMetaData[../agda/latex/ThesisExtra.tex]{extra-expand}
+\end{AgdaMultiCode}
+
+
+
+P.S and several combinators that can be derived.

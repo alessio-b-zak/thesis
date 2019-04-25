@@ -3,7 +3,7 @@ module Extra where
 open import Level
 import Cats.Category.Constructions.Iso as Iso
 open import Cats.Category.Base
-open import Diagonal
+open import Diagonal renaming (diagonal to lawvere)
 open import Cats.Category.Constructions.CCC
 open import Cats.Category.Constructions.Exponential
 open import Cats.Category.Constructions.Terminal
@@ -33,14 +33,14 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
     _◎_ : (A : Point X) → (B : Point X) → (Point X)
     a ◎ b = eval ∘ ⟨ PS.arr × id ⟩ ∘ (⟨ a , b ⟩)
 
-    localDiagonal : FixedPointProperty X
-    localDiagonal = diagonal C ps
+    fixedPointProperty : FixedPointProperty X
+    fixedPointProperty = lawvere C ps
 
     Y-co : (f : Point X) → Σ (Point X) (λ x → f ◎ x ≈ x)
     Y-co f = let x = (PS.arr) ∘ f
                  y = uncurry x
                  z = collapseToOne y
-                 q = localDiagonal z
+                 q = fixedPointProperty z
                  h = HasFixedPoint.X q
                  foo = HasFixedPoint.isFixedPoint q
                  proof = begin
