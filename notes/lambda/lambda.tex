@@ -2,6 +2,9 @@
 
 \usepackage{listings}
 \usepackage[utf8]{inputenc}
+\usepackage{stmaryrd}
+\usepackage{yfonts}
+\usepackage{bm}
 
 \usepackage[margin=1.00in]{geometry}
 \usepackage{cite}
@@ -34,10 +37,13 @@
 \begin{document}
 \maketitle
 \vspace{-20mm}
-\section{Models}
-The structure of Lawvere's theorem suggests an interplay with the Lambda
-Calculus, not simply due to the relation between the lambda calculus,
-propositional logic and computability.
+Lawvere's Fixed Point theorem generalises many important theorems across
+mathematical logic and the theory of computation. This note outlines a
+relationship between Lawvere's fixed point theorem and models of the untyped
+lambda calculus. All new theorems in this paper have been proven in the theorem
+prover \verb|Agda|. All subsidiary information in this note can be found in
+Barendregt's  "The Lambda Calculus - Its Syntax and Semantics" with a focus on
+section 5 on Models.
 
 As a reminder, Lawvere's fixed point theorem states that, in some CCC, $C$, if
 there exists a point-surjective function $\phi \, : \, A \rightarrow B^A$ for
@@ -49,29 +55,33 @@ an object, $U$,  with a pair of arrows $u \, : \, U \rightarrow U^U$, $u^{-1} \,
 have a fixed point.
 
 This has a close and distinct relation to models of the lambda calculus. From
-Barendregt (1984) "\ldots for the construction of a $\lambda$-calculus model it
+Barendregt "\ldots for the construction of a $\lambda$-calculus model it
 is sufficient to have an object $D$ in a CCC such that $D^D$ is a retract of
 $D$."
 
 In light of the simple corollary to Lawvere's fixed point theorem it can be seen
 that every $\lambda$-calculus model has fixed point for every endomorphism for
-the relevant intepretation of its reflexive object. One might imagine that this
-may in some way correspond to the Y-combinator for the Lambda Calculus however
-under closer examination this yields some not so obvious results. Examining the
-implications of this observation requires an examinations of models of the
-$\lambda$-calculus.
+the relevant interpretation of its reflexive object. Papers that explore the
+consequences of lawvere's fixed point theorem sometimes claim that Lawvere's
+fixed point theorem implies the existence of a fixed point combinator in the
+untyped $\lambda$-calculus. One might imagine that this is the case given the
+corollary outlined above and Barendregt's statements however the story is
+slightly more complicated. Lawvere's fixed point theorem can be used not to
+derive the existence of a fixed point combinator in the untyped
+$\lambda$-calculus but instead the first fixed point theorem, a simple
+consequence of the existence of fixed point combinators.
 
 The thesis that all models of the $\lambda$-calculus arise from CCCs with a
-reflexive object arises from the isomorphism between the so-callled
-$\lambda$-algebras and CCCs with a reflexive object. $\lambda$-algebras are
-models that satisfy  all provable equations of the $\lambda$-calculus and are an
-entirely equational theory. Via a process called the Karoubi Envelope, every
-$\lambda$-algebra can be turned into a CCC with a reflexive object. The
-implications of the corollary in this domain will be examined below.
+reflexive object arises from the relationship between models of the
+$\lambda$-calculus, named $\lambda$-algebras, and CCCs with a reflexive object.
+$\lambda$-algebras are models that satisfy  all provable equations of the
+$\lambda$-calculus and are an entirely equational theory. Via a transformation
+called the Karoubi Envelope, every $\lambda$-algebra can be turned into a CCC
+with a reflexive object. A transformation exists in the reverse direction that
+takes every CCC with a reflexive object to a $\lambda$-algebra. Going from
+algebra to CCC to algebra again produces an isomorphic algebra to the original.
 
 The definition of $\lambda$-algebras will briefly be summarised below
-
-\subsection{$\lambda$-Algebras}
 
 $M = (X \, , \: \cdot)$ is an applicative structure if $\cdot$ is a binary operation on
 $X$.
@@ -86,15 +96,165 @@ sxyz &= xz (yz)
 \end{align*}
 
 With this the terms and pure equational theory of combinatory logic is lifted to
-an abitrary underlying carrier set. From the study of combinatory logic
-(Barendregt 1984), it is known that further axioms are required for the
-equational theory of combinatory logic to create an equivalence between this and
-the equational theory $\lambda$. These axioms, as discovered by Curry, are known
-as $A_{\beta}$ and can be found in any good textbook on combinatory logic. These
-axioms are precisely the axioms added to extend combinatory algebras to
-$\lambda$-algebras. Given this terms and proofs in lambda algebras can be given
-using lambda terms which are then converted to terms in combinatory logic and
-then lifted to lambda algebras.
+an arbitrary underlying carrier set. From the study of combinatory logic, it is
+known that further axioms are required for the equational theory of combinatory
+logic to create an equivalence between this and the equational theory $\lambda$.
+These axioms, as discovered by Curry, are known as $A_{\beta}$ and can be found
+in the Barendregt. These axioms are precisely the axioms added to extend
+combinatory algebras to $\lambda$-algebras. Given this terms and proofs in
+lambda algebras can be given using lambda terms which are then converted to
+terms in combinatory logic and then lifted to lambda algebras.
+
+
+An alternate formulation of $\lambda$-algebras are the so-called environment or
+syntactic models. Syntactic applicative structures extend original ones with a
+set of semantic brackets $\llbracket  \, \, \rrbracket$ that allow for an
+inteprataton of the $\lambda$-calculus in the underlying set of the applicative
+structure. Constraints on the semantic brackets are outlined further in
+Barendregt. Barendregt further outlines a notion of satisfaction for syntactic
+applicative structures.
+
+Syntactic $\lambda$-algebras are the syntactic applicative structures,
+\textfrak{M} such that
+
+\begin{align*}
+    \bm{\lambda} \vdash M = N \Rightarrow \textfrak{M} \models \llbracket M
+    \rrbracket = \llbracket N \rrbracket
+\end{align*}
+\\
+
+where $\bm{\lambda}$ is the equational theory of the $\lambda$-calculus.
+Syntactic $\lambda$-algebras are equivalent to the earlier formulation of
+$\lambda$-models.
+
+Every (locally small) CCC, $C$, with a reflexive object, $D$, can be turned into
+a syntactic $\lambda$-algebra as follows: Let the underlying set be the points
+to $D$, written $|D|$, let the operation $\star$ on points $a$ and $b$ where $F
+: D \rightarrow D^D$ is the morphism guaranteed by the reflexive $D$
+
+\begin{align*}
+    a \star b = eval \circ \langle \, F \times id \, \rangle \circ \langle \, a \,
+    , \, b \, \rangle
+\end{align*}
+\\
+The semantic interpretation function is outlined in the Barendregt and the proof
+of satisfaction is provided and not relevant here. Barendregt provides a proof
+originally by Koymans that applying the karoubi envelope to a $\lambda$-algebra
+and performing the above transformation back produces an isomorphic
+$\lambda$-algebra thus establishing that every $\lambda$-algebra can be obtained
+from a CCC with a reflexive object.
+
+The earlier established corollary that all categorical models of the
+$\lambda$-calculus have endomorphsisms on their reflexive object will now be
+used to derive the first fixed point theorem in the $\lambda$-calculus in all
+models of the $\lambda$-calculus.
+
+The first fixed point theorem in the $\lambda$-calculus states that all lambda
+terms have a fixed point under application. The binary operation of applicative
+structures is meant to represent application and thus the required statement is
+that, for all $\lambda$-models $(A \, , \, \bullet \, , \, \llbracket \,
+\rrbracket \, )$,
+$\forall \, f \in A \, , \, \exists p \in A \, s.t. \, f \, \bullet \, p = p$
+
+Given that every $\lambda$-algebra can be obtained from a CCC with a reflexive
+object we can consider the proof for the transformation from these to a
+$\lambda$-algebra i.e. that for all CCCs with a reflexive object $D$, that
+for all points, $a$ to $D$ that there exists a $b$ such that $a \star b = b$.
+The proof of this is very similar to the proof of lawvere's fixed point theorem.
+
+Let $t = F \circ a $ be a morphism from $1 \rightarrow D^D$. This can be turned
+into a morphism from $D \rightarrow D$ by pushing it first through the
+adjunction for products and exponentials $\textrm{hom}(A \times B \, , \, C)
+\cong \textrm{hom}(A \, , \, C^B)$ in the leftward direction which we will call
+$uncurry$ and then through the isomorphism between $1 \times A \cong A$ which
+will be denoted using a bar above the expression i.e. $u = \overline{uncurry\, (
+F \circ a)}$ by the corollary to Lawvere's fixed point theorem in $CCCs$ with a
+reflexive object $u$ has a fixed point which we call $p$. Simple algebra can now
+be used to see that p is the fixed point of $a$ under $\star$
+
+\begin{align*}
+    a \star p &= eval \circ \langle F \times id \rangle \circ \langle a , p
+    \rangle \\
+    &= eval \circ \langle F \circ a \times id \rangle \circ \langle id , p
+    \rangle \\
+    &= uncurry \, (\, F \circ a ) \circ \langle id , p \rangle \\
+    &= \overline{uncurry \, (F \circ a)} \circ p \\
+    &= p
+\end{align*}
+
+Thus Lawvere's theorem can be seen to derive a significant result in the
+$\lambda$-calculus. Lawvere's theorem may give some more insight into the theory
+of the $\lambda$-calculus. CCCs with a reflexive object, $D$ are related to the
+$\lambda$-algebras and further, CCCs that have an object $D$ with $D \cong D^D$
+correspond to the so called $\lambda$-models which are all models of the
+$\lambda$-calculus that satisfy the $\eta$-rule ($\lambda x .  M \, x = \lambda
+x . N \, x  \Rightarrow M = N$). An (to my knowledge) outstanding question is
+what the categorical model of combinatory algebras are.  Whilst we do not answer
+this question we provide some motivating evidence that the necessary property
+may be point-surjectivity or something similar. The underlying theory of
+combinatory algebras is combinatory logic, a simple calculus of combinators that
+are a model of computation. The minimal basis of combinators are $K$ and $S$
+with the laws outlined earlier however many other standard combinators exist
+(see the end of "To Mock a Mockingbird" by Raymond Smullyan). Three "standard"
+combinators can be created in a CCC with a point-surjective $\varphi : D
+\rightarrow D^D$. These combinators utilise the fact that $a \star b =
+\overline{uncurry \, (\varphi \circ a)} \circ b$. If we are able to pick $a$
+then we are able to recover any endomorphism on $D$. More precisely, for any $f:
+D \rightarrow D$, this can be turned into a point to $D^D$ by pushing through
+the other way in the $1 \times A \cong A$ isomorphism and exploiting the other
+direction of the adjunction which we will call curry i.e. $f' = curry \, (
+\,\underline{f} \,) : 1 \rightarrow D^D$. The point-surjectivity of $\varphi$
+can now be used to find the equivalent $u$ such that $\varphi \circ u = f'$.
+Considering $u \star b$ for any $b$ we get
+
+\begin{align*}
+    u \star b &= \overline{uncurry \, (\varphi \circ u \, )} \circ b \\
+    &= \overline{uncurry \, ( \, f' \, ) } \circ b \\
+    &= \overline{uncurry \, ( \, curry \, ( \, \underline{f} \, ) \, )} \circ b \\
+    &= f \circ b
+\end{align*}
+
+
+A fairly easy combinator to construct is the identity combinator $\textbf{I} \, x =
+x$ by taking $f$ in the above construction to be $id$ and calculating the
+equivalent $u$.
+
+Another useful combinator is the mockingbird or self-application operator,
+$\textbf{M} x = x x$ by taking $f$ to be the following morphism of type $D
+\rightarrow D$, $\textbf{M'} = eval \circ \langle \varphi \times id \rangle \circ
+\delta$ and finding the equivalent $u$ and setting it to be \textbf{M}.
+
+The final combinator we give a derivation for was found whilst attempting to
+recover the \textbf{K} combinator and requires slightly more machinery.
+
+Let $x = id : D \rightarrow D$, $y = curry \, ( \, \underline{x} \, ) : 1
+\rightarrow D^D$ pick $z : 1 \rightarrow D$ s.t. $\varphi \circ z = y$ from the
+point-surjectivity of $\varphi$ let $q = z \, \circ \, !_{D} : D \rightarrow D$
+where $!_{D}$ is the terminal arrow from $D$. Taking $f$ as $q$ and deriving the
+appropriate $u$ we get an interesting combinator. Calling the appropriate
+$u$, \textbf{F}
+
+\begin{align*}
+    \textbf{F} \star a \star b &= (\textbf{F} \circ a) \star b \\
+    &= eval \circ \langle \varphi  \times id \rangle \circ \langle q \circ a , b
+    \rangle \\
+    &= eval \circ \langle \varphi \times id \rangle \circ \langle z \, \circ \, !_{D}
+    \, \circ \, a , \, b \rangle \\
+    &= eval \circ \langle \varphi \circ z \times id \rangle \circ \langle !_{D} \,
+    \circ \, a \, , \, b \rangle \\
+    &= \overline{uncurry \, ( \varphi \circ z \, )} \circ b \\
+    &= id \circ b \\
+    &= b
+\end{align*}
+i.e. \textbf{F} selects the second of its two arguments. With some work perhaps
+more combinators could be derived and, potentially, they will form a complete
+basis for combinatory logic. Even if not , it is interesting to understand to
+which computational world point-surjectivity corresponds.
+
+\subsection{Karoubi Envelope Attempt}
+
+Below is a failed attempt to see the consequences of lawvere's fixed pont
+theorem after applying the Karoubi Envelope to the $\lambda$-algebra.
 
 As stated earlier every $\lambda$-algebra can be turned into a ccc with a
 reflexive object via the karoubi envelope which turns any additive category into
@@ -167,18 +327,7 @@ $\lambda$-term, $u$, such that $\lambda x . f (u x) = u$. $u =
     &= \textbf{K} (p \textbf{I})
 \end{align*}
 
-The last line provides some hope for a partial recovery of the first recursion
-theorem. Analysing what $p$ is, as guaranteed by LWFPT, may give sommay also be of use.e insight.
 
-
-Analysing the other direction is a lot more fruitful
-
-\section{Scott-Curry}
-  - Diagonalization operator \\
-  - Godel \\
-  - Tarski \\
-  - Rice \\
-  - Computable functions \\
 
 \end{document}
 
