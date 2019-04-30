@@ -130,11 +130,59 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
 \end{code}
 %</extra-expand>
 
+%<*extra-bulk-proof>
 \begin{code}
-                    ≈⟨ {!!} ⟩
-                      fixedPoint
-                    ∎
+                         ≈⟨ ∘-resp-r ⟨×⟩-∘-⟨,⟩ ⟩
+                           eval ∘ ⟨ (PS.arr ∘ f) , (id ∘ fixedPoint) ⟩
+                         ≈⟨ ∘-resp-r (⟨,⟩-resp (≈.sym id-r) ≈.refl)  ⟩
+                           eval ∘ ⟨ (PS.arr ∘ f) ∘ id , id ∘ fixedPoint ⟩
+                         ≈⟨ ∘-resp-r (≈.sym ⟨×⟩-∘-⟨,⟩)  ⟩
+                           eval ∘ ⟨ (PS.arr ∘ f) × id ⟩ ∘ ⟨ id , fixedPoint ⟩
+                         ≈⟨ unassoc ⟩
+                           (eval ∘ ⟨ (PS.arr ∘ f) × id ⟩) ∘ ⟨ id , fixedPoint ⟩
+                         ≈⟨ ∘-resp-l (∘-resp-r (⟨×⟩-resp (≈.sym curry∘uncurry) ≈.refl )) ⟩
+                           (eval ∘ ⟨ (curry (uncurry (PS.arr ∘ f))) × id ⟩) ∘ ⟨ id , fixedPoint ⟩
+                         ≈⟨ ∘-resp-l eval-curry ⟩
+                            (uncurry (PS.arr ∘ f)) ∘ ⟨ id , fixedPoint ⟩
+                         ≈⟨ ∘-resp-l (≈.sym id-r) ⟩
+                           (uncurry (PS.arr ∘ f) ∘ id) ∘ ⟨ id , fixedPoint ⟩
+                         ≈⟨ ∘-resp-l (∘-resp-r (≈.sym One×A⇒A)) ⟩
+                           (uncurry (PS.arr ∘ f) ∘ oneIso ∘ otherIso) ∘ ⟨ id , fixedPoint ⟩
+                         ≈⟨ ∘-resp-l unassoc ⟩
+                           ((uncurry (PS.arr ∘ f) ∘ oneIso) ∘ otherIso) ∘ ⟨ id , fixedPoint ⟩
+                         ≈⟨ assoc ⟩
+                           (uncurry (PS.arr ∘ f) ∘ oneIso) ∘ (otherIso ∘ ⟨ id , fixedPoint ⟩)
+                         ≈⟨ ≈.refl ⟩
+                           (collapseToOne (uncurry (PS.arr ∘ f))) ∘ (projr ∘ ⟨ id , fixedPoint ⟩)
+                         ≈⟨ ∘-resp-r ⟨,⟩-projr ⟩
 \end{code}
+%</extra-bulk-proof>
+
+%<*extra-bulk-proof1>
+\begin{code}
+                           (collapseToOne (uncurry (PS.arr ∘ f))) ∘ fixedPoint
+\end{code}
+%</extra-bulk-proof1>
+
+%<*extra-almost>
+\begin{code}
+                         ≈⟨ ≈.refl ⟩
+\end{code}
+%</extra-almost>
+
+%<*extra-almost1>
+\begin{code}
+                           y ∘ fixedPoint
+\end{code}
+%</extra-almost1>
+
+%<*extra-end>
+\begin{code}
+                         ≈⟨ fixedPointProof ⟩
+                           fixedPoint
+                         ∎
+\end{code}
+%</extra-end>
 
 \begin{code}
          in {!!}

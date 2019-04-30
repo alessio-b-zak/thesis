@@ -76,3 +76,73 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
                          ∎
              in h , proof
 
+
+
+    util : (f : X ⇒ X) → Σ (Point X) (λ u → ∀ {b} → u ◎ b ≈ f ∘ b )
+    util f = let f' = curry ( extendToOne(f))
+                 sol = PS.isPointSurjective f'
+                 open HasSolution sol renaming (X to q ; isSolution to q-prf)
+              in q , λ {b} → begin
+                               q ◎ b
+                             ≈⟨ ≈.refl ⟩
+                               eval ∘ ⟨ PS.arr × id ⟩ ∘ ⟨ q , b ⟩
+                             ≈⟨ ∘-resp-r ⟨×⟩-∘-⟨,⟩ ⟩
+                               eval ∘ ⟨ PS.arr ∘ q , id ∘ b ⟩
+                             ≈⟨ ∘-resp-r (⟨,⟩-resp (≈.sym id-r) ≈.refl)  ⟩
+                               eval ∘ ⟨ (PS.arr ∘ q) ∘ id , id ∘ b ⟩
+                             ≈⟨ ∘-resp-r (≈.sym ⟨×⟩-∘-⟨,⟩)  ⟩
+                               eval ∘ ⟨ PS.arr ∘ q × id ⟩ ∘ ⟨ id , b ⟩
+                             ≈⟨ unassoc ⟩
+                               (eval ∘ ⟨ PS.arr ∘ q × id ⟩) ∘ ⟨ id , b ⟩
+                             ≈⟨ ∘-resp-l (∘-resp-r (⟨×⟩-resp (≈.sym curry∘uncurry) ≈.refl )) ⟩
+                               (eval ∘ ⟨ curry(uncurry(PS.arr ∘ q)) × id ⟩) ∘ ⟨ id , b ⟩
+                             ≈⟨ ∘-resp-l eval-curry ⟩
+                               uncurry (PS.arr ∘ q) ∘ ⟨ id , b ⟩
+                             ≈⟨ ∘-resp-l (≈.sym id-r) ⟩
+                               (uncurry (PS.arr ∘ q) ∘ id) ∘ ⟨ id , b ⟩
+                             ≈⟨ ∘-resp-l (∘-resp-r (≈.sym One×A⇒A)) ⟩
+                               (uncurry (PS.arr ∘ q) ∘ oneIso ∘ otherIso) ∘ ⟨ id , b ⟩
+                             ≈⟨ ∘-resp-l unassoc ⟩
+                               ((uncurry (PS.arr ∘ q) ∘ oneIso) ∘ otherIso) ∘ ⟨ id , b ⟩
+                             ≈⟨ assoc ⟩
+                               (uncurry (PS.arr ∘ q) ∘ oneIso) ∘ (otherIso ∘ ⟨ id , b ⟩)
+                             ≈⟨ ∘-resp-r ⟨,⟩-projr ⟩
+                               (collapseToOne (uncurry (PS.arr ∘ q))) ∘ b
+                             ≈⟨ ∘-resp-l (collapseToOne-resp (uncurry-resp C {X} {X} q-prf)) ⟩
+                               (collapseToOne (uncurry (curry( extendToOne( f))))) ∘ b
+                             ≈⟨ ∘-resp-l (collapseToOne-resp uncurry∘curry) ⟩
+                               (collapseToOne (extendToOne( f))) ∘ b
+                             ≈⟨ ∘-resp-l collapseExtendIso ⟩
+                               f ∘ b
+                             ∎
+
+    I-combin-exist : Σ (Point X) (λ i → ∀ {x} → i ◎ x ≈ x)
+    I-combin-exist = let i = util id in proj₁ i , λ {x} → begin
+                                                            (proj₁ i) ◎ x
+                                                          ≈⟨ proj₂ i  ⟩
+                                                            id ∘ x
+                                                          ≈⟨ id-l ⟩
+                                                            x
+                                                          ∎
+
+
+    M-combin-exist : Σ (Point X) (λ m → ∀ {x} → m ◎ x ≈ x ◎ x)
+    M-combin-exist = let m = util (eval ∘ ⟨ PS.arr × id ⟩ ∘ δ) in proj₁ m , λ {x} → begin
+                                                                                     (proj₁ m) ◎ x
+                                                                                   ≈⟨ proj₂ m ⟩
+                                                                                     (eval ∘ ⟨ PS.arr × id ⟩ ∘ δ) ∘ x
+                                                                                   ≈⟨ ∘-resp-l unassoc ⟩
+                                                                                     ((eval ∘ ⟨ PS.arr × id ⟩) ∘ δ) ∘ x
+                                                                                   ≈⟨ assoc ⟩
+                                                                                     (eval ∘ ⟨ PS.arr × id ⟩) ∘ (δ ∘ x)
+                                                                                   ≈⟨ ≈.refl ⟩
+                                                                                     (eval ∘ ⟨ PS.arr × id ⟩) ∘ (⟨ id , id ⟩ ∘ x)
+                                                                                   ≈⟨ ∘-resp-r ⟨,⟩-∘ ⟩
+                                                                                     (eval ∘ ⟨ PS.arr × id ⟩) ∘ (⟨ (id ∘ x) , (id ∘ x) ⟩)
+                                                                                   ≈⟨ ∘-resp-r (⟨,⟩-resp id-l id-l) ⟩
+                                                                                     (eval ∘ ⟨ PS.arr × id ⟩) ∘ (⟨ x , x ⟩)
+                                                                                   ≈⟨ assoc ⟩
+                                                                                     eval ∘ ⟨ PS.arr × id ⟩ ∘ ⟨ x , x ⟩
+                                                                                   ≈⟨ ≈.refl ⟩
+                                                                                     x ◎ x
+                                                                                   ∎
