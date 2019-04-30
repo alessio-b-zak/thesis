@@ -9,6 +9,7 @@ open import Cats.Category.Constructions.Exponential
 open import Cats.Category.Constructions.Terminal
 open import Cats.Category.Constructions.Product
 open import Data.Product hiding (uncurry ; curry)
+open import Cats.Category.Constructions.Unique as Unique
 open import Cats.Util.Conv
 open import Extension
 import Points
@@ -23,6 +24,7 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
   open HasTerminal (HasFiniteProducts.hasTerminal (IsCCC.hasFiniteProducts isCCC))
   open HasBinaryProducts (HasExponentials.hasBinaryProducts (IsCCC.hasExponentials isCCC))
   open Iso.Build C
+  open Unique.Build C
   open ≈-Reasoning
   open Points.Build C
   open Extension.Build C
@@ -127,22 +129,56 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
 
 
     M-combin-exist : Σ (Point X) (λ m → ∀ {x} → m ◎ x ≈ x ◎ x)
-    M-combin-exist = let m = util (eval ∘ ⟨ PS.arr × id ⟩ ∘ δ) in proj₁ m , λ {x} → begin
-                                                                                     (proj₁ m) ◎ x
-                                                                                   ≈⟨ proj₂ m ⟩
-                                                                                     (eval ∘ ⟨ PS.arr × id ⟩ ∘ δ) ∘ x
-                                                                                   ≈⟨ ∘-resp-l unassoc ⟩
-                                                                                     ((eval ∘ ⟨ PS.arr × id ⟩) ∘ δ) ∘ x
-                                                                                   ≈⟨ assoc ⟩
-                                                                                     (eval ∘ ⟨ PS.arr × id ⟩) ∘ (δ ∘ x)
-                                                                                   ≈⟨ ≈.refl ⟩
-                                                                                     (eval ∘ ⟨ PS.arr × id ⟩) ∘ (⟨ id , id ⟩ ∘ x)
-                                                                                   ≈⟨ ∘-resp-r ⟨,⟩-∘ ⟩
-                                                                                     (eval ∘ ⟨ PS.arr × id ⟩) ∘ (⟨ (id ∘ x) , (id ∘ x) ⟩)
-                                                                                   ≈⟨ ∘-resp-r (⟨,⟩-resp id-l id-l) ⟩
-                                                                                     (eval ∘ ⟨ PS.arr × id ⟩) ∘ (⟨ x , x ⟩)
-                                                                                   ≈⟨ assoc ⟩
-                                                                                     eval ∘ ⟨ PS.arr × id ⟩ ∘ ⟨ x , x ⟩
-                                                                                   ≈⟨ ≈.refl ⟩
-                                                                                     x ◎ x
-                                                                                   ∎
+    M-combin-exist = let m = util (eval ∘ ⟨ PS.arr × id ⟩ ∘ δ)
+                      in proj₁ m , λ {x} → begin
+                                             (proj₁ m) ◎ x
+                                           ≈⟨ proj₂ m ⟩
+                                             (eval ∘ ⟨ PS.arr × id ⟩ ∘ δ) ∘ x
+                                           ≈⟨ ∘-resp-l unassoc ⟩
+                                             ((eval ∘ ⟨ PS.arr × id ⟩) ∘ δ) ∘ x
+                                           ≈⟨ assoc ⟩
+                                             (eval ∘ ⟨ PS.arr × id ⟩) ∘ (δ ∘ x)
+                                           ≈⟨ ≈.refl ⟩
+                                             (eval ∘ ⟨ PS.arr × id ⟩) ∘ (⟨ id , id ⟩ ∘ x)
+                                           ≈⟨ ∘-resp-r ⟨,⟩-∘ ⟩
+                                             (eval ∘ ⟨ PS.arr × id ⟩) ∘ (⟨ (id ∘ x) , (id ∘ x) ⟩)
+                                           ≈⟨ ∘-resp-r (⟨,⟩-resp id-l id-l) ⟩
+                                             (eval ∘ ⟨ PS.arr × id ⟩) ∘ (⟨ x , x ⟩)
+                                           ≈⟨ assoc ⟩
+                                             eval ∘ ⟨ PS.arr × id ⟩ ∘ ⟨ x , x ⟩
+                                           ≈⟨ ≈.refl ⟩
+                                             x ◎ x
+                                           ∎
+
+
+    ◎-pres : ∀ {x y z} → x ≈ z → x ◎ y ≈ z ◎ y
+    ◎-pres {x} {y} {z} prf = begin
+                               x ◎ y
+                             ≈⟨ ≈.refl ⟩
+                               eval ∘ ⟨ PS.arr × id ⟩ ∘ ⟨ x , y ⟩
+                             ≈⟨ ∘-resp-r (∘-resp-r (⟨,⟩-resp prf ≈.refl)) ⟩
+                               eval ∘ ⟨ PS.arr × id ⟩ ∘ ⟨ z , y ⟩
+                             ≈⟨ ≈.refl ⟩
+                               z ◎ y
+                             ∎
+
+    F-combin-exist : Σ (Point X) (λ f → ∀ {x y} → (f ◎ x) ◎ y ≈ y)
+    F-combin-exist = let y = curry {One} {X} (extendToOne(id))
+                         sol = PS.isPointSurjective y
+                         open HasSolution sol renaming (X to z ; isSolution to z-prf)
+                         !D = isTerminal X
+                         q = z ∘ (∃!′.arr !D)
+                         snd = util q
+                         in proj₁ snd , λ {x} {y} → begin
+                                                      (proj₁ snd ◎ x) ◎ y
+                                                    ≈⟨ ◎-pres (proj₂ snd) ⟩
+                                                      (q ∘ x) ◎ y
+                                                    ≈⟨  ≈.refl ⟩
+                                                      eval ∘ ⟨ PS.arr × id ⟩ ∘ ⟨ (q ∘ x) , y ⟩
+                                                    ≈⟨  ≈.refl ⟩
+                                                      eval ∘ ⟨ PS.arr × id ⟩ ∘ ⟨ (z ∘ (∃!′.arr !D)) ∘ x , y ⟩
+                                                    ≈⟨  ∘-resp-r (∘-resp-r (⟨,⟩-resp (∘-resp-l {!!}) ≈.refl)) ⟩
+                                                      {!!}
+                                                    ≈⟨ {! ?!} ⟩
+                                                      y
+                                                    ∎
