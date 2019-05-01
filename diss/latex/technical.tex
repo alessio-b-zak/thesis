@@ -1,9 +1,20 @@
 % !TEX root = ./dissertation.tex
+This section will outline the essential technical details to understand the
+primary contributions of this thesis. This section will aim to to provide a
+working knowledge of the theory behind and the usage of the Agda theorem prover.
+Through Agda, the underlying theory of categories will be explained to
+sufficiently understand Lawvere's fixed point theorem. As explained prior,
+theorem provers often work by utilising the Curry-howard isomorphism to embed a
+logical framework within the type system of a programming language. This is the
+approach taken by the Agda theorem prover which makes use of a type system
+similar to that of Martin Lof Type theory, a type theory which provides a
+logical framework for intutionistic higher-order logic.
+
 \section{Martin Lof Type Theory}
 The approach to theorem proving taken in this thesis is a type theoretic
 approach exploiting the curry-howard correspondence. This will be done in a
 dependent type theory designed by Per Martin Lof, a logician working in
-intutionistic logic. Martin Lof's type theory, here on abbreviated as MLTT, was
+intutionistic logic. Martin Lof's type theory (MLTT) was
 intended to be an entirely constructive foundation in which mathematics could be
 done. Just as, inline with the curry-howard correspondence, the intutionistic
 fragment of natural deduction has an interpretation within the simply-typed
@@ -13,7 +24,7 @@ intuitionistic predicate logic by including dependent types in the theory.
 MLTT adopts the Church-style view of typing in which terms cannot be brought in
 without a unique type. This is done by introducing typing as a judgement of the
 type theory. The judgements of a theory are the conclusions that can be made
-from the theory given the deductive rules of said theory. The judgement that a
+given the deductive rules of said theory. The judgement that a
 term $a$ has type $A$ is written
 
 \begin{align*}
@@ -31,23 +42,27 @@ $a$ and $b$ are equal (at type $A$) is written
 \end{align*}
 
 
-Agda is a dependently typed functional language in which theorem can be done.
-Agda can be used as a proof assistant through the lens of the curry-howard
-correspondance given it's type system. Agda uses Haskell like syntax and its
-underlying type theory is based of that of Per Martin-Lof.
 
 Types are introduced by introducing definitional equalities that define how to
 form and use the types within the context of the theory. In the section that
 follows, only a limited number of types will be introduced so as to understand
-how the type theory can be used in theorem proving.
+how the type theory can be used in theorem proving. Among the most basic
+components of MLTT is the function type $\rightarrow$.
 
-sigma type
+(dependent) Function types: intro, formation, computation, elimintation, propeq
+sigma: intro, formation, computation, elimintation, propeq
+product: intro, formation, computation, elimintation, propeq
 
-product
+Universes/ predicativity
 
-coproduct
-
-natural numbers
+Agda is a dependently typed functional language in which theorem can be done.
+Agda can be used as a proof assistant through the lens of the curry-howard
+correspondance given it's type system. Agda uses Haskell like syntax and its
+underlying type theory is based of that of Per Martin-Lof. The following
+describes features of Agda available in version 2.52, used to prove theorems
+within this thesis. Agda uses a predicative hierarchy of universes indexed by a
+natural-number like type ctodo{agdadatatype} level. Set then becomes a
+type-family indexed by level. 
 
 equality
 
@@ -68,3 +83,7 @@ records
 Proving in Agda: small examples
 
 Setoids: limitations of propositional equality
+
+quotienting types
+
+
