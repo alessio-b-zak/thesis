@@ -24,8 +24,8 @@ intuitionistic predicate logic by including dependent types in the theory.
 MLTT adopts the Church-style view of typing in which terms cannot be brought in
 without a unique type. This is done by introducing typing as a judgement of the
 type theory. The judgements of a theory are the conclusions that can be made
-given the deductive rules of said theory. The judgement that a
-term $a$ has type $A$ is written
+given the deductive rules of said theory. The judgement that a term $a$ has type
+$A$ is written
 
 \begin{align*}
     a: \, A
@@ -41,6 +41,7 @@ $a$ and $b$ are equal (at type $A$) is written
     a \equiv b \, : \, A
 \end{align*}
 
+Inductions and recursion principles
 
 
 Types are introduced by introducing definitional equalities that define how to
@@ -55,35 +56,51 @@ product: intro, formation, computation, elimintation, propeq
 
 Universes/ predicativity
 
+\section{Agda}
+
 Agda is a dependently typed functional language in which theorem can be done.
 Agda can be used as a proof assistant through the lens of the curry-howard
 correspondance given it's type system. Agda uses Haskell like syntax and its
 underlying type theory is based of that of Per Martin-Lof. The following
-describes features of Agda available in version 2.52, used to prove theorems
-within this thesis. Agda uses a predicative hierarchy of universes indexed by a
-natural-number like type ctodo{agdadatatype} level. Set then becomes a
-type-family indexed by level. 
+describes features of Agda available in version 2.52, the version employed in
+this thesis. Agda uses a predicative hierarchy of universes,
+\AgdaPrimitive{Set}, indexed by a natural-number like type
+\AgdaPrimitive{level}. \AgdaPrimitive{Set} can be viewed as a type-family
+returning a universe.
 
-equality
+A term \verb|t| of a given type, \AgdaDatatype{A} can be introduced and named
+in Agda as follows
 
-intensional vs extensional.
 
-Agda:
+where \verb|term| : \AgdaDatatype{A} indicates that the identifier \verb|term| has
+type \AgdaDatatype{A} and the second line assigns to \verb|term| the value to
+the right hand sign of the equals sign. Unlike other typed programming
+languages, the types of identifiers cannot be elided and inferred by the
+compiler. In the presence of dependent types, the problem of type inference
+becomes undecidable and therefore it is preferable to explicitly annotate them
+for all identifiers. Agda provides a limited number of the constructions
+provided in Martin Lof type theory and instead provides a method for defining
+inductive datatypes allowing inductive types such as dependent pairs, product
+and coproduct types to be defined. One of the constructions provided by
+are Pi types. A Pi type can be introduced with an identifier, \verb|foo|, as follows
 
-pattern matching
+\todo{pi type intro}
 
-basic syntax
+Computation and elimination rules work adequately similar to MLTT. Inductive
+data types can be introduced as follows.
+\todo{inductive datatypes}
+definition
 
-introducing datatypes
+Instead of introducing induction and recursion principles for inductive data
+types, agda insetad opts for deep pattern matching whereby an inductive datatype
+can be expanded into its constitutent components.
 
+proof that pattern matching for inductive data types is sound.
+constructors
+
+pattern matching vs induction/recursion principles.
 records
 
-
-
-Proving in Agda: small examples
-
-Setoids: limitations of propositional equality
-
-quotienting types
-
-
+categories
+monoids
+setoids

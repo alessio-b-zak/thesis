@@ -177,7 +177,9 @@ module _ {lo la l=} (C : Category lo la l=) {{isCCC : IsCCC C}} where
                                                       eval ∘ ⟨ PS.arr × id ⟩ ∘ ⟨ (q ∘ x) , y ⟩
                                                     ≈⟨  ≈.refl ⟩
                                                       eval ∘ ⟨ PS.arr × id ⟩ ∘ ⟨ (z ∘ (∃!′.arr !D)) ∘ x , y ⟩
-                                                    ≈⟨  ∘-resp-r (∘-resp-r (⟨,⟩-resp (∘-resp-l {!!}) ≈.refl)) ⟩
+                                                    ≈⟨  ∘-resp-r (∘-resp-r (⟨,⟩-resp assoc ≈.refl)) ⟩
+                                                      eval ∘ ⟨ PS.arr × id ⟩ ∘ ⟨ z ∘ (∃!′.arr !D) ∘ x , y ⟩
+                                                    ≈⟨ {! ?!} ⟩
                                                       {!!}
                                                     ≈⟨ {! ?!} ⟩
                                                       y
