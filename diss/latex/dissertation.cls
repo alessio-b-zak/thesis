@@ -77,7 +77,7 @@
 \RequirePackage{bm}
 \RequirePackage{stmaryrd}
 \input{./utf.tex}
-
+\raggedbottom
 
 % =============================================================================
 

@@ -11,14 +11,58 @@ via category theory, an offshoot of abstract algebra, and the rigorous
 formalisation of mathematics within modern theorem provers. More precisely, a
 particular theorem within Category Theory will be proven within the theorem
 prover Agda and its applications are explored with a new application provided in
-the context of the untyped $\lambda$-calculus. \todo{precise contributions}.
-Givin the attempts of this thesis to incoporate a large amount of related yet
+the context of the untyped $\lambda$-calculus. To theorem in question that will
+be explored within this thesis is Lawvere's fixed point theorem discovered by
+William Lawvere in. \todo{date}Lawvere's fixed point theorem is a statement
+within the context of cartesian closed categories, categories which play a
+crucial role within the study of computation and logic. Lawvere's fixed point
+theorem is a categorical abstraction of the familiar class of diagonal arguments
+employed throughout computer science and mathematics. The decision to formalise
+lawvere's fixed point theorem within a theorem prover is not incidental; many of
+the theorems abstracted by Lawvere's theorem play an important role in the
+problem of providing a formal foundation in which to do mathematics.
+
+Many of the applications of lawvere's fixed point theorem are taken from
+Yanofsky's 2003 review paper \ldots \todo{yanofsky}
+
+Given the attempts of this thesis to incoporate a large amount of related yet
 distinct fields together the contextual history behind the primary areas must be
 outlined.
+
 \section{Foundations of Mathematical Logic and Computation}
 
-\subsection{Cantor}
-\subsubsection{Cantor's Diagonal Theorem}
+\subsection{Cantor's Theorem}
+
+The story begins slightly before the advent of the 20th century with the German
+Mathematician Georg Cantor. Cantor (1845 - 1918), is considered the father of
+set theory with his proofs of the differing cardinalities of the real and
+natural numbers, the theory of ordinal and transfinite induction for proving
+properties of these. A major piece of work by Cantor was his eponymous theorem
+that the cardinality of a set is strictly smaller than the cardinality of its
+powerset. Cantor's proof of this theorem made use of a so-called diagonal
+argument, the first of its kind which, repeated through time in different
+fields, was abstracted by Lawvere to give his fixed point theorem in category
+theory subsuming previous instances.
+\todo{cantor's theorem}
+
+\subsection{Russell's Paradox}
+Cantor, in founding set theory as a field of study, introduced his Naive set
+theory as a foundation in which to do mathematics, its naivety stemming from its
+implicit Axiom of Unrestricted Comprehension, in which all predicates correspond
+themselves to a set. This lead to perhaps the first signifcant result in the
+foundations of mathematics in the 20th century, Russell's paradox. Betrand
+Russell (1872-1970), an English polymath, showed that, in classical logic, the
+axiom of unrestricted comprehension leads to a contradiction.
+
+\todo{russell's paradox}
+
+This result is relevenat to both prongs of this thesis. Russell's paradox
+presented a blow to the hoped foundations of mathematics. Various systems were
+designed to provide a more secure foundation of mathematics as a result of
+Russell's paradox the type theories 
+
+Russell's paradox
+ZFC
 \subsection{Hilbert's Program}
 \subsubsection{Entsheidungsproblem}
 \subsubsection{Other Problem}
