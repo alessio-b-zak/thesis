@@ -51,6 +51,7 @@ foo' x = M
 \begin{code}
 open import Data.Nat hiding (_⊔_)
 open import Level renaming (zero to lzero ; suc to lsuc)
+infix 9 _≡_
 \end{code}
 
 %<*misc-inductive1>
@@ -105,4 +106,42 @@ data _≡_ {m : Level} {A : Set m} (x : A) : A → Set m where
   refl : x ≡ x
 \end{code}
 %</misc-equality>
+
+
+%<*misc-monoid>
+\begin{code}
+record Monoid (a : Level) : Set (lsuc a) where
+  field
+    S : Set a
+    _∙_ : S → S → S
+    e : S
+  field
+    ∙-assoc : (a b c : S) → ((a ∙ b) ∙ c) ≡ (a ∙ (b ∙ c))
+    e-left-neutral : {a : S} → e ∙ a ≡ a
+    e-right-neutral : {a : S} → a ∙ e ≡ a
+
+\end{code}
+%</misc-monoid>
+
+
+%<*misc-monhom>
+\begin{code}
+record MonHom {L L'} (M : Monoid L) (M' : Monoid L') : Set ( L ⊔ L') where
+\end{code}
+%</misc-monhom>
+
+\begin{code}
+  open Monoid M
+  open Monoid M' renaming ( e to e'; _∙_ to _∙'_ ; S to S')
+\end{code}
+
+%<*misc-monhom1>
+\begin{code}
+  field
+    f : S → S'
+    e-preserved : f e ≡ e'
+    ∙-preserved : (X Y : S) → (f (X ∙ Y)) ≡ (f X ∙' f Y)
+\end{code}
+%</misc-monhom1>
+
 \end{document}

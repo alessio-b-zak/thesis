@@ -192,13 +192,59 @@ fact the same. This can be used in the body of the function as needed.
 
 Proving theorems with no additional features in the language would prove
 difficult. Mathematical structures would be a pain to define in the standard
-inductive style as often they will often consist of a single structure with
-arguments 
+inductive style as often they will often consist of a single constructor with
+arguments that depend on each other. To assist with these types of structure
+record types exist. Records are extensions of $\Sigma$ types which have named
+fields to assist with referring to the individual components, an illustrative
+example is the definition of a monoid, $(S \, , \, \bullet , \, e)$, within Agda
 
-TYpe requiring set1
+\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-monoid}
 
-Record Types
+where \AgdaDatatype{lsuc} is the equivalent of \AgdaDatatype{suc} but for
+levels. \todo{underscore}This is required due to \AgdaField{$\bullet$} which
+forces the implicit constructor for the type to be of a higher sort than
+\AgdaField{S} itself, due to the predicativity of the underlying type theory.
+The identifiers to the left hand side of the colon under the \AgdaKeyword{field}
+keyword in the above definitions define projections out of a
+\AgdaDatatype{Monoid} object. The first three fields correspond to the elements
+of a tuple representing a monoid, the underlying set, binary operation and
+identity element. Unlike definitions based in set theory, the axioms the
+structure must adhere to are considered to be fields in the object, a property
+enabled by the proof-relevance of the type theory. Before categories are
+introduced in mathematics and Agda, one more point must be addressed.
+
+\subsection{Setoids}
+The problem, being addressed can be introduced by considering a homomorphism
+type for the above definition of monoid
+
+\begin{AgdaMultiCode}
+\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-monhom}
+\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-monhom1}
+\end{AgdaMultiCode}
+
+where the fields of the second monoid are postfixed with an apostrophe. Consider
+showing two monoids are propositionally equal. For records, this amounts to
+showing that its fields are equal (due to $\eta$ for records?) i.e that the
+underlying functions are the same but \textit{also} the proofs of preservation
+of identity and and operation are the same. The proof-relevant nature of the
+underlying type theory enables two different proofs to be distinguished by their
+normal form. It would be unreasonable and beside-the-point to demand this when
+equating two monoids but it is \textit{required} when equating using
+propositional equality. Quotients and subsets plus extensionality.
+
+This is a well understood problem in formalising
+mathematics within type theories in theorem provers and there are several
+solutions to this problem which will be addressed later.
+
+A common solution within the type theory of unmodified Agda is the setoid
+approach. The setoid approach 
+
+observational type theory
+
+quotients
+
+setoids
+
 
 \section{Category Theory}
 
-setoids
