@@ -13,20 +13,24 @@ logical framework for intutionistic higher-order logic.
 \section{Martin Lof Type Theory}
 The approach to theorem proving taken in this thesis is a type theoretic
 approach exploiting the curry-howard correspondence. This will be done in a
-dependent type theory designed by Per Martin Lof, a logician working in
-intutionistic logic. Martin Lof's type theory (MLTT) was
-intended to be an entirely constructive foundation in which mathematics could be
-done. Just as, inline with the curry-howard correspondence, the intutionistic
-fragment of natural deduction has an interpretation within the simply-typed
+dependent type theory designed by Per Martin-Lof, a logician working in
+intutionistic logic. Martin Lof's type theory (MLTT) was intended to be an
+entirely constructive foundation in which mathematics could be done. Just as,
+inline with the curry-howard correspondence, the intutionistic fragment of
+natural deduction has an interpretation within the simply-typed
 $\lambda$-calculus, MLTT has a logical interpretation as first-order
-intuitionistic predicate logic by including dependent types in the theory.
+intuitionistic predicate logic by including dependent types in the theory. The
+theory is outlined below, a more detailed examination can be found notes derived
+from Martin-Lof's lectures \cite{martin1984intuitionistic} or chapter one of the
+\textit{Homotopy Type Theory} book \cite{hottbook}. Martin-Lof's lecture notes
+discuss the philosophical ramifications of his theory and advocate for its use
+as a foundation for all of mathematics.
 
 MLTT adopts the Church-style view of typing in which terms cannot be brought in
 without a unique type. This is done by introducing typing as a judgement of the
 type theory. The judgements of a theory are the conclusions that can be made
 given the deductive rules of said theory. The judgement that a term $a$ has type
 $A$ is written
-
 \begin{align*}
     a: \, A
 \end{align*}
@@ -41,18 +45,19 @@ $a$ and $b$ are equal (at type $A$) is written
     a \equiv b \, : \, A
 \end{align*}
 
-Inductions and recursion principles
-
-
 Types are introduced by introducing definitional equalities that define how to
 form and use the types within the context of the theory. In the section that
 follows, only a limited number of types will be introduced so as to understand
 how the type theory can be used in theorem proving. Among the most basic
-components of MLTT is the function type $\rightarrow$.
+components of MLTT is the dependent function or Pi type, $\Pi$. $\Pi$ types
+represent functions where the output type of a function can depend on the
+argument to the function.
 
 (dependent) Function types: intro, formation, computation, elimintation, propeq
 sigma: intro, formation, computation, elimintation, propeq
 product: intro, formation, computation, elimintation, propeq
+
+propositions as types
 
 Universes/ predicativity
 
@@ -71,36 +76,129 @@ returning a universe.
 A term \verb|t| of a given type, \AgdaDatatype{A} can be introduced and named
 in Agda as follows
 
+\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-name}
 
-where \verb|term| : \AgdaDatatype{A} indicates that the identifier \verb|term| has
-type \AgdaDatatype{A} and the second line assigns to \verb|term| the value to
-the right hand sign of the equals sign. Unlike other typed programming
-languages, the types of identifiers cannot be elided and inferred by the
-compiler. In the presence of dependent types, the problem of type inference
-becomes undecidable and therefore it is preferable to explicitly annotate them
-for all identifiers. Agda provides a limited number of the constructions
-provided in Martin Lof type theory and instead provides a method for defining
-inductive datatypes allowing inductive types such as dependent pairs, product
-and coproduct types to be defined. One of the constructions provided by
-are Pi types. A Pi type can be introduced with an identifier, \verb|foo|, as follows
 
-\todo{pi type intro}
+where \AgdaDatatype{name} : \AgdaDatatype{A} indicates that the identifier
+\AgdaDatatype{name} has type \AgdaDatatype{A} and the second line assigns to
+\AgdaDatatype{name} the value to the right hand sign of the equals sign,
+\AgdaDatatype{t}. Unlike other typed programming languages, the types of
+identifiers cannot be elided and inferred by the compiler. In the presence of
+dependent types, the problem of type inference becomes undecidable and therefore
+it is preferable to explicitly annotate them for all identifiers. Agda provides
+a limited number of the constructions provided in Martin Lof type theory and
+instead provides a method for defining inductive datatypes allowing inductive
+types such as dependent pairs, product and coproduct types to be defined. One of
+the constructions provided by are Pi types. A Pi type can be introduced with an
+identifier, \AgdaFunction{foo}, as follows
 
-Computation and elimination rules work adequately similar to MLTT. Inductive
-data types can be introduced as follows.
-\todo{inductive datatypes}
-definition
+\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-pi}
+
+where, in the type signature, \verb|x| is an identifier of type \AgdaDatatype{A}
+which may appear in the output type \AgdaDatatype{B}. The \verb|x| to the
+lefthand side of the equals sign in the function definition binds the identifier
+\verb|x| as an argument to the function of type \AgdaDatatype{A} which may be
+used in the term \AgdaDatatype{M} of type \AgdaDatatype{B}. Arguments to a
+function need not have the same names in the type and definition of the function
+e.g.
+\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-pi'}
+
+is a valid definition.
+
+As in MLTT, functions can also be introduced using a $\lambda$-abstraction. A
+downside of this is that the arguments of a $\lambda$-abstraction can not be
+pattern matched on in the body of a function.
+
+
+Inductive data types can be introduced as follows.
+
+\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-inductive1}
+
+The \AgdaKeyword{data} keyword is followed by the name of the inductive data
+type. Before the colon in the first line are the parameters to the type.
+Parameters to a type appear as is in constructors to the type. They indicate
+that the type behaves parametrically with respect to them. This is why in the
+constructors \verb|Parameter| appears as is. Indices, on the other hand, appear
+after the colon. Indices can change the shape of the type depending on the
+constructor. In the example given the index is an inhabitant of the natural
+number type and the first constructor dictates the inhabitant of the natural
+number type is 0 and in the second constructor that the inhabitant is 1. The
+final term before the \AgdaKeyword{where} statement is the output univerese of
+the type i.e. to which \AgdaDatatype{Set} the type belongs. The constructors of
+the Inductive data type are the possible inhabitants of the type. When pattern
+matching onto an inductive data type, information is gained about the type based
+on the index corresponding to the constructors produced by the pattern match.
+
+Many constructions within Agda are common enough that they are desirable at all
+levels of universe. Agda does not have cumulativity so, to assist universe
+generic programming, universe polymorphism can be used.
+
+A more useful example to consider is the sized list type, or vector
+
+\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-inductive}
+
+The curly braces in the type definition indicate implicit arguments, arguments
+Agda will try and infer from other arguments. \AgdaDatatype{Vec} features set
+polymorphism, parameters and indices. The two constructors for
+\AgdaDatatype{Vec}, are indexed by their size. The empty list has size
+\AgdaInductiveConstructor{zero} to indicate its emptiness.
+\AgdaOperator{\AgdaInductiveConstructor{\AgdaUnderscore{}∷\AgdaUnderscore{}}}
+takes an element of type \verb|a| and a Vector of size \verb|n| and appends the
+singleton to the beginning creating a vector of size
+\AgdaInductiveConstructor{suc} \verb|n|. When pattern matching onto a
+\AgdaDatatype{Vec}, information is gained about the inductive argument to the
+type i.e for the empty list has size \AgdaInductiveConstructor{zero} and in the
+inductive case that the list has size \AgdaInductiveConstructor{suc} \verb|n|
+for some \verb|n|. The remaining important types of Martin-Lof type theory can
+now be introduced as inductive types beginning with Sigma types.
+\todo{mixfix syntax}
+
+\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-sigma}
+
+The output universe for sigma must be the maximum of the levels of the first and
+second components of the sigma type which can be done using \todo{lub}. The
+product type is defined similarly.
+
+\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-product}
+
+and coproducts
+
+\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-coproduct}
 
 Instead of introducing induction and recursion principles for inductive data
-types, agda insetad opts for deep pattern matching whereby an inductive datatype
-can be expanded into its constitutent components.
+types, Agda instead opts for deep pattern matching whereby an inductive datatype
+can be expanded into its constitutent components. This is justified by the fact
+that all inductive data types possible of being defined within (normal) Agda
+correspond to W types i.e. types that admit a well-founded induction principle.
+An example of pattern matching can be used to define a projection out of product
+types.
 
-proof that pattern matching for inductive data types is sound.
-constructors
+\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-projl}
 
-pattern matching vs induction/recursion principles.
-records
+\todo{pattern match that introduces information}
 
-categories
-monoids
+The final type needed before propositions-as-types can be employed is the
+equality type which is defined as follows
+
+\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-equality}
+
+For each inhabitant of \verb|A|, \verb|x|, there is unique inhabitant of the
+equality type parameterised by \verb|x| which is when the second indexed
+argument to the equality type normalises to the first parameter. This
+restriction can only be made if the second argument is an index so we are able
+to restrict its shape. Pattern matching on an equality proof in a function
+definition released evidence into the environment that the two arguments are in
+fact the same. This can be used in the body of the function as needed.
+
+Proving theorems with no additional features in the language would prove
+difficult. Mathematical structures would be a pain to define in the standard
+inductive style as often they will often consist of a single structure with
+arguments 
+
+TYpe requiring set1
+
+Record Types
+
+\section{Category Theory}
+
 setoids

@@ -102,7 +102,7 @@
 
 % configure style of table of contents
 
-\setcounter{tocdepth}{1}
+\setcounter{tocdepth}{2}
 
 
 % configure style of bibliography

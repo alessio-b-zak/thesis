@@ -350,7 +350,7 @@ The contrapositive of the statement is worth defining as it is useful for some
 of the applications.
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-cantor}
 
-\subsection{Applications}
+\section{Applications}
 
 Lawvere's fixed point theorem is an incredibly broad ranging theorem that
 generalises many important theorems in mathematical logic and foundational
@@ -363,9 +363,10 @@ consequences of lawvere's fixed point theorem in these models. This theorem has
 many more applications in paradoxes and logic which can be found in (Yanofsky).
 Some limitations in formalising these within theorem provers will be explored in
 the further work section.
-\subsection{Cantor's Diagonal Theorem}
+\section{Cantor's Theorem}
+\section{Russell's Paradox}
 
-\subsection{The $\lambda$-Calculus}
+\section{The $\lambda$-Calculus}
 
 Despite the deep connection between $CCCs$ and the $\lambda$-calculus \todo{cite}
 Lawvere's fixed point theorem has been relatively underexplored within the
@@ -624,13 +625,59 @@ complete basis but give the author some hope, alongside the fixed point theorem,
 that point-surjectivity corresponds to a cohesive underlying structure.
 
 The derivations of the combinators will be presented informally due to their
-similarity to the above derivations with formal proofs being 
+similarity to the above derivations with formal proofs being contained in the
+appendix.
+
+These combinators utilise the fact that $a \star b =
+\overline{uncurry \, (\varphi \circ a)} \circ b$. If we are able to pick $a$
+then we are able to recover any endomorphism on $D$. More precisely, for any $f:
+D \rightarrow D$, this can be turned into a point to $D^D$ by pushing through
+the other way in the $1 \times A \cong A$ isomorphism and exploiting the other
+direction of the adjunction which we will call curry i.e. $f' = curry \, (
+\,\underline{f} \,) : 1 \rightarrow D^D$. The point-surjectivity of $\varphi$
+can now be used to find the equivalent $u$ such that $\varphi \circ u = f'$.
+Considering $u \star b$ for any $b$ we get
+
+\begin{align*}
+    u \star b &= \overline{uncurry \, (\varphi \circ u \, )} \circ b \\
+    &= \overline{uncurry \, ( \, f' \, ) } \circ b \\
+    &= \overline{uncurry \, ( \, curry \, ( \, \underline{f} \, ) \, )} \circ b \\
+    &= f \circ b
+\end{align*}
 
 
+A fairly easy combinator to construct is the identity combinator $\textbf{I} \, x =
+x$ by taking $f$ in the above construction to be $id$ and calculating the
+equivalent $u$.
 
-I combinator
+Another useful combinator is the mockingbird or self-application operator,
+$\textbf{M} x = x x$ by taking $f$ to be the following morphism of type $D
+\rightarrow D$, $\textbf{M'} = eval \circ \langle \varphi \times id \rangle \circ
+\delta$ and finding the equivalent $u$ and setting it to be \textbf{M}.
 
-Snd combinator
+The final combinator we give a derivation for was found whilst attempting to
+recover the \textbf{K} combinator and requires slightly more machinery.
 
-mockingbird combinator
+Let $x = id : D \rightarrow D$, $y = curry \, ( \, \underline{x} \, ) : 1
+\rightarrow D^D$ pick $z : 1 \rightarrow D$ s.t. $\varphi \circ z = y$ from the
+point-surjectivity of $\varphi$ let $q = z \, \circ \, !_{D} : D \rightarrow D$
+where $!_{D}$ is the terminal arrow from $D$. Taking $f$ as $q$ and deriving the
+appropriate $u$ we get an interesting combinator. Calling the appropriate
+$u$, \textbf{F}
 
+\begin{align*}
+    \textbf{F} \star a \star b &= (\textbf{F} \circ a) \star b \\
+    &= eval \circ \langle \varphi  \times id \rangle \circ \langle q \circ a , b
+    \rangle \\
+    &= eval \circ \langle \varphi \times id \rangle \circ \langle z \, \circ \, !_{D}
+    \, \circ \, a , \, b \rangle \\
+    &= eval \circ \langle \varphi \circ z \times id \rangle \circ \langle !_{D} \,
+    \circ \, a \, , \, b \rangle \\
+    &= \overline{uncurry \, ( \varphi \circ z \, )} \circ b \\
+    &= id \circ b \\
+    &= b
+\end{align*}
+i.e. \textbf{F} selects the second of its two arguments. With some work perhaps
+more combinators could be derived and, potentially, they will form a complete
+basis for combinatory logic. Even if not , it is interesting to understand to
+which computational world point-surjectivity corresponds.
