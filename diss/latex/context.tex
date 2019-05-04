@@ -147,9 +147,10 @@ natural deduction. This lead to the conclusion that every system in
 formal logic has a corresponding computational calculi with a specific type
 system named the curry-howard correspondence.
 
-Intuinistic logic and constructivity.
+Intuinistic logic and constructivity. bhk interpretation
 
 \section{History of Theorem Proving}
+\todo{define logical framework}
 The curry-howard correspondence provided a computational intepretation of the
 notion of proof. Providing a proof of a theorem corresponded to a program that
 inhabited a given type. Type systems in computation had largely grown with the
@@ -162,7 +163,17 @@ around new proofs that were published.
 \subsection{Automath}
 The first computational system to exploit the curry-howard isomorphism to act as
 a theorem prover was Automath in 1967, slighty before Howard's explicit
-observation of the curry-howard correspondence.
+observation of the curry-howard correspondence. Automath (automating
+mathematics) was designed by Dutch Mathematician, Nicolaas Govert de Bruijni (of
+index fame), who independently observed the curry-howard correspondence.
+Automath was a typed programming language providing inbuilt support for variable
+binding, substitution and application of judgemental equalities. As has been
+a common feature of proof-assistants since and is the defining features of
+computational calculi known as \textit{logical frameworks}. Users could
+define their own logics and types and no method of introducing inductive types
+was provided. Typechecking the program corresponded to the verification of the
+proof. \todo{Proofs done with automath.}
+
 \subsection{Martin Lof Type Theory}
 In the early 1970s Per Martin-Lof, a Swedish logician and mathematician, aimed
 to exploit the curry-howard correspondence to provide what he deemed as a better
@@ -178,10 +189,16 @@ the propositions-as-types approach to theorem proving which is an incredibly
 common approach taken in modern theorem provers. An overview of his theory will
 be presented in the technical background for this thesis.
 
+Martin-Lof type theory was deeply influential in many theorem provers and
+logical frameworks designed from then on including the Edinburgh Logical
+Framework and proof-assistant Agda, the proof-assistant used within this thesis.
+
 Martin-Lof's type theory was extended in future research to support different
 domains and uses. Thierry Coquand, a French computer scientist, created the
 calculus of constructions, a typed $\lambda$-calculus which he used to create
 the proof-assistant Coq.
+
+coq
 
 NurP
 
@@ -189,8 +206,22 @@ Hol/Isabelle
 
 Universes and hurkens
 
+delinieating theorem provers and logical frameworks
 
 \subsection{Agda}
+The first version of Agda was designed at Chalmers university in 1999 by
+Caterina Coquand based on the ALF logical framework ultimately derived from
+Martin-Lof type theory. The second version of Agda was later designed by Ulf
+Norell during his PhD also at Chalmers University in 2007 based on Zhaohui Luo's
+\textit{Unified Theory of Dependent Types} (UTT) derived from Martin-Lof type
+theory. Agda is implemented as a functional programming language with dependent
+types, and features an interactive mode in the emacs text editor, allowing users
+to interact with the Agda intepreter to develop proofs. Agda is a total
+language, allowing the user to write only programs that are probably
+terminating. This enables type checking (and therefore proof checking) to be
+decidable. The standard Agda backend, \textit{MAlonzo}, is written in the
+functional programming language Haskell and is still being extended and
+developed in 2019.
 \section{Category Theory and Mathematical Logic}
 \subsection{Algebraic Topology}
 \subsection{Cartesian Closed Categories}
