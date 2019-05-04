@@ -223,8 +223,84 @@ decidable. The standard Agda backend, \textit{MAlonzo}, is written in the
 functional programming language Haskell and is still being extended and
 developed in 2019.
 \section{Category Theory and Mathematical Logic}
+Alongside the developlment and exploration of  proof assistants, type theory and
+the curry-howard correspondance the field of category theory was birthed and
+matured. Category theory is an offshoot of abstract algebra and algebraic
+topology and geometry that  aims to provide a general account of mathematical
+structure. A category is a mathematical structure consisting of a collection of
+objects and arrows between these objects with small set of further axioms to
+which that the structure must adhere. This description allows many common
+mathematical structures to be considered as a category such as the category of
+sets where the objects are sets and the arrows functions or the category of
+groups with the objects being groups and the arrows being group homomorphisms.
+The definition of category is such that the majority of mathematical structures
+can be considered as one. The abstract and encompassing definition of
+categories provides a vehicle for the transposition of mathematical ideas from
+one field to another. Category theory also provides a framework in which to
+understand ubiqutous and reoccurring themes in mathematics such as free objects,
+products and function spaces.
 \subsection{Algebraic Topology}
-\subsection{Cartesian Closed Categories}
-\subsection{LFPT}
+Category theory was initially invented by American mathematicians Samuel
+Eilenberg and Saunders Mac Lane in 1945 in their paper \textit{General Theory of
+Natural Equivalences} which defined categories, structure-preserving maps
+between categories or functors and structure preserving maps between functors or
+natural transformations. Mac Lane and Eilenberg initially applied these to the
+field of algebraic topology and geometry to make certain constructions simpler.
+This line was followed by Grothendieck and Kan who added further concepts such
+as adjoint functors and limits. A marked addition to the study of category
+theory was made by one of Eilenberg's PhD students William Lawvere. Lawvere's
+work throughout the 1960s began to analyse the relations between logic,
+foundations of mathematics and category theory. Lawvere provided a categorical
+and structural account of axiomatic set theory with his \textit{Elementary theory of the
+Category of Sets}. His Ph.D. thesis explored model theory and introduced
+Lawvere's theories, the categorical counterpart to equational theories.
+\todo{elementary topoi}
+
+\subsection{Diagonal Arguments and Cartesian Closed Categories}
+Another staple in Lawvere's series of papers relating to category theory and
+logic and a focal point of this thesis was his 1969 paper \textit{Diagonal
+Arguments and Cartesian Closed Categories}. Cartesian closed categories are
+a conceptual class of categories that have close relations to type theory and
+logic. Centered around having an internal hom functor (internalising the concept
+of a function space), cartesian closed categories arose from an analysis of
+elementary topoi. Joachim Lambek in 1985 extended the curry-howard
+correspondence by providing a correspondence between simply-typed lambda calculi
+and cartesian closed categories establishing the religion of computational
+trinitarianism. In \textit{Diagonal Arguments and Cartesian Closed Categories},
+Lawvere showed how the paradoxes in mathematical logic and set theory from the
+early 20th century could be unified under a single theorem in the theory of
+cartesian closed categories. Lawvere's fixed point theorem, when intepreted
+within the category of sets which is cartesian closed, produces Cantor's
+theorem. Lawvere's theorem has the structure of a classical diagonal theorem and
+has been used since to explain the structure and appearances of other paradoxes
+and phenomena in mathematical logic. A comprehensive account of this is provided
+in.
+
+\todo{lidenbaum tarski algebras}
+
 \subsection{Yanofsky}
+
+\subsection{Contributions}
+It has been noted that the components of the proof of Lawvere's fixed point
+theorem resemble syntactically the construction of the curry's Y-combinator in
+combinatory logic. Given the connection between cartesian closed categories and
+the untyped lambda calculus and the syntactic resemblance it has been assumed by
+some that there is a relation between the untyped lambda calculus and lawvere's
+fixed point theorem. Given the theorems applications within the theory of
+computable universes and Turing machines, recursion theory and the recursion
+theorem and Rice's theorem it seems that this would be likely. In spite of this
+the relation between the $\lambda$-calculus and Lawvere's fixed point theorem has
+never been fully developed. The primary contribution of this thesis is an
+explicit account of this relation, primarily that, when intepreted in the
+context of cartesian closed categories corresponding to models of the untyped
+$\lambda$-calculus, Lawvere's fixed point theorem is equivalent to the first
+fixed point theorem for the untyped $\lambda$-calculus. In the evaluation of
+this thesis, mistakes with previous attempts to formalise the relation are
+provided. The proofs in this thesis are done in the proof-assistant, Agda. This
+decision was made so as to explore the relation between type theory and
+mathematical logic but has provided other benefits. Through formalisation, a
+greater appreciation for the particularities of Lawvere's theorem can be
+understood making it easier to find further relations. The other primary
+contribution of this thesis is a collection of proofs within cartesian closed
+categories and of Lawvere's theorem itself.
 
