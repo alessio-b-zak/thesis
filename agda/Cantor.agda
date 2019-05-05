@@ -168,8 +168,6 @@ not false = true
 not true = false
 
 
-test : true ≢ true
-test ()
 
 not-fx-pt : ∀ {x} → (not x) ≢ x
 not-fx-pt {false} ()

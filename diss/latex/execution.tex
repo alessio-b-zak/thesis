@@ -257,6 +257,49 @@ many more applications in paradoxes and logic which can be found in (Yanofsky).
 Some limitations in formalising these within theorem provers will be explored in
 the further work section.
 \section{Cantor's Theorem}
+An analogue of Cantor's theorem can be constructed using a category of small
+types (i.e. all types that belong to a given universe).
+
+
+A category can be constructed from the elements of any Agda universe of a
+particular level.
+
+\ExecuteMetaData[../agda/latex/ThesisSets.tex]{sets-instance}
+
+The objects of the category are the types at the specified level. The morphisms
+are the functions between types of this level. Equality of morphisms is
+extensional propositional equality for functions. Morphism composition is
+function composition, identity morphsism are identity functions. The axioms of
+categories come simply from the definition of propositional equality.
+
+\ExecuteMetaData[../agda/latex/ThesisSets.tex]{sets-equality}
+
+Each instance of \AgdaDatatype{Sets} forms a cartesian closed categories.
+Working with the lowest level universe.
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-univ}
+
+Products correspond to the pair type
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-pair}
+
+With the indexed family of projections being the projections out of the pair.
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-proj}
+
+All that remains is to prove that these constitute the product object i.e. that
+for each pair of arrows from a type to each component of the pair there exists a
+unique (extensionally propositionally unique) function from the type to the pair object.
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-unique-type}
+
+
+
+
+
+
+
+
 \section{Russell's Paradox}
 
 \section{The $\lambda$-Calculus}
