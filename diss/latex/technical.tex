@@ -73,9 +73,6 @@ inconsistencies that develop when trying to postulate a set of all sets in naive
 set theory. A type is then defined to bean element of one of the postulated
 universes and new types can be defined within a given universe.
 
-type families
-
-cumulative predicative hierarchy.
 
 
 Introducing new types into the type theory involves explaining how to create
@@ -112,19 +109,17 @@ applied to $f$ to obtain a value of type $B(a)$ written
 \todo{uniqueness principle for pi types}
 
 The expression that the the application yields is the result of replacing all
-instances of $x$ in $M$ with $a$.
-
-The other types to be introduced in this section can be written as inductive
-types. Inductive types can be introduced by supplying constructors with build
-elements of the type from other types.  Inductive types can be computed with
-using induction principles which describe how to compute with abitrary
-structures of the type based on the constituent parts. Induction principles can
-be seen as an alternative to pattern matching, a more common feature of
-functional programming languages. A simple type to illustrate this is the
-product type which is the type theory analogue of the cartesian product. Given
-two types $A : U_{n}$ and $B : U_{n}$ the product type, $A \times B : U$ can be
-formed. Given $a : A$ and $b : B$ an element of the pair type $A \times B$ can
-be constructed as
+instances of $x$ in $M$ with $a$. The other types to be introduced in this
+section can be written as inductive types. \todo{type-family}Inductive types can
+be introduced by supplying constructors with build elements of the type from
+other types.  Inductive types can be computed with using induction principles
+which describe how to compute with abitrary structures of the type based on the
+constituent parts. Induction principles can be seen as an alternative to pattern
+matching, a more common feature of functional programming languages. A simple
+type to illustrate this is the product type which is the type theory analogue of
+the cartesian product. Given two types $A : U_{n}$ and $B : U_{n}$ the product
+type, $A \times B : U$ can be formed. Given $a : A$ and $b : B$ an element of
+the pair type $A \times B$ can be constructed as
 \begin{align*}
     (a \, , \, \, b) \, : \, A \times B
 \end{align*}
@@ -160,14 +155,62 @@ $\Sigma$-types or dependent pairs. Dependent pairs are product types where the
 type of the second argument can depend on the first. Given a type $A : U$ and a
 type-family $B : A \rightarrow U$ the dependent product type $\Sigma_{(x :
 A)}B(x)$ can be formed. Given an element $a : A$ and an element $b : B(a)$ the
-dependent pair $(a,b) : \Sigma_{(x : A)}B(x)$
+dependent pair $(a,b) : \Sigma_{(x : A)}B(x)$. The induction principle for
+$\Sigma$-types is similar to the induction principle for products.
+
+\begin{align*}
+    \textsf{ind}_{\Sigma_{x :A}B(x)} : \prod_{C : \Sigma_{x : A }B(x)\rightarrow
+    U}\bigg(\prod_{(x : A)}\prod_{(y : B)}C((x , y))\bigg) \rightarrow \prod_{p :
+    \Sigma_{x : A}B(x)}C(x)
+\end{align*}
+with the same defining equation
+\begin{align*}
+    \textsf{ind}_{\Sigma_{x :A}B(x)}\, (C, g, (a , b)) :\equiv g(a)(b)
+\end{align*}
 
 
-
-sigma: intro, formation, computation, elimintation, propeq
-product: intro, formation, computation, elimintation, propeq
 coproduct
-equality
+induction principle
+
+unit
+induction principle
+
+void
+
+A final and key component of MLTT is the identity type, a type used to prove
+that two terms are equal. This is known as propositional equality and is
+internal to the theory. For a given type, $A : U$, the identity type is a family
+$\textsf{Id}_{A} : A \rightarrow A \rightarrow U$ for a given $a : A$, $b : A$
+written $a =_{A} b$. Within MLTT there is a single inhabitant of the identity
+type for a given  $a : A$  which can only be introduced if the second elements
+of $A$ are definitionally equal known as $\textsf{refl}_{a}$. $\textsf{refl}$ is
+a constructor of type
+\begin{align*}
+    \textsf{refl} : \prod_{a : A}(a =_{A} a)
+\end{align*}
+
+There are different choices for induction principle for the identity type.
+Choosing whether to use both or only one is major decision in modern type
+theories. One of the induction principles for the identity type is known as
+\textsf{Axiom J}. \textsf{Axiom J} is a function of type
+
+\begin{align*}
+    \textsf{ind}_{=_{A}} : \prod_{(C : \Pi_{(x,y : A)}(x=_{A}y)\rightarrow
+    U)}\bigg(\prod_{(x : A)}C(x,x,\textsf{refl}_{x})\bigg) \rightarrow
+    \prod_{(x,y:A)}\prod_{p:x=_{A}y}C(x,y,p)
+\end{align*}
+
+\textsf{Axiom J} is defined as
+\begin{align*}
+    \textsf{ind}_{=_{A}} (C,c,x,x,\textsf{refl}_{x}) :\equiv c(x)
+\end{align*}
+
+
+\textsf{Axiom J} is surprisingly not capable of proving that all inhabitants of
+the identity type are propositionally equal, a property known as
+\textit{uniqueness of identity proofs} or \textsf{UIP}. To achieve this
+another induction principle for the identity type must be provided known as
+\textsf{Axiom K}.
 
 The basis upon which MLTT can be used as a foundation for mathematics is via the
 curry-howard correspondence in a particular fashion known as
@@ -419,10 +462,9 @@ category theory, as is prevelant in the literature, no firm foundations will be
 provided so as to aid in understanding. This will be followed by a formal
 presentation of the constructions within Agda. To repeat, a category is a
 collection of objects and a collection of arrows between objects.
-
 \begin{align*}
-    &Objects : A \\
-    &Arrows : A \rightarrow B
+    &\textrm{Obj} : A \\
+    &\textrm{Arr} : A \rightarrow B
 \end{align*}
 
 In Agda, categories can be constructed in with relative simplicity. The initial
@@ -437,30 +479,48 @@ objects, arrows and type of morphism equality respectively
 
 Categories are typed at a level above the largest of objects, arrows and
 equalities in order to present equality on morphisms as relations on types as
-per the Agda standard library. The axioms of a category are presented as fields
-of the record. Objects are permitted to be any type of any level and morphisms
-typed as any function that takes two objects and returns a type.
+per the Agda standard library. In addition to objects and arrows, there exists a
+binary operation on morphisms known as composition which takes two morphisms,
+$f : A \rightarrow B$ and $g : B \rightarrow C$ and produces a third morphism
+$g \circ f : A \rightarrow C$. Furthemore, for each object, $A$, in the
+category, there exists an identity arrow $id_{A} : A \rightarrow A$.
+\begin{align*}
+    &\textrm{Identity} : \forall A \in \textrm{Obj}(\textbf{C}) \, \, \exists \, \, id : A \rightarrow A \\
+    &\textrm{Composition} : \textrm{Given } f : A \rightarrow B
+    \textrm{ and } g : B \rightarrow C \, \exists \, \, g \circ f : A \rightarrow C
+\end{align*}
 
-Identity arrows and composition take their obvious definitions. The identity
+In Agda, identity arrows and composition take their obvious definitions. The identity
 arrow provides a distinguished morphism for each object implicitly and
 composition is a function that takes two morphisms of the correct shape and
 returns the appropriate morphism
 \ExecuteMetaData[../agda/latex/ThesisCategory.tex]{cat-field-comp-id}
 
-To codify the associativity of composition and the neutrality of identity it is
-not practical to use propositional equality. Proving these as propositional
-equalities of the structures that are often categorified is often a difficult
-task. Propositional equality for a structure amounts to showing propositional
-equality on its constituent components. That two terms are propositionally equal
-implies the terms have the same normal form. There are often situations where it
-is desirable to equate two different terms that do not have the same normal
-forms. As an example, consider equating propositionally two monoid
-homomorphisms. In a dependently typed setting this requires that the proofs of
-preservation for the two morphisms are also equal in addition to the functions
-between the underlying monoids. This is a tedious requirement that is often
-undesired. \todo{Axiom K?}To remedy this, the earlier mentioned setoid model is
-used whereby structures are equated by an equivalence relation.\todo{hott} For
-categories an equivalence relation for morphism must be provided
+The current operations defined for a category must adhere to a few more axioms,
+namely
+\begin{align*}
+    &\textrm{Neutrality of identity} : \forall \, g : A \rightarrow B \, \, \, \,
+    g \circ id_{A} = g \textrm{  and    } \forall f : C \rightarrow D \, \,  \, \,
+    id_{D} \circ f = f \\
+    &\textrm{Associativity of Composition} : \forall \, f \, , g \, \, , \,  h \, \, \,
+    \, \, ((h \circ g) \circ f) = (h \circ (g \circ f))
+\end{align*}
+
+To codify the associativity of composition and the neutrality of identity within
+Agda it is not practical to use propositional equality. Proving these as
+propositional equalities of the structures that are often categorified is often
+a difficult task. Propositional equality for a structure amounts to showing
+propositional equality on its constituent components. That two terms are
+propositionally equal implies the terms have the same normal form. There are
+often situations where it is desirable to equate two different terms that do not
+have the same normal forms. As an example, consider equating propositionally two
+monoid homomorphisms. In a dependently typed setting this requires that the
+proofs of preservation for the two morphisms are also equal in addition to the
+functions between the underlying monoids. This is a tedious requirement that is
+often undesired. \todo{Axiom K?}To remedy this, the earlier mentioned setoid
+model is used whereby structures are equated by an equivalence
+relation.\todo{hott} For categories an equivalence relation for morphism must be
+provided
 \ExecuteMetaData[../agda/latex/ThesisCategory.tex]{cat-field-rel}
 
 The \AgdaFunction{IsEquivalence} function establishes the appropriate proofs of
@@ -480,11 +540,38 @@ are unable to distinguish terms with the same normal form. This can be seen as
 one of the downsides to using equivalence relations as congruence must be proven
 for every each individual equivalence relation.\todo{congruence}
 
+\todo{examples of categories}
+\subsection{Universal Constructions}
 
-\subsection{Uniqueness}
+A key idea of category theory are universal constructions. Universal
+constructions are common patterns that occur throughout mathematics
+that aim to capture the essence of these patterns at the categorical level. The
+universal constructions presented here are those that will be of use within the
+thesis.
 
-The next step in the categorical journey is a critical component of many of the
-more complex abstractions, the notion of unique arrow
+\subsubsection{Terminal Objects}
+Terminal objects are constructions that capture the
+minimal structure required to be an object within a category. They often
+correspond to the trivial examples of objects within the category.
+A terminal object of a category \textbf{C} is an object, $T$, such that, for all
+other objects, $A$ in the category, there exists a unique arrow $!_{A}: A
+\rightarrow T$.
+
+This can be shown as a diagram where the dashed line indicates uniqueness.
+
+\[\begin{tikzcd}[sep=huge]
+A \arrow[d, "!_A", dashed] \\
+T
+\end{tikzcd}\]
+
+As is common with universal constructions, terminal objects in categories are
+unique up to unique isomorphism.
+
+Examples of terminal objects in common categories include any singleton in
+\textbf{Set} and the one element group in \textbf{Group}
+
+Formalising universal constructions within Agda requires the notion of unique
+arrow
 
 \ExecuteMetaData[../agda/latex/ThesisUnique.tex]{unique-def-unique}
 
@@ -512,8 +599,37 @@ takes a category and provides an object alongside a proof that it is terminal
 
 \ExecuteMetaData[../agda/latex/ThesisTerminal.tex]{terminal-def-has}
 
-To prove Lawvere's Fixed Point Theorem within Agda and the various surrounding
-proofs in logic, Cartesian Closed Categories must be formalised. For this, in
+Lawvere's fixed point theorem is a theorem about cartesian closed categories.
+Cartesian closed categories are categories with three specific universal
+properties, a terminal object, products and exponentials. 
+
+\subsubsection{Products}
+Products exemplify a common construction in categories of combining the
+structure of two objects (in some canonical way) within the category to produce
+an object of the same category. In more concrete terms the product of two
+objects $A$ and $B$ in the category $\textbf{C}$ is an triple $(A \times B,
+\pi_{1}, \pi_{2})$ where for all other objects $C$ in $\textbf{C}$ with
+projections $f: C \rightarrow A$ and $g: C \rightarrow B$ the unique arrow
+$\langle f, g\rangle : C \rightarrow A \times B$ can be formed such that the
+following diagram commutes:
+
+\[\begin{tikzcd}[sep=huge]
+ & C \arrow[ld, "f"'] \arrow[rd, "g"] \arrow[d, "{\langle f, g\rangle}" description, dashed] &  \\
+A & A \times B \arrow[l, "\pi_2"] \arrow[r, "\pi_1"'] & B
+\end{tikzcd}\]
+
+where the dashed arrow indicates uniqueness. This can be extended to
+\textit{n}-ary products in the obvious way.
+
+As with terminal objects, products (via the unique arrow $\langle f, g \rangle$)
+are unique up to unique isomorphism. Examples of products within familiar
+categories include the cartesian product $\times$ in \textbf{Set}, defined as
+the set of all tuples of elements from two separate sets. If products can be
+formed for every finite set of objects in a category it is said to be cartesian.
+
+
+To prove Lawvere's fixed point theorem within Agda and the various surrounding
+proofs in logic, cartesian closed categories must be formalised. For this, in
 addition to terminal objects, binary products and exponentials will be needed
 
 \ExecuteMetaData[../agda/latex/ThesisCCC.tex]{ccc-def-is-ccc}

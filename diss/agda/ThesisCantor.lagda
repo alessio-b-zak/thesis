@@ -76,9 +76,12 @@ proj-uniqueness : ∀ {A B X} (p : ∀ i → X → Bool-elim A B i) →
 \end{code}
 %</cantor-unique-type>
 
+%<*cantor-unique-def>
 \begin{code}
-proj-uniqueness p = Unique.Build.∃!-intro {!!} {!!} {!!}
+proj-uniqueness p
+  = Unique.Build.∃!-intro (λ x → mkPair (p true x) (p false x)) {!!} {!!}
 \end{code}
+%</cantor-unique-def>
 
 \begin{code}
 instance

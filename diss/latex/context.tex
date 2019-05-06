@@ -6,33 +6,33 @@ This thesis is a small exploration into the interconnected and mysterious worlds
 of mathematical logic and computation. Since the advent of the fields in the
 early 20th Century, links have been found in unusual places and both fields have
 provided insight into the other. There are two primary focal points of this
-thesis, the unification of disparate areas in mathematical logic and computing
-via category theory, an offshoot of abstract algebra, and the rigorous
+thesis: the unification of disparate areas in mathematical logic and computing
+via category theory, an offshoot of abstract algebra; and the rigorous
 formalisation of mathematics within modern theorem provers. More precisely, a
 particular theorem within category theory will be proven within the theorem
-prover Agda and its applications are explored with a new application provided in
-the context of the untyped $\lambda$-calculus. The theorem that will
+prover Agda and its applications will be explored, with a new application
+provided in the context of the untyped $\lambda$-calculus. The theorem that will
 be explored within this thesis is Lawvere's fixed point theorem discovered by
 William Lawvere in 1969 in \textit{Diagonal Arguments and Cartesian Closed
-Categories} \cite{lawvere1969diagonal}. \todo{date}Lawvere's fixed point theorem
+Categories} \cite{lawvere1969diagonal}. Lawvere's fixed point theorem
 is a statement within the context of cartesian closed categories, categories
 which play a crucial role within the study of computation and logic. Lawvere's
 fixed point theorem is a categorical abstraction of the familiar class of
-diagonal arguments employed throughout computer science and mathematics. The
-decision to formalise lawvere's fixed point theorem within a theorem prover is
+\textit{diagonal arguments} employed throughout computer science and mathematics. The
+decision to formalise Lawvere's fixed point theorem within a theorem prover is
 not incidental; many of the theorems abstracted by Lawvere's theorem play an
 important role in the problem of providing a formal foundation in which to do
 mathematics.
 
 The primary contributions of this thesis are: a formalisation of Lawvere's fixed
 point theorem within the theorem prover Agda with additional proofs in the
-theory of cartesian closed categories, a novel application of lawvere's fixed
+theory of cartesian closed categories; a novel application of Lawvere's fixed
 point theorem within the context of the untyped $\lambda$-calculus with a
-derivation of the first recursion theorem, and a formalisation within Agda of a
+derivation of the first recursion theorem; and a formalisation within Agda of a
 category of small types with presentations of Cantor's Theorem and Russell's
 paradox within context.
 
-Many of the applications of lawvere's fixed point theorem are taken from
+Many of the applications of Lawvere's fixed point theorem are taken from
 Yanofsky's 2003 review paper \ldots \todo{yanofsky}.
 
 Given the attempts of this thesis to incoporate a large amount of related yet
@@ -45,7 +45,7 @@ behind this thesis.
 \subsection{Cantor's Theorem}
 
 The story begins slightly before the advent of the 20th century with the German
-Mathematician Georg Cantor. Cantor (1845 - 1918), is considered the father of
+Mathematician Georg Cantor. Cantor (1845 - 1918) is considered the father of
 set theory with his proofs of the differing cardinalities of the real and
 natural numbers, the theory of ordinals, and, for proving properties of
 ordinals, transfinite induction. A major piece of work by Cantor was his
@@ -77,7 +77,7 @@ mathematics. Various systems were designed to provide a more secure foundation
 of mathematics as a result of Russell's paradox. Russell himself created the
 first theories of types in his \textit{Principia Mathematica} \cite{russell25} to combat this
 with various other foundational theories being presented, including set
-theoretic foundations such as ZFC and NBG which reject the axiom of unrestricted
+theoretic foundations such as \todo{expand}ZFC and NBG which reject the axiom of unrestricted
 comprehension. As well as being intimately involved with the practicalities of
 foundations itself, Russell's paradox can also be seen to be an instance of
 Lawvere's theorem as outined in Yanofsky and presented formally further within
@@ -98,19 +98,19 @@ procedure or algorithm which, on an input of a statement in first-order logic
 plus a finite numbers of axioms, could determine its validity in all structures
 statisfying the axioms. Before an answer could be given, the notion of algorithm
 had to be formalised. This was done in the 1930s independently by Alonzo Church
-and Alan Turing. Turing's formalisation \cite{turing1937computable}, presented
-in 1937, the class of Turing Machine's were machines aimed at directly capturing
-the notion of algorithm, provided a negative answer to this question by
-establishing the existence of undecidable problems such as his halting problem
-and confirming the entscheidungsproblem as one of these undecidable problems.
-Turing's proof of the existence of undecidable problems and his proof of the
-Halting problem resemble in no small part the proof of Cantor's Theorem as
-diagonalisation arguments. Yanofsky, shows how both proofs can be understood
+and Alan Turing. \todo{make better}Turing's formalisation
+\cite{turing1937computable} known as Turing Machines, machines aimed directly at
+capturing the notion of algorithm, provided a negative answer to this question
+by establishing the existence of undecidable problems such as his halting
+problem and confirming the entscheidungsproblem as one of these undecidable
+problems.  Turing's proof of the existence of undecidable problems and his proof
+of the Halting problem resemble closely the proof of Cantor's Theorem being
+diagonalisation arguments. Yanofsky shows how both proofs can be understood
 through the lens of Lawvere's fixed point theorem constituting another
 unification of a concept in mathematical logic by Lawvere's Theorem.
 \subsubsection{$\lambda$-calculus}
 Instead of capturing directly the notion of computability, Alonzo Church's
-formalisation was focused on formalising more precisely the notion of function.
+formalisation was focused on formalising more precisely the notion of a function.
 Church's formulation, the $\lambda$-calculus, is a formal system consisting of
 the operations of abstraction and application using variable binding and
 substitution. Church showed that the $\lambda$-calculus had an notion of
@@ -118,16 +118,16 @@ $\lambda$-computability which was equivalent to the class of general recursive
 functions as defined by Godel and thus represented a model of computation.
 Church also provided a negative answer to the entscheidungsproblem. The
 $\lambda$-calculus has applications beyond that of providing a negative answer
-to Hilbert's Problem. The $\lambda$-calculus originally arose form Church's
+to the entscheidungsproblem. The $\lambda$-calculus originally arose from Church's
 desire to provide a foundation for logic, a desire also shared by another
 American Logician, Haskell Curry. In the 1920s and 1930s, Curry worked on a
 foundation of logic extremely similar to the $\lambda$-calculus, his theory of
 combinators. Combinatory logic, as defined by Curry, was in correspondence with
-the $\lambda$-calculus. Curry observed in 1934 that, if types were assigned to
+the $\lambda$-calculus. In 1934 Curry observed that, if types were assigned to
 the domains and comdomains of his combinators, the types  matched the axioms of
 intuitionistic implicational logic. This observation proved to be the beginning
 of theorem provers as they are in their current state.
-
+\todo{intuitionistic logic}
 $\lambda$-calculus as a deductive system
 Y-combinator and curry's paradox
 the simply typed lambda calculus
@@ -141,17 +141,17 @@ again by Curry using his Paradoxical Combinator. To remedy this inconsistency
 both Curry and Church extended their logical systems with types giving typed
 combinatory logic and the simply typed $\lambda$-calculus. Further to Curry's
 aformentioned observation made of typed combinatory logic, in the 1960s William
-Alvin Howard  made a further observation that the the typing rules of the simply
+Alvin Howard  made a further observation that the typing rules of the simply
 $\lambda$-calculus corresponded to laws of inference for intuitionistic style
 natural deduction. This lead to the conclusion that every system in
 formal logic has a corresponding computational calculi with a specific type
-system named the curry-howard correspondence.
+system named the Curry-Howard correspondence.
 
 Intuinistic logic and constructivity. bhk interpretation
 
 \section{History of Theorem Proving}
 \todo{define logical framework}
-The curry-howard correspondence provided a computational intepretation of the
+The Curry-Howard correspondence provided a computational intepretation of the
 notion of proof. Providing a proof of a theorem corresponded to a program that
 inhabited a given type. Type systems in computation had largely grown with the
 theory of programming languages. Types were intended to check that a program, to
@@ -159,24 +159,24 @@ some degree, behaved as intended. It was understood that the comprehensive type
 systems and their associated checkers could be used to check the validity of
 proofs in mathematics. With the advent of physical computers this provided hope
 that a more methodical approach to mathematics that eliminated the uncertainty
-around new proofs that were published.
+around new proofs would be achieved.
 \subsection{Automath}
-The first computational system to exploit the curry-howard isomorphism to act as
+The first computational system to exploit the Curry-Howard isomorphism to act as
 a theorem prover was Automath in 1967, slighty before Howard's explicit
-observation of the curry-howard correspondence. Automath (automating
-mathematics) was designed by Dutch Mathematician, Nicolaas Govert de Bruijni (of
-index fame), who independently observed the curry-howard correspondence.
+observation of the Curry-Howard correspondence. Automath (automating
+mathematics) was designed by Dutch Mathematician, Nicolaas Govert de Brujin (of
+index fame), who independently observed the Curry-Howard correspondence.
 Automath was a typed programming language providing inbuilt support for variable
-binding, substitution and application of judgemental equalities. As has been
+binding, substitution and application of judgemental equalities. This has been
 a common feature of proof-assistants since and is the defining features of
-computational calculi known as \textit{logical frameworks}. Users could
+a set of computational calculi known as \textit{logical frameworks}. Users could
 define their own logics and types and no method of introducing inductive types
 was provided. Typechecking the program corresponded to the verification of the
 proof. \todo{Proofs done with automath.}
 
-\subsection{Martin Lof Type Theory}
+\subsection{Martin-Lof Type Theory}
 In the early 1970s Per Martin-Lof, a Swedish logician and mathematician, aimed
-to exploit the curry-howard correspondence to provide what he deemed as a better
+to exploit the Curry-Howard correspondence to provide what he deemed as a better
 foundation for mathematics. Per Martin-Lof, a constructivist, asserted that in
 order to know of the existence of a mathematical object it must be directly
 constructed. To this end Martin-Lof went about producing a type system to
@@ -191,7 +191,7 @@ be presented in the technical background for this thesis.
 
 Martin-Lof type theory was deeply influential in many theorem provers and
 logical frameworks designed from then on including the Edinburgh Logical
-Framework and proof-assistant Agda, the proof-assistant used within this thesis.
+Framework and  Agda, the proof-assistant used within this thesis.
 
 Martin-Lof's type theory was extended in future research to support different
 domains and uses. Thierry Coquand, a French computer scientist, created the
@@ -212,48 +212,49 @@ delinieating theorem provers and logical frameworks
 The first version of Agda was designed at Chalmers university in 1999 by
 Caterina Coquand based on the ALF logical framework ultimately derived from
 Martin-Lof type theory. The second version of Agda was later designed by Ulf
-Norell during his PhD also at Chalmers University in 2007 based on Zhaohui Luo's
+Norell during his Ph.D also at Chalmers University in 2007 based on Zhaohui Luo's
 \textit{Unified Theory of Dependent Types} (UTT) derived from Martin-Lof type
 theory. Agda is implemented as a functional programming language with dependent
 types, and features an interactive mode in the emacs text editor, allowing users
 to interact with the Agda intepreter to develop proofs. Agda is a total
-language, allowing the user to write only programs that are probably
+language, allowing the user to write only programs that are provably
 terminating. This enables type checking (and therefore proof checking) to be
 decidable. The standard Agda backend, \textit{MAlonzo}, is written in the
 functional programming language Haskell and is still being extended and
 developed in 2019.
 \section{Category Theory and Mathematical Logic}
 Alongside the developlment and exploration of  proof assistants, type theory and
-the curry-howard correspondance the field of category theory was birthed and
+the Curry-Howard correspondance the field of category theory was birthed and
 matured. Category theory is an offshoot of abstract algebra and algebraic
-topology and geometry that  aims to provide a general account of mathematical
+topology and geometry that aims to provide a general account of mathematical
 structure. A category is a mathematical structure consisting of a collection of
-objects and arrows between these objects with small set of further axioms to
-which that the structure must adhere. This description allows many common
+objects and arrows between these objects with a small set of further axioms to
+which the structure must adhere. This description allows many common
 mathematical structures to be considered as a category such as the category of
 sets where the objects are sets and the arrows functions or the category of
 groups with the objects being groups and the arrows being group homomorphisms.
-The definition of category is such that the majority of mathematical structures
-can be considered as one. The abstract and encompassing definition of
-categories provides a vehicle for the transposition of mathematical ideas from
-one field to another. Category theory also provides a framework in which to
-understand ubiqutous and reoccurring themes in mathematics such as free objects,
-products and function spaces.
+The definition of category sufficiently abstract that the majority of
+mathematical structures can be considered as one. The abstract and encompassing
+definition of categories provides a vehicle for the transposition of
+mathematical ideas from one field to another. Category theory also provides a
+framework in which to understand ubiqutous and reoccurring themes in mathematics
+such as free objects, products and function spaces.
 \subsection{Beginnings}
 Category theory was initially invented by American mathematicians Samuel
 Eilenberg and Saunders Mac Lane in 1945 in their paper \textit{General Theory of
 Natural Equivalences} which defined categories, structure-preserving maps
-between categories or functors and structure preserving maps between functors or
-natural transformations. Mac Lane and Eilenberg initially applied these to the
-field of algebraic topology and geometry to make certain constructions simpler.
-This line was followed by Grothendieck and Kan who added further concepts such
-as adjoint functors and limits. A marked addition to the study of category
-theory was made by one of Eilenberg's PhD students William Lawvere. Lawvere's
-work throughout the 1960s began to analyse the relations between logic,
-foundations of mathematics and category theory. Lawvere provided a categorical
-and structural account of axiomatic set theory with his \textit{Elementary theory of the
-Category of Sets}. His Ph.D. thesis explored model theory and introduced
-Lawvere's theories, the categorical counterpart to equational theories.
+between categories, known as functors, and structure preserving maps between
+functors, known as natural transformations. Mac Lane and Eilenberg initially
+applied these to the field of algebraic topology and geometry to make certain
+constructions simpler.  This line was followed by Grothendieck and Kan who added
+further concepts such as adjoint functors and limits. A marked addition to the
+study of category theory was made by one of Eilenberg's Ph.D students William
+Lawvere. Lawvere's work throughout the 1960s began to analyse the relations
+between logic, foundations of mathematics and category theory. Lawvere provided
+a categorical and structural account of axiomatic set theory with his
+\textit{Elementary Theory of the Category of Sets}. His Ph.D. thesis explored
+model theory and introduced Lawvere's theories, the categorical counterpart to
+equational theories.
 \todo{elementary topoi}
 
 \subsection{Diagonal Arguments and Cartesian Closed Categories}
@@ -263,7 +264,7 @@ Arguments and Cartesian Closed Categories}. Cartesian closed categories are
 a conceptual class of categories that have close relations to type theory and
 logic. Centered around having an internal hom functor (internalising the concept
 of a function space), cartesian closed categories arose from an analysis of
-elementary topoi. Joachim Lambek in 1985 extended the curry-howard
+elementary topoi. Joachim Lambek in 1985 extended the Curry-Howard
 correspondence by providing a correspondence between simply-typed lambda calculi
 and cartesian closed categories establishing the religion of computational
 trinitarianism. In \textit{Diagonal Arguments and Cartesian Closed Categories},
@@ -280,8 +281,8 @@ and phenomena in mathematical logic
 
 \subsection{Beyond Lawvere}
 
-In 2003, Noson Yanofsy, released a review paper, \textit{A Universal Approach to
-Self-Referential Paradoxes, Incompleteness and Fixed Points} on Lawvere's 1969
+In 2003, Noson Yanofsy released a review paper, \textit{A Universal Approach to
+Self-Referential Paradoxes, Incompleteness and Fixed Points}, on Lawvere's 1969
 paper.  Yanofsky's paper, in an attempt to make Lawvere's paper more accessible,
 reframed Lawvere's thereom outside of category theory. Yanofsky extended
 Lawvere's theorem to explain several of the logical paradoxes that have existed
@@ -305,12 +306,12 @@ yablo
 priest closure
 
 
-
+\todo{$\lambda$-models}
 \subsection{Contributions}
 It has been noted that the components of the proof of Lawvere's fixed point
 theorem resemble syntactically the construction of the curry's Y-combinator in
 combinatory logic. Given the connection between cartesian closed categories and
-the untyped lambda calculus and the syntactic resemblance it has been assumed by
+the untyped $\lambda$-calculus and the syntactic resemblance it has been assumed by
 some that there is a relation between the untyped lambda calculus and lawvere's
 fixed point theorem. Given the theorems applications within the theory of
 computable universes and Turing machines, recursion theory and the recursion
@@ -322,7 +323,7 @@ context of cartesian closed categories corresponding to models of the untyped
 $\lambda$-calculus, Lawvere's fixed point theorem is equivalent to the first
 fixed point theorem for the untyped $\lambda$-calculus. In the evaluation of
 this thesis, mistakes with previous attempts to formalise the relation are
-provided. The proofs in this thesis are done in the proof-assistant, Agda. This
+provided. The proofs in this thesis are done in the proof-assistant Agda. This
 decision was made so as to explore the relation between type theory and
 mathematical logic but has provided other benefits. Through formalisation, a
 greater appreciation for the particularities of Lawvere's theorem can be
