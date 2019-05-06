@@ -1,6 +1,17 @@
 % !TEX root = ./dissertation.tex
 \section{Alternative Theorem Provers}
-coq
+A seemingly abitrary decision was the choice of proof-assitant to use. Of the
+plethora that exist, the three viable options for use in this project were Coq,
+Agda and Isabelle. The reasons for choosing Agda were largely convenience. Agda
+closely resembles in syntax and semantics strongly typed functional programming
+languages like Haskell and therefore is more likely to resemble a more familiar
+programming experience to computer scientists. The propositions-as-types
+approach is taken to proving where proof objects are easily manipulable. Coq, is
+a dependently typed functional programming language supported by INRIA and
+originally developed by Gerard Huet and Thierry Coquand based on an alternative
+to MLTT called the Calculus of Inductive Constructions. Proving in Coq does not
+consist of pattern matching and manipulating proof objects but instead through
+the refinement of goals through \textit{tactics}. Tactics 
 \section{Homotopy Type Theory}
 As mentioned earlier in the thesis, a setoid based approach was taken towards
 modelling categories where categories were parameterised by an equivalence
@@ -29,7 +40,7 @@ topos theory
 \subsection{Constructive Category of Sets}
 Intepreting Lawvere's fixed point theorem within the category of sets to
 produce the Russell style paradoxes and Cantor's theorem proves tricky within
-Agda. Within normal MLTT a constructive category of sets is 
+Agda. Within normal MLTT a constructive category of sets is
 
 sets in mltt
 

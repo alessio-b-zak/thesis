@@ -48,18 +48,122 @@ $a$ and $b$ are equal (at type $A$) is written
 Types are introduced by introducing definitional equalities that define how to
 form and use the types within the context of the theory. In the section that
 follows, only a limited number of types will be introduced so as to understand
-how the type theory can be used in theorem proving. Types are often introduced
-by introducing how to form the type out of constituent types known as a
-formation rule, how to introduce elements of the type known as an introduction
-rule and how the type can be used and what, computationally, that means as a
-elimination and computation rules. The most basic components of MLTT is the
-dependent function or Pi type, $\Pi$. $\Pi$ types represent functions where the
-output type of a function can depend on the argument to the function. The
-formation, introduction and computation rules of $\Pi$ types are introduced in
-the standard type-theoretic fashion.
+how the type theory can be used in theorem proving. Before defining types,
+however, what it means to be a type must be introduced. A universe is a type
+who's elements are themselves types. The version of MLTT presented here
+postulates an infinite hierarchy of universes, $U_{n}$ which is an element of
+the universe at a higher level $U_{n+1}$ i.e.
 
-\todo{pi types}
-(dependent) Function types: intro, formation, computation, elimintation, propeq
+\begin{align*}
+    U_{0} : U_{1} : U_{2} \cdots
+\end{align*}
+
+A type is then an inhabitant of some universe. One might desire some finite
+number of universes in which to work and this was something Martin-Lof desired.
+Martin-Log's first presentation of his type theory featured only one universe,
+$U$, which was an element of itself.
+
+\begin{align*}
+    U : U
+\end{align*}
+
+Thierry Coquand in 1992 showed that a Russell style paradox could be embedded
+within a type theory with a single impredicative universe. This mirrors the
+inconsistencies that develop when trying to postulate a set of all sets in naive
+set theory. A type is then defined to bean element of one of the postulated
+universes and new types can be defined within a given universe.
+
+type families
+
+cumulative predicative hierarchy.
+
+
+Introducing new types into the type theory involves explaining how to create
+objects of that type and how to compute with objects of the type, done by adding
+more definitional equalities to the system.  The most basic components of MLTT
+is the dependent function or Pi-type, $\Pi$. $\Pi$-types represent functions
+where the output type of a function can depend on the argument to the function.
+If $A$ is a type (i.e. $A : U$ for some universe $U$) and $B : U$  the
+$\Pi$-type,
+
+\begin{align*}
+    \prod_{(x : A)}B
+\end{align*}
+which binds the variable $x$ in B, represents the dependent function which takes
+an argument $x : A$ and returns an element of type $B$ with the free variable
+$x$ replaced with the argument to the function. A dependent function, $f :
+\prod_{(x : A)}B$, can be introduced via a set of defining equations or via a
+$\lambda$-abstraction. Given an expression $M : B$ where $B$ may contain the
+variable $x : A$ $f$ can be defined as
+\begin{align*}
+    f (x) :\equiv M \textrm{ for } x : A
+\end{align*}
+Another way to introduce a dependent function is to introduce a $\lambda$ which
+takes an identifier and an expression and produces a dependent function i.e.
+\begin{align*}
+    \lambda \, x . M : \prod_{(x : A)}B(x)
+\end{align*}
+Computing with $\prod$-types occurs through application and substitution. Given
+a dependent function, $f(x) \equiv M : \prod_{(x : A)}B(x)$, and a value $a : A$, $a$ can be
+applied to $f$ to obtain a value of type $B(a)$ written
+\begin{align*}
+    f(a) : B(a)
+\end{align*}
+\todo{uniqueness principle for pi types}
+
+The expression that the the application yields is the result of replacing all
+instances of $x$ in $M$ with $a$.
+
+The other types to be introduced in this section can be written as inductive
+types. Inductive types can be introduced by supplying constructors with build
+elements of the type from other types.  Inductive types can be computed with
+using induction principles which describe how to compute with abitrary
+structures of the type based on the constituent parts. Induction principles can
+be seen as an alternative to pattern matching, a more common feature of
+functional programming languages. A simple type to illustrate this is the
+product type which is the type theory analogue of the cartesian product. Given
+two types $A : U_{n}$ and $B : U_{n}$ the product type, $A \times B : U$ can be
+formed. Given $a : A$ and $b : B$ an element of the pair type $A \times B$ can
+be constructed as
+\begin{align*}
+    (a \, , \, \, b) \, : \, A \times B
+\end{align*}
+Before introducing the induction principle for product types it is worth
+dwelling on some subtleties of induction principles. Induction principles are
+judgemental equalities that are describe how to compute with newly introduced
+data types. Induction principles often provide a separate defining function for
+each constructor for a type however this is \textit{not} pattern matching. A
+separate defining equation for each constructor often makes logical sense for
+the type to have good computational properties but there is an element of choice
+to designing induction principles as shall be seen in the discussion of the
+identity type. The induction principle for products is a function with the type
+
+\begin{align*}
+    \textsf{ind}_{A \times B} : \prod_{C : A \times B\rightarrow
+    U}(\prod_{(x : A)}\prod_{(y : B)}C((x , y))) \rightarrow \prod_{x : A\times
+    B}C(x)
+\end{align*}
+
+Intuitively, this type can be read as, given a type family $C : A \times B
+\rightarrow U$ for some universe, $U$, and given a dependent function which
+takes two arguments returns the type family applied to the pair of the two
+functions, a dependent function for pairs can be produced. More concisely, a
+function for pairs can be produced from a function that takes two arguments.
+Intuitively this can be done by taking the function with two arguments,
+deconstructing the pair and applying each component of the pair in turn. As a
+defining equation this is:
+\begin{align*}
+    \textsf{ind}_{A \times B}\, (C, g, (a , b)) :\equiv g(a)(b)
+\end{align*}
+Other types that are integral to the theorem-proving effort are $\Sigma$-types.
+$\Sigma$-types or dependent pairs. Dependent pairs are product types where the
+type of the second argument can depend on the first. Given a type $A : U$ and a
+type-family $B : A \rightarrow U$ the dependent product type $\Sigma_{(x :
+A)}B(x)$ can be formed. Given an element $a : A$ and an element $b : B(a)$ the
+dependent pair $(a,b) : \Sigma_{(x : A)}B(x)$
+
+
+
 sigma: intro, formation, computation, elimintation, propeq
 product: intro, formation, computation, elimintation, propeq
 coproduct
@@ -143,6 +247,7 @@ function need not have the same names in the type and definition of the function
 e.g.
 \ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-pi'}
 
+\todo{unit and void}
 is a valid definition.
 
 As in MLTT, functions can also be introduced using a $\lambda$-abstraction. A
@@ -234,7 +339,7 @@ Proving theorems with no additional features in the language would prove
 difficult. Mathematical structures would be a pain to define in the standard
 inductive style as often they will often consist of a single constructor with
 arguments that depend on each other. To assist with these types of structure
-record types exist. Records are extensions of $\Sigma$ types which have named
+record types exist. Records are extensions of $\Sigma$-types which have named
 fields to assist with referring to the individual components, an illustrative
 example is the definition of a monoid, $(S \, , \, \bullet , \, e)$, within Agda
 
