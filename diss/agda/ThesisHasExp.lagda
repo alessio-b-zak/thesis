@@ -93,16 +93,16 @@ record HasExponentials {lo la l≈} (Cat : Category lo la l≈) : Set (lo ⊔ la
   curry {B = B} {C} f = Bld.curry (B ↝′ C) f
 \end{code}
 
+%<*hasexp-uncurry>
 \begin{code}
   uncurry : ∀ {A B C} → A ⇒ B ↝ C → A × B ⇒ C
 \end{code}
+%</hasexp-uncurry>
 
 
-%<*hasexp-uncurry>
 \begin{code}
   uncurry {B = B} {C} = Bld.uncurry (B ↝′ C)
 \end{code}
-%</hasexp-uncurry>
 
 
 

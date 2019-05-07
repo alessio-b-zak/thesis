@@ -213,11 +213,14 @@ the identity type are propositionally equal, a property known as
 another induction principle for the identity type must be provided known as
 \textsf{Axiom K}.
 
+\todo{Axiom K}
+
+The choice of whether to include \textsf{Axiom K} within a type theory is a
+choic with real practical consequences as will be discussed in \ldots
+
 The basis upon which MLTT can be used as a foundation for mathematics is via the
 curry-howard correspondence in a particular fashion known as
 propositions-as-types.
-
-Universes/ predicativity
 
 \subsection{Propositions-as-types}
 Propositions-as-types hinges on intepreting a proof of a proposition as an
@@ -717,4 +720,18 @@ formed for every pair of objects
 \begin{AgdaMultiCode}
 \ExecuteMetaData[../agda/latex/ThesisHasExp.tex]{hasexp-def}
 \ExecuteMetaData[../agda/latex/ThesisHasExp.tex]{hasexp-exp}
+\\
+A convenient exponential operation can be defined that extracts the object
+\\
+\ExecuteMetaData[../agda/latex/ThesisHasExp.tex]{hasexp-expo}
+\\
+With a generic evaluation map
+\\
+\ExecuteMetaData[../agda/latex/ThesisHasExp.tex]{hasexp-eval}
+\\
+and \AgdaFunction{curry} and \AgdaFunction{uncurry} as isomorphisms
+\\
+\ExecuteMetaData[../agda/latex/ThesisHasExp.tex]{hasexp-curry}
+\ExecuteMetaData[../agda/latex/ThesisHasExp.tex]{hasexp-uncurry}
+\\
 \end{AgdaMultiCode}

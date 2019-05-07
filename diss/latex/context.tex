@@ -64,9 +64,9 @@ naivety stemming from its implicit axiom of unrestricted comprehension, in which
 all predicates correspond themselves to a set. This lead to perhaps the first
 signifcant result in the foundations of mathematics in the 20th century,
 Russell's paradox. Betrand Russell (1872-1970), an English polymath, showed in
-\textit{The Principles of Mathematics} written with Alfred Whitehead in 1903
-that, in classical logic, the axiom of unrestricted comprehension leads to a
-contradiction.
+\textit{The Principles of Mathematics} \cite{russell1903principles} written with
+Alfred Whitehead in 1903 that, in classical logic, the axiom of unrestricted
+comprehension leads to a contradiction.
 
 \todo{russell's paradox}
 
@@ -77,13 +77,11 @@ mathematics. Various systems were designed to provide a more secure foundation
 of mathematics as a result of Russell's paradox. Russell himself created the
 first theories of types in his \textit{Principia Mathematica} \cite{russell25} to combat this
 with various other foundational theories being presented, including set
-theoretic foundations such as \todo{expand}ZFC and NBG which reject the axiom of unrestricted
+theoretic foundations such as ZFC and NBG which reject the axiom of unrestricted
 comprehension. As well as being intimately involved with the practicalities of
 foundations itself, Russell's paradox can also be seen to be an instance of
 Lawvere's theorem as outined in Yanofsky and presented formally further within
 this thesis.
-
-\todo{predicativity}
 
 \subsection{Computability}
 Shortly after the work of Cantor and Russell, the field of theoretical computer
@@ -91,7 +89,7 @@ science was birthed by attempts to answer the entsheidungsproblem (decision
 problem), a challenge by David Hilbert \cite{hilbert1928theoretische} which required the formalisation of the
 notion of algorithm.
 
-\subsubsection{Entsheidungsproblem}\todo{recursive functions}
+\subsubsection{Entsheidungsproblem}
 
 Devised in 1928 by Hilbert, the entsheidungsproblem asked for an effective
 procedure or algorithm which, on an input of a statement in first-order logic
@@ -111,21 +109,21 @@ unification of a concept in mathematical logic by Lawvere's Theorem.
 \subsubsection{$\lambda$-calculus}
 Instead of capturing directly the notion of computability, Alonzo Church's
 formalisation was focused on formalising more precisely the notion of a function.
-Church's formulation, the $\lambda$-calculus, is a formal system consisting of
+Church's formulation, the $\lambda$-calculus \cite{church1932set}, is a formal system consisting of
 the operations of abstraction and application using variable binding and
 substitution. Church showed that the $\lambda$-calculus had an notion of
-$\lambda$-computability which was equivalent to the class of general recursive
-functions as defined by Godel and thus represented a model of computation.
+$\lambda$-definability \cite{church1936unsolvable} which was equivalent to the class of general recursive
+functions \cite{kleene1936general} as defined by Godel and clarified by Kleene, another model of computation.
 Church also provided a negative answer to the entscheidungsproblem. The
 $\lambda$-calculus has applications beyond that of providing a negative answer
 to the entscheidungsproblem. The $\lambda$-calculus originally arose from Church's
 desire to provide a foundation for logic, a desire also shared by another
 American Logician, Haskell Curry. In the 1920s and 1930s, Curry worked on a
 foundation of logic extremely similar to the $\lambda$-calculus, his theory of
-combinators. Combinatory logic, as defined by Curry, was in correspondence with
+combinators \cite{curry1930grundlagen}. Combinatory logic, as defined by Curry, was in correspondence with
 the $\lambda$-calculus. In 1934 Curry observed that, if types were assigned to
-the domains and comdomains of his combinators, the types  matched the axioms of
-intuitionistic implicational logic. This observation proved to be the beginning
+the domains and comdomains of his combinators, the types matched the axioms of
+intuitionistic implicational logic \cite{curry1934functionality}. This observation proved to be the beginning
 of theorem provers as they are in their current state.
 \todo{intuitionistic logic}
 $\lambda$-calculus as a deductive system
@@ -136,14 +134,15 @@ curry howard
 
 \subsection{Curry Howard Correspondence}
 Curry's combinatory logic and Church's $\lambda$-calculus, when viewed as a
-system for logic, proved to be inconsistent as shown by Kleene and Rosser and
-again by Curry using his Paradoxical Combinator. To remedy this inconsistency
+system for logic, proved to be inconsistent as shown by Kleene and Rosser
+\cite{kleene1935inconsistency} and
+again by Curry using his Paradoxical Combinator \cite{curry1941paradox}. To remedy this inconsistency
 both Curry and Church extended their logical systems with types giving typed
 combinatory logic and the simply typed $\lambda$-calculus. Further to Curry's
 aformentioned observation made of typed combinatory logic, in the 1960s William
 Alvin Howard  made a further observation that the typing rules of the simply
 $\lambda$-calculus corresponded to laws of inference for intuitionistic style
-natural deduction. This lead to the conclusion that every system in
+natural deduction \cite{howard1980formulae}. This lead to the conclusion that every system in
 formal logic has a corresponding computational calculi with a specific type
 system named the Curry-Howard correspondence.
 
@@ -165,7 +164,7 @@ The first computational system to exploit the Curry-Howard isomorphism to act as
 a theorem prover was Automath in 1967, slighty before Howard's explicit
 observation of the Curry-Howard correspondence. Automath (automating
 mathematics) was designed by Dutch Mathematician, Nicolaas Govert de Brujin (of
-index fame), who independently observed the Curry-Howard correspondence.
+index fame) \cite{de1983automath}, who independently observed the Curry-Howard correspondence.
 Automath was a typed programming language providing inbuilt support for variable
 binding, substitution and application of judgemental equalities. This has been
 a common feature of proof-assistants since and is the defining features of
@@ -174,10 +173,11 @@ define their own logics and types and no method of introducing inductive types
 was provided. Typechecking the program corresponded to the verification of the
 proof. \todo{Proofs done with automath.}
 
+\todo{fix martin lof citaiton}
 \subsection{Martin-Lof Type Theory}
 In the early 1970s Per Martin-Lof, a Swedish logician and mathematician, aimed
 to exploit the Curry-Howard correspondence to provide what he deemed as a better
-foundation for mathematics. Per Martin-Lof, a constructivist, asserted that in
+foundation for mathematics \cite{martin1984intuitionistic}. Per Martin-Lof, a constructivist, asserted that in
 order to know of the existence of a mathematical object it must be directly
 constructed. To this end Martin-Lof went about producing a type system to
 produce an intuitionistic type theory for proving within higher order logics.
