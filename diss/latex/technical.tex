@@ -10,7 +10,7 @@ approach taken by the Agda theorem prover which makes use of a type system
 similar to that of Martin Lof Type theory, a type theory which provides a
 logical framework for intutionistic higher-order logic.
 
-\section{Martin Lof Type Theory}
+\section{Martin-Lof Type Theory}
 The approach to theorem proving taken in this thesis is a type theoretic
 approach exploiting the curry-howard correspondence. This will be done in a
 dependent type theory designed by Per Martin-Lof, a logician working in
@@ -169,7 +169,8 @@ with the same defining equation
 \end{align*}
 
 
-coproduct
+The coproduct type is the typed variant of the disjoint union from set theory.
+For two types $A : U$ and $B : U$ coproduct of $A$ and $B$ is $A + B : U$.
 induction principle
 
 unit
@@ -601,7 +602,11 @@ takes a category and provides an object alongside a proof that it is terminal
 
 Lawvere's fixed point theorem is a theorem about cartesian closed categories.
 Cartesian closed categories are categories with three specific universal
-properties, a terminal object, products and exponentials. 
+properties, a terminal object, binary products and exponentials. Having a terminal
+object and binary products is also called having finite products. Therefore the
+definition of a CCC in Agda is appropriately.
+
+\ExecuteMetaData[../agda/latex/ThesisCCC.tex]{ccc-def-is-ccc}
 
 \subsubsection{Products}
 Products exemplify a common construction in categories of combining the
@@ -621,28 +626,95 @@ A & A \times B \arrow[l, "\pi_2"] \arrow[r, "\pi_1"'] & B
 where the dashed arrow indicates uniqueness. This can be extended to
 \textit{n}-ary products in the obvious way.
 
-As with terminal objects, products (via the unique arrow $\langle f, g \rangle$)
-are unique up to unique isomorphism. Examples of products within familiar
-categories include the cartesian product $\times$ in \textbf{Set}, defined as
-the set of all tuples of elements from two separate sets. If products can be
-formed for every finite set of objects in a category it is said to be cartesian.
+As with terminal objects, products are unique up to unique isomorphism. Examples
+of products within familiar categories include the cartesian product $\times$ in
+\textbf{Set}, defined as the set of all tuples of elements from two separate
+sets. If products can be formed for every finite set of objects in a category it
+is said to be cartesian.
 
-
-To prove Lawvere's fixed point theorem within Agda and the various surrounding
-proofs in logic, cartesian closed categories must be formalised. For this, in
-addition to terminal objects, binary products and exponentials will be needed
-
-\ExecuteMetaData[../agda/latex/ThesisCCC.tex]{ccc-def-is-ccc}
-
-Products and exponentials have slightly more involved definitions. Beginning
+Products have a slightly more involved definition than terminal objects. Beginning
 with the uniqueness principle for products
 
 \ExecuteMetaData[../agda/latex/ThesisProduct.tex]{product-def-product}
 
 \AgdaFunction{IsProduct} takes an indexing function, a product object, and some
-projections out of the product into the components of the indexing
-category. \AgdaFunction{IsProduct} returns a function type which, upon being
-supplied a set of projections from an object to the indexing set, returns a
-unique arrow from the the object to the previously supplied product object
-satisfying the commuting diagrams for the product.
+projections out of the product into the components of the indexing category.
+\AgdaFunction{IsProduct} returns a function type which, upon being supplied a
+set of projections from an object to the indexing set, returns a unique arrow
+from the the object to the previously supplied product object satisfying the
+commuting diagrams for the product. A product object for a given indexed family
+of objects \verb|O| can be defined as the product object itself,
+\AgdaField{prod}, the projections out of the product object, \AgdaField{proj},
+and the proof of uniqueness, \AgdaField{isProduct}.
 
+\ExecuteMetaData[../agda/latex/ThesisProduct.tex]{product-def-prod}
+
+A binary product is a product where the function that indexes the family of
+objects is the a boolean elimination function
+
+\ExecuteMetaData[../agda/latex/ThesisProduct.tex]{product-def-bool}
+\ExecuteMetaData[../agda/latex/ThesisProduct.tex]{product-def-binprod}
+
+A category containing binary products can be encoded as a category equipped with
+a operation that, for every pair of objects, \verb|A| and \verb|B|, produces the
+product object for the pair.
+
+\begin{AgdaMultiCode}
+\ExecuteMetaData[../agda/latex/ThesisBinProd.tex]{binprod-has-binary-products}
+\ExecuteMetaData[../agda/latex/ThesisBinProd.tex]{binprod-times}
+\\
+For notational convenience a function that returns the object within the
+category from a particular product object is useful.\\
+\ExecuteMetaData[../agda/latex/ThesisBinProd.tex]{binprod-obj}
+\\
+Also useful are the projections out of the product \\
+\ExecuteMetaData[../agda/latex/ThesisBinProd.tex]{binprod-projr}
+\ExecuteMetaData[../agda/latex/ThesisBinProd.tex]{binprod-projl} \\
+and the methods of forming the unique arrows \\
+\ExecuteMetaData[../agda/latex/ThesisBinProd.tex]{binprod-unique-arr}
+\ExecuteMetaData[../agda/latex/ThesisBinProd.tex]{binprod-unique-pair}
+\end{AgdaMultiCode}
+
+\todo{finite products}
+
+\subsubsection{Exponentials}
+
+Exponential objects are universal constructions that capture the notion of
+function spaces or higher order objects.
+
+The exponential, $B^{A}$, indicates the mappings from the object $A$ to $B$. This is
+paired with the morphism $eval: B^{A} \times A \rightarrow B$ such that for any
+object $Z$ and morphism $f : Z\times A \rightarrow B$ there exists a unique
+morphism $\tilde{f}: Z \rightarrow B^{A}$ such that the following diagram
+commutes:
+
+\todo{exponential diagram}
+
+$\tilde{f}$, or transposition, can be thought of as currying in the functional
+programming sense, taking a function in multiple arguments to a sequence of
+functions in one argument.
+
+In Agda, an exponential object for objects \verb|B| and \verb|C| consist of an
+object
+
+\begin{AgdaMultiCode}
+\ExecuteMetaData[../agda/latex/ThesisExponential.tex]{expon-exp}
+\\
+the evaluation map
+\\
+\ExecuteMetaData[../agda/latex/ThesisExponential.tex]{expon-eval}
+\\
+and the uniquness principle for products
+\\
+\ExecuteMetaData[../agda/latex/ThesisExponential.tex]{expon-unique}\\
+For ease of use the function producing the unique arrow can be extracted.\\
+\ExecuteMetaData[../agda/latex/ThesisExponential.tex]{expon-curry}
+\end{AgdaMultiCode}
+
+A category that has exponentials is one that  where the exponetial object can be
+formed for every pair of objects
+
+\begin{AgdaMultiCode}
+\ExecuteMetaData[../agda/latex/ThesisHasExp.tex]{hasexp-def}
+\ExecuteMetaData[../agda/latex/ThesisHasExp.tex]{hasexp-exp}
+\end{AgdaMultiCode}
