@@ -150,7 +150,7 @@ Intuinistic logic and constructivity. bhk interpretation
 
 \section{History of Theorem Proving}
 \todo{define logical framework}
-The Curry-Howard correspondence provided a computational intepretation of the
+The Curry-Howard correspondence provided a computational interpretation of the
 notion of proof. Providing a proof of a theorem corresponded to a program that
 inhabited a given type. Type systems in computation had largely grown with the
 theory of programming languages. Types were intended to check that a program, to
@@ -210,10 +210,12 @@ delinieating theorem provers and logical frameworks
 
 \subsection{Agda}
 The first version of Agda was designed at Chalmers university in 1999 by
-Caterina Coquand based on the ALF logical framework ultimately derived from
+Caterina Coquand \cite{coquand2000agda} based on the ALF logical framework
+\cite{magnusson1993alf} ultimately derived from
 Martin-Lof type theory. The second version of Agda was later designed by Ulf
-Norell during his Ph.D also at Chalmers University in 2007 based on Zhaohui Luo's
-\textit{Unified Theory of Dependent Types} (UTT) derived from Martin-Lof type
+Norell during his Ph.D also at Chalmers University in 2007
+\cite{norell2007towards} based on Zhaohui Luo's
+\textit{Unified Theory of Dependent Types} (UTT)  \cite{luo1992unifying} derived from Martin-Lof type
 theory. Agda is implemented as a functional programming language with dependent
 types, and features an interactive mode in the emacs text editor, allowing users
 to interact with the Agda intepreter to develop proofs. Agda is a total
@@ -223,8 +225,8 @@ decidable. The standard Agda backend, \textit{MAlonzo}, is written in the
 functional programming language Haskell and is still being extended and
 developed in 2019.
 \section{Category Theory and Mathematical Logic}
-Alongside the developlment and exploration of  proof assistants, type theory and
-the Curry-Howard correspondance the field of category theory was birthed and
+Alongside the development and exploration of  proof assistants, type theory and
+the Curry-Howard correspondence the field of category theory was birthed and
 matured. Category theory is an offshoot of abstract algebra and algebraic
 topology and geometry that aims to provide a general account of mathematical
 structure. A category is a mathematical structure consisting of a collection of
@@ -237,12 +239,12 @@ The definition of category sufficiently abstract that the majority of
 mathematical structures can be considered as one. The abstract and encompassing
 definition of categories provides a vehicle for the transposition of
 mathematical ideas from one field to another. Category theory also provides a
-framework in which to understand ubiqutous and reoccurring themes in mathematics
+framework in which to understand ubiquitous and reoccurring themes in mathematics
 such as free objects, products and function spaces.
 \subsection{Beginnings}
 Category theory was initially invented by American mathematicians Samuel
 Eilenberg and Saunders Mac Lane in 1945 in their paper \textit{General Theory of
-Natural Equivalences} which defined categories, structure-preserving maps
+Natural Equivalences} \cite{eilenberg1945general} which defined categories, structure-preserving maps
 between categories, known as functors, and structure preserving maps between
 functors, known as natural transformations. Mac Lane and Eilenberg initially
 applied these to the field of algebraic topology and geometry to make certain
