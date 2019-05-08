@@ -141,12 +141,41 @@ theory of the untyped $\lambda$-calculus as follows
 
 Garcia uses Joachim Lambek's observation that every simply-typed
 $\lambda$-calculus has an associated cartesian closed category which is obtained
-by considering the category in which the tp 
+by considering the objects of the category to be the types of the
+$\lambda$-calculus and the morphisms to be the functions between types. Lambek
+showed in \todo{here} that these categories were cartesian closed. Through the
+familiar argument from \todo{bob} Bob Harper the untyped $\lambda$-calculus can
+be viewed as a simply typed calculus i.e.  that untyped is uni-typed - the
+untyped $\lambda$-calculus can be viewed as a simply typed $\lambda$-calculus
+with one type, \textsf{D}. Garcia uses this argument and also provides a
+retraction pair $r : \textsf{D} \rightarrow (\textsf{D} \rightarrow
+\textsf{D})$, $s : (\textsf{D} \rightarrow \textsf{D}) \rightarrow \textsf{D}$.
+Following this line of reasoning, Garcia establishes that considering the
+untyped-as-unityped $\lambda$-calculus as a cartesian closed category yields a
+category with a reflexive object, \textsf{D} where terms can be considered as
+morphisms via the retraction map. By Lawvere's fixed point theorem every
+$\lambda$-term, $d : \textsf{D}$ , has a point $p: 1 \rightarrow \textsf{D}$
+such that $d \circ p = p$. Garcia claims in \textbf{Corollary 4.20} that this
+proves that every term in the untyped $\lambda$-calculus has a fixed point. This argument fails on a crucial point. The cartesian
+closed category generated from the untyped-as-unityped $\lambda$-calculus has a
+single object. By the definition of a cartesian closed category this object
+\textit{must} be the terminal object. To recap, the definition of a terminal
+object is that for all objects in the category there is a unique arrow from the
+object to the terminal object. This condition applies to the terminal object
+itself and therefore there is a unqiue arrow from the terminal object to the
+terminal object. By the definition of a category every object must have a
+terminal object and therefore the only arror from the terminal object to itself
+can be the identity arrow. With this reading it is clear that there can be no
+syntactic interpretation of this arrow that yields the terms of the untyped
+$\lambda$-calculus. A key component of the proof provided in \todo{section} was
+that it gave a fixed point theorem in every $\lambda$-algebra which included the
+term models which give a syntactic fixed point theorem which translates to the
+untyped $\lambda$-calculus.
 
+\subsubsection{Interpretation in the reflexive cpo in the CCC -
+\textbf{CPO}$\bot$}
 
-
-
-
+The second argument comes from a note available
 $D \equiv D^D$
 
 % $\textbf{CPO}_{\bot}$ the category of cpos with $\bottom$ objects are cpos with
@@ -163,4 +192,4 @@ CCC from simply typed $\lambda$-calculus
 godels incompleteness theorem
 \subsection{Lambda calculus and topoi}
 tarki's theorem
-
+m
