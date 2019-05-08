@@ -76,6 +76,7 @@
 \RequirePackage{tikz-cd}
 \RequirePackage{bm}
 \RequirePackage{stmaryrd}
+\RequirePackage{csquotes}
 \input{./utf.tex}
 \raggedbottom
 

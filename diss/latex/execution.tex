@@ -299,34 +299,53 @@ Given the indexed-family the unique arrow \verb|u| can be produced by
 \section{Russell's Paradox}
 
 \section{The $\lambda$-Calculus}
+\todo{lambda equun theory}
+There is much to suggest that a coherent interpretation of Lawvere's theorem
+exists in the $\lambda$-calculus. The untyped $\lambda$-calculus is famous for
+Curry's fixed point combinator \todo{combinator} of which a consequence is that
+every $\lambda$-term has a fixed point under application (known as the first
+fixed point theorem) indicating that perhaps a direct
+application in an appropriate category could yield this result. In addition to
+this, significant results in different models of computation are given as a
+result as outlined in \todo{contextual background}. This observation has not
+gone unnoticed by others. \verb|nLab| \todo{cite}, an online encyclopedia
+for category theory, its webpage for Lawvere's fixed point
+theorem states in \textbf{Remark 2.6}.
 
-Despite the deep connection between $CCCs$ and the $\lambda$-calculus \todo{cite}
-Lawvere's fixed point theorem has been relatively underexplored within the
-field. In this section, a focus will be placed on the untyped
-$\lambda$-calculus. A common theme in presentations of Lawvere's fixed point
-theorem is the statement to the effect that the theorem allows for the
-derivation of a fixed point combinator for the untyped $\lambda$-calculus.
-Whilst being a claim repeated in several papers there does not appear to be a
-proof associated with this. In contrast it is somewhat easier to find a proof
-of the first fixed point theorem in the untyped $\lambda$-calculus. \todo{theorem}
+\begin{displayquote}
+\textit{Many applications of Lawvere’s fixed point theorem are in the form of negated
+propositions, e.g., there is no surjection from a set to its power set, or
+Peano arithmetic cannot prove its own consistency. However, there are positive
+applications as well, e.g., it implies the existence of fixed-point combinators
+in untyped lambda calculus.}
+\end{displayquote}
 
-In this thesis provide a novel proof is provided of the first fixed point
-theorem using Lawvere's fixed point theorem. A simpler proof is also provided.
-The proof in this thesis outlines an interesting phenomena and poses some
-questions in the study of models of the $\lambda$-calculus. Both proofs rest on
-a similar and simple observations of models of the $\lambda$-calculus and a
-simple corollary of Lawvere's fixed point theorem. The observation in the
-theory of the untyped $\lambda$-calculus, first made by Dana Scott in his
-development of domain theory, is that models for the $\lambda$-calculus often
-want to exploit the fact that $\lambda$-terms can be considered as objects of
-the models but that $\lambda$-terms themselves are functions between
-$\lambda$-terms. This naturally engenders a desire for some object $D$ that is
-isomorphic to $D^D$, the function space on $D$. This is impossible for any set,
-as shown by the previous section. Dana Scott solved this by constructing an
-object $D_{\infty}$ as a complete partial order which will be outlined below.
-This was later generalised by Koymans and Scott to be any Cartesian closed
-category with an object $D$ which has a retraction to its own function space,
-termed as a reflexive object.
+This claim affirms the notion that Curry's fixed combinator could be derived as
+an instance of Lawvere's theorem. Despite this remark, the realities of the
+situation are not so simple. The \verb|nLab| page does not provide a source for
+their remark and, within the literature, there are only informal proofs of this
+claim. Upon further examination the informal proofs contain some inaccuracies
+that result in them not being a true reflection of Lawvere's theorem in the
+context of the untyped $\lambda$-calculus. The precise issues with the
+previously presented proofs will be outlined in \todo{evaluation}. In this
+thesis we will present a precise account of the relationship indicated within
+the remark on \verb|nLab| which does not quite extend to establishing the
+existence of fixed point combinators within the $\lambda$-calculus but the
+result - the first fixed point theorem.
+
+The proof that Lawvere's theorem implies the existence of fixed points for all
+$\lambda$-terms rests on the observation first made by Dana Scott in his
+development of domain theory, that $\lambda$-terms can be considered as objects
+of the models but also as functions between $\lambda$-terms. This naturally
+engenders a desire for some object $D$ that is isomorphic to $D^D$, the function
+space on $D$. This is impossible for any set within a set theory that rejects
+unrestricted comprehension. Dana Scott solved this by constructing an object
+$D_{\infty}$ as a complete partial order \todo{here}. These
+ideas were generalised by Koymans and Scott identifying that all models of the
+$\lambda$-calculus arise from cartesian closed category with an object $D$ that
+has a retraction to its own function space, known as a reflexive object.
+
+\todo{name corollary}
 
 The relationship between these constructions and Lawvere's theorem can be
 understood by observing that in any $CCC$ with a reflexive object $D$ there is a
@@ -349,7 +368,7 @@ CCC
 The proof can be created by creating a point-surjective function from \verb|X|
 to $\verb|X|^{\verb|X|}$ and applying the earlier proof of
 \AgdaFunction{lawvere}. First, the retraction can be pattern matched on and
-lawvere introduced with the arrow from \verb|X| to $\verb|X|^{\verb|X|}$ with
+Lawvere introduced with the arrow from \verb|X| to $\verb|X|^{\verb|X|}$ with
 only a proof of point surjectivity required.
 
 \ExecuteMetaData[../agda/latex/ThesisY.tex]{Y-def-corollary-body}
@@ -363,52 +382,43 @@ definition of a retraction to collapse the identity.
 \ExecuteMetaData[../agda/latex/ThesisY.tex]{Y-point-surjective}
 
 
-Understanding what this means requires looking at the specific of both models in
-detail. First however what exactly it means to be a model of the
-$\lambda$-calculus in general must be explored. \todo{cite $\lambda$-textbook}
-$\bm{\lambda}$ refers to the equational theory of the same name outlined in
-\todo{kerr's notes}. Models, in the model theoretic sense, are helpful for
-exploring properties of the $\lambda$-calculus that are not immediate from the
-equational theory and syntax itself, utilising discoveries from the field of
-model theory. Providing a model for the $\lambda$-calculus was a difficult task,
-primarily due to axioms of ordinary set theory (the axiom of regularity)
-preventing a set from being an element of itself and thus a function from being
-in its domain. With $\lambda$-terms being able to be considered as functions
-between $\lambda$-terms this is an intimate problem with providing a set based
-model. Several concrete models were provided since the first discovery of the
-$\lambda$-calculus inclduing Scott's $D_{\infty}$, to be outlined later, Bohm's
-tree model and Plotkin and Scott's $P\omega$ model. Despite these concrete
-models of the $\lambda$-calculus, what exactly it meant to be a model of the
-$\lambda$-calculus was less clear and only concretely defined later on by
-\todo{who made $\lambda$-models}. For the equational theory $\bm{\lambda}$, the
-class of structures which which constitute models are known as
-$\lambda$-algebras. There are multiple formulations of $\lambda$-algebras, this
-thesis will use several and point to proofs of equivalence within
-\todo{barendregt}.
+The implications of this corollary can be understood from this excerpt from section
+5 of Barendregt's \textit{The Lambda Calculus: Its Syntax and Semantics}
+\cite{barendregt1992lambda} on
+models.
+
+\begin{displayquote}
+\textit{"\ldots for the construction of a $\lambda$-calculus model it
+is sufficient to have an object $D$ in a CCC such that $D^D$ is a retract of
+$D$."}
+\end{displayquote}
+
+Baredregt's textbook is a useful resource for all work within this section. From
+the above quote and the earlier corollary to Lawvere's theorem it can be
+concluded that the categorical interpretation of every model of the
+$\lambda$-calculus has an object with the fixed point property.
+
+Models, in the model-theoretic sense, are helpful for exploring properties of
+the $\lambda$-calculus that are not immediate from the equational theory and
+syntax itself. Concrete models of the $\lambda$-calculus include \todo{concrete
+models} but what it meant to be model of the $\lambda$-calculus was elusive
+until \todo{koymans} where the notion of $\lambda$-algebra was introduced as the
+class of structures corresponding to the $\lambda$-calculus.
 
 The definition of $\lambda$-algebras are predicated on the definition of an
 applicative structure. An applicative structure is a tuple $M = (A \, , \,
 \bullet)$ where $A$ is a set and $\bullet$ is a binary operation on $A$.
 
-terms over a applicative structure
 
-valuations in an applicative structure
-
-The first set of models provided are the class known as environment or syntactic
-models. A syntactic applicative structure adds a method of intepreting terms in
-the $\lambda$-calculus, elements of the set $\Lambda$, into the applicative
+A useful type of models to be considered are the class of syntactic models. A
+syntactic applicative structure adds a method of intepreting terms in the
+$\lambda$-calculus, elements of the set $\Lambda$, into the applicative
 struture. In other words a syntactic applicative structure is a triple $M = (A
 \, , \, \bullet \, , \, \llbracket \, \rrbracket)$ of an underlying set $A$, a
 binary operation $\bullet : A \rightarrow A$ and a syntactical intepretation
-function $\llbracket \, \rrbracket$. Syntactical intepretations in an algebra,
-$M$,  are functions $I : \Lambda(M) \times \textnormal{Val}(M) \rightarrow A$
-where $\Lambda(M)$ is the set of all $\lambda$-terms, $\Lambda$, extended with
-constants for each element in $M$ and Val$(M)$ is a function from strings to
-elements of $M$, or a valuation.
-
-definition of syntatic brackets.
-
-satisfaction for syntactic structures
+function $\llbracket \, \rrbracket$. See Barendregt \todo{for a precise account}
+for a precise definition of $\llbracket \, \, \rrbracket$ and an appropriate definition of
+satisfaction, $\vDash$.
 
 The constraint which turns a syntactic applicative structure, \textit{P}, into a
 syntactic $\lambda$-algebra is
@@ -419,16 +429,18 @@ syntactic $\lambda$-algebra is
 
 Or that every two $\lambda$-terms that are equal under $\bm{\lambda}$ are equal
 under their intepretation within the $\lambda$-algebra. There is a close
-relationship between $\lambda$-algebras and $CCCs$. Every $\lambda$-algebra can be
-transformed into a $CCC$ with a reflexive object via the karoubi
-envelope.\todo{karoubi} Furthermore, every $CCC$ with a reflexive object can be
-turned into a $\lambda$-algebra such that taking a $\lambda$-algebra to a $CCC$
-and back to $\lambda$-algebra again produces an isomorphic $\lambda$-algebra.
-This indicates that every $\lambda$-algebra can be obtained by a $CCC$ with a
-reflexive object. This relationship hints at an application of Lawvere's fixed
-point theorem within the context of the $\lambda$-calculus. To examine this more
-closely the implications of the corollary must be examined within the context of
-both directions of the transformations.
+relationship between $\lambda$-algebras and $CCCs$. Every $\lambda$-algebra can
+be transformed into a $CCC$ with a reflexive object via a process known as the
+\textit{Karoubi Envelope}.\todo{karoubi} Furthermore, every $CCC$ with a
+reflexive object can be turned into a $\lambda$-algebra such that taking a
+$\lambda$-algebra to a $CCC$ and back to $\lambda$-algebra again produces an
+isomorphic $\lambda$-algebra. This indicates that every $\lambda$-algebra can
+be obtained by a $CCC$ with a reflexive object. The results of \todo{turn into
+theorem} can be interpreted in both directions of this transformation.
+Intepreting within the context of the transformation from \textit{Karoubi
+envelope} to CCC yields no sensical results and will be detailed in
+\todo{appendix}. Interpreting in the other direction, however, is more useful.
+
 
 A (locally small) $CCC$ with a reflexive object, $D$, with arrows $F : D
 \rightarrow D^D$ and $G : D^D \rightarrow D$ can be turned into a
@@ -442,15 +454,16 @@ follows:
     \rangle
 \end{align*}
 
-Barendregt defines a semantic intepretation function for $\lambda$-terms for
+\todo{here} defines a semantic intepretation function for $\lambda$-terms for
 which the triple of $( \, |D| \, , \, \star \, , \, \llbracket \rrbracket \,)$
-forms a $\lambda$-algebra.
+is shown to be  a $\lambda$-algebra in.
 
 
-Using the earlier corollary and the aformentioned transformation, lawvere's
+With \todo{corollary} and the fact that the above transformation yields all
+$\lambda$-models
 fixed point theorem can be used to prove the first recursion theorem in every
-$\lambda$-model. This can be shown in Agda as follows. In some Cartesian Closed
-Category with a point surjective arrow, \AgdaFunction{PS.arr}, the operation
+$\lambda$-model. The proof proceeds as follows. In some cartesian closed
+category with a point surjective arrow, \AgdaFunction{PS.arr}, the operation
 constituting $\star$ in the generated $\lambda$-algebra can be written as
 follows
 
@@ -514,8 +527,13 @@ theorem. \\
 \ExecuteMetaData[../agda/latex/ThesisExtra.tex]{extra-end}
 \end{AgdaMultiCode}
 
+The above theorem shows that the syntactic applicative structure generated from
+any CCC with a point surjective morphism has a fixed point theorem. The first
+fixed point theorem can be recovered from the $\lambda$-calculus by considering
+the syntactic term models. \todo{term models} have a two way implication.
+
 Other insights can be gained from attempting to examine models of the Lambda
-Calculus through the lens of lawvere's fixed point theorem. The applicative
+Calculus through the lens of Lawvere's fixed point theorem. The applicative
 structure generated by the above procedure can be considered for any CCC and any
 arrow from an object to its function space. By adding more or less constraints
 on the morphism, different types of models of the lambda calculus are gained.
