@@ -122,16 +122,15 @@ within \todo{voevodsky}
 
 In attempts to investigate the relationship between the $\lambda$-calculus and
 Lawvere's fixed point theorem, two informal attempts to outline the relation
-were found. These attempted proofs both had inaccuracies which will be outlined
-shortly. Through working in a highly rigorous setting, there is very little
-doubt that relation outlined within this thesis is incorrect. Although not all
-the relationships have been investigated end to end, the tricky area of the proof
-(i.e. the algebraic manipulation) has been formalised and checked. The work
-formalising Lawvere's theorem was vital to observing the connection between the
-$\lambda$-calculus and the theorem. In theorem proving, none of the details can
-be elided so a subtle and deep understanding of the intricacies of the theorem
-is developed. It is by paying close attention to the types of terms that the
-below errors were observed.
+were found. These attempted proofs did not fully link the untyped
+$\lambda$-calculus to Lawvere's theorem. Through working in a highly rigorous
+setting, there is very little doubt that relation outlined within this thesis is
+incorrect. Although not all the relationships have been investigated end to end,
+the tricky area of the proof (i.e. the algebraic manipulation) has been
+formalised and checked. The work formalising Lawvere's theorem was vital to
+observing the connection between the $\lambda$-calculus and the theorem. In
+theorem proving, none of the details can be elided so a subtle and deep
+understanding of the intricacies of the theorem is developed.
 
 \subsubsection{The CCC generated from a simply-typed $\lambda$-calculus}
 
@@ -156,40 +155,60 @@ category with a reflexive object, \textsf{D} where terms can be considered as
 morphisms via the retraction map. By Lawvere's fixed point theorem every
 $\lambda$-term, $d : \textsf{D}$ , has a point $p: 1 \rightarrow \textsf{D}$
 such that $d \circ p = p$. Garcia claims in \textbf{Corollary 4.20} that this
-proves that every term in the untyped $\lambda$-calculus has a fixed point. This argument fails on a crucial point. The cartesian
-closed category generated from the untyped-as-unityped $\lambda$-calculus has a
-single object. By the definition of a cartesian closed category this object
-\textit{must} be the terminal object. To recap, the definition of a terminal
-object is that for all objects in the category there is a unique arrow from the
-object to the terminal object. This condition applies to the terminal object
-itself and therefore there is a unqiue arrow from the terminal object to the
-terminal object. By the definition of a category every object must have a
-terminal object and therefore the only arror from the terminal object to itself
-can be the identity arrow. With this reading it is clear that there can be no
-syntactic interpretation of this arrow that yields the terms of the untyped
-$\lambda$-calculus. A key component of the proof provided in \todo{section} was
-that it gave a fixed point theorem in every $\lambda$-algebra which included the
-term models which give a syntactic fixed point theorem which translates to the
-untyped $\lambda$-calculus.
+proves that every term in the untyped $\lambda$-calculus has a fixed point. This
+argument fails on a crucial point. The cartesian closed category generated from
+the untyped-as-unityped $\lambda$-calculus has a single object. By the
+definition of a cartesian closed category this object \textit{must} be the
+terminal object. To recap, the definition of a terminal object is that for all
+objects in the category there is a unique arrow from the object to the terminal
+object. This condition applies to the terminal object itself and therefore there
+is a unqiue arrow from the terminal object to the terminal object. By the
+definition of a category every object must have a terminal object and therefore
+the only arror from the terminal object to itself can be the identity arrow.
+With this reading it is clear that there can be no syntactic interpretation of
+this arrow that yields the terms of the untyped $\lambda$-calculus. A key
+component of the proof provided in \todo{section} was that it gave a fixed point
+theorem in every $\lambda$-algebra which included the term models which give a
+syntactic fixed point theorem which translates to the untyped
+$\lambda$-calculus.
 
 \subsubsection{Interpretation in the reflexive cpo in the CCC -
 \textbf{CPO}$\bot$}
+The argument that follows is not incorrect but does not, in the opinion of the
+author, capture directly the notion applying Lawvere's theorem in the
+$\lambda$-calculus. From \todo{section}, this result can be derived directly.
 
-The second argument comes from a note available
-$D \equiv D^D$
+The second argument comes from a note published by Dan Frumin and Guillaume
+Massas. Their arguments draw on material from throughout the Barendregt
+\cite{barendregt1992lambda} which will be made clear when necessary. They begin
+their argument by considering the category \textbf{CPO}$_{\bot}$. The objects of
+this category are directed complete partial orders (cpos) with a least element
+and arrows are scott-continuous functions. \textbf{Theorem 1.2.16} in the
+Barendregt shows that this category is cartesian closed. Frumin and Massas begin
+by stating without proof that there is a reflexive object in \textbf{CPO}$\bot$.
+Using Lawvere's theorem, Frumin and Massas conclude that every endomap on this
+object has a fixed point in the categorical sense. \textbf{Section 5.4} of the
+Barendregt outlines how every reflexive cpo with maps $F : D \rightarrow (D
+\rightarrow D)$ and $G : (D \rightarrow D) \rightarrow D$ induces a
+$\lambda$-model. The underlying set of the $\lambda$-model is the underlying set
+of the cpo and the binary operation $\bullet : D \times D \rightarrow D$ is
+defined on $x , y \in D$ as \begin{align*} x \bullet y = F(x)(y) \end{align*}
+Frumin and Massas argue to the effect that, given that every endomap has a
+categorical fixed point, that scott-continuous function $f : D \rightarrow D$
+must have a fixed point. This is valid reasoning as the points to a cpo
+correspond to the elements of the cpo and therefore every endomorphism on $D$
+having a fixed point $p : 1 \rightarrow D$ corresponds to every scott-continuous
+function on $D$ having a fixed point. Whilst the reasoning of this argument is
+correct what has been proven is that a particular model of the
+$\lambda$-calculus has fixed points. Whilst suggestive there is no guarantee
+that it will be possible to translate this back to the syntax of the untyped
+$\lambda$-calculus. The extension to work with abstract cartesian closed
+categories with a reflexive object is a key component of relating the result
+back the syntax of the untyped $\lambda$-calculus. This could instead be
+considered an application of Lawvere's theorem to domain theory.
 
-% $\textbf{CPO}_{\bot}$ the category of cpos with $\bottom$ objects are cpos with
-% least element, arrows are scott continuous function, define a ccc and exists an
-% object with a retraction therefore corollary therefore every endomap has a fixed
-% point. Every CPO with retraction gives rise to $\lambda$-model underlying set is
-% set of CPO and operation is F(u)(v) where F : D -> (D -> D) and u , v are elems
-% of set 
-
-
-CCC from simply typed $\lambda$-calculus
 \section{future work}
-\subsection{Linenbaum-Tarski Algebras}
-godels incompleteness theorem
+homotopy type theorying it
+making rest of examples work
+paradoxes
 \subsection{Lambda calculus and topoi}
-tarki's theorem
-m
