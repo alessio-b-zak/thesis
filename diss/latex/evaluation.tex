@@ -1,4 +1,5 @@
 % !TEX root = ./dissertation.tex
+
 \section{Alternative Theorem Provers}
 A seemingly abitrary decision was the choice of proof-assitant to use. Of the
 plethora that exist, the three viable options for use in this project were Coq,
@@ -12,45 +13,139 @@ originally developed by Gerard Huet and Thierry Coquand based on an alternative
 to MLTT called the Calculus of Inductive Constructions. Proving in Coq does not
 consist of pattern matching and manipulating proof objects but instead through
 the refinement of goals through \textit{tactics}. Tactics 
-\section{Homotopy Type Theory}
-As mentioned earlier in the thesis, a setoid based approach was taken towards
+\section{Limitations}
+As mentioned earlier in \todo{section}, a setoid based approach was taken towards
 modelling categories where categories were parameterised by an equivalence
 relation on morphisms. This limitation arose due to the inability to represent
-quotient sets within the type theory of plain Agda. A very modern advancement in
-type theory enables quotient types, the analog of quotient sets, to be
-constructed directly.
+quotient sets within the type theory of plain Agda. This was a limitation in
+several different ways. As previously mentioned, for arbitrary equivalence
+relations, there is no support for indercinability of identicals and congruence
+must therefore be proved for every type individually. This did not prove to be a
+particularly annoying component of proving within the scope of this thesis.
+This, however, is primarily due to not working in any instances of categories
+that required working with an equivalence relation of morphisms. It would be
+difficult to take the version of Lawvere's theorem defined within this thesis
+and apply it to a non-trivial category. One example of this would be to, within
+Agda, construct the category $\bm{CPO}_{\bot}$\todo{explain}, which is a CCC with a reflexive
+object, to examine the implications of the results in \ldots\todo{here}
 
-Quotient types
+
+\subsection{Constructive Category of Sets}
+Another, more restrictive limitation is the lack of a category of sets to work
+within. In \ldots \todo{section on cantor's theorem}, rather than working in a
+real category of sets, an analog to the theorem was proven in a category of
+small types. This was not a faithful interpretation as, within type theory, the
+notion of typing is \textit{external} to the theory, whereas a key notion within
+set theory is that the membership relation is internal to the theory. This is
+what allows the notion of powerset to be formalised and thus takes the
+formulation presented in \ldots to Cantor's theorem. To construct a category of
+sets it is necessary to work within a different type theory.
+
+There are various different type theories that could be worked within.
+observational blah blah blah.
+
+A type theory which is supported by Agda and provides a solution to both of the
+problems outlined above is the new and radically different type theory known as
+Homotopy Type Theory.
+
+\subsection{Homotopy Type Theory}
 
 Homotopy type theory is an extension of MLTT in which the
 higher dimensional structure of the equality type is embraced. Homotopy type
-theory rejects Axiom K which implies UIP. By doing so the so-called higher
-homotopy structure of the identity type can be exploited.
+theory rejects \textsf{Axiom K} which implies UIP. By doing so the so-called higher
+homotopy structure of the identity type can be exploited. This is achieved by
+viewing equality between two types as a path in space between two points. Two
+different paths can be considered as well as homotopies (continuous
+deformations) between them. Through rejecting \textsf{Axiom K}, it is no longer
+possible to prove that \textsf{refl} is the only inhabitant of the identity
+type. An upside of this is that new inhabitants of the equality type for a given
+type can now be introduced without inconsistency. It is possible to imagine
+that, to create a quotient type, new equalities can be introduced corresponding
+directly to the equivalence classes desired. Types with these non-trivial
+equalities are known as higher inductive types.
 
-without k
-higher inductive types
-univalence
-quotient types
-cubical type theory agda
-cubical agda
+Rejecting \textsf{Axiom K} by itself provides benefits to the type theory but
+another significant advantage can be gained, namely the introduction of the
+univalence axiom. The univalence axiom, inconsistent with
+\textsf{Axiom K}, is an axiom which states that equivalence is equivalent to
+equality.
 
-\section{Constructive Category of Sets}
-Intepreting Lawvere's fixed point theorem within the category of sets to
-produce the Russell style paradoxes and Cantor's theorem proves tricky within
-Agda. Within normal MLTT a constructive category of sets is
+\begin{align*}
+    A = B \simeq A \simeq B
+\end{align*}
 
-sets in mltt
+jere, equivalence is meant in the category theoretic sense in that
+two types $A$ and $B$ belonging to some universe $U$ are equivalent if there
+exists an arrow $f : A \rightarrow B$ with both a left inverse and right
+inverse. The univalence axiom captures an informal mathematical practice of
+equating two isomorphic structures, allowing the informal reasoning in
+mathematics to be done within the type theory. Univalence simplifies the task of
+working with higher inductive types and allows mathematics such as Category
+theory (very much dependent on classifying structures up to isomophism) and
+homotopy theory to be embedded succinctly within type theory. By postulating
+univalence it is possible to recover a classical principle of function
+extensionality, something that is not valid within plain MLTT.
 
-ects
+Within homotopy type theory it is possible, as mentioned prior, to quotient your
+types by abitrary equivalence relations as a higher inductive type.
+\textsf{Axiom J} without \textsf{Axiom K} ensures that these higher inductive
+types behave the same as \textsf{refl}, meaning that indecernability of identicals
+is preserved. This allows categories to be defined with propositional equality
+without the additional requirement of congruence for the equivalence relation.
+Within Homotopy type theory it is possible to define a set type which
+corresponds to the rules of ZFC with a coherent notion of set membership. This
+is outlined in \todo{here}. Using this construction, a coherent category of sets
+could be produced within the type theory and Lawvere's fixed point theorem could
+be applied appropriately.
 
-zfc in hott
+Univalence is posited as an axiom within Homotopy Type theory but work has been
+done recently to provide a constructive interpretation of the univalence axiom
+\todo{cubical}.  Support for Cubical type theory exists in Agda as of version
+2.6 providing support for higher inductive types and an equality path type.
 
-\subsection{Linenbaum-Tarski Algebras}
-godels incompleteness theorem
-tarki's theorem
-\subsection{Lambda calculus and topoi}
 \section{Importance of Theorem Proving}
-problems with other proofs
+Part of the  work done during this thesis was to investigate how computer-aided
+mathematics is done and whether it is worth being pursued in mainstream
+mathematics. With respect to the latter question, throughout this thesis it has
+become clear that, although there are certainly limitations and problems,
+computer-aided theorem proving is a positive step forward for mathematics. Much
+mathematical reasoning is done informally and even in published proofs many
+steps are left for the reader to internally fill in. There is no shortage of
+mathematical proofs that have been published only for mistakes to have been
+found. The Russian Mathematician Vladimir Voevodsky, a central figure behind the
+development of Homotopy type theory, began his career in algebraic topology. A
+main motivation behind his development of Homotopy type theory was due to
+mistakes in published papers throughout the 1970s within algebraic topology.
+Homotopy type theory was aimed at allowing mathematicians to use informal
+reasoning within a vigorous setting. More can be found of voevodsky's opinions
+within \todo{voevodsky}
+
+In attempts to investigate the relationship between the $\lambda$-calculus and
+Lawvere's fixed point theorem, two informal attempts to outline the relation
+were found. These attempted proofs both had inaccuracies which will be outlined
+shortly. Through working in a highly rigorous setting, there is very little
+doubt that relation outlined within this thesis is incorrect. Although not all
+the relationships have been investigated end to end, the tricky area of the proof
+(i.e. the algebraic manipulation) has been formalised and checked. The work
+formalising Lawvere's theorem was vital to observing the connection between the
+$\lambda$-calculus and the theorem. In theorem proving, none of the details can
+be elided so a subtle and deep understanding of the intricacies of the theorem
+is developed. It is by paying close attention to the types of terms that the
+below errors were observed.
+
+\subsubsection{The CCC generated from a simply-typed $\lambda$-calculus}
+
+A recent Ph.D. thesis, \textit{Category Theory and the Lambda Calculus} by Mario
+Rom\'an Garcia provides an attempt to integrate Lawvere's theorem into the
+theory of the untyped $\lambda$-calculus as follows
+
+Garcia uses Joachim Lambek's observation that every simply-typed
+$\lambda$-calculus has an associated cartesian closed category which is obtained
+by considering the category in which the tp 
+
+
+
+
 
 $D \equiv D^D$
 
@@ -63,3 +158,9 @@ $D \equiv D^D$
 
 
 CCC from simply typed $\lambda$-calculus
+\section{future work}
+\subsection{Linenbaum-Tarski Algebras}
+godels incompleteness theorem
+\subsection{Lambda calculus and topoi}
+tarki's theorem
+
