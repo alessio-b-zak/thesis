@@ -36,7 +36,7 @@ open import Data.Empty using (⊥)
 open import Data.Unit using (⊤)
 import Cats.Category.Constructions.Unique as Unique
 open import Cats.Category.Cat.Facts
-open import Relation.Binary.PropositionalEquality
+open import Relation.Binary.PropositionalEquality hiding (Extensionality)
 
 -- derivation of cantor's diagonal argument from lawvere's fixed pt thm
 \end{code}
@@ -104,6 +104,12 @@ pairPrf : {X A B : Set} → {g : X → Pair A B} → {y : X}
 pairPrf {X} {A} {B} {g₁} {y} with (g₁ y)
 ... | mkPair x x₁ = refl
 
+\end{code}
+
+\begin{code}
+pairPrf′ : {A B : Set} → {g : Pair A B}
+  → mkPair (proj-pair true g) (proj-pair false g) ≡ g
+pairPrf′ {A} {B} {mkPair x x₁} = refl
 \end{code}
 
 %\begin{code}
@@ -270,12 +276,13 @@ sets-curry f = λ x y → f (mkPair x y)
 \end{code}
 %</cantor-curry>
 
+%<*cantor-pair-prf>
 \begin{code}
 pairPrf' : {A B : Set} → {g : Pair A B}
-  → mkPair (proj-pair true g) (proj-pair false g) ≡ g
+         → mkPair (proj-pair true g) (proj-pair false g) ≡ g
 pairPrf' {A} {B} {mkPair x x₁} = refl
 \end{code}
-
+%</cantor-pair-prf>
 
 %<*cantor-curry'>
 \begin{code}
@@ -284,8 +291,76 @@ set-curry′ : ∀ {A B C} (f : Pair A B → C) →
               → (set-eval ∘ (λ y → mkPair (f' (fst y)) (Function.id (snd y))))  x ≡ f x)
 \end{code}
 %</cantor-curry'>
+
 \begin{code}
-set-curry′ f = Unique.Build.∃!-intro (sets-curry f) {!!} {!!}
+open ≡-Reasoning
+\end{code}
+
+
+%<*cantor-curry-uniq-type>
+\begin{code}
+sets-curry-unique : {A B C : Set} →
+                    {f : Pair A B → C} →
+                    {g : A → B → C} →
+                    ((x : Pair A B) → g (proj-pair true x) (proj-pair false x) ≡ f x) →
+                    (x : A) → (λ y → f (mkPair x y)) ≡ g x
+
+\end{code}
+%</cantor-curry-uniq-type>
+
+
+\begin{code}
+Extensionality : (a b : Level) → Set _
+Extensionality a b =
+  {A : Set a} {B : A → Set b} {f g : (x : A) → B x} →
+  (∀ x → f x ≡ g x) → f ≡ g
+\end{code}
+
+%<*cantor-postulate>
+\begin{code}
+postulate
+  ext : Extensionality lzero lzero
+\end{code}
+%</cantor-postulate>
+
+%<*cantor-curry-uniq>
+\begin{code}
+sets-curry-unique {f = f}{g = g} fprf x
+  = let tproof = λ y → fprf (mkPair x y)
+    in (begin
+          (λ y → f (mkPair x y))
+        ≡⟨ {!!} ⟩
+          (λ y → g x y)
+        ≡⟨ refl ⟩
+          g x
+        ∎  )
+\end{code}
+%</cantor-curry-uniq>
+
+%(y : .B) → g x y ≡ f (mkPair x y)
+
+%<*cantor-sets-curry'-sat>
+\begin{code}
+sets-curry'-sat : ∀ {A B C} (f : Pair A B → C) → (x : Pair A B)
+  → (set-eval ∘ (λ y → mkPair ((sets-curry f) (fst y)) (Function.id (snd y))))  x ≡ f x
+\end{code}
+%</cantor-sets-curry'-sat>
+
+%<*cantor-sets-curry'-sat1>
+\begin{code}
+sets-curry'-sat = λ f x → begin
+                            f (mkPair (proj-pair true x) (proj-pair false x))
+                          ≡⟨ cong f pairPrf' ⟩
+                            f x
+                          ∎
+\end{code}
+%</cantor-sets-curry'-sat1>
+
+
+
+
+\begin{code}
+set-curry′ f = Unique.Build.∃!-intro (sets-curry f) (λ x → sets-curry'-sat f x) {!!}
 \end{code}
 
 %<*cantor-exponential>
@@ -302,12 +377,6 @@ set-exponential {A} {B} = record { Cᴮ = A → B ; eval = set-eval ; curry′  
 %                          (λ x → cong f pairPrf' )
 %                          λ x x₁ → {!!} }
 %\end{code}
-
-\begin{code}
-sets-curry' : ∀ {A B C} {f : Pair A B → C} → (x : Pair A B)
-            → (set-eval ∘ (λ y → mkPair ((sets-curry f) (fst y)) (Function.id (snd y))))  x ≡ f x
-sets-curry' = {!!}
-\end{code}
 
 
 \begin{code}

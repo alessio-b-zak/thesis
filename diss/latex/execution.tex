@@ -394,6 +394,28 @@ usual, is the mapping itself which is the curry function.
 The second argument is a proof that \AgdaFunction{sets-curry} satisfies the
 universal property.
 
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-sets-curry'-sat}
+
+Reducing the left hand side of the propositional equality in the above type the
+proof can be completed trivially
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-sets-curry'-sat1}
+
+Making use of the universal property for products
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-pair-prf}
+
+The last component of the unique mapping property is the proof of uniqueness of
+the map the type of which is
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-curry-uniq-type}
+
+This proof proves to be difficult to complete. \verb|tProof| has type
+\todo{type}. This is an extensional proof equating the two desired structures
+however, within MLTT, function extensionality is not derivable. To resolve this
+function extensionality is postulated as an axiom
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-postulate}
 
 
 
