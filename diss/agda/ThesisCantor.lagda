@@ -48,7 +48,7 @@ Sets1 = Sets lzero
 %</cantor-univ>
 
 \begin{code}
-open Terminal.Build Sets1
+open Terminal.Build Sets1 hiding (terminal-unique)
 open Unique.Build Sets1
 open Points.Build Sets1
 \end{code}
@@ -186,20 +186,40 @@ instance
 
 
 
+%<*cantor-terminal-arrow>
 \begin{code}
-g : {X : Set} → X → ⊤
-g x = ⊤.tt
+terminal-arrow : {X : Set} → X → ⊤
+terminal-arrow x = ⊤.tt
+\end{code}
+%</cantor-terminal-arrow>
 
-tterminal :  {X : Set} {g : X → ⊤} → ⊤ → (x : X) → ⊤.tt ≡ g x
-tterminal x x₁ = refl
+%<*cantor-terminal-unique>
+\begin{code}
+terminal-unique :  {X : Set} {g : X → ⊤} → ⊤ → (x : X) → ⊤.tt ≡ g x
+terminal-unique x x₁ = refl
+\end{code}
+%</cantor-terminal-unique>
 
-helper :  (X : Set) → Unique.Build.∃!′ (Sets lzero) {A = X} {B = ⊤}(λ f → ⊤)
-helper X = Unique.Build.∃!-intro g _ tterminal
+%<*cantor-terminal-prop>
+\begin{code}
+terminal-property :  (X : Set) → ∃! X ⊤
+terminal-property X = Unique.Build.∃!-intro {!!} _ {!!}
+\end{code}
+%</cantor-terminal-prop1>
 
+\begin{code}
+terminal-property' :  (X : Set) → ∃! X ⊤
+terminal-property' X = Unique.Build.∃!-intro terminal-arrow _ {!!}
+\end{code}
 
+\begin{code}
+terminal-property'' :  (X : Set) → ∃! X ⊤
+terminal-property'' X = Unique.Build.∃!-intro terminal-arrow _ {!!}
+\end{code}
+
+\begin{code}
 ⊤-isTerminal : IsTerminal ⊤
-⊤-isTerminal = helper
-
+⊤-isTerminal = terminal-property
 \end{code}
 
 
