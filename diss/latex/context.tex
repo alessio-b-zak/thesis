@@ -197,7 +197,8 @@ the \textit{capture} or \textit{binding} of the variable $x$ in term $s$, known
 as a $\lambda$-abtraction. Intuitively, application of a term to a
 $\lambda$-abstraction, when considered as a computation, should replace all
 instances of the abstracted variable with the term being applied a process known
-as substitution. This computation is known as $\beta$-reduction.
+as substitution. This computation is known as $\beta$-reduction. 
+
 
 \begin{definition}[$\bm{\beta}$\textbf{-reduction}] A term $t$ applied to
     $\lambda$-abstraction $(\lambda x . s \; t)$, $\beta$\textit{-reduces} to
@@ -206,8 +207,11 @@ as substitution. This computation is known as $\beta$-reduction.
         (\lambda x . s \; t) \rightarrow_{\beta} s[t/x]
     \end{align*}
 \end{definition}
+With this notion of reduction an equational theory can be produced capturing the
+notion of equivalence under $\beta$-reduction which will be referred to
+\todo{maybe}
 
-$\lambda$-calculus originally arose from Church's desire to provide a foundation
+The $\lambda$-calculus originally arose from Church's desire to provide a foundation
 for logic, a desire also shared by another American Logician, Haskell Curry. In
 the 1920s and 1930s, Curry worked on a foundation of logic extremely similar to
 the $\lambda$-calculus, his theory of combinators \cite{curry1930grundlagen}.
@@ -218,8 +222,6 @@ intuitionistic implicational logic \cite{curry1934functionality}. This
 observation proved to be the beginning of theorem provers as they are in their
 current state.  \todo{intuitionistic logic} $\lambda$-calculus as a deductive
 system Y-combinator and curry's paradox the simply typed lambda calculus
-lambda cube
-curry howard
 
 \subsection{Curry Howard Correspondence}
 Curry's combinatory logic and Church's $\lambda$-calculus, when viewed as a
@@ -235,10 +237,9 @@ natural deduction \cite{howard1980formulae}. This lead to the conclusion that
 every system in formal logic has a corresponding computational calculi with a
 specific type system named the Curry-Howard correspondence.
 
-Intuinistic logic and constructivity. bhk interpretation
+\todo{Intuinistic logic and constructivity. bhk interpretation}
 
 \section{History of Theorem Proving}
-\todo{define logical framework}
 The Curry-Howard correspondence provided a computational interpretation of the
 notion of proof. Providing a proof of a theorem corresponded to a program that
 inhabited a given type. Type systems in computation had largely grown with the
@@ -260,8 +261,7 @@ a common feature of proof-assistants since and is the defining features of
 a set of computational calculi known as \textit{logical frameworks}. Users could
 define their own logics and types and no method of introducing inductive types
 was provided. Typechecking the program corresponded to the verification of the
-proof. \todo{Proofs done with automath.}
-
+proof.
 \todo{fix martin lof citaiton}
 \subsection{Martin-Lof Type Theory}
 In the early 1970s Per Martin-Lof, a Swedish logician and mathematician, aimed
@@ -280,22 +280,9 @@ be presented in the technical background for this thesis.
 
 Martin-Lof type theory was deeply influential in many theorem provers and
 logical frameworks designed from then on including the Edinburgh Logical
-Framework and  Agda, the proof-assistant used within this thesis.
-
-Martin-Lof's type theory was extended in future research to support different
-domains and uses. Thierry Coquand, a French computer scientist, created the
-calculus of constructions, a typed $\lambda$-calculus which he used to create
-the proof-assistant Coq.
-
-coq
-
-NurP
-
-Hol/Isabelle
-
-Universes and hurkens
-
-delinieating theorem provers and logical frameworks
+Framework and  Agda, the proof-assistant used within this thesis. An analysis of
+the various theorem provers and their relative strengths with take place in
+\todo{evaluation}.
 
 \subsection{Agda}
 The first version of Agda was designed at Chalmers university in 1999 by
