@@ -385,7 +385,8 @@ function which for the category of small types takes the form
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-curry'}
 
-Which returns a universal mapping property. The first argument of this, as is
+Which returns a universal mapping property. The first argument of the universal
+mapping property, as is
 usual, is the mapping itself which is the curry function.
 
 
@@ -427,13 +428,38 @@ throught \verb|tproof|
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-curry-uniq1}
 
-Thus concluding the definition of currying
+The above defined function complete the definition of \AgdaFunction{set-curry'}
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-set-curry}
 
+\AgdaDatatype{Sets1} can now be defined to be closed
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-hasexp}
+
+With these definitions the CCCness of \AgdaDatatype{Sets1} can be trivially
+established.
+
+The category that has been is unfortunately not a valid model of set theory and
+is only a toy language for reasons that can be found \ldots \todo{where found}.
+A type theoretic analogue of Cantor's theorem can be established showing there
+is no point-surjection from a type to the predicates on the type. In set theory,
+for a given set, the predicates on the set can be considered as subsets placing
+the elements of the powerset of a set in correspondence with the predicates on
+the set. With no coherent notion of membership relation or subset relation (by
+design) there is no way to faithfully model the Cantor's theorem  within the
+category produced. Even so, the proof shows, with enough similarity how the
+argument would proceed in the category of sets.
+
+Within \AgdaDatatype{Sets1}, predicates are functions from a type \verb|A| to
+\AgdaDatatype{Bool} type.
+
+\ExecuteMetaData[../agda/latex/ThesisBool.tex]{bool-def}
+
+The contrapositive of
+\AgdaFunction{lawvere}, \AgdaFunction{cantor} will be used, as a reminder
+
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-cantor}
 
 
-exponentials
 
 
 ccc

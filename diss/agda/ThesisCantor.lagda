@@ -407,10 +407,34 @@ set-exponential {A} {B} = record { Cᴮ = A → B ; eval = set-eval ; curry′  
 %\end{code}
 
 
+%<*cantor-hasexp>
 \begin{code}
 instance
   setsHasExponentials : HasExponentials Sets1
-  setsHasExponentials = record { _↝′_ = λ B C → {!!} }
+  setsHasExponentials = record { _↝′_ = λ B C → set-exponential }
+\end{code}
+%</cantor-hasexp>
+
+\begin{code}
+instance
+  setsHasFiniteProducts : HasFiniteProducts Sets1
+  setsHasFiniteProducts = record {}
 \end{code}
 
+\begin{code}
+instance
+  setsHasIsCCC : IsCCC Sets1
+  setsHasIsCCC = record {}
+\end{code}
+
+\begin{code}
+open HasExponentials setsHasExponentials
+open Diagonal
+\end{code}
+
+
+\begin{code}
+cantorsDiagonalTheorem : ∀ {A} → ¬ PointSurjective A (A ↝ Bool)
+cantorsDiagonalTheorem = cantor Sets1 noFixPtBool
+\end{code}
 \end{document}

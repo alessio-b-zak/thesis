@@ -184,7 +184,7 @@ noFixPtBool x with (x not)
 open HasExponentials setsHasExponentials
 open Diagonal
 
-cantorsDiagonalTheorem : ¬ PointSurjective ℕ (ℕ ↝ Bool)
+cantorsDiagonalTheorem : ∀ {A} → ¬ PointSurjective A (A ↝ Bool)
 cantorsDiagonalTheorem = cantor Sets1 noFixPtBool
 
 -- show that (A ↝ Bool) ≅ membership question on A
