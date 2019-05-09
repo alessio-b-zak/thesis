@@ -53,6 +53,7 @@ Sets1 = Sets lzero
 open Terminal.Build Sets1 hiding (terminal-unique)
 open Unique.Build Sets1
 open Points.Build Sets1
+open Product.Build Sets1
 \end{code}
 
 %<*cantor-pair>
@@ -69,11 +70,13 @@ data Pair (A : Set) (B : Set) : Set where
 %                ∃![ u ] ( ∀ i (b : X) → p i b ≡ proj-pair i (u b))
 %\end{code}
 
+%<*sets-proj>
 \begin{code}
 proj-pair : ∀ {A B} i → Pair A B → Bool-elim A B i
 proj-pair false (mkPair x x₁) = x₁
 proj-pair true (mkPair x x₁) = x
 \end{code}
+%</sets-proj>
 
 \begin{code}
 fst : ∀ {A B} → Pair A B → A
@@ -163,9 +166,7 @@ proj-uniqueness : ∀ {A B X} (p : ∀ i → X → Bool-elim A B i) →
 \begin{code}
 proj-uniqueness {A} {B} = λ p →
   let u = (λ x → mkPair (p true x) (p false x))
-  in Unique.Build.∃!-intro u
-                           {!!}
-                           {!!}
+  in Unique.Build.∃!-intro u {!!} {!!}
 \end{code}
 %</cantor-unique-def>
 
@@ -185,6 +186,14 @@ proj-uniqueness' {A} {B} = λ p →
     {!!}
 \end{code}
 %</cantor-unique-def1>
+
+
+%<*sets-product>
+\begin{code}
+set-product : {A B : Set} → BinaryProduct A B
+set-product {A} {B} = record { prod = Pair A B ; proj = proj-pair ; isProduct = {!!} }
+\end{code}
+%</sets-product>
 
 \begin{code}
 instance

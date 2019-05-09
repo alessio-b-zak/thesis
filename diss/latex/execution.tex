@@ -277,26 +277,35 @@ morphisms to be the functions between them.
 
 \ExecuteMetaData[../agda/latex/ThesisSets.tex]{sets-instance}
 
-The objects of the category are the types at the specified level. The morphisms
-are the functions between types of this level. Equality of morphisms is
-extensional propositional equality for functions. Morphism composition is
-function composition, identity morphsism are identity functions. The axioms of
-categories come simply from the definition of propositional equality.
+ Equality of morphisms is extensional propositional equality for functions.
 
 \ExecuteMetaData[../agda/latex/ThesisSets.tex]{sets-equality}
 
-Each instance of \AgdaDatatype{Sets} forms a cartesian closed category. Working with the lowest level universe.
+Morphism composition is function composition, identity morphsism are identity
+functions.
+
+\ExecuteMetaData[../agda/latex/ThesisSets.tex]{sets-instance1}
+
+The remaining axioms are trivially satisfied by the above definitions.Each
+instance of \AgdaDatatype{Sets} forms a cartesian closed category. The remainder
+of this section will be done with the lowest of these
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-univ}
 
 The cartesian closedness of \AgdaDatatype{Sets1} will be established by
-providing a terminal object, products and exponentials.
+providing a terminal object, products and exponentials.  Proving that
+\AgdaDatatype{Sets1} is cartesian requires showing that, for every pair of
+types, a product object can be formed.
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{sets-product}
+
+Product objects consist of an object, projections out of the object and a proof
+that the objects and arrows satisfy the universal property of products.
 
 Products correspond to the pair type
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-pair}
 
-With the indexed family of projections being the projections out of the pair.
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-proj}
 
@@ -311,7 +320,7 @@ the values from the indexed family and creating a pair from them
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-unique-def}
 
-Where \todo{consturcot} is the constructor for a univeral mapping.
+Where \todo{consturcot} is the constructor for a univeral mapping property.
 
 The next field of the universal mapping type is the proof that the provided
 arrow satisfies the definition required from the product i.e.
@@ -325,7 +334,8 @@ satisfies with abuse of notation,
 \end{align*}
 
 where $f$ and $g$ are the two morphisms underlying \verb|p|. This proves to be
-trivially true given the definition of \AgdaFunction{proj-pair}.
+trivially true given the definition of \AgdaFunction{proj-pair} and can be
+directly placed as an argument to the universal mapping property.
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-unique-def1}
 
@@ -684,14 +694,14 @@ be transformed into a $CCC$ with a reflexive object via a process known as the
 \textit{Karoubi Envelope}.\todo{karoubi} Furthermore, every $CCC$ with a
 reflexive object can be turned into a $\lambda$-algebra such that taking a
 $\lambda$-algebra to a $CCC$ and back to $\lambda$-algebra again produces an
-isomorphic $\lambda$-algebra. This indicates that every $\lambda$-algebra can
-be obtained by a $CCC$ with a reflexive object. The results of \todo{turn into
+isomorphic $\lambda$-algebra. This indicates that every $\lambda$-algebra can be
+obtained by a $CCC$ with a reflexive object. The results of \todo{turn into
 theorem} can be interpreted in both directions of this transformation.
 Intepreting within the context of the transformation from \textit{Karoubi
 envelope} to CCC yields no sensical results. The construction of the
 \textit{Karoubi envelope} and the investigation of its relationship with
-Lawvere's theorem are detailed in
-Appendix \ref{appx:karoubi}. Interpreting in the other direction, however, is more useful.
+Lawvere's theorem are detailed in Appendix \ref{appx:karoubi}. Interpreting in
+the other direction, however, is more useful.
 
 
 A (locally small) $CCC$ with a reflexive object, $D$, with arrows $F : D
