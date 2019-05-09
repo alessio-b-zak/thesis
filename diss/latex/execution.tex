@@ -454,13 +454,42 @@ Within \AgdaDatatype{Sets1}, predicates are functions from a type \verb|A| to
 
 \ExecuteMetaData[../agda/latex/ThesisBool.tex]{bool-def}
 
-The contrapositive of
-\AgdaFunction{lawvere}, \AgdaFunction{cantor} will be used, as a reminder
+With \AgdaDatatype{Bool}, Cantor's theorem can be reframed within
+\AgdaDatatype{Sets1} as
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-cantor-type}
+
+Or that, in English, for all types (in \AgdaDatatype{Set}) there does not exist
+a point-surjection from the type to the predicates on the type. It is unclear
+to the author as to whether point-surjectivity has a more coherent intepretation
+within \AgdaDatatype{Sets1}.
+
+To prove this  the contrapositive of
+\AgdaFunction{lawvere}, \AgdaFunction{cantor} will be used. As a reminder
 
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-cantor}
 
+To make use of this it is necessary to show that \AgdaDatatype{Bool} does not
+have the fixed point property.
 
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-nofixpt}
 
+Recall that the definition of \todo{not} is
+\todo{here}
+
+Therefore, given a function which finds the fixed point of any function from
+\AgdaDatatype{Bool} to \AgdaDatatype{Bool}, an inhabitant of void must be
+provided. The observation that results in Cantor's theorem being an application
+of Lawvere's theorem is that there is a function from \AgdaDatatype{Bool} to
+\AgdaDatatype{Bool} that does not have a fixed point, the familiar function from
+classical logic, negation or \AgdaFunction{not}.
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-not}
+
+In fact, with respect to sets, every set with more than one element has at least
+one function to itself without a fixed point leading to an extension of Cantor's
+theorem i.e. that for all sets $A$ and $B$ with cardinality greater than one
+there does not exist a surjective function from $A \rightarrow B^A$.
 
 ccc
 

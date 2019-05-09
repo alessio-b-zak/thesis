@@ -27,12 +27,12 @@ open import Cats.Category.Constructions.Exponential as Exponential
 open import Cats.Category.Sets using (Sets)
 open import Data.Bool using (true ; false; Bool)
 open import Relation.Nullary using (¬_)
-open import Relation.Nullary.Negation using (contradiction)
+open import Relation.Nullary.Negation hiding (contradiction)
 open import Level renaming (suc to lsuc ; zero to lzero)
 open import Extension
 open import Diagonal
 import Points
-open import Data.Empty using (⊥)
+open import Data.Empty using (⊥ ; ⊥-elim)
 open import Data.Unit using (⊤)
 import Cats.Category.Constructions.Unique as Unique
 open import Cats.Category.Cat.Facts
@@ -432,9 +432,57 @@ open HasExponentials setsHasExponentials
 open Diagonal
 \end{code}
 
+%<*cantor-not>
+\begin{code}
+not : Bool → Bool
+not false = true
+not true = false
+\end{code}
+%</cantor-not>
+
 
 \begin{code}
-cantorsDiagonalTheorem : ∀ {A} → ¬ PointSurjective A (A ↝ Bool)
-cantorsDiagonalTheorem = cantor Sets1 noFixPtBool
+not-fx-pt : ∀ {x} → (not x) ≢ x
+not-fx-pt {false} ()
+not-fx-pt {true} ()
 \end{code}
+
+\begin{code}
+bool-no-fix-pt : {X : ⊤ → Bool} → not (X ⊤.tt) ≡ X ⊤.tt → ⊥
+bool-no-fix-pt x = not-fx-pt x
+\end{code}
+
+%<*cantor-nofixpt>
+\begin{code}
+noFixPtBool : ¬ FixedPointProperty Bool
+\end{code}
+%</cantor-nofixpt>
+
+%<*cantor-nofixpt1>
+\begin{code}
+noFixPtBool Y with (Y not)
+... | record { X = X ; isFixedPoint = isFixedPoint } = {!!}
+\end{code}
+%</cantor-nofixpt1>
+
+\begin{code}
+contradiction : ∀ {p w} {P : Set p} {Whatever : Set w} →
+               P → ¬ P → Whatever
+contradiction p ¬p = ⊥-elim (¬p p)
+\end{code}
+
+%<*cantor-cantor-type>
+\begin{code}
+cantorsDiagonalTheorem : ∀ {A} → ¬ PointSurjective A (A → Bool)
+\end{code}
+%</cantor-cantor-type>
+
+
+
+\begin{code}
+cantorsDiagonalTheorem = {!!}
+\end{code}
+
+
 \end{document}
+

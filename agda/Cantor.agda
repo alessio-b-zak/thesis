@@ -174,12 +174,10 @@ not-fx-pt : ∀ {x} → (not x) ≢ x
 not-fx-pt {false} ()
 not-fx-pt {true} ()
 
-bool-no-fix-pt : {X : ⊤ → Bool} → not (X ⊤.tt) ≡ X ⊤.tt → ⊥
-bool-no-fix-pt x = not-fx-pt x
 
 noFixPtBool : ¬ FixedPointProperty Bool
 noFixPtBool x with (x not)
-... | record { X = X ; isFixedPoint = isFixedPoint } = contradiction (isFixedPoint ⊤.tt) bool-no-fix-pt
+... | record { X = X ; isFixedPoint = isFixedPoint } = contradiction (isFixedPoint ⊤.tt) not-fx-pt
 
 open HasExponentials setsHasExponentials
 open Diagonal
