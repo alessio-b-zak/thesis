@@ -20,44 +20,85 @@ which play a crucial role within the study of computation and logic. Lawvere's
 fixed point theorem is a categorical abstraction of the familiar class of
 \textit{diagonal arguments} employed throughout computer science and mathematics. The
 decision to formalise Lawvere's fixed point theorem within a theorem prover is
-not incidental; many of the theorems abstracted by Lawvere's theorem play an
+not incidental; many of the theorems abstracted by the theorem play an
 important role in the problem of providing a formal foundation in which to do
 mathematics.
 
 The primary contributions of this thesis are: a formalisation of Lawvere's fixed
 point theorem within the theorem prover Agda with additional proofs in the
 theory of cartesian closed categories; a novel application of Lawvere's fixed
-point theorem within the context of the untyped $\lambda$-calculus ; and a
+point theorem within the context of the untyped $\lambda$-calculus; and a
 formalisation within Agda of a category of small types with presentations of
 Cantor's Theorem. Given the attempts of this thesis to incoporate a large amount
 of related yet distinct fields together the contextual history behind the
 primary areas must be outlined. What follows is a blurred and idealistic
-exposition of background of 20th century mathematical logic.
+exposition of background of 20$^{\textrm{th}}$ century mathematical logic.
+
+\newtheorem{thm}{Theorem}
+\newtheorem{definition}{Definition}
+
 \section{Foundations of Mathematical Logic and Computation}
 
 \subsection{Cantor's Theorem}
 
-The story begins slightly before the advent of the 20th century with the German
-Mathematician Georg Cantor. Cantor (1845 - 1918) is considered the father of
-set theory with his proofs of the differing cardinalities of the real and
-natural numbers and theory of ordinals. A major piece of work by Cantor was his
-eponymous theorem \cite{cantor1892ueber}, published in 1892,
-that the cardinality of a set is strictly smaller than the cardinality of its
-powerset. Cantor's proof of this theorem made use of a so-called diagonal
-argument, the first of its kind which, repeated through time in different
-fields, was abstracted by Lawvere to give his fixed point theorem in category
-theory subsuming previous instances. Cantor's Theorem proceeds as follows
+The story begins slightly before the advent of the 20$^{\textrm{th}}$ century
+with the German Mathematician Georg Cantor. Cantor (1845 - 1918) is considered
+the father of set theory with his proofs of the differing cardinalities of the
+real and natural numbers and theory of ordinals. A major piece of work by Cantor
+was his eponymous theorem \cite{cantor1892ueber}, published in 1892, that the
+cardinality of a set is strictly smaller than the cardinality of its powerset.
+Cantor's proof of this theorem made use of a so-called \textit{diagonal
+argument}, one of the first of its kind which, repeated through time in
+different fields, was abstracted by Lawvere to give his fixed point theorem in
+category theory subsuming previous instances. Cantor's theorem proceeds has
+follows:
+
+\begin{thm}
+    fet $f$ be a function from a set $A$ to its powerset $\mathcal{P}(A)$. Then
+    $f$
+    is not a surjective function.
+\end{thm}
+
+\begin{proof}
+    fiming for a contradiction assume $f$ is surjective. Consider the set $B =
+    \{ a \in A \: | \: a \not\in f(a) \}$. Therefore there exists a $b \in A$
+    such that $f(b)=B$. By definition $f(b) = B$ and therefore $b \not\in B$.
+    However, $b \not\in f(b)$ implies $b \in B$. Contradiction.
+\end{proof}
+
+The name \textit{diagonal theorem} comes from an earlier proof by Cantor of the
+uncountability of the real numbers. This was done by assuming an enumeration of
+the set of infinite sequences of binary digits which are in correspondence with
+the real numbers, and considering this as a table, see Figure
+\ref{fig:diagonal}. The proof then proceeds by going along the diagonal of the
+table flipping the $n^{th}$ digit of the $n^{th}$ number going down the table to
+produce a new real number not in the table. The repetition of the argument in
+two places in the definition yields a familiar structure repeated in many
+theorems in mathematical logic known as \textit{diagonal arguments}.
+
+\begin{figure}[h]
+    \includegraphics[width=5cm]{diagonal.png}
+    \centering
+    \caption{Cantor's Diagonal Argument Illustrated }
+    \label{fig:diagonal}
+\end{figure}
 
 \subsection{Russell's Paradox}
-Cantor, in founding set theory as a field of study, introduced his naive set
-theory \cite{Cantor:1874} as a foundation in which to do mathematics, its
-naivety stemming from its implicit axiom of unrestricted comprehension, in which
-all predicates correspond themselves to a set. This lead to perhaps the first
-signifcant result in the foundations of mathematics in the 20th century,
-Russell's paradox. Betrand Russell (1872-1970), an English polymath, showed in
-\textit{The Principles of Mathematics} \cite{russell1903principles} written with
-Alfred Whitehead in 1903 that, in classical logic, the axiom of unrestricted
-comprehension leads to a contradiction.
+Cantor, in founding set theory as a field of study, introduced his na{\"i}ve set
+theory \cite{Cantor:1874} as a foundation in which to do mathematics. The
+na{\"i}vity of Cantor's foundations rested in the Axiom of Unrestricted
+Comprehension, orignally taken from work by Gottlob Frege
+\cite{frege1884grundlagen}
+
+\begin{definition}
+\end{definition}
+
+This lead to perhaps the first signifcant result in the foundations of
+mathematics in the 20th century, Russell's paradox. Betrand Russell
+(1872-1970), an English polymath, showed in \textit{The Principles of
+Mathematics} \cite{russell1903principles} written with Alfred Whitehead in 1903
+that, in classical logic, the axiom of unrestricted comprehension leads to a
+contradiction.
 
 \todo{russell's paradox}
 

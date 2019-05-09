@@ -68,6 +68,7 @@
 \RequirePackage{dtk-logos}
 \RequirePackage{todonotes}
 
+\graphicspath{ {./graphics/} }
 \RequirePackage{catchfilebetweentags}
 \RequirePackage{amsmath}
 \RequirePackage{agda}
@@ -79,6 +80,8 @@
 \RequirePackage{csquotes}
 \input{./utf.tex}
 \raggedbottom
+\RequirePackage{amsthm}
+
 
 % =============================================================================
 
