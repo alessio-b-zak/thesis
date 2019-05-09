@@ -54,6 +54,7 @@ helper X = Unique.Build.∃!-intro g _ tterminal
 ⊤-isTerminal = helper
 
 
+
 instance
   setsHasTerminal : HasTerminal (Sets1)
   setsHasTerminal = record { One = ⊤ ; isTerminal = ⊤-isTerminal}
@@ -78,7 +79,7 @@ pairPrf′ {A} {B} {mkPair x x₁} = refl
 --... | mkPair x x₁ = refl
 
 
-
+  
 pairPrf : {X A B : Set} → {g : X → Pair A B} → {y : X}
         → mkPair (proj-Sets1 true (g y)) (proj-Sets1 false (g y)) ≡ g y
 pairPrf {X} {A} {B} {g₁} {y} with (g₁ y)
@@ -121,7 +122,7 @@ instance
 
 sets1Eval : ∀ {B C} → Pair (B → C) B → C
 sets1Eval (mkPair x x₁) = x x₁
-
+  
 
 sets1Curry : {A B C : Set} → (Pair A B → C) → (A → B → C)
 sets1Curry x x₁ x₂ = x (mkPair x₁ x₂)

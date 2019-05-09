@@ -293,11 +293,56 @@ for each pair of arrows from a type to each component of the pair there exists a
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-unique-type}
 
-Given the indexed-family the unique arrow \verb|u| can be produced by  
+Given the indexed-family the unique arrow \verb|u| can be produced by extracting
+the values from the indexed family and creating a pair from them
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-unique-def}
+
+Where \todo{consturcot} is the constructor for a univeral mapping.
+
+The next field of the universal mapping type is the proof that the provided
+arrow satisfies the definition required from the product i.e.
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-proj-sat}
+
+or in straightforward mathematical terms that the constructed arrow, \verb|u|,
+satisfies with abuse of notation,
+\begin{align*}
+    \pi_{1} \circ \texttt{u} = f \land \pi_{2} \circ \texttt{u} = g
+\end{align*}
+
+where $f$ and $g$ are the two morphisms underlying \verb|p|. This proves to be
+trivially true given the definition of \AgdaFunction{proj-pair}.
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-unique-def1}
+
+The final field of the univeral mapping constructor is the proof that \verb|u|
+is unique i .e. that for any \verb|g|\todo{type} such that \verb|g| satisfies
+\AgdaFunction{proj-sat-univ} it is (extensionally) equal to \verb|u| or as a
+type
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-unique}
+
+The condition \verb|h|, equates \verb|g| to \todo{projpair}. This condition is
+something that the unique arrow satisfies by definition. Using the transitivity
+of equality 
+productsproductsproducst
+
+For a category to have finite products it must also have a terminal object. The
+terminal object in the category \AgdaDatatype{Sets1} is the unit type
+
+\ExecuteMetaData[../agda/latex/ThesisUnit.tex]{unit-unit}
 
 
-\section{Russell's Paradox}
 
+exponentials
+
+
+ccc
+
+not fixed point
+
+cantor
 \section{The $\lambda$-Calculus}
 \todo{lambda equun theory}
 There is much to suggest that a coherent interpretation of Lawvere's theorem
