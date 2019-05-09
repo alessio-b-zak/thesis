@@ -63,9 +63,18 @@ instance Sets : ∀ l → Category (suc l) l l
 Sets l = record
   { Obj = Set l
   ; _⇒_ = λ A B → A → B
+\end{code}
+%</sets-instance>
+
+%<*sets-instance1>
+\begin{code}
   ; _≈_ = _≈_
   ; id = id
   ; _∘_ = _∘_
+\end{code}
+%</sets-instance1>
+
+\begin{code}
   ; equiv = equiv
   ; ∘-resp = λ {_} {_} {_} {f} eq₁ eq₂ x
              → ≡.trans (≡.cong f (eq₂ _)) (eq₁ _)
@@ -73,8 +82,6 @@ Sets l = record
   ; id-l = λ _ → ≡.refl
   ; assoc = λ _ → ≡.refl
   }
-
 \end{code}
-%</sets-instance>
 
 \end{document}

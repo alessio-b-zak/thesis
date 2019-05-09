@@ -42,6 +42,7 @@ open import Relation.Binary.PropositionalEquality hiding (Extensionality)
 \end{code}
 
 
+
 %<*cantor-univ>
 \begin{code}
 Sets1 = Sets lzero

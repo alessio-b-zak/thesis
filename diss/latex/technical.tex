@@ -418,10 +418,10 @@ of the identity type are \textsf{refl}. Introducing \textsf{Axiom K} into MLTT
 turns the theory into a proof-irrelevant one. The proofs for both structures
 can be reduced to refl and then equated propositionally and all that remains is
 showing equality of functions. Introducing \textsf{Axiom K} is not without its
-downsides however, recent advancements in type theory \cite{hottbook}
+downsides however. Recent advancements in type theory \cite{hottbook}
 show that there are signifcant advantages to working within a proof-relevant
-setting which are inconsistent with \textsf{Axiom K} which are discussed
-\todo{put where discussed and write axiom K}.
+setting which are inconsistent with \textsf{Axiom K}. These are discussed in
+section \ref{section:limitations} of the Evaluation.
 
 The last limitation that must be addressed is pertinent to the goal of
 formalising category theory within type theory. Returning again to considering
@@ -759,5 +759,6 @@ and \AgdaFunction{curry} and \AgdaFunction{uncurry} as isomorphisms
 \\
 \end{AgdaMultiCode}
 
+In \textbf{Set}, the exponential object for two sets is the set of all functions
+between them.
 
-\todo{law fix}

@@ -1,15 +1,25 @@
 % !TEX root = ./dissertation.tex
-In this section the main contributions of this thesis will be presented.
+In this section the main contributions of this thesis will be presented. Working
+towards a formalised version of Lawvere's fixed point theorem definitions and
+properties of points to objects will be explored. Following this a detailed
+proof of Lawvere's theorem will be presented in Agda. This will then be applied
+to two separate domains: a category of types and within models of the untyped
+$\lambda$-calculus. Within the category of types an analog of Cantor's theorem
+will be derived after established its cartesian closedness. The interplay
+between cartesian closed categories and models of the untyped $\lambda$-calculus
+will be examined and a novel result will be derived.
 \section{Points}
 
 \subsection{Points} \todo{expand proofs further}
-All that follows is work done during this thesis. The theorem makes use of the
-notion of points and some surrounding definitions
+Lawvere's fixed point theorem makes use of the notion of points and surrounding
+definitions. The necessary definitions will be presented in Agda.
 
 Points are a categorical abstraction that generalise the notion of elements of
 a set. A point is an arrow from the terminal object to any other object
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-point}
+
+\todo{points in categories}
 
 Given the name of Lawvere's theorem it makes sense to formalise the notion of a
 fixed point categorically
@@ -257,13 +267,13 @@ consequences of lawvere's fixed point theorem in these models. This theorem has
 many more applications in paradoxes and logic which can be found in (Yanofsky).
 Some limitations in formalising these within theorem provers will be explored in
 the further work section.
-\section{Cantor's Theorem}
+
+\subsection{Cantor's Theorem}
 An analogue of Cantor's theorem can be constructed using a category of small
-types (i.e. all types that belong to a given universe).
-
-
-A category can be constructed from the elements of any Agda universe of a
-particular level.
+types (i.e. all types that belong to a given universe). A category can be
+constructed from the elements of any Agda universe of a particular level by
+setting the objects of the category to be the types of the universe and the
+morphisms to be the functions between them.
 
 \ExecuteMetaData[../agda/latex/ThesisSets.tex]{sets-instance}
 
@@ -275,10 +285,12 @@ categories come simply from the definition of propositional equality.
 
 \ExecuteMetaData[../agda/latex/ThesisSets.tex]{sets-equality}
 
-Each instance of \AgdaDatatype{Sets} forms a cartesian closed categories.
-Working with the lowest level universe.
+Each instance of \AgdaDatatype{Sets} forms a cartesian closed category. Working with the lowest level universe.
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-univ}
+
+The cartesian closedness of \AgdaDatatype{Sets1} will be established by
+providing a terminal object, products and exponentials.
 
 Products correspond to the pair type
 
@@ -536,7 +548,7 @@ of \AgdaFunction{cantor}
     \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-cantor-type}
     \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-cantor}
 \end{AgdaMultiCode}
-\section{The $\lambda$-Calculus}
+\subsection{The $\lambda$-Calculus}
 \todo{lambda equun theory}
 There is much to suggest that a coherent interpretation of Lawvere's theorem
 exists in the $\lambda$-calculus. The untyped $\lambda$-calculus is famous for
@@ -676,8 +688,10 @@ isomorphic $\lambda$-algebra. This indicates that every $\lambda$-algebra can
 be obtained by a $CCC$ with a reflexive object. The results of \todo{turn into
 theorem} can be interpreted in both directions of this transformation.
 Intepreting within the context of the transformation from \textit{Karoubi
-envelope} to CCC yields no sensical results and will be detailed in
-\todo{appendix}. Interpreting in the other direction, however, is more useful.
+envelope} to CCC yields no sensical results. The construction of the
+\textit{Karoubi envelope} and the investigation of its relationship with
+Lawvere's theorem are detailed in
+Appendix \ref{appx:karoubi}. Interpreting in the other direction, however, is more useful.
 
 
 A (locally small) $CCC$ with a reflexive object, $D$, with arrows $F : D
@@ -852,5 +866,5 @@ $u$, \textbf{F}
 \end{align*}
 i.e. \textbf{F} selects the second of its two arguments. With some work perhaps
 more combinators could be derived and, potentially, they will form a complete
-basis for combinatory logic. Even if not , it is interesting to understand to
-which computational world point-surjectivity corresponds.
+basis for combinatory logic. Further discussion of this occurs in \todo{link
+appendix}
