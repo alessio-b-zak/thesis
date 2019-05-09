@@ -237,4 +237,28 @@ instance
   setsHasTerminal = record { One = ⊤ ; isTerminal = ⊤-isTerminal}
 \end{code}
 
+\begin{code}
+open Exponential.Build Sets1
+\end{code}
+
+%<*cantor-eval>
+\begin{code}
+set-eval : ∀ {B C} → Pair (B → C) B → C
+set-eval (mkPair f x) = f x
+\end{code}
+%</cantor-eval>
+
+%<*cantor-exponential>
+\begin{code}
+set-exponential : {A B : Set} → Exp A B
+set-exponential {A} {B} = record { Cᴮ = A → B ; eval = {!!} ; curry′ = {!!} }
+\end{code}
+%</cantor-exponential>
+
+\begin{code}
+instance
+  setsHasExponentials : HasExponentials Sets1
+  setsHasExponentials = record { _↝′_ = λ B C → {!!} }
+\end{code}
+
 \end{document}

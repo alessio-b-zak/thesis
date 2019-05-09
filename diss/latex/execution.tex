@@ -367,6 +367,22 @@ And it can be established that \AgdaDatatype{Sets1} has a terminal object
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-tisterminal}
 
 
+The last requirement for a cartesian closed category is exponentials. For every
+pair of types an exponential object must be produced consisting of a type, an
+evaluation map and transposition (currying). The exponential object for two
+types \verb|A| and \verb|B| is the function type between the two 
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-exponential}
+
+The evaluation map takes a pair containing a function from a type \verb|A| to a
+type \verb|B| and term of type \verb|A| and returns a \verb|B|. All that is
+required here is to unpack the pair and apply the function to the value.
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-eval}
+
+
+
+
 exponentials
 
 
