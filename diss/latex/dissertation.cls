@@ -146,6 +146,7 @@
 
 % mymacros
 \newcommand{\ent}{Entscheidungsproblem}
+\newcommand{\mlt}{Martin-L{\"o}f}
 
 % -----------------------------------------------------------------------------
 
