@@ -472,6 +472,7 @@ in \todo{hott section}.
 
 \section{Category Theory}
 
+\subsection{Basic Definitions}
 Category theory is a unifying field of mathematics that examines abstract
 structure. A category, \textbf{C}, is a mathematical structure containing a
 class objects and a class of morphisms or directed relations between said
@@ -555,7 +556,7 @@ properties of composition and identity
 \ExecuteMetaData[../agda/latex/ThesisCategory.tex]{cat-field-comp}
 
 The field \AgdaField{∘{-}resp} is the result of the aformentioned lack of
-congruence for equivalence relations. Preserves2 indicates that composition is
+fongruence for equivalence relations. Preserves2 indicates that composition is
 congruent in both of its arguments. This allows us to target individual
 compositions in a large categorical term to apply an equality. This is given for
 free when using propositional equality as functions are unable to distinguish
@@ -563,7 +564,11 @@ terms with the same normal form. This can be seen as one of the downsides to
 using equivalence relations as congruence must be proven for every each
 individual equivalence relation.\todo{congruence}
 
-\todo{examples of categories}
+There are many examples of categories throughout mathematics and computing. The
+category of groups, \textbf{Group}, has as its objects groups and its morphisms
+group homomorphisms. The category of sets, \textbf{Set}, has as its objects sets
+and its morphsisms total functions. A category of types will be introduced in
+\ldots which will be used to explore an application of lawvere's theorem
 \subsection{Universal Constructions}
 
 A key idea of category theory are universal constructions. Universal
@@ -573,14 +578,12 @@ universal constructions presented here are those that will be of use within the
 thesis.
 
 \subsubsection{Terminal Objects}
-Terminal objects are constructions that capture the
-minimal structure required to be an object within a category. They often
-correspond to the trivial examples of objects within the category.
-A terminal object of a category \textbf{C} is an object, $T$, such that, for all
-other objects, $A$ in the category, there exists a unique arrow $!_{A}: A
-\rightarrow T$.
-
-This can be shown as a diagram where the dashed line indicates uniqueness.
+Terminal objects are constructions that capture the minimal structure required
+to be an object within a category. They often correspond to the trivial examples
+of objects within the category.  A terminal object of a category \textbf{C} is
+an object, $T$, such that, for all other objects, $A$ in the category, there
+exists a unique arrow $!_{A}: A \rightarrow T$. This can be shown as a diagram
+where the dashed line indicates uniqueness.
 
 \[\begin{tikzcd}[sep=huge]
 A \arrow[d, "!_A", dashed] \\
@@ -588,13 +591,10 @@ T
 \end{tikzcd}\]
 
 As is common with universal constructions, terminal objects in categories are
-unique up to unique isomorphism.
-
-Examples of terminal objects in common categories include any singleton in
-\textbf{Set} and the one element group in \textbf{Group}
-
-Formalising universal constructions within Agda requires the notion of unique
-arrow
+unique up to unique isomorphism. Examples of terminal objects in common
+categories include any singleton in \textbf{Set} and the one element group in
+\textbf{Group} Formalising universal constructions within Agda requires the
+notion of unique arrow
 
 \ExecuteMetaData[../agda/latex/ThesisUnique.tex]{unique-def-unique}
 
@@ -603,17 +603,16 @@ properties). In Agda this amounts to formulating the property as type
 parameterised by the property and an arrow satisfying the property. The type
 encodes a function which, given any other arrow satisfying the property
 expresses equality to the parameterised arrow. Using this a general unique arrow
-can be encoded using a trivial function that always returns the unit.
-
-Universal properties can now be given as an object, a proposition and a proof of
+can be encoded using a trivial function that always returns the unit. Universal
+properties can now be given as an object, a proposition and a proof of
 uniqueness
 
 \ExecuteMetaData[../agda/latex/ThesisUnique.tex]{unique-def-exun}
 
-Agda's syntax directive can be used to create a universal property like type
-\todo{syntax}, as in the characterisation of an object as terminal whereby an
-object is terminal if, for any other object in the category, there is an arrow
-from the object to the terminal alongside a proof of uniqueness.
+Agda has support for custom syntax directives which can be used to create a
+universal mapping type postulating the existence of a unique arrow. Below is an
+example of defining products using this where \todo{grab exists}, desugars to
+the universal property type above.
 
 \ExecuteMetaData[../agda/latex/ThesisUnique.tex]{unique-def-terminal}
 
@@ -697,20 +696,25 @@ and the methods of forming the unique arrows \\
 \ExecuteMetaData[../agda/latex/ThesisBinProd.tex]{binprod-unique-pair}
 \end{AgdaMultiCode}
 
-\todo{finite products}
+Examples of products include the direct-product of groups in \textbf{Group} and
+the cartesian product of sets in \textbf{Set}. A category with a terminal object
+and products is said to have finite products and is a cartesian category.
 
 \subsubsection{Exponentials}
 
 Exponential objects are universal constructions that capture the notion of
-function spaces or higher order objects.
+function spaces or higher order objects. The exponential, $B^{A}$, indicates the
+mappings from the object $A$ to $B$. This is paired with the morphism $eval:
+B^{A} \times A \rightarrow B$ such that for any object $Z$ and morphism $f :
+Z\times A \rightarrow B$ there exists a unique morphism $\tilde{f}: Z
+\rightarrow B^{A}$ such that the following diagram commutes:
 
-The exponential, $B^{A}$, indicates the mappings from the object $A$ to $B$. This is
-paired with the morphism $eval: B^{A} \times A \rightarrow B$ such that for any
-object $Z$ and morphism $f : Z\times A \rightarrow B$ there exists a unique
-morphism $\tilde{f}: Z \rightarrow B^{A}$ such that the following diagram
-commutes:
-
-\todo{exponential diagram}
+\[\begin{tikzcd}[sep=huge]
+    B^{A} \times A \arrow[r, "eval"]
+    & C \\
+    A \times B \arrow[ru, "f"'] \arrow[u, "\langle \: \hat{f} \: \times \: id
+    \rangle"] &
+\end{tikzcd}\]
 
 $\tilde{f}$, or transposition, can be thought of as currying in the functional
 programming sense, taking a function in multiple arguments to a sequence of
@@ -754,3 +758,6 @@ and \AgdaFunction{curry} and \AgdaFunction{uncurry} as isomorphisms
 \ExecuteMetaData[../agda/latex/ThesisHasExp.tex]{hasexp-uncurry}
 \\
 \end{AgdaMultiCode}
+
+
+\todo{law fix}
