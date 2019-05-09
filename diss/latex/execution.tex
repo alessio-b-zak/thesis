@@ -489,13 +489,52 @@ classical logic, negation or \AgdaFunction{not}.
 In fact, with respect to sets, every set with more than one element has at least
 one function to itself without a fixed point leading to an extension of Cantor's
 theorem i.e. that for all sets $A$ and $B$ with cardinality greater than one
-there does not exist a surjective function from $A \rightarrow B^A$.
+there does not exist a surjective function from $A \rightarrow B^A$. Before
+returning to \AgdaFunction{noFixPtBool}, a proof that \AgdaFunction{not} is
+needed.
 
-ccc
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-not-fx-type}
 
-not fixed point
+\AgdaFunction{not} \verb|x| reduces to a different normal form to \verb|x| for
+both \AgdaInductiveConstructor{true} and \AgdaInductiveConstructor{false} and therefore the absurd pattern can
+be introduced in both cases.
 
-cantor
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-not-fx}
+\todo{explain absurd pattern}
+
+\AgdaFunction{not-fx-pt} is now used to derive \AgdaFunction{noFixPtBool}
+through a contradiction. \todo{not} \AgdaFunction{noFixPtBool} is a function
+which, given a proof that \AgdaDatatype{Bool} has a fixed property, can derive
+false. The proof that \AgdaDatatype{Bool} has the fixed point property can be
+used to derive a fixed point for \AgdaFunction{not} which we have already proven
+does not have a fixed point. This is done through the \AgdaKeyword{with}
+construct within Agda. \AgdaKeyword{with} allows an intermediate computation to
+be pattern matched on. In the case of \AgdaFunction{noFixPtBool} it is the
+result of applying the proof of the fixed proof property \verb|Y|, a fixed point
+combinator, to the \AgdaFunction{not} function.
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-nofixpt1}
+
+Through this, a fixed-point, \verb|X| of \AgdaFunction{not} can be extracted alongside a
+proof of \verb|X| fixed pointedness.
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-nof-def}
+
+Now, within the scope of the \AgdaFunction{noFixPtBool}, there exist proofs that
+\AgdaFunction{not} both does and doesn't have a fixed point.
+\AgdaFunction{not-fx-pt} has type \todo{type}. It is clear that by applying
+the proof of the existence of a fixed point to this will derive \todo{bottom} as
+needed.
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-nof-final}
+
+\AgdaFunction{cantorsDiagonalTheorem} can now be derived as a direct application
+of \AgdaFunction{cantor}
+
+\begin{AgdaMultiCode}
+    \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-cantor-type}
+    \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-cantor}
+\end{AgdaMultiCode}
 \section{The $\lambda$-Calculus}
 \todo{lambda equun theory}
 There is much to suggest that a coherent interpretation of Lawvere's theorem

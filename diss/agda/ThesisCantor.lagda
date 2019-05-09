@@ -440,12 +440,18 @@ not true = false
 \end{code}
 %</cantor-not>
 
-
+%<*cantor-not-fx-type>
 \begin{code}
 not-fx-pt : ∀ {x} → (not x) ≢ x
+\end{code}
+%</cantor-not-fx-type>
+
+%<*cantor-not-fx>
+\begin{code}
 not-fx-pt {false} ()
 not-fx-pt {true} ()
 \end{code}
+%</cantor-not-fx>
 
 \begin{code}
 bool-no-fix-pt : {X : ⊤ → Bool} → not (X ⊤.tt) ≡ X ⊤.tt → ⊥
@@ -461,9 +467,26 @@ noFixPtBool : ¬ FixedPointProperty Bool
 %<*cantor-nofixpt1>
 \begin{code}
 noFixPtBool Y with (Y not)
-... | record { X = X ; isFixedPoint = isFixedPoint } = {!!}
 \end{code}
 %</cantor-nofixpt1>
+
+%<*cantor-nof-def>
+\begin{code}
+... | record { X = X ; isFixedPoint = isFixedPoint } = {!!}
+\end{code}
+%</cantor-nof-def>
+
+
+\begin{code}
+noFixPtBool' : ¬ FixedPointProperty Bool
+noFixPtBool' Y with (Y not)
+\end{code}
+
+%<*cantor-nof-final>
+\begin{code}
+... | record { X = X ; isFixedPoint = isFixedPoint } = not-fx-pt (isFixedPoint ⊤.tt)
+\end{code}
+%</cantor-nof-final>
 
 \begin{code}
 contradiction : ∀ {p w} {P : Set p} {Whatever : Set w} →
@@ -479,9 +502,11 @@ cantorsDiagonalTheorem : ∀ {A} → ¬ PointSurjective A (A → Bool)
 
 
 
+%<*cantor-cantor>
 \begin{code}
-cantorsDiagonalTheorem = {!!}
+cantorsDiagonalTheorem = cantor Sets1 noFixPtBool
 \end{code}
+%</cantor-cantor>
 
 
 \end{document}
