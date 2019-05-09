@@ -19,6 +19,7 @@ module ThesisCantor where
 
 open import Cats.Category.Constructions.Terminal as Terminal
 open import Cats.Category.Constructions.Product as Product
+open import Cats.Util.Function as Function using (_∘_)
 open import Cats.Category.Constructions.CCC as CCC
 open import Data.Nat
 open import Relation.Binary.PropositionalEquality.Core using (_≢_)
@@ -71,6 +72,16 @@ data Pair (A : Set) (B : Set) : Set where
 proj-pair : ∀ {A B} i → Pair A B → Bool-elim A B i
 proj-pair false (mkPair x x₁) = x₁
 proj-pair true (mkPair x x₁) = x
+\end{code}
+
+\begin{code}
+fst : ∀ {A B} → Pair A B → A
+fst = proj-pair true
+\end{code}
+
+\begin{code}
+snd : ∀ {A B} → Pair A B → B
+snd = proj-pair false
 \end{code}
 
 %<*cantor-proj-sat>
@@ -248,12 +259,56 @@ set-eval (mkPair f x) = f x
 \end{code}
 %</cantor-eval>
 
+\begin{code}
+
+\end{code}
+
+%<*cantor-curry>
+\begin{code}
+sets-curry : {A B C : Set} → (Pair A B → C) → (A → B → C)
+sets-curry f = λ x y → f (mkPair x y)
+\end{code}
+%</cantor-curry>
+
+\begin{code}
+pairPrf' : {A B : Set} → {g : Pair A B}
+  → mkPair (proj-pair true g) (proj-pair false g) ≡ g
+pairPrf' {A} {B} {mkPair x x₁} = refl
+\end{code}
+
+
+%<*cantor-curry'>
+\begin{code}
+set-curry′ : ∀ {A B C} (f : Pair A B → C) →
+            ∃![ f' ∈ A ⇒ (B → C) ] ((x : Pair A B)
+              → (set-eval ∘ (λ y → mkPair (f' (fst y)) (Function.id (snd y))))  x ≡ f x)
+\end{code}
+%</cantor-curry'>
+\begin{code}
+set-curry′ f = Unique.Build.∃!-intro (sets-curry f) {!!} {!!}
+\end{code}
+
 %<*cantor-exponential>
 \begin{code}
 set-exponential : {A B : Set} → Exp A B
-set-exponential {A} {B} = record { Cᴮ = A → B ; eval = {!!} ; curry′ = {!!} }
+set-exponential {A} {B} = record { Cᴮ = A → B ; eval = set-eval ; curry′  = set-curry′}
 \end{code}
 %</cantor-exponential>
+
+
+%\begin{code}
+%  curry′ = λ f →
+%    Unique.Build.∃!-intro (sets-curry f)
+%                          (λ x → cong f pairPrf' )
+%                          λ x x₁ → {!!} }
+%\end{code}
+
+\begin{code}
+sets-curry' : ∀ {A B C} {f : Pair A B → C} → (x : Pair A B)
+            → (set-eval ∘ (λ y → mkPair ((sets-curry f) (fst y)) (Function.id (snd y))))  x ≡ f x
+sets-curry' = {!!}
+\end{code}
+
 
 \begin{code}
 instance

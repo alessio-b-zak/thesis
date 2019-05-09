@@ -370,7 +370,7 @@ And it can be established that \AgdaDatatype{Sets1} has a terminal object
 The last requirement for a cartesian closed category is exponentials. For every
 pair of types an exponential object must be produced consisting of a type, an
 evaluation map and transposition (currying). The exponential object for two
-types \verb|A| and \verb|B| is the function type between the two 
+types \verb|A| and \verb|B| is the function type between the two
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-exponential}
 
@@ -379,6 +379,21 @@ type \verb|B| and term of type \verb|A| and returns a \verb|B|. All that is
 required here is to unpack the pair and apply the function to the value.
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-eval}
+
+The last component that needs to be provided for exponentials is the curry
+function which for the category of small types takes the form
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-curry'}
+
+Which returns a universal mapping property. The first argument of this, as is
+usual, is the mapping itself which is the curry function.
+
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-curry}
+
+The second argument is a proof that \AgdaFunction{sets-curry} satisfies the
+universal property.
+
 
 
 
