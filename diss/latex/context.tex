@@ -146,66 +146,94 @@ the framework of Lawvere's fixed point theorem.
 
 \subsection{Computability}
 Shortly after the work of Cantor and Russell, the field of theoretical computer
-science was birthed by attempts to answer the entsheidungsproblem (decision
+science was birthed by attempts to answer the \ent{} (decision
 problem), a challenge by David Hilbert \cite{hilbert1928theoretische} which required the formalisation of the
 notion of algorithm.
 
-\subsubsection{Entsheidungsproblem}
+\subsubsection{\ent}
 
-Devised in 1928 by Hilbert, the entsheidungsproblem asked for an effective
-procedure or algorithm which, on an input of a statement in first-order logic
-plus a finite numbers of axioms, could determine its validity in all structures
-statisfying the axioms. Before an answer could be given, the notion of algorithm
-had to be formalised. This was done in the 1930s independently by Alonzo Church
-and Alan Turing. \todo{make better}Turing's formalisation
-\cite{turing1937computable} known as Turing Machines, machines aimed directly at
-capturing the notion of algorithm, provided a negative answer to this question
-by establishing the existence of undecidable problems such as his halting
-problem and confirming the entscheidungsproblem as one of these undecidable
-problems.  Turing's proof of the existence of undecidable problems and his proof
-of the Halting problem resemble closely the proof of Cantor's Theorem being
-diagonalisation arguments. Yanofsky shows how both proofs can be understood
-through the lens of Lawvere's fixed point theorem constituting another
-unification of a concept in mathematical logic by Lawvere's Theorem.
-\subsubsection{$\lambda$-calculus}
-Instead of capturing directly the notion of computability, Alonzo Church's
-formalisation was focused on formalising more precisely the notion of a function.
-Church's formulation, the $\lambda$-calculus \cite{church1932set}, is a formal system consisting of
-the operations of abstraction and application using variable binding and
-substitution. Church showed that the $\lambda$-calculus had an notion of
-$\lambda$-definability \cite{church1936unsolvable} which was equivalent to the class of general recursive
-functions \cite{kleene1936general} as defined by Godel and clarified by Kleene, another model of computation.
-Church also provided a negative answer to the entscheidungsproblem. The
-$\lambda$-calculus has applications beyond that of providing a negative answer
-to the entscheidungsproblem. The $\lambda$-calculus originally arose from Church's
-desire to provide a foundation for logic, a desire also shared by another
-American Logician, Haskell Curry. In the 1920s and 1930s, Curry worked on a
-foundation of logic extremely similar to the $\lambda$-calculus, his theory of
-combinators \cite{curry1930grundlagen}. Combinatory logic, as defined by Curry, was in correspondence with
-the $\lambda$-calculus. In 1934 Curry observed that, if types were assigned to
-the domains and comdomains of his combinators, the types matched the axioms of
-intuitionistic implicational logic \cite{curry1934functionality}. This observation proved to be the beginning
-of theorem provers as they are in their current state.
-\todo{intuitionistic logic}
-$\lambda$-calculus as a deductive system
-Y-combinator and curry's paradox
-the simply typed lambda calculus
+Devised in 1928 by Hilbert, the \ent asked for an effective procedure or
+algorithm which, on an input of a statement in first-order logic plus a finite
+numbers of axioms, could determine its validity in all structures statisfying
+the axioms. Before an answer could be given, the notion of algorithm had to be
+formalised. This was done in the 1930s independently by Alonzo Church and Alan
+Turing. Turing's formalisation \cite{turing1937computable} known as Turing
+Machines, aimed to capture directly the notion of algorithm. Turing provided a
+negative answer to this question by establishing the existence of undecidable
+problems such as the Halting problem and confirming the \ent as one of these
+undecidable problems. Turing's proof of the existence of undecidable problems
+and his proof of the Halting problem resemble closely the proof of Cantor's
+theorem being diagonalisation arguments. Yanofsky \cite{yanofsky2003universal}
+also  shows how both proofs can be understood through the lens of Lawvere's
+fixed point theorem by considering the category of computable universes or
+objects which "support computation" \subsubsection{$\lambda$-calculus} Instead
+of capturing directly the notion of computability, Alonzo Church's formalisation
+was focused on formalising more precisely the notion of a function.  Church's
+formulation, the $\lambda$-calculus \cite{church1932set}, is a formal system
+consisting of the operations of abstraction and application using variable
+binding and substitution. Church showed that the $\lambda$-calculus had an
+notion of $\lambda$-definability \cite{church1936unsolvable} which was
+equivalent to the class of general recursive functions \cite{kleene1936general}
+as defined by G{\"o}del and clarified by Kleene, another model of computation.
+Church also provided a negative answer to the \ent. The $\lambda$-calculus has
+applications beyond that of providing a negative answer to the \ent.
+
+The $\lambda$-calculus consists of a set of inductively defined terms and
+rewriting rules governing how to compute with them. In the definitions that
+follow $s$ and $t$ range over $\lambda$-terms and $x$ ranges over variable
+names.
+
+\begin{definition}[\textbf{The set} $\bm{\Lambda}$ \textbf{of}
+    $\bm{\lambda}$\textbf{-terms}]
+    \begin{gather*}
+        x \in \Lambda \\
+        s \in \Lambda \; \land \; t \in \Lambda \implies (s \; t) \in \Lambda \\
+        s \in \Lambda \; \implies \lambda x . s \in \Lambda
+    \end{gather*}
+\end{definition}
+
+$(s \: t)$ denotes the application of $s$ to $t$ and $\lambda x . s $ denotes
+the \textit{capture} or \textit{binding} of the variable $x$ in term $s$, known
+as a $\lambda$-abtraction. Intuitively, application of a term to a
+$\lambda$-abstraction, when considered as a computation, should replace all
+instances of the abstracted variable with the term being applied a process known
+as substitution. This computation is known as $\beta$-reduction.
+
+\begin{definition}[$\bm{\beta}$\textbf{-reduction}] A term $t$ applied to
+    $\lambda$-abstraction $(\lambda x . s \; t)$, $\beta$\textit{-reduces} to
+    $s[t/x]$ denoting the substitution of $t$ for $x$ in $s$ written
+    \begin{align*}
+        (\lambda x . s \; t) \rightarrow_{\beta} s[t/x]
+    \end{align*}
+\end{definition}
+
+$\lambda$-calculus originally arose from Church's desire to provide a foundation
+for logic, a desire also shared by another American Logician, Haskell Curry. In
+the 1920s and 1930s, Curry worked on a foundation of logic extremely similar to
+the $\lambda$-calculus, his theory of combinators \cite{curry1930grundlagen}.
+Combinatory logic, as defined by Curry, was in correspondence with the
+$\lambda$-calculus. In 1934 Curry observed that, if types were assigned to the
+domains and comdomains of his combinators, the types matched the axioms of
+intuitionistic implicational logic \cite{curry1934functionality}. This
+observation proved to be the beginning of theorem provers as they are in their
+current state.  \todo{intuitionistic logic} $\lambda$-calculus as a deductive
+system Y-combinator and curry's paradox the simply typed lambda calculus
 lambda cube
 curry howard
 
 \subsection{Curry Howard Correspondence}
 Curry's combinatory logic and Church's $\lambda$-calculus, when viewed as a
 system for logic, proved to be inconsistent as shown by Kleene and Rosser
-\cite{kleene1935inconsistency} and
-again by Curry using his Paradoxical Combinator \cite{curry1941paradox}. To remedy this inconsistency
-both Curry and Church extended their logical systems with types giving typed
-combinatory logic and the simply typed $\lambda$-calculus. Further to Curry's
-aformentioned observation made of typed combinatory logic, in the 1960s William
-Alvin Howard  made a further observation that the typing rules of the simply
+\cite{kleene1935inconsistency} and again by Curry using his Paradoxical
+Combinator \cite{curry1941paradox}. To remedy this inconsistency both Curry and
+Church extended their logical systems with types giving typed combinatory logic
+and the simply typed $\lambda$-calculus. Further to Curry's aformentioned
+observation made of typed combinatory logic, in the 1960s William Alvin Howard
+made a further observation that the typing rules of the simply
 $\lambda$-calculus corresponded to laws of inference for intuitionistic style
-natural deduction \cite{howard1980formulae}. This lead to the conclusion that every system in
-formal logic has a corresponding computational calculi with a specific type
-system named the Curry-Howard correspondence.
+natural deduction \cite{howard1980formulae}. This lead to the conclusion that
+every system in formal logic has a corresponding computational calculi with a
+specific type system named the Curry-Howard correspondence.
 
 Intuinistic logic and constructivity. bhk interpretation
 

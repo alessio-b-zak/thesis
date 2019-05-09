@@ -144,7 +144,7 @@
 \pagestyle{plain}
 
 
-% macros
+% mymacros
 \newcommand{\ent}{Entscheidungsproblem}
 
 % -----------------------------------------------------------------------------
