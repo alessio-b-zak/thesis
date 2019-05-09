@@ -14,15 +14,18 @@ prover Agda and its applications will be explored, with a new application
 provided in the context of the untyped $\lambda$-calculus. The theorem that will
 be explored within this thesis is Lawvere's fixed point theorem discovered by
 William Lawvere in 1969 in \textit{Diagonal Arguments and Cartesian Closed
-Categories} \cite{lawvere1969diagonal}. Lawvere's fixed point theorem
-is a statement within the context of cartesian closed categories, categories
-which play a crucial role within the study of computation and logic. Lawvere's
-fixed point theorem is a categorical abstraction of the familiar class of
-\textit{diagonal arguments} employed throughout computer science and mathematics. The
-decision to formalise Lawvere's fixed point theorem within a theorem prover is
-not incidental; many of the theorems abstracted by the theorem play an
-important role in the problem of providing a formal foundation in which to do
-mathematics.
+Categories} \cite{lawvere1969diagonal}. Lawvere's fixed point theorem is a
+statement within the context of cartesian closed categories, categories which
+play a crucial role within the study of computation and logic. Interested was
+somewhat renewed in Lawvere's theorem in 2003 after a review paper published by
+Noson Yanofsky \cite{yanofsky2003universal} detailed how many common paradoxes
+and results in computing and mathematical logic could be brought within the
+framework of the theorem. Lawvere's fixed point theorem is a categorical
+abstraction of the familiar class of \textit{diagonal arguments} employed
+throughout computer science and mathematics. The decision to formalise Lawvere's
+fixed point theorem within a theorem prover is not incidental; many of the
+theorems abstracted by the theorem play an important role in the problem of
+providing a formal foundation in which to do mathematics.
 
 The primary contributions of this thesis are: a formalisation of Lawvere's fixed
 point theorem within the theorem prover Agda with additional proofs in the
@@ -34,7 +37,8 @@ of related yet distinct fields together the contextual history behind the
 primary areas must be outlined. What follows is a blurred and idealistic
 exposition of background of 20$^{\textrm{th}}$ century mathematical logic.
 
-\newtheorem{thm}{Theorem}
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
 
 \section{Foundations of Mathematical Logic and Computation}
@@ -53,14 +57,13 @@ different fields, was abstracted by Lawvere to give his fixed point theorem in
 category theory subsuming previous instances. Cantor's theorem proceeds has
 follows:
 
-\begin{thm}
-    fet $f$ be a function from a set $A$ to its powerset $\mathcal{P}(A)$. Then
-    $f$
-    is not a surjective function.
-\end{thm}
+\begin{theorem}[\textbf{Cantor's Theorem}]
+    Let $f$ be a function from a set $A$ to its powerset $\mathcal{P}(A)$. Then
+    $f$ is not a surjective function.
+\end{theorem}
 
 \begin{proof}
-    fiming for a contradiction assume $f$ is surjective. Consider the set $B =
+    Aiming for a contradiction assume $f$ is surjective. Consider the set $B =
     \{ a \in A \: | \: a \not\in f(a) \}$. Therefore there exists a $b \in A$
     such that $f(b)=B$. By definition $f(b) = B$ and therefore $b \not\in B$.
     However, $b \not\in f(b)$ implies $b \in B$. Contradiction.
@@ -74,7 +77,7 @@ the real numbers, and considering this as a table, see Figure
 table flipping the $n^{th}$ digit of the $n^{th}$ number going down the table to
 produce a new real number not in the table. The repetition of the argument in
 two places in the definition yields a familiar structure repeated in many
-theorems in mathematical logic known as \textit{diagonal arguments}.
+theorems in mathematical logic known as \textit{diagonal arguments}. The set
 
 \begin{figure}[h]
     \includegraphics[width=5cm]{diagonal.png}
@@ -86,34 +89,60 @@ theorems in mathematical logic known as \textit{diagonal arguments}.
 \subsection{Russell's Paradox}
 Cantor, in founding set theory as a field of study, introduced his na{\"i}ve set
 theory \cite{Cantor:1874} as a foundation in which to do mathematics. The
-na{\"i}vity of Cantor's foundations rested in the Axiom of Unrestricted
-Comprehension, orignally taken from work by Gottlob Frege
-\cite{frege1884grundlagen}
+na{\"i}vity of Cantor's foundations rested in the \textbf{Axiom of Unrestricted
+Comprehension}, adapted from Gottlob Frege's \textbf{Basic Law \RNum{5}}
+\cite{frege1884grundlagen} where $w_{1}$, \ldots , $w_{n}$ ranges over the words
+of the language of sets which states that that for all predicates (functions
+that return a boolean value), $\varphi$, there exists a set, $B$, whose elements
+exactly satisfy $\varphi$.
 
-\begin{definition}
+\begin{definition}[\textbf{Axiom of Unrestricted Comprehension}]
+    {\large
+    \begin{align*}
+        \forall \varphi \; \forall w_{1}, \cdots , w_{n} \; \exists \, B.  \textrm{ such that }
+        \forall x  \; (x \in B \textrm{ iff. }  \varphi(x, w_{1},\cdots,w_{2} ))
+    \end{align*}
+    }%
 \end{definition}
 
-This lead to perhaps the first signifcant result in the foundations of
-mathematics in the 20th century, Russell's paradox. Betrand Russell
-(1872-1970), an English polymath, showed in \textit{The Principles of
-Mathematics} \cite{russell1903principles} written with Alfred Whitehead in 1903
-that, in classical logic, the axiom of unrestricted comprehension leads to a
+. This lead to perhaps the first signifcant result in the foundations of
+mathematics in the 20$^{\textrm{th}}$ century, Russell's paradox. Betrand Russell (1872-1970),
+an English polymath, showed in \textit{The Principles of Mathematics}
+\cite{russell1903principles} written with Alfred Whitehead in 1903 that, in
+classical logic, the axiom of unrestricted comprehension leads to a
 contradiction.
 
-\todo{russell's paradox}
+\begin{theorem}[\textbf{Na{\"i}ve set theory is inconsistent}]
+\end{theorem}
 
-Rejecting the axiom of unrestricted comprehension prevented the theory of a
-universal set from being considered.  This result is relevant to both prongs of
-this thesis. Russell's paradox presented a blow to the hoped foundations of
-mathematics. Various systems were designed to provide a more secure foundation
-of mathematics as a result of Russell's paradox. Russell himself created the
-first theories of types in his \textit{Principia Mathematica} \cite{russell25} to combat this
-with various other foundational theories being presented, including set
-theoretic foundations such as ZFC and NBG which reject the axiom of unrestricted
-comprehension. As well as being intimately involved with the practicalities of
-foundations itself, Russell's paradox can also be seen to be an instance of
-Lawvere's theorem as outined in Yanofsky and presented formally further within
-this thesis.
+\begin{proof}
+    Consider the predicate
+    \begin{align*}
+        \varphi(x) = x \not\in x
+    \end{align*}
+    By the \textbf{Axiom of Unrestricted Comprehension} there is a set $X$ such
+    that all $x \in X$ satisfy $\varphi$. Aiming for a contradiction, assume
+    $X \in X$. By definition of $\varphi$, $X \not\in X$. Contradiction.
+\end{proof}
+
+This proof shares the similar diagonal style argument where $x$ appears in the
+postive and negative positions of the set membership relation $\in$. In modern
+set theories, this is disposed of in favour of an axiom of restricted
+comprehension, where all predicates must be defined on an already existing set.
+For a set theory to be consistent it must therefore reject the \textbf{Axiom of
+Restricted Comprehension}. This in turn prevents the existence of a set of all
+sets from being considered as this must contain itself, something which is not
+supported by restricted comprehension schemes. This result is relevant to both
+prongs of this thesis. Russell's paradox presented a blow to the hoped
+foundations of mathematics. Various systems were designed to provide a more
+secure foundation of mathematics as a result of Russell's paradox. Russell
+himself created the first theories of types in his \textit{Principia
+Mathematica} \cite{russell25} to combat this with various other foundational
+theories being presented, including set theoretic foundations such as
+Zermelo-Fraenkel set theory (ZFC) and Von-Neumann-Bernays-G{\"o}del set theory
+(NBG) which reject the axiom of unrestricted comprehension. Yanofsky
+\cite{yanofsky2003universal} shows how Russell's paradox can be brought within
+the framework of Lawvere's fixed point theorem.
 
 \subsection{Computability}
 Shortly after the work of Cantor and Russell, the field of theoretical computer

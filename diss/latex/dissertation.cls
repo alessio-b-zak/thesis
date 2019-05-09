@@ -82,6 +82,9 @@
 \raggedbottom
 \RequirePackage{amsthm}
 
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+
 
 % =============================================================================
 
@@ -139,6 +142,10 @@
 }
 
 \pagestyle{plain}
+
+
+% macros
+\newcommand{\ent}{Entscheidungsproblem}
 
 % -----------------------------------------------------------------------------
 
