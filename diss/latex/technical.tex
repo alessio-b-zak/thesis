@@ -10,56 +10,54 @@ approach taken by the Agda theorem prover which makes use of a type system
 similar to that of Martin Lof Type theory, a type theory which provides a
 logical framework for intutionistic higher-order logic.
 
-\section{Martin-Lof Type Theory}
+\section{\mlt{} Type Theory}
 The approach to theorem proving taken in this thesis is a type theoretic
-approach exploiting the curry-howard correspondence. This will be done in a
-dependent type theory designed by Per Martin-Lof, a logician working in
-intutionistic logic. Martin Lof's type theory (MLTT) was intended to be an
+approach exploiting the \cuho{} correspondence. This will be done in the
+dependent type theory designed by \mlt{}. Martin Lof's type theory (MLTT) was intended to be an
 entirely constructive foundation in which mathematics could be done. Just as,
-inline with the curry-howard correspondence, the intutionistic fragment of
+inline with the \cuho{} correspondence, the intutionistic fragment of
 natural deduction has an interpretation within the simply-typed
 $\lambda$-calculus, MLTT has a logical interpretation as first-order
 intuitionistic predicate logic by including dependent types in the theory. The
 theory is outlined below, a more detailed examination can be found notes derived
-from Martin-Lof's lectures \cite{martin1984intuitionistic} or chapter one of the
-\textit{Homotopy Type Theory} book \cite{hottbook}. Martin-Lof's lecture notes
+from \mlt's lectures \cite{martin1984intuitionistic} or Chapter One of the
+\textit{Homotopy Type Theory} book \cite{hottbook}. \mlt's lecture notes
 discuss the philosophical ramifications of his theory and advocate for its use
 as a foundation for all of mathematics.
 
-MLTT adopts the Church-style view of typing in which terms cannot be brought in
-without a unique type. This is done by introducing typing as a judgement of the
-type theory. The judgements of a theory are the conclusions that can be made
-given the deductive rules of said theory. The judgement that a term $a$ has type
-$A$ is written
+Within MLTT, typing takes the form of a judgement. Judgements are statements in
+the metatheory of the type theory that can either be derived from the deductive
+rules of the type theory or introduced independently. The judgement that a term
+$a$ has type $A$ is written
 \begin{align*}
     a: \, A
 \end{align*}
 
-The other primary judgement of MLTT is that of judgemental equality. Judgemental
-equality is used to introduce new constructions into the theory as definitional
-equalities to allow us to introduce and name new constructions and to establish
-when two terms normalise to the same term. The judgement that two terms,
-$a$ and $b$ are equal (at type $A$) is written
+The other primary judgement of MLTT is equality. Equality equates
+two terms in the sense that one can be replaced with the other freely within the
+theory. This allows new constructions to be introduced within the theory through
+naming and functions. The judgement that
+two terms, $a$ and $b$ are equal (at type $A$) is written
 
 \begin{align*}
     a \equiv b \, : \, A
 \end{align*}
 
-Types are introduced by introducing definitional equalities that define how to
-form and use the types within the context of the theory. In the section that
-follows, only a limited number of types will be introduced so as to understand
-how the type theory can be used in theorem proving. Before defining types,
-however, what it means to be a type must be introduced. A universe is a type
-who's elements are themselves types. The version of MLTT presented here
-postulates an infinite hierarchy of universes, $U_{n}$ which is an element of
-the universe at a higher level $U_{n+1}$ i.e.
+Types are introduced by introducing equalities that define how to form and use
+the types within the context of the theory. In the section that follows, only a
+limited number of types will be introduced so as to understand how the type
+theory can be used in theorem proving. Before defining types, however, what it
+means to be a type must be introduced. A universe is a type whose elements are
+themselves types. The version of MLTT presented here postulates an infinite
+hierarchy of universes, $U_{n}$ which is an element of the universe at a higher
+level $U_{n+1}$ i.e.
 
 \begin{align*}
     U_{0} : U_{1} : U_{2} \cdots
 \end{align*}
 
 A type is then an inhabitant of some universe. One might desire some finite
-number of universes in which to work and this was something Martin-Lof desired.
+number of universes in which to work and this was something \mlt{} desired.
 Martin-Log's first presentation of his type theory featured only one universe,
 $U$, which was an element of itself.
 
@@ -109,11 +107,13 @@ applied to $f$ to obtain a value of type $B(a)$ written
 \todo{uniqueness principle for pi types}
 
 The expression that the the application yields is the result of replacing all
-instances of $x$ in $M$ with $a$. The other types to be introduced in this
-section can be written as inductive types. \todo{type-family}Inductive types can
-be introduced by supplying constructors with build elements of the type from
-other types.  Inductive types can be computed with using induction principles
-which describe how to compute with abitrary structures of the type based on the
+instances of $x$ in $M$ with $a$. With depenent functions it is possible to
+capture the notion of a \textit{type-family}. A type-family is a $\Pi$-type that
+returns an element of some universe written. The other types to be introduced in
+this section can be written as inductive types. Inductive types can be
+introduced by supplying constructors with build elements of the type from other
+types.  Inductive types can be computed with using induction principles which
+describe how to compute with abitrary structures of the type based on the
 constituent parts. Induction principles can be seen as an alternative to pattern
 matching, a more common feature of functional programming languages. A simple
 type to illustrate this is the product type which is the type theory analogue of
@@ -207,19 +207,8 @@ theories. One of the induction principles for the identity type is known as
 \end{align*}
 
 
-\textsf{Axiom J} is surprisingly not capable of proving that all inhabitants of
-the identity type are propositionally equal, a property known as
-\textit{uniqueness of identity proofs} or \textsf{UIP}. To achieve this
-another induction principle for the identity type must be provided known as
-\textsf{Axiom K}.
-
-\todo{Axiom K}
-
-The choice of whether to include \textsf{Axiom K} within a type theory is a
-choic with real practical consequences as will be discussed in \ldots
-
 The basis upon which MLTT can be used as a foundation for mathematics is via the
-curry-howard correspondence in a particular fashion known as
+\cuho{} correspondence in a particular fashion known as
 propositions-as-types.
 
 \subsection{Propositions-as-types}
@@ -252,12 +241,11 @@ type-theory presenting a equality between two things.
 
 
 \section{Agda}
-\todo{termination checker}
 
 Agda is a dependently typed functional language in which theorem can be done.
-Agda can be used as a proof assistant through the lens of the curry-howard
+Agda can be used as a proof assistant through the lens of the \cuho{}
 correspondance given it's type system. Agda uses Haskell like syntax and its
-underlying type theory is based of that of Per Martin-Lof. The following
+underlying type theory is based of that of Per \mlt. The following
 describes features of Agda available in version 2.52, the version employed in
 this thesis. Agda uses a predicative hierarchy of universes,
 \AgdaPrimitive{Set}, indexed by a natural-number like type
@@ -294,7 +282,6 @@ function need not have the same names in the type and definition of the function
 e.g.
 \ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-pi'}
 
-\todo{unit and void}
 is a valid definition.
 
 As in MLTT, functions can also be introduced using a $\lambda$-abstraction. A
@@ -314,16 +301,19 @@ constructors \verb|Parameter| appears as is. Indices, on the other hand, appear
 after the colon. Indices can change the shape of the type depending on the
 constructor. In the example given the index is an inhabitant of the natural
 number type and the first constructor dictates the inhabitant of the natural
-number type is 0 and in the second constructor that the inhabitant is 1. The
-final term before the \AgdaKeyword{where} statement is the output univerese of
-the type i.e. to which \AgdaDatatype{Set} the type belongs. The constructors of
-the Inductive data type are the possible inhabitants of the type. When pattern
-matching onto an inductive data type, information is gained about the type based
-on the index corresponding to the constructors produced by the pattern match.
+number type is \AgdaInductiveConstructor{0} and in the second constructor that
+the inhabitant is \AgdaInductiveConstructor{1}. The final term before the
+\AgdaKeyword{where} statement is the output univerese of the type i.e. to which
+\AgdaDatatype{Set} the type belongs. The constructors of the Inductive data type
+are the possible inhabitants of the type. When pattern matching onto an
+inductive data type, information is gained about the type based on the index
+corresponding to the constructors produced by the pattern match.
 
 Many constructions within Agda are common enough that they are desirable at all
 levels of universe. Agda does not have cumulativity so, to assist universe
 generic programming, universe polymorphism can be used.
+
+\todo{unit and void}
 
 A more useful example to consider is the sized list type, or vector
 
@@ -341,7 +331,7 @@ singleton to the beginning creating a vector of size
 \AgdaDatatype{Vec}, information is gained about the inductive argument to the
 type i.e for the empty list has size \AgdaInductiveConstructor{zero} and in the
 inductive case that the list has size \AgdaInductiveConstructor{suc} \verb|n|
-for some \verb|n|. The remaining important types of Martin-Lof type theory can
+for some \verb|n|. The remaining important types of \mlt type theory can
 now be introduced as inductive types beginning with Sigma types.
 \todo{mixfix syntax}
 
@@ -378,9 +368,7 @@ For each inhabitant of \verb|A|, \verb|x|, there is unique inhabitant of the
 equality type parameterised by \verb|x| which is when the second indexed
 argument to the equality type normalises to the first parameter. This
 restriction can only be made if the second argument is an index so we are able
-to restrict its shape. Pattern matching on an equality proof in a function
-definition released evidence into the environment that the two arguments are in
-fact the same. This can be used in the body of the function as needed.
+to restrict its shape.
 
 Proving theorems with no additional features in the language would prove
 difficult. Mathematical structures would be a pain to define in the standard
@@ -400,14 +388,14 @@ The identifiers to the left hand side of the colon under the \AgdaKeyword{field}
 keyword in the above definitions define projections out of a
 \AgdaDatatype{Monoid} object. The first three fields correspond to the elements
 of a tuple representing a monoid, the underlying set, binary operation and
-identity element. Unlike definitions based in set theory, the axioms the
-structure must adhere to are considered to be fields in the object, a property
-enabled by the proof-relevance of the type theory. Before categories are
-introduced in mathematics and Agda, one more point must be addressed.
+identity element.
 
-\subsection{Setoids}
-The problem, being addressed can be introduced by considering a homomorphism
-type for the above definition of monoid
+Another limitation within the currently outlined framework with respect to
+proving theorem is the definition of the equality type. In a world where where
+Agda used induction principles instead of pattern matching, \textsf{Axiom J},
+would, in some sense, not be strong enough to be useful when proving a
+significant number of theorems. The problem, being addressed can be introduced
+by considering a homomorphism type for the above definition of monoid
 
 \begin{AgdaMultiCode}
 \ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-monhom}
@@ -416,35 +404,71 @@ type for the above definition of monoid
 
 where the fields of the second monoid are postfixed with an apostrophe. Consider
 showing two monoids are propositionally equal. For records, this amounts to
-showing that its fields are equal (due to $\eta$ for records?) i.e that the
-underlying functions are the same but \textit{also} the proofs of preservation
-of identity and and operation are the same. The proof-relevant nature of the
-underlying type theory enables two different proofs to be distinguished by their
-normal form. It would be unreasonable and beside-the-point to demand this when
-equating two monoids but it is \textit{required} when equating using
-propositional equality. Quotients and subsets plus extensionality.
+showing that its fields are equal i.e that the underlying functions are the
+same but \textit{also} the proofs of preservation of identity and and operation
+are the same. The proof-relevant nature of the underlying type theory enables
+two different proofs to be distinguished by their normal form. It would be
+unreasonable and beside-the-point to demand this when equating two monoids but
+it is \textit{required} when equating using propositional equality. This is a
+well understood problem with various solutions \todo{find solutions}. The
+approach taken in standard Agda is to employ an additional axiom on the identity
+type known as Streicher's \textsf{Axiom K} \cite{streicher1993investigations}.
+\textsf{Axiom K} is an axiom that enables it to be proven that all inhabitants
+of the identity type are \textsf{refl}. Introducing \textsf{Axiom K} into MLTT
+turns the theory into a proof-irrelevant one. The proofs for both structures
+can be reduced to refl and then equated propositionally and all that remains is
+showing equality of functions. Introducing \textsf{Axiom K} is not without its
+downsides however, recent advancements in type theory \cite{hottbook}
+show that there are signifcant advantages to working within a proof-relevant
+setting which are inconsistent with \textsf{Axiom K} which are discussed
+\todo{put where discussed and write axiom K}.
 
-This is a well understood problem in formalising
-mathematics within type theories in theorem provers and there are several
-solutions to this problem which will be addressed later.
+The last limitation that must be addressed is pertinent to the goal of
+formalising category theory within type theory. Returning again to considering
+equality of monoid homomorphisms, by employing \textsf{Axiom K}, showing
+equality of monoid homomorphisms amounts solely to showing equality of
+functions. Within set theory, it is common to equate functions that are
+pointwise equal
+
+\begin{align*}
+    (\forall x \; f(x) = g(x)) \implies f=g
+\end{align*}
+
+This notion of equality ignores, for better or worse, the computational content
+of the individual functions. It does not matter if functions are operationally
+different but only that they are functionally different. This principle is not
+derivable within standard MLTT and therefore, if it is going to be used, it must
+be postulated as an axiom. For many, a distinct advantage of computer-aided
+theorem proving using types is its intrinsically constructive interpretation and
+therefore it is common to avoid axioms such as function extensionality within
+the type theory.
+
 
 A common solution within the type theory of unmodified Agda is the setoid
-approach. A setoid is a set or type alongside an equivalence relation.  A setoid
-can therefore be considered as a quotient set or type. Proofs with respect to
-the equivalence relation can be done in a largely similar way to using
-propositional equality. When defining mathematical structures the morphisms
-between structures are often accompanied by an equivalence relaation, making
-them a setoid to fix the problems outines earlier.
-
+approach. A setoid is a set or type alongside an equivalence relation \todo{add
+setoid def}. Setoids can be used to work with and prove properties of
+extensional equalities without introducing a new axiom. This is pertinent to
+category theory as, often, structures like monoids and monoid homorphisms are
+the subject of examination and a useful notion of equality is essential for
+making progress. Proofs with respect to the equivalence relation can be done in
+a largely similar way to using propositional equality using the properties of
+reflexivity, transitivity and symmetry of the equivalence relation \todo{monoid
+example}.  Other situations in which it is preferable to use setoids is when
+working with algebraic structures where the underlying equality is not truly
+propositional equality for example the monoid consisting of the rational numbers
+under addition. Commonly the rational numbers are defined as a pair of integers
+however equality on fractions usually consists of equality of their reduced
+forms, generating an equivalence class of fractions. In general quotiented
+structures are not readily available within standard MLTT.
 
 The primary limitation when opting for setoid equality over propositionally
-equality is the inability to apply congruence. Congruence is a property of
-propositional equality that takes a proof of equality and a function and extends
-the equality to the function applied to the equality. This is sometimes
-known as Leibniz's law and, within Agda, is facilitated by the weaker induction
-principle of the equality type, \verb|J|. For a generic equivalence relation
-there is no such induction principle and therefore congruence needs to be proved
-for each individual induction principle or for each particular function.
+equality is the inability to employ indecernability of identicals or congruence
+a natural consequence of \textsf{Axiom J}. This is an advantage of
+propositionally equality since this property must be proven for each equivalence
+relation separately, in some circumstances adding on a significant amount of
+work. Recent advancements in type theory have produced a type theory in which
+function extensionality can be derived and has computational content, discussed
+in \todo{hott section}.
 
 \section{Category Theory}
 
@@ -456,7 +480,7 @@ exactly mathematical structures that objects and arrows are. If objects and
 arrows are \textit{sets} of things, swathes of mathematical objects are
 inaccessible to category theory because they are too large due to Russell's
 paradox style problems such as a category of all sets or a category of all
-categories. This was a main motivation behind Martin-Lof's theory of types by
+categories. This was a main motivation behind \mlt's theory of types by
 defining categories and the objects and arrows of categories as types. By paying
 closer attention to what is in the metatheory versus internal to theory i.e. set
 membership versus a typing judgement and by paying closer attention to the
@@ -510,21 +534,16 @@ namely
     \, \, ((h \circ g) \circ f) = (h \circ (g \circ f))
 \end{align*}
 
-To codify the associativity of composition and the neutrality of identity within
-Agda it is not practical to use propositional equality. Proving these as
-propositional equalities of the structures that are often categorified is often
-a difficult task. Propositional equality for a structure amounts to showing
-propositional equality on its constituent components. That two terms are
-propositionally equal implies the terms have the same normal form. There are
-often situations where it is desirable to equate two different terms that do not
-have the same normal forms. As an example, consider equating propositionally two
-monoid homomorphisms. In a dependently typed setting this requires that the
-proofs of preservation for the two morphisms are also equal in addition to the
-functions between the underlying monoids. This is a tedious requirement that is
-often undesired. \todo{Axiom K?}To remedy this, the earlier mentioned setoid
-model is used whereby structures are equated by an equivalence
-relation.\todo{hott} For categories an equivalence relation for morphism must be
-provided
+As mentioned in the previous section, when codifying equalities on morphisms,
+such as associativity of composition and the neutrality of identity within
+Agda, it is often not practical to use propositional equality. It is common to
+work with categories with which the morphisms are functions between types
+equipped with additional structure. To work with these in standard Agda, either
+extensionality must be postulated or setoids must be used. There are other
+factors involved with the decision between equality on morphsims being
+propositional or setoid such as performance and ease-of-use, some of which is
+discussed in.
+
 \ExecuteMetaData[../agda/latex/ThesisCategory.tex]{cat-field-rel}
 
 The \AgdaFunction{IsEquivalence} function establishes the appropriate proofs of
@@ -535,14 +554,14 @@ properties of composition and identity
 
 \ExecuteMetaData[../agda/latex/ThesisCategory.tex]{cat-field-comp}
 
-The field \AgdaField{∘{-}resp} is a necessary and inconvenient aspect of
-utilising equivalence relations over propositional equality. Preserves2
-indicates that composition is congruent in both of its arguments. This allows us
-to target individual compositions in a large categorical term to apply an
-equality. This is given for free when using propositional equality as functions
-are unable to distinguish terms with the same normal form. This can be seen as
-one of the downsides to using equivalence relations as congruence must be proven
-for every each individual equivalence relation.\todo{congruence}
+The field \AgdaField{∘{-}resp} is the result of the aformentioned lack of
+congruence for equivalence relations. Preserves2 indicates that composition is
+congruent in both of its arguments. This allows us to target individual
+compositions in a large categorical term to apply an equality. This is given for
+free when using propositional equality as functions are unable to distinguish
+terms with the same normal form. This can be seen as one of the downsides to
+using equivalence relations as congruence must be proven for every each
+individual equivalence relation.\todo{congruence}
 
 \todo{examples of categories}
 \subsection{Universal Constructions}
