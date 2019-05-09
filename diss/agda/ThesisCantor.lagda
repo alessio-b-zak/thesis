@@ -200,10 +200,11 @@ terminal-unique x x₁ = refl
 \end{code}
 %</cantor-terminal-unique>
 
-%<*cantor-terminal-prop>
+%<*cantor-terminal-prop1>
 \begin{code}
 terminal-property :  (X : Set) → ∃! X ⊤
-terminal-property X = Unique.Build.∃!-intro {!!} _ {!!}
+terminal-property X =
+  Unique.Build.∃!-intro {!!} _ {!!}
 \end{code}
 %</cantor-terminal-prop1>
 
@@ -214,13 +215,20 @@ terminal-property' X = Unique.Build.∃!-intro terminal-arrow _ {!!}
 
 \begin{code}
 terminal-property'' :  (X : Set) → ∃! X ⊤
-terminal-property'' X = Unique.Build.∃!-intro terminal-arrow _ {!!}
+terminal-property'' X =
 \end{code}
+%<*cantor-terminal-prop2>
+\begin{code}
+  Unique.Build.∃!-intro terminal-arrow _ terminal-unique
+\end{code}
+%</cantor-terminal-prop2>
 
+%<*cantor-tisterminal>
 \begin{code}
 ⊤-isTerminal : IsTerminal ⊤
 ⊤-isTerminal = terminal-property
 \end{code}
+%</cantor-tisterminal>
 
 
 \begin{code}

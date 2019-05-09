@@ -336,7 +336,7 @@ terminal object in the category \AgdaDatatype{Sets1} is the unit type
 To prove that \todo{here} is in fact the terminal object the universal property
 must be proven
 
-\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-terminal-prop}
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-terminal-prop1}
 
 This is a universal mapping property. The first argument to the constructor is
 the unique arrow and the last the proof of uniqueness. The middle argument
@@ -349,6 +349,22 @@ constantly returns the single inhabitant of \todo{here}.
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-terminal-arrow}
 
+The final component of the terminal object is the proof of uniqueness i.e. that
+every function from a type to the terminal object is propositionally
+(extensionally) equal. This
+is trivially true as there is a single inhabitant of the unit type and therefore
+only one place for to which all functions can map.
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-terminal-unique}
+
+With this the universal mapping property can be completed
+
+\todo{fix this}
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-terminal-prop2}
+
+And it can be established that \AgdaDatatype{Sets1} has a terminal object
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-tisterminal}
 
 
 exponentials
