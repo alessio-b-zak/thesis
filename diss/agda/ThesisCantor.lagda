@@ -309,12 +309,14 @@ sets-curry-unique : {A B C : Set} →
 %</cantor-curry-uniq-type>
 
 
+%<*cantor-extensionality>
 \begin{code}
 Extensionality : (a b : Level) → Set _
-Extensionality a b =
-  {A : Set a} {B : A → Set b} {f g : (x : A) → B x} →
-  (∀ x → f x ≡ g x) → f ≡ g
+Extensionality a b = {A : Set a} {B : A → Set b} {f g : (x : A) → B x} →
+                     ----------------------------
+                     (∀ x → f x ≡ g x) → f ≡ g
 \end{code}
+%</cantor-extensionality>
 
 %<*cantor-postulate>
 \begin{code}
@@ -336,6 +338,30 @@ sets-curry-unique {f = f}{g = g} fprf x
         ∎  )
 \end{code}
 %</cantor-curry-uniq>
+
+\begin{code}
+sets-curry-unique' : {A B C : Set} →
+  {f : Pair A B → C} →
+  {g : A → B → C} →
+  ((x : Pair A B) → g (proj-pair true x) (proj-pair false x) ≡ f x) →
+  (x : A) → (λ y → f (mkPair x y)) ≡ g x
+sets-curry-unique' {f = f}{g = g} fprf x
+\end{code}
+
+%<*cantor-curry-uniq1>
+\begin{code}
+  = let tproof = λ y → fprf (mkPair x y)
+    in (begin
+         (λ y → f (mkPair x y))
+       ≡⟨ ext (λ t → sym (tproof t)) ⟩
+         (λ y → g x y)
+       ≡⟨ refl ⟩
+         g x
+       ∎  )
+\end{code}
+%</cantor-curry-uniq1>
+
+
 
 %(y : .B) → g x y ≡ f (mkPair x y)
 
@@ -359,9 +385,11 @@ sets-curry'-sat = λ f x → begin
 
 
 
+%<*cantor-set-curry>
 \begin{code}
-set-curry′ f = Unique.Build.∃!-intro (sets-curry f) (λ x → sets-curry'-sat f x) {!!}
+set-curry′ f = Unique.Build.∃!-intro (sets-curry f) (λ x → sets-curry'-sat f x) sets-curry-unique
 \end{code}
+%</cantor-set-curry>
 
 %<*cantor-exponential>
 \begin{code}

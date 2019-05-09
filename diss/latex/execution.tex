@@ -412,11 +412,24 @@ the map the type of which is
 
 This proof proves to be difficult to complete. \verb|tProof| has type
 \todo{type}. This is an extensional proof equating the two desired structures
-however, within MLTT, function extensionality is not derivable. To resolve this
-function extensionality is postulated as an axiom
+however, within MLTT, function extensionality is not derivable. Function extensionality
+does not lead to inconsistencies within MLTT when postulated and therefore is
+done here to allow the proof to proceed.
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-postulate}
 
+Where extensionality equates functions that are pointwise equal
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-extensionality}
+
+With extensionality the proof can be completed without significant difficulty
+throught \verb|tproof|
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-curry-uniq1}
+
+Thus concluding the definition of currying
+
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-set-curry}
 
 
 
