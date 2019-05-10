@@ -75,6 +75,7 @@
 \RequirePackage{newunicodechar}
 \RequirePackage{amssymb}
 \RequirePackage{tikz-cd}
+\RequirePackage{hyperref}
 \RequirePackage{bm}
 \RequirePackage{stmaryrd}
 \RequirePackage{csquotes}

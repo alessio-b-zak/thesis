@@ -90,6 +90,7 @@
 \AgdaBound{hasBinaryProducts}\<%
 \end{code}
 
+
 %<*expon-exp>
 \begin{code}%
 \>[0]\AgdaKeyword{record}\AgdaSpace{}%
@@ -194,6 +195,43 @@
 \AgdaField{curry′}\AgdaSpace{}%
 \AgdaBound{f}\AgdaSpace{}%
 \AgdaOperator{\AgdaField{⃗}}\<%
+\end{code}
+
+%<*expon-eval-curry>
+\begin{code}%
+%
+\>[2]\AgdaFunction{eval{-}curry}\AgdaSpace{}%
+\AgdaSymbol{:}\AgdaSpace{}%
+\AgdaSymbol{∀}\AgdaSpace{}%
+\AgdaSymbol{\{}\AgdaBound{A}\AgdaSymbol{\}}\AgdaSpace{}%
+\AgdaSymbol{\{}\AgdaBound{f}\AgdaSpace{}%
+\AgdaSymbol{:}\AgdaSpace{}%
+\AgdaBound{A}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{×}}\AgdaSpace{}%
+\AgdaBound{B}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{⇒}}\AgdaSpace{}%
+\AgdaBound{C}\AgdaSymbol{\}}\<%
+\\
+\>[2][@{}l@{\AgdaIndent{0}}]%
+\>[4]\AgdaSymbol{→}\AgdaSpace{}%
+\AgdaField{eval}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{∘}}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{⟨}}\AgdaSpace{}%
+\AgdaFunction{curry}\AgdaSpace{}%
+\AgdaBound{f}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{×}}\AgdaSpace{}%
+\AgdaFunction{id}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{⟩}}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{≈}}\AgdaSpace{}%
+\AgdaBound{f}\<%
+\end{code}
+%</expon-eval-curry>
+
+\begin{code}%
+%
+\>[2]\AgdaFunction{eval{-}curry}\AgdaSpace{}%
+\AgdaSymbol{=}\AgdaSpace{}%
+\AgdaSymbol{\{!!\}}\<%
 \end{code}
 
 

@@ -16,8 +16,6 @@ is an arrow from the terminal object to any other object
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-point}
 
-\todo{points in categories}
-
 Given the name of Lawvere's theorem it makes sense to formalise the notion of a
 fixed point categorically
 
@@ -205,9 +203,10 @@ the product object.
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-in-u}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-in-u1} \\
 To reproduce the original fixed point, $\phi$ should be composed with \verb|u|
-followed by another composition with \verb|u|. To do this, a corollary to the
-universal property of exponentials must be used, however some rearrangement must
-be done. The corollary that needs to be used is \todo{eval-curry}
+followed by another composition with \verb|u|. To do this, a corollary of the
+universal property for exponentials must be employed \\
+
+\ExecuteMetaData[../agda/latex/ThesisExponential]{expon-eval-curry}\\
 
 This requires considerably more work as each transformation of product
 objects must be made explicit \\
@@ -305,7 +304,7 @@ Products correspond to the pair type
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-pair}
 
 
-\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-proj}
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{sets-proj}
 
 All that remains is to prove that these constitute the product object i.e. that
 for each pair of arrows from a type to each component of the pair there exists a
@@ -318,7 +317,9 @@ the values from the indexed family and creating a pair from them
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-unique-def}
 
-Where \todo{consturcot} is the constructor for a univeral mapping property.
+
+Where \AgdaInductiveConstructor{Unique.Build.∃!{-}intro} is the constructor for
+a univeral mapping property.
 
 The next field of the universal mapping type is the proof that the provided
 arrow satisfies the definition required from the product i.e.
@@ -338,9 +339,7 @@ directly placed as an argument to the universal mapping property.
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-unique-def1}
 
 The final field of the univeral mapping constructor is the proof that \verb|u|
-is unique i .e. that for any \verb|g|\todo{type} such that \verb|g| satisfies
-\AgdaFunction{proj-sat-univ} it is (extensionally) equal to \verb|u| or as a
-type
+is unique
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-unique}
 
@@ -354,7 +353,7 @@ terminal object in the category \AgdaDatatype{Sets1} is the unit type
 
 \ExecuteMetaData[../agda/latex/ThesisUnit.tex]{unit-unit}
 
-To prove that \todo{here} is in fact the terminal object the universal property
+To prove that \AgdaDatatype{⊤} is in fact the terminal object the universal property
 must be proven
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-terminal-prop1}
@@ -366,7 +365,7 @@ here is existence and so can be inferred automatically using an underscore as it
 is trivially true if the type can be inhabited.
 
 For a given type the function to the terminal object is the function that
-constantly returns the single inhabitant of \todo{here}.
+constantly returns the single inhabitant of \AgdaDatatype{⊤}, \AgdaInductiveConstructor{tt}.
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-terminal-arrow}
 
@@ -380,7 +379,6 @@ only one place for to which all functions can map.
 
 With this the universal mapping property can be completed
 
-\todo{fix this}
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-terminal-prop2}
 
 And it can be established that \AgdaDatatype{Sets1} has a terminal object
@@ -460,15 +458,16 @@ With these definitions the CCCness of \AgdaDatatype{Sets1} can be trivially
 established.
 
 The category that has been is unfortunately not a valid model of set theory and
-is only a toy language for reasons that can be found \ldots \todo{where found}.
-A type theoretic analogue of Cantor's theorem can be established showing there
-is no point-surjection from a type to the predicates on the type. In set theory,
-for a given set, the predicates on the set can be considered as subsets placing
-the elements of the powerset of a set in correspondence with the predicates on
-the set. With no coherent notion of membership relation or subset relation (by
-design) there is no way to faithfully model the Cantor's theorem  within the
-category produced. Even so, the proof shows, with enough similarity how the
-argument would proceed in the category of sets.
+is only a toy language for reasons that can be found in Section
+\ref{section:sets}.  A type theoretic analogue of Cantor's theorem can be
+established showing there is no point-surjection from a type to the predicates
+on the type. In set theory, for a given set, the predicates on the set can be
+considered as subsets placing the elements of the powerset of a set in
+correspondence with the predicates on the set. With no coherent notion of
+membership relation or subset relation (by design) there is no way to faithfully
+model the Cantor's theorem  within the category produced. Even so, the proof
+shows, with enough similarity how the argument would proceed in the category of
+sets.
 
 Within \AgdaDatatype{Sets1}, predicates are functions from a type \verb|A| to
 \AgdaDatatype{Bool} type.
@@ -495,8 +494,9 @@ have the fixed point property.
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-nofixpt}
 
-Recall that the definition of \todo{not} is
-\todo{here}
+Recall that the definition of \AgdaFunction{¬} is
+
+\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-negation}
 
 Therefore, given a function which finds the fixed point of any function from
 \AgdaDatatype{Bool} to \AgdaDatatype{Bool}, an inhabitant of void must be
@@ -518,13 +518,14 @@ needed.
 
 \AgdaFunction{not} \verb|x| reduces to a different normal form to \verb|x| for
 both \AgdaInductiveConstructor{true} and \AgdaInductiveConstructor{false} and therefore the absurd pattern can
-be introduced in both cases.
+be introduced in both cases introduced using \verb|()| which indicate
+that there is no constructor that is valid for the argument,
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-not-fx}
-\todo{explain absurd pattern}
 
+Here the absurd patterns are used,  given that the
 \AgdaFunction{not-fx-pt} is now used to derive \AgdaFunction{noFixPtBool}
-through a contradiction. \todo{not} \AgdaFunction{noFixPtBool} is a function
+through a contradiction. \AgdaFunction{¬} \AgdaFunction{noFixPtBool} is a function
 which, given a proof that \AgdaDatatype{Bool} has a fixed property, can derive
 false. The proof that \AgdaDatatype{Bool} has the fixed point property can be
 used to derive a fixed point for \AgdaFunction{not} which we have already proven
@@ -543,8 +544,9 @@ proof of \verb|X| fixed pointedness.
 
 Now, within the scope of the \AgdaFunction{noFixPtBool}, there exist proofs that
 \AgdaFunction{not} both does and doesn't have a fixed point.
-\AgdaFunction{not-fx-pt} has type \todo{type}. It is clear that by applying
-the proof of the existence of a fixed point to this will derive \todo{bottom} as
+\AgdaFunction{not-fx-pt} has takes an equality of \AgdaFunction{not} \verb|x|
+and \verb|x| and returns an element of \. It is clear that by
+the proof of the existence of a fixed point to this will derive \AgdaDatatype{⊥} as
 needed.
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-nof-final}
@@ -560,7 +562,7 @@ of \AgdaFunction{cantor}
 \label{quote:lambda}
 There is much to suggest that a coherent interpretation of Lawvere's theorem
 exists in the $\lambda$-calculus. The untyped $\lambda$-calculus is famous for
-Curry's fixed point combinator \todo{combinator} of which a consequence is that
+Curry's fixed point combinator of which a consequence is that
 every $\lambda$-term has a fixed point under application (known as the first
 fixed point theorem) indicating that perhaps a direct
 application in an appropriate category could yield this result. In addition to
@@ -631,7 +633,7 @@ only a proof of point surjectivity required.
 
 With \verb|b| being a general point to $\verb|X|^{\verb|X|}$, a point to
 \verb|X| needs to be provided alongside a proof that \verb|b| is the solution to
-the obvious equation \todo{fill in equation}. The point to \verb|X| is found by
+the point-surjective equation. The point to \verb|X| is found by
 using the retraction. The proof of equality is simply achieved by exploiting the
 definition of a retraction to collapse the identity.
 

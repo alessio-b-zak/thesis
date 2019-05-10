@@ -39,6 +39,7 @@ open Unique.Build Cat
 open HasBinaryProducts hasBinaryProducts
 \end{code}
 
+
 %<*expon-exp>
 \begin{code}
 record Exp (B C : Obj) : Set (lo ⊔ la ⊔ l≈) where
@@ -68,6 +69,17 @@ record Exp (B C : Obj) : Set (lo ⊔ la ⊔ l≈) where
 
 \begin{code}
   curry f = curry′ f ⃗
+\end{code}
+
+%<*expon-eval-curry>
+\begin{code}
+  eval-curry : ∀ {A} {f : A × B ⇒ C}
+    → eval ∘ ⟨ curry f × id ⟩ ≈ f
+\end{code}
+%</expon-eval-curry>
+
+\begin{code}
+  eval-curry = {!!}
 \end{code}
 
 

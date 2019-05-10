@@ -16,7 +16,7 @@ be explored within this thesis is Lawvere's fixed point theorem discovered by
 William Lawvere in 1969 in \textit{Diagonal Arguments and Cartesian Closed
 Categories} \cite{lawvere1969diagonal}. Lawvere's fixed point theorem is a
 statement within the context of cartesian closed categories, categories which
-play a crucial role within the study of computation and logic. Interested was
+play a crucial role within the study of computation and logic. Interest was
 somewhat renewed in Lawvere's theorem in 2003 after a review paper published by
 Noson Yanofsky \cite{yanofsky2003universal} detailed how many common paradoxes
 and results in computing and mathematical logic could be brought within the
@@ -34,8 +34,8 @@ point theorem within the context of the untyped $\lambda$-calculus; and a
 formalisation within Agda of a category of small types with presentations of
 Cantor's Theorem. Given the attempts of this thesis to incoporate a large amount
 of related yet distinct fields together the contextual history behind the
-primary areas must be outlined. What follows is a blurred and idealistic
-exposition of background of 20$^{\textrm{th}}$ century mathematical logic.
+primary areas will be outlined. What follows is a blurred and idealistic
+exposition of 20$^{\textrm{th}}$ century mathematical logic.
 
 \theoremstyle{definition}
 \newtheorem{theorem}{Theorem}
@@ -50,13 +50,13 @@ exposition of background of 20$^{\textrm{th}}$ century mathematical logic.
 The story begins slightly before the advent of the 20$^{\textrm{th}}$ century
 with the German Mathematician Georg Cantor. Cantor (1845 - 1918) is considered
 the father of set theory with his proofs of the differing cardinalities of the
-real and natural numbers and theory of ordinals. A major piece of work by Cantor
+real and natural numbers and his theory of ordinals. A major piece of work by Cantor
 was his eponymous theorem \cite{cantor1892ueber}, published in 1892, that the
 cardinality of a set is strictly smaller than the cardinality of its powerset.
 Cantor's proof of this theorem made use of a so-called \textit{diagonal
 argument}, one of the first of its kind which, repeated through time in
 different fields, was abstracted by Lawvere to give his fixed point theorem in
-category theory subsuming previous instances. Cantor's theorem proceeds as
+category theory subsuming, previous instances. Cantor's theorem proceeds as
 follows:
 
 \begin{theorem*}[\textbf{Cantor's Theorem}]
@@ -66,11 +66,10 @@ follows:
 
 \begin{proof}
     Aiming for a contradiction assume $f$ is surjective. Consider the set $B =
-    \{ a \in A \: | \: a \not\in f(a) \}$. Therefore there exists a $b \in A$
+    \{ a \in A \: | \: a \not\in f(a) \}$. Therefore there exists a  $\, b \in A$
     such that $f(b)=B$. By definition $f(b) = B$ and therefore $b \not\in B$.
     However, $b \not\in f(b)$ implies $b \in B$. Contradiction.
 \end{proof}
-
 The name \textit{diagonal theorem} comes from an earlier proof by Cantor of the
 uncountability of the real numbers. This was done by assuming an enumeration of
 the set of infinite sequences of binary digits which are in correspondence with
@@ -93,8 +92,8 @@ Cantor, in founding set theory as a field of study, introduced his na{\"i}ve set
 theory \cite{Cantor:1874} as a foundation in which to do mathematics. The
 na{\"i}vity of Cantor's foundations rested in the \textbf{Axiom of Unrestricted
 Comprehension}, adapted from Gottlob Frege's \textbf{Basic Law \RNum{5}}
-\cite{frege1884grundlagen} where $w_{1}$, \ldots , $w_{n}$ ranges over the words
-of the language of sets which states that that for all predicates (functions
+\cite{frege1884grundlagen}. Where $w_{1}$, \ldots , $w_{n}$ ranges over the words
+of the language of sets, the axiom states that, for all predicates (functions
 that return a boolean value), $\varphi$, there exists a set, $B$, whose elements
 exactly satisfy $\varphi$.
 
@@ -106,8 +105,7 @@ exactly satisfy $\varphi$.
     \end{align*}
     }%
 \end{definition*}
-
-. This lead to perhaps the first signifcant result in the foundations of
+This lead to perhaps the first signifcant result in the foundations of
 mathematics in the 20$^{\textrm{th}}$ century, Russell's paradox. Betrand Russell (1872-1970),
 an English polymath, showed in \textit{The Principles of Mathematics}
 \cite{russell1903principles} written with Alfred Whitehead in 1903 that, in
@@ -126,14 +124,13 @@ contradiction.
     that all $x \in X$ satisfy $\varphi$. Aiming for a contradiction, assume
     $X \in X$. By definition of $\varphi$, $X \not\in X$. Contradiction.
 \end{proof}
-
 This proof shares the similar diagonal style argument where $x$ appears in the
 postive and negative positions of the set membership relation $\in$. In modern
 set theories, this is disposed of in favour of an axiom of restricted
 comprehension, where all predicates must be defined on an already existing set.
 For a set theory to be consistent it must therefore reject the \textbf{Axiom of
-Restricted Comprehension}. This in turn prevents the existence of a set of all
-sets from being considered as this must contain itself, something which is not
+Unrestricted Comprehension}. This in turn prevents the existence of a set of all
+sets from being considered as, by definition, this must contain itself, something which is not
 supported by restricted comprehension schemes. This result is relevant to both
 prongs of this thesis. Russell's paradox presented a blow to the hoped
 foundations of mathematics. Various systems were designed to provide a more
@@ -142,7 +139,7 @@ himself created the first theories of types in his \textit{Principia
 Mathematica} \cite{russell25} to combat this with various other foundational
 theories being presented, including set theoretic foundations such as
 Zermelo-Fraenkel set theory (ZFC) and Von-Neumann-Bernays-G{\"o}del set theory
-(NBG) which reject the axiom of unrestricted comprehension. Yanofsky
+(NBG) which reject the \textbf{Axiom of unrestricted Comprehension}. Yanofsky
 \cite{yanofsky2003universal} shows how Russell's paradox can be brought within
 the framework of Lawvere's fixed point theorem.
 
@@ -154,7 +151,7 @@ notion of algorithm.
 
 \subsubsection{\ent}
 
-Devised in 1928 by Hilbert, the \ent asked for an effective procedure or
+Devised in 1928 by Hilbert, the \ent{} asked for an effective procedure or
 algorithm which, on an input of a statement in first-order logic plus a finite
 numbers of axioms, could determine its validity in all structures statisfying
 the axioms. Before an answer could be given, the notion of algorithm had to be
@@ -162,8 +159,7 @@ formalised. This was done in the 1930s independently by Alonzo Church and Alan
 Turing. Turing's formalisation \cite{turing1937computable} known as Turing
 Machines, aimed to capture directly the notion of algorithm. Turing provided a
 negative answer to this question by establishing the existence of undecidable
-problems such as the Halting problem and confirming the \ent as one of these
-undecidable problems. Turing's proof of the existence of undecidable problems
+problems such as the Halting problem and confirming the \ent{} to be one. Turing's proof of the existence of undecidable problems
 and his proof of the Halting problem resemble closely the proof of Cantor's
 theorem being diagonalisation arguments. Yanofsky \cite{yanofsky2003universal}
 also  shows how both proofs can be understood through the lens of Lawvere's
@@ -180,8 +176,7 @@ $\lambda$-calculus had an notion of $\lambda$-definability
 \cite{church1936unsolvable} which was equivalent to the class of general
 recursive functions \cite{kleene1936general} as defined by G{\"o}del and
 clarified by Kleene, another model of computation.  Church also provided a
-negative answer to the \ent. The $\lambda$-calculus has applications beyond that
-of providing a negative answer to the \ent.
+negative answer to the \ent.
 
 The $\lambda$-calculus consists of a set of inductively defined terms and
 rewriting rules governing how to compute with them. In the definitions that
@@ -212,9 +207,9 @@ as substitution. This computation is known as $\beta$-reduction.
         (\lambda x . s) \; t \rightarrow_{\beta} s[t/x]
     \end{align*}
 \end{definition*}
-With this notion of reduction an equational theory can be produced capturing the
-notion of equivalence under $\beta$-reduction which will be referred to as
-$\lambda\beta$.
+With this notion of reduction an equational theory, $\lambda\beta$ can be
+defined as the relexive transitive closure of the relation that
+$\rightarrow_{\beta}$ defines.
 
 The $\lambda$-calculus originally arose from Church's desire to provide a foundation
 for logic, a desire also shared by another American Logician, Haskell Curry. In
@@ -230,9 +225,9 @@ current state.
 \subsection{Curry-Howard Correspondence}
 Curry's combinatory logic and Church's $\lambda$-calculus, when viewed as a
 system for logic, proved to be inconsistent as shown by Kleene and Rosser
-\cite{kleene1935inconsistency} and again by Curry using his Paradoxical
-Combinator \cite{curry1941paradox}. To remedy this inconsistency both Curry and
-Church restricted their logical systems with types giving typed combinatory logic
+\cite{kleene1935inconsistency} and again by Curry using his fixed point
+combinator \cite{curry1941paradox}. To remedy this inconsistency both Curry and
+Church restricted their logical systems with types, giving typed combinatory logic
 and the simply typed $\lambda$-calculus. Further to Curry's aformentioned
 observation made of typed combinatory logic, in the 1960s William Alvin Howard
 made a further observation that the typing rules of the simply
@@ -241,8 +236,8 @@ natural deduction \cite{howard1980formulae}. This lead to the conclusion that
 every system in formal logic has a corresponding computational calculi with a
 specific type system named the Curry-Howard correspondence. The relation of
 computational calculi to \textit{intuitionistic} logic is an interesting one.
-Intuitionistic logics are a class of logics that reject some common principles
-of classical logic namely the Law of Excluded Middle (LEM), $(\vdash p \lor \lnot p)$,
+Intuitionistic logics are a class of logics that reject common principles
+of classical logic, namely the Law of Excluded Middle (LEM), $(\vdash p \lor \lnot p)$,
 and Double Negation Elimination (DNE) $(\lnot \lnot p \vdash p)$. Intuitionistic Logic
 is highly related to the philosophical position of mathematical constructivism.
 Mathematical constructivism places a higher burden on proof when positing the
@@ -289,12 +284,12 @@ order to know of the existence of a mathematical object it must be directly
 constructed. To this end \mlt{} went about producing a type system to
 produce an intuitionistic type theory for proving within higher-order logics.
 Intuitionistic logics were precisely the logics that type systems corresponded
-to which matched \mlt's constructivist agenda. Martin-Lof further aimed
+to which matched \mlt's constructivist agenda. \mlt{} further aimed
 for his type system to replace set theory as a foundation for doing all of
 mathematics. \mlt's type theory was incredibly successful and pioneered
 the propositions-as-types approach to theorem proving which is an incredibly
 common approach taken in modern theorem provers. An overview of his theory will
-be presented in the technical background for this thesis.
+be presented in the Section \ref{section:mlt}
 
 \mlt{} type theory was deeply influential in many theorem provers and
 logical frameworks designed from then on including the Edinburgh Logical
@@ -308,9 +303,10 @@ The first version of Agda was designed at Chalmers university in 1999 by
 Caterina Coquand \cite{coquand2000agda} based on the ALF logical framework
 \cite{magnusson1993alf} ultimately derived from
 \mlt type theory. The second version of Agda was later designed by Ulf
-Norell during his Ph.D also at Chalmers University in 2007
+Norell during his Ph.D. also at Chalmers University in 2007
 \cite{norell2007towards} based on Zhaohui Luo's
-\textit{Unified Theory of Dependent Types} (UTT)  \cite{luo1992unifying} derived from \mlt type
+\textit{Unified Theory of Dependent Types} (UTT)  \cite{luo1992unifying} derived
+from \mlt{} type
 theory. Agda is implemented as a functional programming language with dependent
 types, and features an interactive mode in the emacs text editor, allowing users
 to interact with the Agda intepreter to develop proofs. Agda is a total
@@ -390,24 +386,26 @@ early in his article that Lawvere's fixed point theorem can be viewed as the
 limitations of logical and computational systems and how paradoxes can be viewed
 as the consequences of violating these limitations.
 \subsection{Contributions}
-It has been noted, Section \ref{quote:lambda}, Section \ref{quote:prior}, that the components of the proof of Lawvere's fixed point
+It has been noted (see Section \ref{quote:lambda} and \ref{quote:prior}) that the components of the proof of Lawvere's fixed point
 theorem indicate a connection to the untyped $\lambda$-calculus. Given the connection between cartesian closed categories and
 the untyped $\lambda$-calculus and the syntactic resemblance it has been assumed by
-some that there is a relation between the untyped lambda calculus and lawvere's
+some that there is a relation between the untyped lambda calculus and Lawvere's
 fixed point theorem. Given the theorems applications within the theory of
 computable universes and Turing machines, recursion theory and the recursion
-theorem and Rice's theorem it seems that this would be likely. In spite of this
+theorem and Rice's theorem, it seems that this would be likely. In spite of this
 the relation between the $\lambda$-calculus and Lawvere's fixed point theorem has
 never been fully developed. The primary contribution of this thesis is an
 explicit account of this relation, primarily that, when intepreted in the
 context of cartesian closed categories corresponding to models of the untyped
 $\lambda$-calculus, Lawvere's fixed point theorem is equivalent to the first
 fixed point theorem for the untyped $\lambda$-calculus. In the evaluation of
-this thesis, mistakes with previous attempts to formalise the relation are
-provided. The proofs in this thesis are done in the proof-assistant Agda. This
+this thesis, previous attempts to formalise the relation are
+provided and examined. The proofs in this thesis are done in the proof-assistant Agda. This
 decision was made so as to explore the relation between type theory and
 mathematical logic but has provided other benefits. Through formalisation, a
 greater appreciation for the particularities of Lawvere's theorem can be
 understood making it easier to find further relations. The other primary
-contribution of this thesis is a collection of proofs within cartesian closed
-categories and of Lawvere's theorem itself.
+contribution of this thesis is a collection of formalised proofs within cartesian closed
+categories and of Lawvere's theorem itself. The code featured within this thesis
+is literate Agda and has been type checked for correctness. All mechanised
+proofs within this thesis can be found at 
