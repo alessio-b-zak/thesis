@@ -133,7 +133,7 @@ mkPair-resp {X} {Y} {x} {.x} {y} {.y} refl refl = refl
 
 %<*cantor-unique>
 \begin{code}
-proj-unique''' : {A B X : Set} {x : ∀ i → X → Bool-elim A B i}
+proj-unique : {A B X : Set} {x : ∀ i → X → Bool-elim A B i}
               {g : X → Pair A B} →
               (∀ i (x₁ : X) → x i x₁ ≡ proj-pair i (g x₁)) →
               (x₁ : X) →
@@ -141,17 +141,17 @@ proj-unique''' : {A B X : Set} {x : ∀ i → X → Bool-elim A B i}
 \end{code}
 %</cantor-unique>
 
-\begin{code}
-proj-unique : {A B X : Set} {x : ∀ i → X → Bool-elim A B i}
-               {g : X → Pair A B} →
-               (h : ∀ i (x₁ : X) → x i x₁ ≡ proj-pair i (g x₁)) →
-               (x₁ : X) → mkPair (x true x₁) (x false x₁) ≡ g x₁
-proj-unique {A} {B} {X} {x₁} {g₁} x y with (x true y) | (x false y)
-... | p | q = trans {!!} {!!}
-\end{code}
+%\begin{code}
+%proj-unique : {A B X : Set} {x : ∀ i → X → Bool-elim A B i}
+%               {g : X → Pair A B} →
+%               (h : ∀ i (x₁ : X) → x i x₁ ≡ proj-pair i (g x₁)) →
+%               (x₁ : X) → mkPair (x true x₁) (x false x₁) ≡ g x₁
+%proj-unique {A} {B} {X} {x₁} {g₁} x y with (x true y) | (x false y)
+%... | p | q = trans {!!} {!!}
+%\end{code}
 
 \begin{code}
-proj-unique''' {A} {B} {X} {x₁} {g₁} x y with (x true y) | (x false y)
+proj-unique {A} {B} {X} {x₁} {g₁} x y with (x true y) | (x false y)
 ... | p | q  = trans (mkPair-resp p q) (pairPrf {X} {A} {B} {g₁})
 \end{code}
 
@@ -166,7 +166,8 @@ proj-uniqueness : ∀ {A B X} (p : ∀ i → X → Bool-elim A B i) →
 \begin{code}
 proj-uniqueness {A} {B} = λ p →
   let u = (λ x → mkPair (p true x) (p false x))
-  in Unique.Build.∃!-intro u {!!} {!!}
+  in Unique.Build.∃!-intro u {!!}
+                          {!!}
 \end{code}
 %</cantor-unique-def>
 

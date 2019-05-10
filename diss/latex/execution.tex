@@ -1,11 +1,11 @@
 % !TEX root = ./dissertation.tex
 In this section the main contributions of this thesis will be presented. Working
-towards a formalised version of Lawvere's fixed point theorem definitions and
-properties of points to objects will be explored. Following this a detailed
+towards a formalised version of Lawvere's fixed point theorem, definitions and
+properties of points to objects will be explored. Following this, a detailed
 proof of Lawvere's theorem will be presented in Agda. This will then be applied
-to two separate domains: a category of types and within models of the untyped
+to two separate domains: a category of types, and models of the untyped
 $\lambda$-calculus. Within the category of types an analog of Cantor's theorem
-will be derived after established its cartesian closedness. The interplay
+will be derived after establishing its cartesian closedness. After The interplay
 between cartesian closed categories and models of the untyped $\lambda$-calculus
 will be examined and a novel result will be derived.
 \section{Points}
@@ -22,41 +22,41 @@ fixed point categorically
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-fixed-point}
 
 A fixed point of a morphism is a point that is idempotent under composition to
-the right with the morphism. As is common within the \verb|cats| library this is
+the right with the morphism. As is common within the \verb|cats| library, this is
 then wrapped up in a record as a sigma type to express that a given function has
 a fixed point
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-has-fixed-point}
 
-Now the fixed point property which features in Lawvere's theorem can be
-formalised which is a predicate on a object in a category expressing that all
+Now, the fixed point property, something which features in Lawvere's theorem, can be
+formalised as a predicate on a object in a category expressing that all
 endomorphisms on the object have a fixed point.
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-fixed-point-property}
- on the object have a fixed point.
 
-Another useful feature in lawvere's theorem is the notion of point surjectivity
+Another concept that needs to be understood is the notion of point surjectivity
 which itself requires some machinery. First the notion of a solved equation with
 points
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-solution}
 
-Point surjectivity expresses the notion that given a point to $B$, $b : 1
-\rightarrow B$, and a morphism $f : A \rightarrow B$, we can produce a point to
-$A$, $a : 1 \rightarrow A$, that satisfies the equation $f \circ a = b$.
+Point surjectivity expresses the notion that given a point to $B$, $(b : 1
+\rightarrow B)$, and a morphism $f : A \rightarrow B$, we can produce a point to
+$A$, $(a : 1 \rightarrow A)$, that satisfies the equation $f \circ a = b$.
 
-Packaging this up into a sigma type which, given a morphism from an object A to
-an object B and a point to B contains a point to A and a proof that is
+Packaging this up into a sigma type which, given a morphism, \verb|f| from an object
+\verb|A| to
+an object \verb|B| and a point to \verb|B|, contains a point to \verb|A| and a proof that is
 constitutes a solution to the triple.
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-has-solution}
 
-A point surjective morphism is a function for which every point to B there
+A point surjective morphism is a function for which for every point to \verb|B| there
 exists a solution
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-is-point-surjective}
 
-The formulation of the point surjectivity used in the theorem as a record
+The formulation of the point surjectivity used in the theorem is as a record
 confirming the existence of a point surjective function between two objects
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-point-surjective}
@@ -68,9 +68,8 @@ Cartesian Closed Category.
 
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-type-diagonal}
 
-Or mathematically that in a Cartesian Closed Category, given a point-surjective
-function from some object $A$ to the exponential object, $B^A$, from $A$ to some object
-$B$, every endomorphism on $B$ has a fixed point.
+Or mathematically that, in a cartesian closed category, if there exists a point-surjective
+function from some object $A$ to the exponential object, $B^A$ then every endomorphism on $B$ has a fixed point.
 
 The proof of the theorem will be developed line by line. The first step is to
 pattern match on the arguments to the proof and bring in the constructors for
@@ -82,17 +81,22 @@ the output type.
 \end{AgdaMultiCode}
 
 The first argument to the proof is the point-surjective morphism constituting
-the morphism and the proof of point-surjectivity, and the second argument is the
-endomorphism on \verb|B|. The output, a record with holes, requires a point to
+the underlying morphism and the proof of point-surjectivity, and the second
+argument, \verb|f| is the
+endomorphism on \verb|B|. The output requires a point to
 \verb|B| alongside a proof that it is a fixed point of \verb|f|.
 
-To produce a fixed-point the goal is to create a morphism, \verb|g|,  from \verb|A| to
+To produce a fixed-point, the goal is to create a morphism, \verb|g|, from \verb|A| to
 \verb|B| and then exploit the point-surjective morphism to find a point to
 \verb|A|. With the correctly chosen \verb|g| the composition of this point to A
 with \verb|g| will be a fixed-point. \verb|g| will be constructed such that is
 in some way "self-replicating".
 
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-h-def}
+
+where \AgdaFunction{$\delta$} is the unit of the diagonal-product adjunction and can
+defined simply as
+\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-delta}
 
 Categorically, \verb|g| represents the following diagram
 
@@ -104,9 +108,8 @@ Categorically, \verb|g| represents the following diagram
 In order to push \verb|g| morphism back through the point-surjective morphism
 it needs to be turned into a point to the exponential object. This can be
 achieved via two isomorphisms, $1 \times A \cong A$ and $\textnormal{hom}(A \times B \: , \, C)
-\cong \textnormal{hom}(A \: , \, C^B)$, the types and directions that are used proof as
-follows
-
+\cong \textnormal{hom}(A \: , \, C^B)$. The directions of these isomorphisms
+used in the proof are as follows
 \begin{AgdaMultiCode}
 \ExecuteMetaData[../agda/latex/ThesisExtension.tex]{extension-types-collapseToOne}
 \ExecuteMetaData[../agda/latex/ThesisTypes.tex]{types-type-curry}
@@ -125,7 +128,7 @@ to \verb|A| with \verb|g'|
 
 The fixed point construction can now be achieved by composing $\phi$ with
 \verb|u| twice to obtain a point to \verb|B|. After composing once with \verb|u|
-a point to $B^A$ is obtained. This must be pushed through the aformentioned
+a point to $B^A$ is obtained. This must be pushed through the aforementioned
 isomorphisms to get a morphism, $A \rightarrow B$, to compose with \verb|u|
 again.
 
@@ -151,10 +154,10 @@ The proof of point-surjectivity is extracted as follows
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-ps-proof}
 
 This cannot be used directly due to the application of \AgdaFunction{curry} and
-\AgdaFunction{extendToOne} to the expression. The usage of equivlance relations
+\AgdaFunction{extendToOne} to the expression. The usage of equivalence relations
 means that congruence must be proved separately for every function on
 morphisms. These two proofs have the following types but the proofs are elided
-due to unecessary complexity.
+due to unnecessary complexity.
 
 \begin{AgdaSuppressSpace}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-uncurry-resp-prf}
@@ -179,7 +182,7 @@ The next transformation is accomplished by utilising that \AgdaFunction{curry}
 is an isomorphism with respect to \AgdaFunction{uncurry}, and that
 \AgdaFunction{collapseToOne} is an isomorphism with respect to
 \AgdaFunction{extendToOne}. With this \verb|g'| $\circ$ \verb|u| is obtained,
-expanding \verb|g'|, \\
+followed by expanding \verb|g'|, \\
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-col-unc-ps-trans2}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-g'-reduc}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-g'-reduc1}
@@ -192,9 +195,6 @@ reassociated. This is particularly tedious.\\
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-reassoc1}
 \\
 Once this has been achieved, definitions can be expanded and applied.
-\AgdaFunction{$\delta$} is the unit of the diagonal-product adjunction and can
-defined simply as \\
-\ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-delta} \\
 Intuitively, it can be seen that the precomposition of a morphism by an arrow to
 a product object can fused to push the precomposed morphism into each branch of
 the product object.
@@ -206,9 +206,9 @@ To reproduce the original fixed point, $\phi$ should be composed with \verb|u|
 followed by another composition with \verb|u|. To do this, a corollary of the
 universal property for exponentials must be employed \\
 
-\ExecuteMetaData[../agda/latex/ThesisExponential]{expon-eval-curry}\\
+\ExecuteMetaData[../agda/latex/ThesisExponential]{expon-eval-curry} \\
 
-This requires considerably more work as each transformation of product
+Actually applying this corollary requires more work as each transformation of product
 objects must be made explicit \\
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-in-u1}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-product-rearr}
@@ -227,13 +227,15 @@ Now, the universal property can be applied to extract \AgdaFunction{uncurry}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-eval-curry}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-eval-curry1} \\
 The end is in sight and all that remains is to extract the second \verb|u|. This
-collapsing $A \times 1$ to $A$ which can be achieved by inserting the identity
+is done by
+collapsing $A \times 1$ to $A$, which can be achieved by inserting the identity
 for $A \times 1$ and deconstructing this into the morphisms comprising the
-isomorphism and seeing what happens \\
+isomorphism, \AgdaFunction{oneIso} and \AgdaFunction{otherIso}, and seeing what
+happens \\
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-eval-curry1}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-ax1-iso}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-ax1-iso1} \\
-The isomorphisms happen to precisecly be what is needed to recover the fixed
+The isomorphisms happen to precisely be what is needed to recover the fixed
 point \\
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-ax1-iso1}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-iso-app}
@@ -254,16 +256,12 @@ of the applications.
 
 Lawvere's fixed point theorem is an incredibly broad ranging theorem that
 generalises many important theorems in mathematical logic and foundational
-computer science and mathematics. This thesis will formalise and axiomatise two
+computer science. This thesis will formalise and axiomatize two
 specific instances, Cantor's theorem the first fixed point theorem
 in the untyped $\lambda$-calculus. An analog to Cantor's theorem will be introduced
 alongside a category of small types in place of the category of sets.
 After, categorical models of the $\lambda$-calculus will be explored and the
-consequences of lawvere's fixed point theorem in these models. This theorem has
-many more applications in paradoxes and logic which can be found in (Yanofsky).
-Some limitations in formalising these within theorem provers will be explored in
-the further work section.
-
+consequences of Lawvere's fixed point theorem in these models.
 \subsection{Cantor's Theorem}
 \label{section:cantor}
 An analogue of Cantor's theorem can be constructed using a category of small
@@ -273,11 +271,9 @@ setting the objects of the category to be the types of the universe and the
 morphisms to be the functions between them.
 
 \ExecuteMetaData[../agda/latex/ThesisSets.tex]{sets-instance}
-
- Equality of morphisms is extensional propositional equality for functions.
+Equality of morphisms is extensional propositional equality or functions.
 
 \ExecuteMetaData[../agda/latex/ThesisSets.tex]{sets-equality}
-
 Morphism composition is function composition, identity morphsism are identity
 functions.
 
@@ -297,9 +293,8 @@ types, a product object can be formed.
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{sets-product}
 
 Product objects consist of an object, projections out of the object and a proof
-that the objects and arrows satisfy the universal property of products.
-
-Products correspond to the pair type
+that the objects and arrows satisfy the universal property of products. Products
+correspond to the pair type
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-pair}
 
@@ -308,45 +303,42 @@ Products correspond to the pair type
 
 All that remains is to prove that these constitute the product object i.e. that
 for each pair of arrows from a type to each component of the pair there exists a
-(extensionally propositionally) unique function from the type to the pair object.
+(extensionally propositionally) unique function from the type to the pair object
+that satisfies the definition of the product.
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-unique-type}
 
-Given the indexed-family the unique arrow \verb|u| can be produced by extracting
-the values from the indexed family and creating a pair from them
+Given the indexed-family \verb|p|, the unique arrow \verb|u| can be produced by extracting
+the values from the indexed-family and creating a pair from them
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-unique-def}
 
 
 Where \AgdaInductiveConstructor{Unique.Build.∃!{-}intro} is the constructor for
-a univeral mapping property.
+a universal mapping property.
 
 The next field of the universal mapping type is the proof that the provided
 arrow satisfies the definition required from the product i.e.
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-proj-sat}
 
-or in straightforward mathematical terms that the constructed arrow, \verb|u|,
+Or in straightforward mathematical terms that the constructed arrow, \verb|u|,
 satisfies with abuse of notation,
 \begin{align*}
     \pi_{1} \circ \texttt{u} = f \land \pi_{2} \circ \texttt{u} = g
 \end{align*}
 
-where $f$ and $g$ are the two morphisms underlying \verb|p|. This proves to be
+Where $f$ and $g$ are the two morphisms underlying \verb|p|. This proves to be
 trivially true given the definition of \AgdaFunction{proj-pair} and can be
 directly placed as an argument to the universal mapping property.
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-unique-def1}
 
-The final field of the univeral mapping constructor is the proof that \verb|u|
+The final field of the universal mapping constructor is the proof that \verb|u|
 is unique
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-unique}
 
-The condition \verb|h|, equates \verb|g| to \todo{projpair}. This condition is
-something that the unique arrow satisfies by definition. Using the transitivity
-of equality 
-productsproductsproducst
 
 For a category to have finite products it must also have a terminal object. The
 terminal object in the category \AgdaDatatype{Sets1} is the unit type
@@ -358,11 +350,11 @@ must be proven
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-terminal-prop1}
 
-This is a universal mapping property. The first argument to the constructor is
+ The first argument to the constructor is
 the unique arrow and the last the proof of uniqueness. The middle argument
 ordinarily corresponds to the property the arrow must satisfy but the property
 here is existence and so can be inferred automatically using an underscore as it
-is trivially true if the type can be inhabited.
+is trivially true that the type can be inhabited.
 
 For a given type the function to the terminal object is the function that
 constantly returns the single inhabitant of \AgdaDatatype{⊤}, \AgdaInductiveConstructor{tt}.
@@ -416,22 +408,21 @@ universal property.
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-sets-curry'-sat}
 
-Reducing the left hand side of the propositional equality in the above type the
-proof can be completed trivially
-
-\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-sets-curry'-sat1}
-
-Making use of the universal property for products
+By making use of the universal property for products
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-pair-prf}
+
+The
+proof can be completed trivially by reducing the left hand side of the propositional equality in the above type
+\ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-sets-curry'-sat1}
+
 
 The last component of the unique mapping property is the proof of uniqueness of
 the map the type of which is
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-curry-uniq-type}
 
-This proof proves to be difficult to complete. \verb|tProof| has type
-\todo{type}. This is an extensional proof equating the two desired structures
+This proof proves to be difficult to complete.  This is an extensional proof equating the two desired structures
 however, within MLTT, function extensionality is not derivable. Function extensionality
 does not lead to inconsistencies within MLTT when postulated and therefore is
 done here to allow the proof to proceed.
@@ -443,7 +434,7 @@ Where extensionality equates functions that are pointwise equal
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-extensionality}
 
 With extensionality the proof can be completed without significant difficulty
-throught \verb|tproof|
+
 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-curry-uniq1}
 
@@ -466,7 +457,7 @@ considered as subsets placing the elements of the powerset of a set in
 correspondence with the predicates on the set. With no coherent notion of
 membership relation or subset relation (by design) there is no way to faithfully
 model the Cantor's theorem  within the category produced. Even so, the proof
-shows, with enough similarity how the argument would proceed in the category of
+shows, with enough similarity, how the argument would proceed in the category of
 sets.
 
 Within \AgdaDatatype{Sets1}, predicates are functions from a type \verb|A| to
@@ -525,7 +516,7 @@ that there is no constructor that is valid for the argument,
 
 Here the absurd patterns are used,  given that the
 \AgdaFunction{not-fx-pt} is now used to derive \AgdaFunction{noFixPtBool}
-through a contradiction. \AgdaFunction{¬} \AgdaFunction{noFixPtBool} is a function
+through a contradiction. \AgdaFunction{¬}\AgdaFunction{noFixPtBool} is a function
 which, given a proof that \AgdaDatatype{Bool} has a fixed property, can derive
 false. The proof that \AgdaDatatype{Bool} has the fixed point property can be
 used to derive a fixed point for \AgdaFunction{not} which we have already proven

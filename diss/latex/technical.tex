@@ -4,7 +4,7 @@ primary contributions of this thesis. This section will aim to to provide a
 working knowledge of the theory behind and the usage of the Agda theorem prover.
 Through Agda, the underlying theory of categories will be explained to
 sufficiently understand Lawvere's fixed point theorem. As explained prior,
-theorem provers often work by utilising the Curry-howard isomorphism to embed a
+theorem provers often work by utilising the Curry-Howard correspondence to embed a
 logical framework within the type system of a programming language. This is the
 approach taken by the Agda theorem prover which makes use of a type system
 similar to that of \mlt{} Type theory, a type theory which provides a
@@ -19,7 +19,7 @@ entirely constructive foundation in which mathematics could be done. Just as,
 inline with the \cuho{} correspondence, the intutionistic fragment of
 natural deduction has an interpretation within the simply-typed
 $\lambda$-calculus, MLTT has a logical interpretation as first-order
-intuitionistic predicate logic by including dependent types in the theory. The
+intuitionistic predicate logic, by including dependent types in the theory. The
 theory is outlined below, a more detailed examination can be found notes derived
 from \mlt's lectures \cite{martin1984intuitionistic} or Chapter One of the
 \textit{Homotopy Type Theory} book \cite{hottbook}. \mlt's lecture notes
@@ -58,7 +58,7 @@ level $U_{n+1}$ i.e.
 \end{align*}
 
 A type is then an inhabitant of some universe. One might desire some finite
-number of universes in which to work and this was something \mlt{} desired.
+number of universes in which to work and indeed,
 \mlt{}'s first presentation of his type theory featured only one universe,
 $U$, which was an element of itself.
 
@@ -70,12 +70,14 @@ Thierry Coquand, in 1992, showed that a Russell-style paradox could be embedded
 within a type theory with a single impredicative universe
 \cite{coquand1992paradox}. This mirrors the
 inconsistencies that develop when trying to postulate a set of all sets in naive
-set theory. A type is then defined to be an element of one of the postulated
-universes and new types can be defined within a given universe. Introducing new
+set theory.
+
+Working in a world with a hierarchy of universes, a type is then defined to be an element of one of the postulated
+universes. New  types can be defined within any of the postulated universe. Introducing new
 types into the type theory involves explaining how to create objects of that
 type and how to compute with objects of the type, done by adding more
 definitional equalities to the system.  The most basic components of MLTT is the
-dependent function or Pi-type, $\Pi$. $\Pi$-types represent functions where the
+dependent function or $\Pi$-type. $\Pi$-types represent functions where the
 output type of a function can depend on the argument to the function.  If $A$ is
 a type (i.e. $A : U$ for some universe $U$) and $B : U$  the $\Pi$-type,
 
@@ -85,7 +87,7 @@ a type (i.e. $A : U$ for some universe $U$) and $B : U$  the $\Pi$-type,
 which binds the variable $x$ in $B$, represents the dependent function which takes
 an argument $x : A$ and returns an element of type $B$ with the free variable
 $x$ replaced with the argument to the function. A dependent function, $f :
-\prod_{(x : A)}B$, can be introduced via a set of defining equations or via a
+\Pi_{(x : A)}B$, can be introduced via a set of defining equations or via a
 $\lambda$-abstraction. Given an expression $M : B$ where $B$ may contain the
 variable $x : A$, $f$ can be defined as
 \begin{align*}
@@ -104,14 +106,14 @@ applied to $f$ to obtain a value of type $B(a)$ written
 \end{align*}
 The expression that the the application yields is the result of replacing all
 instances of $x$ in $M$ with $a$. When $B$ returns a constant type for input
-types the normal function arrow $\rightarrow$ can be used.  The other types to
+types the normal function arrow, $\rightarrow$, can be used. The other types to
 be introduced in this section can be written as inductive types. Inductive types
 can be introduced by supplying constructors with build elements of the type from
 other types. Inductive types can be computed with using induction principles
 which describe how to compute with abitrary structures of the type based on the
 constituent parts. Induction principles can be seen as an alternative to pattern
 matching, a more common feature of functional programming languages. A simple
-type to illustrate this is the product type which is the type theory analogue of
+type to illustrate this is the product type, which is the type theoretic analogue of
 the cartesian product. Given two types $A : U_{n}$ and $B : U_{n}$ the product
 type, $A \times B : U$ can be formed. Given $a : A$ and $b : B$ an element of
 the pair type $A \times B$ can be constructed as
@@ -120,7 +122,7 @@ the pair type $A \times B$ can be constructed as
 \end{align*}
 Before introducing the induction principle for product types it is worth
 dwelling on some subtleties of induction principles. Induction principles are
-judgemental equalities that are describe how to compute with newly introduced
+judgemental equalities that describe how to compute with newly introduced
 data types. Induction principles often provide a separate defining function for
 each constructor for a type however this is \textit{not} pattern matching. A
 separate defining equation for each constructor often makes logical sense for
@@ -135,8 +137,8 @@ identity type. The induction principle for products is a function with the type
 \end{align*}
 Intuitively, this type can be read as, given a function $C : A \times B
 \rightarrow U$ for some universe, $U$, and given a dependent function which
-takes two arguments returns the  applied to the pair of the two
-functions, a dependent function for pairs can be produced. More concisely, a
+takes two arguments and returns the dependent function applied to the pair of the two
+arguments, a dependent function for pairs can be produced. More concisely, a
 function for pairs can be produced from a function that takes two arguments.
 Intuitively this can be done by taking the function with two arguments,
 deconstructing the pair and applying each component of the pair in turn. As a
@@ -144,10 +146,10 @@ defining equation this is:
 \begin{align*}
     \textsf{ind}_{A \times B}\, (C, g, (a , b)) :\equiv g(a)(b)
 \end{align*}
-Other types that are integral to the theorem-proving effort are $\Sigma$-types.
-$\Sigma$-types or dependent pairs. Dependent pairs are product types where the
+Other types that are integral to the theorem-proving effort are $\Sigma$-types
+or dependent pairs. Dependent pairs are product types where the
 type of the second argument can depend on the first. Given a type $A : U$ and a
-type-family $B : A \rightarrow U$ the dependent product type $\Sigma_{(x :
+function $B : A \rightarrow U$ the dependent product type $\Sigma_{(x :
 A)}B(x)$ can be formed. Given an element $a : A$ and an element $b : B(a)$ the
 dependent pair $(a,b) : \Sigma_{(x : A)}B(x)$. The induction principle for
 $\Sigma$-types is similar to the induction principle for products.
