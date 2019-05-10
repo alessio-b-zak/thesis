@@ -335,8 +335,8 @@ directly placed as an argument to the universal mapping property.
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-unique-def1}
 
 The final field of the universal mapping constructor is the proof that \verb|u|
-is unique
-
+is unique which will be elided for brevity but can be found in associated
+proofs. 
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-unique}
 
 
@@ -579,25 +579,26 @@ claim. Upon further examination the informal proofs do not truly reflect Lawvere
 context of the untyped $\lambda$-calculus. These
 previously presented proofs will be examined more closely in Section
 \ref{quote:prior}. In this
-thesis a precise account of the relationship indicated within
+thesis, a precise account of the relationship indicated within
 the remark on \verb|nLab| will be presented, which does not quite extend to establishing the
 existence of fixed point combinators within the $\lambda$-calculus but a
-straightforward corollary - the first fixed point theorem. The first fixed point
-theorem states that all $\lambda$-terms have a fixed point under application.
+straightforward corollary - the first fixed point theorem.
 
 The proof that Lawvere's theorem implies the existence of fixed points for all
 $\lambda$-terms rests on the observation first made by Dana Scott in his
-development of domain theory, that $\lambda$-terms can also be considered as functions between $\lambda$-terms. This naturally
+development of domain theory, that $\lambda$-terms can also be considered as
+mappings between $\lambda$-terms. This naturally
 engenders a desire for some object $D$ that is isomorphic to $D^D$, the function
 space on $D$. This is impossible for any set within a set theory that rejects
-unrestricted comprehension. Various specific models were constructed through the
-latter half the of 20$^{\textrm{th}}$ century. These
+unrestricted comprehension. Various models were constructed through the
+latter half the of 20$^{\textrm{th}}$ century including Scott's $D_{\infty}$ and
+Plotkin's $P\omega$. These
 ideas were later generalised by identifying that all models of the
 $\lambda$-calculus arise from cartesian closed category with an object $D$ that
 has a retraction to its own function space, known as a reflexive object.
 
 The relationship between these constructions and Lawvere's theorem can be
-understood by observing that in any $CCC$ with a reflexive object $D$ there is a
+understood by observing that in any CCC with a reflexive object $D$ there is a
 point surjective morphism from $D$ to $D^D$, precisely the retraction.
 Formalising this in Agda first requires a formalisation of a reflexive object
 and retractions. In an arbitrary category a retraction between two objects
@@ -631,7 +632,7 @@ definition of a retraction to collapse the identity.
 \ExecuteMetaData[../agda/latex/ThesisY.tex]{Y-point-surjective}
 
 
-The implications of this corollary can be understood from this excerpt from section
+The implications of this corollary can be understood from this excerpt from Section
 5 of Barendregt's \textit{The Lambda Calculus: Its Syntax and Semantics}
 \cite{barendregt1992lambda} on
 models.
@@ -653,7 +654,7 @@ model-theoretic sense, are helpful for exploring properties of the
 $\lambda$-calculus that are not immediate from the equational theory and syntax
 itself. The general class of structures that are models of the
 $\lambda$-calculus are known as $\lambda$-algebras. The definition of
-$\lambda$-algebras are predicated on the that of an applicative structure. An
+$\lambda$-algebras are predicated on that of an applicative structure. An
 applicative structure is a tuple $M = (A \, , \, \bullet)$ where $A$ is a set
 and $\bullet$ is a binary operation on $A$.
 
@@ -664,25 +665,25 @@ struture. In other words a syntactic applicative structure is a triple $M = (A
 \, , \, \bullet \, , \, \llbracket \, \rrbracket)$ of an underlying set $A$, a
 binary operation $\bullet : A \rightarrow A$ and a syntactical intepretation
 function $\llbracket \, \rrbracket$. See \textbf{Definitions 5.3.1} and
-\textbf{5.3.2} in \cite{barendregt1992lambda} for a precise definition of
+\textbf{5.3.2} for a precise definition of
 $\llbracket \, \, \rrbracket$ and an appropriate definition of satisfaction,
 $\vDash$.
 
 The constraint which turns a syntactic applicative structure, \textit{P}, into a
 syntactic $\lambda$-algebra is
 \begin{align*}
-    \bm{\lambda} \vdash M = N \Rightarrow P \models \llbracket M \rrbracket = \llbracket N
+    \lambda\beta \vdash M = N \Rightarrow P \models \llbracket M \rrbracket = \llbracket N
     \rrbracket
 \end{align*}
 
-Or that every two $\lambda$-terms that are equal under $\bm{\lambda}$ are equal
+Or that every two $\lambda$-terms that are equal under $\lambda\beta$ are equal
 under their intepretation within the $\lambda$-algebra. There is a close
 relationship between $\lambda$-algebras and CCCs. Every $\lambda$-algebra can
 be transformed into a CCC with a reflexive object via a process known as the
-\textit{Karoubi Envelope}. Furthermore, every CCC with a
+\textit{Karoubi Envelope}, see \textbf{Definition 5.5.11.}. Furthermore, every CCC with a
 reflexive object can be turned into a $\lambda$-algebra such that taking a
 $\lambda$-algebra to a CCC and back to $\lambda$-algebra again produces an
-isomorphic $\lambda$-algebra, established in \textbf{Theorem 5.5.13.}. This indicates that every $\lambda$-algebra can be
+isomorphic $\lambda$-algebra, established in \textbf{Theorem 5.5.13}. This indicates that every $\lambda$-algebra can be
 obtained by a CCC with a reflexive object. The results of applying
 \AgdaFunction{corollary} can be interpreted in both directions of this transformation.
 Intepreting within the context of the transformation from \textit{Karoubi
@@ -779,7 +780,7 @@ theorem. \\
 The above theorem shows that the syntactic applicative structure generated from
 any CCC with a point surjective morphism has a fixed point theorem. To connect
 this result back the terms of the $\lambda$-calculus and the equational theory
-$\lambda\beta$,  \textbf{Theorem 5.2.18 (i)} from \cite{barendregt1992lambda} must
+$\lambda\beta$,  \textbf{Theorem 5.2.18} from \cite{barendregt1992lambda} must
 be considered which states
 
 \begin{theorem*}
@@ -810,7 +811,7 @@ points if for all $f$, $g : A \rightarrow A$
 \end{align*}
 
 
-Furthermore there are the extensional $\lambda$-algebras that correspond the
+Furthermore, there are the extensional $\lambda$-algebras that correspond the
 equational theory which satisfies the $\eta$ rule i.e.
 
 \begin{align*}
@@ -820,7 +821,7 @@ equational theory which satisfies the $\eta$ rule i.e.
 
 The class of CCCs that give rise to these structures are those with an object
 $D$ that \textit{has
-enough points} but, instead of $D$ being reflexive is instead
+enough points} but, instead of $D$ being reflexive, is instead
 isomorphic to its exponential object i.e. $D \equiv D^{D}$.
 
 Given that point surjectivity gives a fixed point theorem for any applicative
@@ -829,11 +830,11 @@ structure it might correspond. The notion is certainly weaker than that of
 certainly weaker than that of a $\lambda$-algebra as the arrow from $D^{D}
 \rightarrow D$ for a reflexive object is made use of when defining the semantic
 intepretation function giving rise to $\lambda$-algebras. This thesis does not
-provide a concrete answer to this question, see Section \ref{section:combin},
+provide a concrete answer to this question (see Section \ref{section:combin})
 but provides some combinators that are derivable in any applicative structure
 derived from a CCC with a point surjective object. The derivations of the
 combinators will be presented informally due to their similarity to the above
-derivations with formal proofs being contained in the appendix.
+proofs.
 
 These combinators utilise the fact that $a \star b =
 \overline{uncurry \, (\varphi \circ a)} \circ b$. If  $a$ can be picked
