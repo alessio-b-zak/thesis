@@ -7,13 +7,13 @@ sufficiently understand Lawvere's fixed point theorem. As explained prior,
 theorem provers often work by utilising the Curry-howard isomorphism to embed a
 logical framework within the type system of a programming language. This is the
 approach taken by the Agda theorem prover which makes use of a type system
-similar to that of Martin Lof Type theory, a type theory which provides a
+similar to that of \mlt{} Type theory, a type theory which provides a
 logical framework for intutionistic higher-order logic.
 
 \section{\mlt{} Type Theory}
 The approach to theorem proving taken in this thesis is a type theoretic
 approach exploiting the \cuho{} correspondence. This will be done in the
-dependent type theory designed by \mlt{}. Martin Lof's type theory (MLTT) was intended to be an
+dependent type theory designed by \mlt{}. \mlt{}'s type theory (MLTT) was intended to be an
 entirely constructive foundation in which mathematics could be done. Just as,
 inline with the \cuho{} correspondence, the intutionistic fragment of
 natural deduction has an interpretation within the simply-typed
@@ -58,17 +58,18 @@ level $U_{n+1}$ i.e.
 
 A type is then an inhabitant of some universe. One might desire some finite
 number of universes in which to work and this was something \mlt{} desired.
-Martin-Log's first presentation of his type theory featured only one universe,
+\mlt{}'s first presentation of his type theory featured only one universe,
 $U$, which was an element of itself.
 
 \begin{align*}
     U : U
 \end{align*}
 
-Thierry Coquand in 1992 showed that a Russell style paradox could be embedded
-within a type theory with a single impredicative universe. This mirrors the
+Thierry Coquand, in 1992, showed that a Russell-style paradox could be embedded
+within a type theory with a single impredicative universe
+\cite{coquand1992paradox}. This mirrors the
 inconsistencies that develop when trying to postulate a set of all sets in naive
-set theory. A type is then defined to bean element of one of the postulated
+set theory. A type is then defined to be an element of one of the postulated
 universes and new types can be defined within a given universe.
 
 
@@ -84,12 +85,12 @@ $\Pi$-type,
 \begin{align*}
     \prod_{(x : A)}B
 \end{align*}
-which binds the variable $x$ in B, represents the dependent function which takes
+which binds the variable $x$ in $B$, represents the dependent function which takes
 an argument $x : A$ and returns an element of type $B$ with the free variable
 $x$ replaced with the argument to the function. A dependent function, $f :
 \prod_{(x : A)}B$, can be introduced via a set of defining equations or via a
 $\lambda$-abstraction. Given an expression $M : B$ where $B$ may contain the
-variable $x : A$ $f$ can be defined as
+variable $x : A$, $f$ can be defined as
 \begin{align*}
     f (x) :\equiv M \textrm{ for } x : A
 \end{align*}
@@ -104,16 +105,14 @@ applied to $f$ to obtain a value of type $B(a)$ written
 \begin{align*}
     f(a) : B(a)
 \end{align*}
-\todo{uniqueness principle for pi types}
 
 The expression that the the application yields is the result of replacing all
-instances of $x$ in $M$ with $a$. With depenent functions it is possible to
-capture the notion of a \textit{type-family}. A type-family is a $\Pi$-type that
-returns an element of some universe written. The other types to be introduced in
-this section can be written as inductive types. Inductive types can be
-introduced by supplying constructors with build elements of the type from other
-types.  Inductive types can be computed with using induction principles which
-describe how to compute with abitrary structures of the type based on the
+instances of $x$ in $M$ with $a$. When $B$ returns a constant type for input
+types the normal function arrow $\rightarrow$ can be used.  The other types to
+be introduced in this section can be written as inductive types. Inductive types
+can be introduced by supplying constructors with build elements of the type from
+other types. Inductive types can be computed with using induction principles
+which describe how to compute with abitrary structures of the type based on the
 constituent parts. Induction principles can be seen as an alternative to pattern
 matching, a more common feature of functional programming languages. A simple
 type to illustrate this is the product type which is the type theory analogue of
@@ -139,9 +138,9 @@ identity type. The induction principle for products is a function with the type
     B}C(x)
 \end{align*}
 
-Intuitively, this type can be read as, given a type family $C : A \times B
+Intuitively, this type can be read as, given a function $C : A \times B
 \rightarrow U$ for some universe, $U$, and given a dependent function which
-takes two arguments returns the type family applied to the pair of the two
+takes two arguments returns the  applied to the pair of the two
 functions, a dependent function for pairs can be produced. More concisely, a
 function for pairs can be produced from a function that takes two arguments.
 Intuitively this can be done by taking the function with two arguments,
@@ -231,9 +230,8 @@ possible. The intutionistic, constructive component of this logic comes from the
 fact that to prove a position an element of a type \textit{must} be constructed.
 A proof of $A \land B$ consists of providing a proof of $A$ \textit{and}
 providing a proof of $B$. This constructive approach to logic weakens the
-deductive framework.
+deductive framework compared to classical logic.
 
-\todo{double negation/excluded middle}
 The propositions-as-types intepretation of logic is
 proof-relevant, proving, within the type theory, that two things are equal uses
 the identity type. An inhabitant of the identity type is an object within the
@@ -265,7 +263,7 @@ where \AgdaDatatype{name} : \AgdaDatatype{A} indicates that the identifier
 identifiers cannot be elided and inferred by the compiler. In the presence of
 dependent types, the problem of type inference becomes undecidable and therefore
 it is preferable to explicitly annotate them for all identifiers. Agda provides
-a limited number of the constructions provided in Martin Lof type theory and
+a limited number of the constructions provided in \mlt{} type theory and
 instead provides a method for defining inductive datatypes allowing inductive
 types such as dependent pairs, product and coproduct types to be defined. One of
 the constructions provided by are Pi types. A Pi type can be introduced with an
@@ -445,7 +443,11 @@ the type theory.
 
 
 A common solution within the type theory of unmodified Agda is the setoid
-approach. A setoid is a set or type alongside an equivalence relation
+approach.
+
+\subsection{Setoids}
+\label{section:setoids}
+A setoid is a set or type alongside an equivalence relation
 
 \ExecuteMetaData[../agda/latex/ThesisSetoid.tex]{setoid-setoid}
 

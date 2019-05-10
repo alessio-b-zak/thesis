@@ -9,13 +9,10 @@ will be derived after established its cartesian closedness. The interplay
 between cartesian closed categories and models of the untyped $\lambda$-calculus
 will be examined and a novel result will be derived.
 \section{Points}
-
-\subsection{Points} \todo{expand proofs further}
 Lawvere's fixed point theorem makes use of the notion of points and surrounding
-definitions. The necessary definitions will be presented in Agda.
-
-Points are a categorical abstraction that generalise the notion of elements of
-a set. A point is an arrow from the terminal object to any other object
+definitions. The necessary definitions will be presented in Agda. Points are a
+categorical abstraction that generalise the notion of elements of a set. A point
+is an arrow from the terminal object to any other object
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-point}
 
@@ -259,8 +256,8 @@ of the applications.
 Lawvere's fixed point theorem is an incredibly broad ranging theorem that
 generalises many important theorems in mathematical logic and foundational
 computer science and mathematics. This thesis will formalise and axiomatise two
-specific instances, Cantor's diagonal argument and the first recursion theorem
-in the $\lambda$-calculus. An analog to Cantor's diagonal argument will be introduced
+specific instances, Cantor's theorem the first fixed point theorem
+in the untyped $\lambda$-calculus. An analog to Cantor's theorem will be introduced
 alongside a category of small types in place of the category of sets.
 After, categorical models of the $\lambda$-calculus will be explored and the
 consequences of lawvere's fixed point theorem in these models. This theorem has
@@ -269,6 +266,7 @@ Some limitations in formalising these within theorem provers will be explored in
 the further work section.
 
 \subsection{Cantor's Theorem}
+\label{section:cantor}
 An analogue of Cantor's theorem can be constructed using a category of small
 types (i.e. all types that belong to a given universe). A category can be
 constructed from the elements of any Agda universe of a particular level by
@@ -584,28 +582,26 @@ This claim affirms the notion that Curry's fixed combinator could be derived as
 an instance of Lawvere's theorem. Despite this remark, the realities of the
 situation are not so simple. The \verb|nLab| page does not provide a source for
 their remark and, within the literature, there are only informal proofs of this
-claim. Upon further examination the informal proofs contain some inaccuracies
-that result in them not being a true reflection of Lawvere's theorem in the
-context of the untyped $\lambda$-calculus. The precise issues with the
-previously presented proofs will be outlined in \todo{evaluation}. In this
+claim. Upon further examination the informal proofs do not truly reflect Lawvere's theorem in the
+context of the untyped $\lambda$-calculus. These
+previously presented proofs will be examined more closely in Section
+\ref{quote:prior}. In this
 thesis a precise account of the relationship indicated within
 the remark on \verb|nLab| will be presented, which does not quite extend to establishing the
-existence of fixed point combinators within the $\lambda$-calculus but the
-result - the first fixed point theorem.
+existence of fixed point combinators within the $\lambda$-calculus but a
+straightforward corollary - the first fixed point theorem. The first fixed point
+theorem states that all $\lambda$-terms have a fixed point under application.
 
 The proof that Lawvere's theorem implies the existence of fixed points for all
 $\lambda$-terms rests on the observation first made by Dana Scott in his
-development of domain theory, that $\lambda$-terms can be considered as objects
-of the models but also as functions between $\lambda$-terms. This naturally
+development of domain theory, that $\lambda$-terms can also be considered as functions between $\lambda$-terms. This naturally
 engenders a desire for some object $D$ that is isomorphic to $D^D$, the function
 space on $D$. This is impossible for any set within a set theory that rejects
-unrestricted comprehension. Dana Scott solved this by constructing an object
-$D_{\infty}$ as a complete partial order \todo{here}. These
-ideas were generalised by Koymans and Scott identifying that all models of the
+unrestricted comprehension. Various specific models were constructed through the
+latter half the of 20$^{\textrm{th}}$ century. These
+ideas were later generalised by identifying that all models of the
 $\lambda$-calculus arise from cartesian closed category with an object $D$ that
 has a retraction to its own function space, known as a reflexive object.
-
-\todo{name corollary}
 
 The relationship between these constructions and Lawvere's theorem can be
 understood by observing that in any $CCC$ with a reflexive object $D$ there is a
@@ -653,22 +649,20 @@ is sufficient to have an object $D$ in a CCC such that $D^D$ is a retract of
 $D$."}
 \end{displayquote}
 
-Baredregt's textbook is a useful resource for all work within this section. From
-the above quote and the earlier corollary to Lawvere's theorem it can be
+From the above quote and the earlier corollary to Lawvere's theorem it can be
 concluded that the categorical interpretation of every model of the
 $\lambda$-calculus has an object with the fixed point property.
 
-Models, in the model-theoretic sense, are helpful for exploring properties of
-the $\lambda$-calculus that are not immediate from the equational theory and
-syntax itself. Concrete models of the $\lambda$-calculus include \todo{concrete
-models} but what it meant to be model of the $\lambda$-calculus was elusive
-until \todo{koymans} where the notion of $\lambda$-algebra was introduced as the
-class of structures corresponding to the $\lambda$-calculus.
-
-The definition of $\lambda$-algebras are predicated on the definition of an
-applicative structure. An applicative structure is a tuple $M = (A \, , \,
-\bullet)$ where $A$ is a set and $\bullet$ is a binary operation on $A$.
-
+In the section that follows, several are results are stated without proof for
+brevity. The relevant theorems and definitions from \textit{The Lambda Calculus:
+Its Syntax and Semantics} will be pointed to for reference. Models, in the
+model-theoretic sense, are helpful for exploring properties of the
+$\lambda$-calculus that are not immediate from the equational theory and syntax
+itself. The general class of structures that are models of the
+$\lambda$-calculus are known as $\lambda$-algebras. The definition of
+$\lambda$-algebras are predicated on the that of an applicative structure. An
+applicative structure is a tuple $M = (A \, , \, \bullet)$ where $A$ is a set
+and $\bullet$ is a binary operation on $A$.
 
 A useful type of models to be considered are the class of syntactic models. A
 syntactic applicative structure adds a method of intepreting terms in the
@@ -690,13 +684,13 @@ syntactic $\lambda$-algebra is
 
 Or that every two $\lambda$-terms that are equal under $\bm{\lambda}$ are equal
 under their intepretation within the $\lambda$-algebra. There is a close
-relationship between $\lambda$-algebras and $CCCs$. Every $\lambda$-algebra can
-be transformed into a $CCC$ with a reflexive object via a process known as the
-\textit{Karoubi Envelope}. Furthermore, every $CCC$ with a
+relationship between $\lambda$-algebras and CCCs. Every $\lambda$-algebra can
+be transformed into a CCC with a reflexive object via a process known as the
+\textit{Karoubi Envelope}. Furthermore, every CCC with a
 reflexive object can be turned into a $\lambda$-algebra such that taking a
-$\lambda$-algebra to a $CCC$ and back to $\lambda$-algebra again produces an
-isomorphic $\lambda$-algebra. This indicates that every $\lambda$-algebra can be
-obtained by a $CCC$ with a reflexive object. The results of applying
+$\lambda$-algebra to a CCC and back to $\lambda$-algebra again produces an
+isomorphic $\lambda$-algebra, established in \textbf{Theorem 5.5.13.}. This indicates that every $\lambda$-algebra can be
+obtained by a CCC with a reflexive object. The results of applying
 \AgdaFunction{corollary} can be interpreted in both directions of this transformation.
 Intepreting within the context of the transformation from \textit{Karoubi
 envelope} to CCC yields no sensical results. The construction of the
@@ -704,7 +698,7 @@ envelope} to CCC yields no sensical results. The construction of the
 Lawvere's theorem are detailed in Appendix \ref{appx:karoubi}. Interpreting in
 the other direction, however, is more useful.
 
-A (locally small) $CCC$ with a reflexive object, $D$, with arrows $F : D
+A locally-small CCC with a reflexive object, $D$, with arrows $F : D
 \rightarrow D^D$ and $G : D^D \rightarrow D$ can be turned into a
 $\lambda$-algebra as follows. The underlying set of the $\lambda$-algebra are
 the points to $D$, written $|D|$. The binary operation, $\star$, of the
@@ -722,13 +716,12 @@ $\lambda$-terms for which the triple of $( \, |D| \, , \, \star \, , \,
 \textbf{Theorem 5.5.6.}.
 
 
-With \todo{corollary} and the fact that the above transformation yields all
-$\lambda$-models
-fixed point theorem can be used to prove the first recursion theorem in every
-$\lambda$-model. The proof proceeds as follows. In some cartesian closed
-category with a point surjective arrow, \AgdaFunction{PS.arr}, the operation
-constituting $\star$ in the generated $\lambda$-algebra can be written as
-follows
+With \AgdaFunction{corollary} and the fact that the above transformation yields
+all $\lambda$-models, Lawvere's fixed point theorem can be used to prove the
+first fixed point theorem in all $\lambda$-models. The proof proceeds as
+follows. In some cartesian closed category with a point surjective arrow,
+\AgdaFunction{PS.arr}, the operation constituting $\star$ in the generated
+$\lambda$-algebra can be written as follows
 
 \ExecuteMetaData[../agda/latex/ThesisExtra.tex]{extra-applicative-op}
 
@@ -791,28 +784,51 @@ theorem. \\
 \end{AgdaMultiCode}
 
 The above theorem shows that the syntactic applicative structure generated from
-any CCC with a point surjective morphism has a fixed point theorem. The first
-fixed point theorem can be recovered from the $\lambda$-calculus by considering
-the syntactic term models. \todo{term models} have a two way implication.
+any CCC with a point surjective morphism has a fixed point theorem. To connect
+this result back the terms of the $\lambda$-calculus and the equational theory
+$\lambda\beta$,  \textbf{Theorem 5.2.18 (i)} from \cite{barendregt1992lambda} must
+be considered which states
 
-The above proof raises further questions concerning categorical intepretations
+\begin{theorem*}
+    For all $M, N \in \Lambda \; \; \; \lambda\beta \vdash  M = N \Leftrightarrow M =
+    N$ is true in all $\lambda$-models
+\end{theorem*}
+
+Given the earlier established fact that all $\lambda$-models can be obtained
+from CCCs with a reflexive object and that all CCCs with a reflexive object
+induce a syntactic applicative structure with a fixed point theorem it is
+possible to conclude, therefore, that the $\lambda$-calculus has a fixed point
+theorem under application. Whilst not the briefest or most insightful proof, it 
+ raises further questions concerning categorical intepretations
 of the untyped $\lambda$-calculus. $\lambda$-algebras are all the models that,
 for their interpretation of $\lambda$-terms, satisfy the equations of
-$\bm{\lambda}$. Other structures exist that aim to characterise all models for
+$\lambda\beta$. Other structures exist that aim to characterise all models for
 which other equational theories hold of their intepretation of $\lambda$-terms.
 For instance, $\lambda$-models are an extension of $\lambda$-algebras which also
-satisfy the Meyer-Scott axiom of weak-extensionality. The class of CCCs that
-give rise to the $\lambda$-models are those with a reflexive object but also
-\textit{have enough points}. \todo{have enough points} Furthermore there are the
-extensional $\lambda$-algebras that correspond the equational theory with the
-satisfies the $\eta$ rule i.e.
-\begin{align*} P \vDash \forall x (\lambda x . M
+satisfy the Meyer-Scott axiom of weak-extensionality. 
+
+
+The class of CCCs that give rise to the $\lambda$-models are those with a
+reflexive object that \textit{has enough points}. An object, $A$, has enough
+points if for all $f$, $g : A \rightarrow A$
+
+\begin{align*}
+    f \neq  g \implies \exists \: x : 1 \rightarrow X \; \; \; f \circ x \neq g \circ x
+\end{align*}
+
+
+Furthermore there are the extensional $\lambda$-algebras that correspond the
+equational theory which satisfies the $\eta$ rule i.e.
+
+\begin{align*}
+    P \vDash \forall x (\lambda x . M
     x) = M
 \end{align*}
 
-The class of CCCs that give rise to these structures are those that \textit{have
-enough points} but, instead of having a reflexive object $D$, instead have the
-isomorphism $D \equiv D^{D}$.
+The class of CCCs that give rise to these structures are those with an object
+$D$ that \textit{has
+enough points} but, instead of $D$ being reflexive is instead
+isomorphic to its exponential object i.e. $D \equiv D^{D}$.
 
 Given that point surjectivity gives a fixed point theorem for any applicative
 structure generated for it a natural question that arises is to what underlying
@@ -820,11 +836,11 @@ structure it might correspond. The notion is certainly weaker than that of
 certainly weaker than that of a $\lambda$-algebra as the arrow from $D^{D}
 \rightarrow D$ for a reflexive object is made use of when defining the semantic
 intepretation function giving rise to $\lambda$-algebras. This thesis does not
-provide a concrete answer to this question but provides some combinators that
-are derivable in any applicative structure derived from a CCC with a point
-surjective object. The derivations of the combinators will be presented
-informally due to their similarity to the above derivations with formal proofs
-being contained in the appendix.
+provide a concrete answer to this question, see Section \ref{section:combin},
+but provides some combinators that are derivable in any applicative structure
+derived from a CCC with a point surjective object. The derivations of the
+combinators will be presented informally due to their similarity to the above
+derivations with formal proofs being contained in the appendix.
 
 These combinators utilise the fact that $a \star b =
 \overline{uncurry \, (\varphi \circ a)} \circ b$. If  $a$ can be picked
@@ -875,7 +891,4 @@ $u$, \textbf{F}
     &= id \circ b \\
     &= b
 \end{align*}
-i.e. \textbf{F} selects the second of its two arguments. With some work perhaps
-more combinators could be derived and, potentially, they will form a complete
-basis for combinatory logic. Further discussion of this occurs in \todo{link
-appendix}
+i.e. \textbf{F} selects the second of its two arguments.

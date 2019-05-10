@@ -4,6 +4,7 @@
 \label{sec:altthmprov}
 A relatively abitrary decision was the choice of proof-assitant to use. Of the
 plethora that exist, the the two most popular in use today are Coq
+\cite{coq}
 and Agda. The reasons for choosing Agda were largely convenience. Agda
 closely resembles strongly typed functional programming languages like Haskell
 in syntax and therefore is more likely to resemble a more familiar programming
@@ -11,7 +12,7 @@ experience to computer scientists. The propositions-as-types approach is taken
 to proving where proof objects are easily manipulable. Coq is a dependently
 typed functional programming language supported by INRIA and originally
 developed by Gerard Huet and Thierry Coquand based on an alternative to MLTT
-called the Calculus of Inductive Constructions. Proving in Coq does not consist
+called the Calculus of Inductive Constructions \cite{pfenning1989inductively}. Proving in Coq does not consist
 of pattern matching and manipulating proof objects but instead through the
 refinement of goals through \textit{tactics}. Tactics are procedures which take
 a goal (proof) and apply a deductive step in reverse to produce subgoal which
@@ -27,36 +28,31 @@ and familiar interface Agda offered. Declarative style proofs i.e.
 integration.
 
 \section{Limitations}
-As mentioned earlier in \todo{section}, a setoid based approach was taken towards
-modelling categories where categories were parameterised by an equivalence
-relation on morphisms. This limitation arose due to the inability to represent
-quotient sets within the type theory of plain Agda. This was a limitation in
-several different ways. As previously mentioned, for arbitrary equivalence
-relations, there is no support for indercinability of identicals and congruence
-must therefore be proved for every type individually. This did not prove to be a
-particularly annoying component of proving within the scope of this thesis.
-This, however, is primarily due to not working in any instances of categories
-that required working with an equivalence relation of morphisms. It would be
-difficult to take the version of Lawvere's theorem defined within this thesis
-and apply it to a non-trivial category. One example of this would be to, within
-Agda, construct the category $\bm{CPO}_{\bot}$\todo{explain}, which is a CCC with a reflexive
-object, to examine the implications of the results in \ldots\todo{here}
-
+As mentioned earlier in Section \ref{section:setoids}, a setoid based approach
+was taken towards modelling categories where categories were parameterised by an
+equivalence relation on morphisms. This limitation arose due to the inability to
+represent quotient sets within the type theory of plain Agda. This was a
+limitation in several different ways. As previously mentioned, for arbitrary
+equivalence relations, there is no support for indercinability of identicals and
+congruence must therefore be proved for every type individually. This did not
+prove to be a particularly annoying component of proving within the scope of
+this thesis.  This, however, is primarily due to not working in any instances of
+categories that required working with an equivalence relation of morphisms. It
+would be difficult to take the version of Lawvere's theorem defined within this
+thesis and apply it to a non-trivial category.
 
 \subsection{Constructive Category of Sets}
 \label{section:hott}
 Another, more restrictive limitation is the lack of a category of sets to work
-within. In \ldots \todo{section on cantor's theorem}, rather than working in a
+within. In Section \ref{section:cantor}, rather than working in a
 real category of sets, an analog to the theorem was proven in a category of
 small types. This was not a faithful interpretation as, within type theory, the
 notion of typing is \textit{external} to the theory, whereas a key notion within
 set theory is that the membership relation is internal to the theory. This is
 what allows the notion of powerset to be formalised and thus takes the
-formulation presented in \ldots to Cantor's theorem. To construct a category of
+formulation presented in Section \ref{section:cantor} to a faithful
+interpretation of Cantor's theorem. To construct a category of
 sets it is necessary to work within a different type theory.
-
-There are various different type theories that could be worked within.
-observational blah blah blah.
 
 A type theory which is supported by Agda and provides a solution to both of the
 problems outlined above is the new and radically different type theory known as
@@ -88,7 +84,7 @@ equality.
     (A = B) \simeq (A \simeq B)
 \end{align*}
 
-jere, equivalence is meant in the category theoretic sense in that
+Here, equivalence is meant in the category theoretic sense in that
 two types $A$ and $B$ belonging to some universe $U$ are equivalent if there
 exists an arrow $f : A \rightarrow B$ with both a left inverse and right
 inverse. The univalence axiom captures an informal mathematical practice of
@@ -153,9 +149,9 @@ proofs that were found, with commentary on their aims and developments.
 
 \subsection{Prior Unifications of the Untyped $\lambda$-calculus and
 Lawvere's Theorem}
+\label{quote:prior}
 \subsubsection{The CCC generated from a simply-typed $\lambda$-calculus}
 
-\label{quote:prior}
 
 A recent Ph.D. thesis, \textit{Category Theory and the Lambda Calculus} by Mario
 Rom\'an Garcia provides an attempt to integrate Lawvere's theorem into the
@@ -265,7 +261,8 @@ theorem and other computability related paradoxes. Analysing the applicative
 structure generated by point-surjectivity could further illuminate the
 similarities between notions of incompleteness and undecidability.
 
-
+\subsection{Combinatory Algebras}
+\label{section:combin}
 Longo and Moggi provide the categorical analogue of the combinatory models, the
 class of models of combinatory logic. An interesting observation is that, to
 model combinatory algebras, the category does not have to be cartesian closed.
