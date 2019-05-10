@@ -2,18 +2,29 @@
 
 \section{Alternative Theorem Provers}
 \label{sec:altthmprov}
-A seemingly abitrary decision was the choice of proof-assitant to use. Of the
-plethora that exist, the three viable options for use in this project were Coq,
-Agda and Isabelle. The reasons for choosing Agda were largely convenience. Agda
-closely resembles  strongly typed functional programming languages like Haskell
+A relatively abitrary decision was the choice of proof-assitant to use. Of the
+plethora that exist, the the two most popular in use today are Coq
+and Agda. The reasons for choosing Agda were largely convenience. Agda
+closely resembles strongly typed functional programming languages like Haskell
 in syntax and therefore is more likely to resemble a more familiar programming
 experience to computer scientists. The propositions-as-types approach is taken
-to proving where proof objects are easily manipulable. Coq, is a dependently
+to proving where proof objects are easily manipulable. Coq is a dependently
 typed functional programming language supported by INRIA and originally
 developed by Gerard Huet and Thierry Coquand based on an alternative to MLTT
 called the Calculus of Inductive Constructions. Proving in Coq does not consist
 of pattern matching and manipulating proof objects but instead through the
-refinement of goals through \textit{tactics}. Tactics
+refinement of goals through \textit{tactics}. Tactics are procedures which take
+a goal (proof) and apply a deductive step in reverse to produce subgoal which
+themselves must be solved. This procedure continues until all goals have been
+satisfied and the proof is complete. In this way, the direct manipulation of
+terms can be avoided and large steps of proofs can be automated. Users are able
+to define their own tactics allowing for faster and more automated proofs. This
+style is not without its disadvantages. Coq proofs consist of a list of
+the tactics used. These can be difficult to read and can require more cognitive
+effort to understand. The timeframe for this project favoured the more intuitive
+and familiar interface Agda offered. Declarative style proofs i.e.
+\AgdaFunction{begin}, however, are not well supported in Agda, with no editor
+integration.
 
 \section{Limitations}
 \label{section:limitations}
@@ -87,7 +98,7 @@ working with higher inductive types and allows mathematics such as Category
 theory (very much dependent on classifying structures up to isomophism) and
 homotopy theory to be embedded succinctly within type theory. By postulating
 univalence it is possible to recover a classical principle of function
-extensionality, something that is not valid within plain MLTT.
+extensionality without postulation.
 
 Within homotopy type theory it is possible, as mentioned prior, to quotient your
 types by abitrary equivalence relations as a higher inductive type.
@@ -106,6 +117,10 @@ done recently to provide a constructive interpretation of the univalence axiom
 \todo{cubical}.  Support for Cubical type theory exists in Agda as of version
 2.6 providing support for higher inductive types and an equality path type.
 
+From the above remarks it is clear that almost all the limitations of the
+current formalisation of categories would be solved by moving towards a Homotopy
+type theory setting, hopefully resulting in a simpler and more satisfying
+proving experience.
 \section{Importance of Theorem Proving}
 Part of the  work done during this thesis was to investigate how computer-aided
 mathematics is done and whether it is worth being pursued in mainstream
@@ -128,14 +143,19 @@ Lawvere's fixed point theorem, two informal attempts to outline the relation
 were found. These attempted proofs did not fully link the untyped
 $\lambda$-calculus to Lawvere's theorem. Through working in a highly rigorous
 setting, there is very little doubt that relation outlined within this thesis is
-incorrect. Although not all the relationships have been investigated end to end,
-the tricky area of the proof (i.e. the algebraic manipulation) has been
+incorrect. Although not all the relationships have been investigated end-to-end,
+the tricky aspect of most proof (i.e. the algebraic manipulation) has been
 formalised and checked. The work formalising Lawvere's theorem was vital to
-observing the connection between the $\lambda$-calculus and the theorem. In
+observing its connection to the $\lambda$-calculus. Insf
 theorem proving, none of the details can be elided so a subtle and deep
-understanding of the intricacies of the theorem is developed.
+understanding of the intricacies of the theorem is developed. Below are the two
+proofs that were found, with commentary on their aims and developments.
 
+\subsection{Prior Unifications of the Untyped $\lambda$-calculus and
+Lawvere's Theorem}
 \subsubsection{The CCC generated from a simply-typed $\lambda$-calculus}
+
+\label{quote:prior}
 
 A recent Ph.D. thesis, \textit{Category Theory and the Lambda Calculus} by Mario
 Rom\'an Garcia provides an attempt to integrate Lawvere's theorem into the
@@ -177,11 +197,10 @@ $\lambda$-calculus.
 
 \subsubsection{Interpretation in the reflexive cpo in the CCC -
 \textbf{CPO}$\bot$}
-The argument that follows is not incorrect but does not, in the opinion of the
-author, capture directly the notion applying Lawvere's theorem in the
-$\lambda$-calculus. From \todo{section}, this result can be derived directly.
+The argument that follows is not incorrect but is derivable as a corollary via
+the result in this thesis.
 
-The second argument comes from a note published by Dan Frumin and Guillaume
+The argument from a note published by Dan Frumin and Guillaume
 Massas. Their arguments draw on material from throughout the Barendregt
 \cite{barendregt1992lambda} which will be made clear when necessary. They begin
 their argument by considering the category \textbf{CPO}$_{\bot}$. The objects of

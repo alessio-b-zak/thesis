@@ -166,17 +166,20 @@ and his proof of the Halting problem resemble closely the proof of Cantor's
 theorem being diagonalisation arguments. Yanofsky \cite{yanofsky2003universal}
 also  shows how both proofs can be understood through the lens of Lawvere's
 fixed point theorem by considering the category of computable universes or
-objects which "support computation" \subsubsection{$\lambda$-calculus} Instead
-of capturing directly the notion of computability, Alonzo Church's formalisation
-was focused on formalising more precisely the notion of a function.  Church's
-formulation, the $\lambda$-calculus \cite{church1932set}, is a formal system
-consisting of the operations of abstraction and application using variable
-binding and substitution. Church showed that the $\lambda$-calculus had an
-notion of $\lambda$-definability \cite{church1936unsolvable} which was
-equivalent to the class of general recursive functions \cite{kleene1936general}
-as defined by G{\"o}del and clarified by Kleene, another model of computation.
-Church also provided a negative answer to the \ent. The $\lambda$-calculus has
-applications beyond that of providing a negative answer to the \ent.
+objects which "support computation"
+
+\subsubsection{$\lambda$-calculus}
+Instead of capturing directly the notion of computability, Alonzo Church's
+formalisation was focused on formalising more precisely the notion of a
+function.  Church's formulation, the $\lambda$-calculus \cite{church1932set}, is
+a formal system consisting of the operations of abstraction and application
+using variable binding and substitution. Church showed that the
+$\lambda$-calculus had an notion of $\lambda$-definability
+\cite{church1936unsolvable} which was equivalent to the class of general
+recursive functions \cite{kleene1936general} as defined by G{\"o}del and
+clarified by Kleene, another model of computation.  Church also provided a
+negative answer to the \ent. The $\lambda$-calculus has applications beyond that
+of providing a negative answer to the \ent.
 
 The $\lambda$-calculus consists of a set of inductively defined terms and
 rewriting rules governing how to compute with them. In the definitions that
@@ -220,9 +223,9 @@ $\lambda$-calculus. In 1934 Curry observed that, if types were assigned to the
 domains and comdomains of his combinators, the types matched the axioms of
 intuitionistic implicational logic \cite{curry1934functionality}. This
 observation proved to be the beginning of theorem provers as they are in their
-current state.  \todo{intuitionistic logic} 
+current state.
 
-\subsection{Curry Howard Correspondence}
+\subsection{Curry-Howard Correspondence}
 Curry's combinatory logic and Church's $\lambda$-calculus, when viewed as a
 system for logic, proved to be inconsistent as shown by Kleene and Rosser
 \cite{kleene1935inconsistency} and again by Curry using his Paradoxical
@@ -234,9 +237,24 @@ made a further observation that the typing rules of the simply
 $\lambda$-calculus corresponded to laws of inference for intuitionistic style
 natural deduction \cite{howard1980formulae}. This lead to the conclusion that
 every system in formal logic has a corresponding computational calculi with a
-specific type system named the Curry-Howard correspondence.
-
-\todo{Intuinistic logic and constructivity. bhk interpretation}
+specific type system named the Curry-Howard correspondence. The relation of
+computational calculi to \textit{intuitionistic} logic is an interesting one.
+Intuitionistic logics are a class of logics that reject some common principles
+of classical logic namely the Law of Excluded Middle (LEM), $(\vdash p \lor \lnot p)$,
+and Double Negation Elimination (DNE) $(\lnot \lnot p \vdash p)$. Intuitionistic Logic
+is highly related to the philosophical position of mathematical constructivism.
+Mathematical constructivism places a higher burden on proof when positing the
+existence of mathematical strucures and demands that a mathematical object be
+explicitly constructed.  Both LEM and DNE are able to prove the existence of
+objects that have not been explicitly constructed through the use of proof by
+contradiction. Constructivism can be seen as a natural counterpart the
+philophical position of intuitionism which asserts that mathematics is an
+entirely human activity that arises from our mental faculty, contrary to
+platonsism which makes stronger ontological claims about the objective status of
+mathematical structures. The effectiveness of the Curry-Howard correspondence in
+formalising and mechanizing mathematics gives some credence to this theory and
+the act of theorem proving can be seen as a continuation of the underlying
+causes of intuitionistic movements.
 
 \section{History of Theorem Proving}
 The Curry-Howard correspondence provided a computational interpretation of the
@@ -280,8 +298,8 @@ be presented in the technical background for this thesis.
 logical frameworks designed from then on including the Edinburgh Logical
 Framework \cite{harper1993framework} and  Agda, the proof-assistant used within this thesis. An analysis of
 the various theorem provers and their relative strengths with take place in
-section
-\ref{sec:altthmprov} of the Evaluation.
+Section
+\ref{sec:altthmprov}.
 
 \subsection{Agda}
 The first version of Agda was designed at Chalmers university in 1999 by
@@ -368,14 +386,10 @@ computability theorem such as a derivation of Rice's theorem  and the Halting
 problem in automata theory and Kleene's recursion theorem. Yanofsky emphasises
 early in his article that Lawvere's fixed point theorem can be viewed as the
 limitations of logical and computational systems and how paradoxes can be viewed
-as the consequences of violating these limitations. Towards the end of the paper
-he suggests further paradoxes that could be brought within the framework.
-\todo{more}
-
+as the consequences of violating these limitations.
 \subsection{Contributions}
-It has been noted that the components of the proof of Lawvere's fixed point
-theorem resemble syntactically the construction of the curry's Y-combinator in
-combinatory logic. Given the connection between cartesian closed categories and
+It has been noted, Section \ref{quote:lambda}, Section \ref{quote:prior}, that the components of the proof of Lawvere's fixed point
+theorem indicate a connection to the untyped $\lambda$-calculus. Given the connection between cartesian closed categories and
 the untyped $\lambda$-calculus and the syntactic resemblance it has been assumed by
 some that there is a relation between the untyped lambda calculus and lawvere's
 fixed point theorem. Given the theorems applications within the theory of
