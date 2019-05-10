@@ -566,11 +566,11 @@ Curry's fixed point combinator \todo{combinator} of which a consequence is that
 every $\lambda$-term has a fixed point under application (known as the first
 fixed point theorem) indicating that perhaps a direct
 application in an appropriate category could yield this result. In addition to
-this, significant results in different models of computation are given as a
-result as outlined in \todo{contextual background}. This observation has not
-gone unnoticed by others. \verb|nLab| \todo{cite}, an online encyclopedia
-for category theory, its webpage for Lawvere's fixed point
-theorem states in \textbf{Remark 2.6}.
+this, significant results in different models of computation are given as an
+application of the theorem as outlined in Section \ref{section:yanofsky}. This observation has not
+gone unnoticed by others. \verb|nLab| \cite{nlab:homepage}, an online encyclopedia
+for category theory,  hosts a webpage for Lawvere's fixed point
+theorem \cite{nlab:lawvere's_fixed_point_theorem} which states in \textbf{Remark 2.6}.
 
 \begin{displayquote}
 \textit{Many applications of Lawvere’s fixed point theorem are in the form of negated
@@ -676,9 +676,10 @@ $\lambda$-calculus, elements of the set $\Lambda$, into the applicative
 struture. In other words a syntactic applicative structure is a triple $M = (A
 \, , \, \bullet \, , \, \llbracket \, \rrbracket)$ of an underlying set $A$, a
 binary operation $\bullet : A \rightarrow A$ and a syntactical intepretation
-function $\llbracket \, \rrbracket$. See Barendregt \todo{for a precise account}
-for a precise definition of $\llbracket \, \, \rrbracket$ and an appropriate definition of
-satisfaction, $\vDash$.
+function $\llbracket \, \rrbracket$. See \textbf{Definitions 5.3.1} and
+\textbf{5.3.2} in \cite{barendregt1992lambda} for a precise definition of
+$\llbracket \, \, \rrbracket$ and an appropriate definition of satisfaction,
+$\vDash$.
 
 The constraint which turns a syntactic applicative structure, \textit{P}, into a
 syntactic $\lambda$-algebra is
@@ -691,18 +692,17 @@ Or that every two $\lambda$-terms that are equal under $\bm{\lambda}$ are equal
 under their intepretation within the $\lambda$-algebra. There is a close
 relationship between $\lambda$-algebras and $CCCs$. Every $\lambda$-algebra can
 be transformed into a $CCC$ with a reflexive object via a process known as the
-\textit{Karoubi Envelope}.\todo{karoubi} Furthermore, every $CCC$ with a
+\textit{Karoubi Envelope}. Furthermore, every $CCC$ with a
 reflexive object can be turned into a $\lambda$-algebra such that taking a
 $\lambda$-algebra to a $CCC$ and back to $\lambda$-algebra again produces an
 isomorphic $\lambda$-algebra. This indicates that every $\lambda$-algebra can be
-obtained by a $CCC$ with a reflexive object. The results of \todo{turn into
-theorem} can be interpreted in both directions of this transformation.
+obtained by a $CCC$ with a reflexive object. The results of applying
+\AgdaFunction{corollary} can be interpreted in both directions of this transformation.
 Intepreting within the context of the transformation from \textit{Karoubi
 envelope} to CCC yields no sensical results. The construction of the
 \textit{Karoubi envelope} and the investigation of its relationship with
 Lawvere's theorem are detailed in Appendix \ref{appx:karoubi}. Interpreting in
 the other direction, however, is more useful.
-
 
 A (locally small) $CCC$ with a reflexive object, $D$, with arrows $F : D
 \rightarrow D^D$ and $G : D^D \rightarrow D$ can be turned into a
@@ -716,9 +716,10 @@ follows:
     \rangle
 \end{align*}
 
-\todo{here} defines a semantic intepretation function for $\lambda$-terms for
-which the triple of $( \, |D| \, , \, \star \, , \, \llbracket \rrbracket \,)$
-is shown to be  a $\lambda$-algebra in.
+\textbf{Definition 5.5.3.} defines a semantic intepretation function for
+$\lambda$-terms for which the triple of $( \, |D| \, , \, \star \, , \,
+\llbracket \rrbracket \,)$ is shown to be  a $\lambda$-algebra in
+\textbf{Theorem 5.5.6.}.
 
 
 With \todo{corollary} and the fact that the above transformation yields all

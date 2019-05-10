@@ -445,8 +445,15 @@ the type theory.
 
 
 A common solution within the type theory of unmodified Agda is the setoid
-approach. A setoid is a set or type alongside an equivalence relation \todo{add
-setoid def}. Setoids can be used to work with and prove properties of
+approach. A setoid is a set or type alongside an equivalence relation
+
+\ExecuteMetaData[../agda/latex/ThesisSetoid.tex]{setoid-setoid}
+
+Where equivalence relations are defined appropriately
+
+\ExecuteMetaData[../agda/latex/ThesisSetoid.tex]{setoid-isequiv}
+
+Setoids can be used to work with and prove properties of
 extensional equalities without introducing a new axiom. This is pertinent to
 category theory as, often, structures like monoids and monoid homorphisms are
 the subject of examination and a useful notion of equality is essential for
@@ -468,7 +475,7 @@ propositionally equality since this property must be proven for each equivalence
 relation separately, in some circumstances adding on a significant amount of
 work. Recent advancements in type theory have produced a type theory in which
 function extensionality can be derived and has computational content, discussed
-in \todo{hott section}.
+in Section \ref{section:hott}
 
 \section{Category Theory}
 
