@@ -296,5 +296,17 @@ if for all $f : X \times Y \rightarrow Z$ there exists a unique $s : X
 \rightarrow X$ such that $f = u \circ \langle \, s \times id \, \rangle$.
 
 By transporting the definition of Lawvere's theorem outlined within this thesis
-through the adjunction between 
+through the adjunction between the functors $-\times Y$ and $-^{Y}$ a statement
+is obtained within cartesian categories. The equivalent theorem proceeds as
+follows and is outlined in \textbf{Theorem 2.2.} of \cite{lawvere1969diagonal}.
+In a cartesian category if there exists some $g : A \times A \rightarrow Y$ such
+that, for all $f : A \rightarrow Y$ there exists an $x : 1 \rightarrow A$ such
+that for all $a : 1 \rightarrow A$
 
+\begin{align*}
+    f \circ a = g \circ \langle a , x \rangle
+\end{align*}
+
+The interplay between the two definitions in this section will do much to
+enlighten the relationshp between functional completeness and Lawvere's fixed
+point theorem and is a topic for future study.

@@ -188,14 +188,14 @@ rewriting rules governing how to compute with them. In the definitions that
 follow $s$ and $t$ range over $\lambda$-terms and $x$ ranges over variable
 names.
 
-\begin{definition}[\textbf{The set} $\bm{\Lambda}$ \textbf{of}
+\begin{definition*}[\textbf{The set} $\bm{\Lambda}$ \textbf{of}
     $\bm{\lambda}$\textbf{-terms}]
     \begin{gather*}
         x \in \Lambda \\
         s \in \Lambda \; \land \; t \in \Lambda \implies (s \; t) \in \Lambda \\
         s \in \Lambda \; \implies \lambda x . s \in \Lambda
     \end{gather*}
-\end{definition}
+\end{definition*}
 
 $(s \: t)$ denotes the application of $s$ to $t$ and $\lambda x . s $ denotes
 the \textit{capture} or \textit{binding} of the variable $x$ in term $s$, known
@@ -205,13 +205,13 @@ instances of the abstracted variable with the term being applied a process known
 as substitution. This computation is known as $\beta$-reduction.
 
 
-\begin{definition}[$\bm{\beta}$\textbf{-reduction}] A term $t$ applied to
+\begin{definition*}[$\bm{\beta}$\textbf{-reduction}] A term $t$ applied to
     $\lambda$-abstraction $(\lambda x . s \; t)$, $\beta$\textit{-reduces} to
     $s[t/x]$ denoting the substitution of $t$ for $x$ in $s$ written
     \begin{align*}
         (\lambda x . s \; t) \rightarrow_{\beta} s[t/x]
     \end{align*}
-\end{definition}
+\end{definition*}
 With this notion of reduction an equational theory can be produced capturing the
 notion of equivalence under $\beta$-reduction which will be referred to as
 $\lambda\beta$.
