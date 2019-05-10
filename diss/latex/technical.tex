@@ -70,17 +70,13 @@ within a type theory with a single impredicative universe
 \cite{coquand1992paradox}. This mirrors the
 inconsistencies that develop when trying to postulate a set of all sets in naive
 set theory. A type is then defined to be an element of one of the postulated
-universes and new types can be defined within a given universe.
-
-
-
-Introducing new types into the type theory involves explaining how to create
-objects of that type and how to compute with objects of the type, done by adding
-more definitional equalities to the system.  The most basic components of MLTT
-is the dependent function or Pi-type, $\Pi$. $\Pi$-types represent functions
-where the output type of a function can depend on the argument to the function.
-If $A$ is a type (i.e. $A : U$ for some universe $U$) and $B : U$  the
-$\Pi$-type,
+universes and new types can be defined within a given universe. Introducing new
+types into the type theory involves explaining how to create objects of that
+type and how to compute with objects of the type, done by adding more
+definitional equalities to the system.  The most basic components of MLTT is the
+dependent function or Pi-type, $\Pi$. $\Pi$-types represent functions where the
+output type of a function can depend on the argument to the function.  If $A$ is
+a type (i.e. $A : U$ for some universe $U$) and $B : U$  the $\Pi$-type,
 
 \begin{align*}
     \prod_{(x : A)}B
@@ -105,7 +101,6 @@ applied to $f$ to obtain a value of type $B(a)$ written
 \begin{align*}
     f(a) : B(a)
 \end{align*}
-
 The expression that the the application yields is the result of replacing all
 instances of $x$ in $M$ with $a$. When $B$ returns a constant type for input
 types the normal function arrow $\rightarrow$ can be used.  The other types to
@@ -137,7 +132,6 @@ identity type. The induction principle for products is a function with the type
     U}(\prod_{(x : A)}\prod_{(y : B)}C((x , y))) \rightarrow \prod_{x : A\times
     B}C(x)
 \end{align*}
-
 Intuitively, this type can be read as, given a function $C : A \times B
 \rightarrow U$ for some universe, $U$, and given a dependent function which
 takes two arguments returns the  applied to the pair of the two
@@ -166,18 +160,54 @@ with the same defining equation
 \begin{align*}
     \textsf{ind}_{\Sigma_{x :A}B(x)}\, (C, g, (a , b)) :\equiv g(a)(b)
 \end{align*}
+The unit type, $\textbf{1} : U$ is inhabited by only a single element $\star :
+\textbf{1}$.
 
+The inducton principle for the unit type captures the notion that, to compute
+with the unit type, it is only necessary to consider the element $\star$.
+
+\begin{align*}
+    \textsf{ind}_{\textbf{1}} : \prod_{C : \textbf{1} \rightarrow U}C(\star)
+    \rightarrow \prod_{x : \textbf{1}}C(x)
+\end{align*}
+
+This is defined as
+
+\begin{align*}
+    \textsf{ind}_{\textbf{1}}(C,c,\star) :\equiv c
+\end{align*}
 
 The coproduct type is the typed variant of the disjoint union from set theory.
-For two types $A : U$ and $B : U$ coproduct of $A$ and $B$ is $A + B : U$.
-induction principle
+For two types $A : U$ and $B : U$ coproduct of $A$ and $B$ is $A + B : U$. There
+are two constructors for the coproduct type $\textsf{inl} : A \rightarrow A + B$
+and $\textsf{inr} : B \rightarrow A + B$ The induction principle for the
+coproducts requires a function to eliminate the \textsf{inl} case and a function
+to eliminate the \textsf{inr}. $\textsf{ind}_{A+B}$ therefore has type
 
-unit
-induction principle
+\begin{align*}
+    \textsf{ind}_{A+B} : \prod_{(C:(A+B)\rightarrow
+    U)}\Big(\prod_{(a:A)}C(\textsf{inl(a)})\Big) \rightarrow
+\Big(\prod_{(b : B)}C(\textsf{inr}(b)))\Big) \rightarrow \prod_{(x:A+B)}C(x)
+\end{align*}
 
-void
+With a defining equation for each constructor
 
-A final and key component of MLTT is the identity type, a type used to prove
+\begin{align*}
+    \textsf{ind}_{A+B}(C,c,d,\textsf{inl}(a)) :\equiv c(a) \\
+    \textsf{ind}_{A+B}(C,c,d,\textsf{inr}(b)) :\equiv d(b)
+\end{align*}
+
+The void type, $\textbf{0} : U$, has no inhabitants and therefore there is no
+way to introduce it. The induction principle has no defining equations as there
+is no inhabitants with which to provide it. It is the type equivalent of the
+trivial function from the empty set.
+
+\begin{align*}
+    \textsf{ind}_{\textbf{0}} : \prod_{(C : \textbf{0} \rightarrow
+    U)}\prod_{(x:\textbf{0})}C(x)
+\end{align*}
+
+The final and key component of MLTT is the identity type, a type used to prove
 that two terms are equal. This is known as propositional equality and is
 internal to the theory. For a given type, $A : U$, the identity type is a family
 $\textsf{Id}_{A} : A \rightarrow A \rightarrow U$ for a given $a : A$, $b : A$
@@ -345,17 +375,29 @@ and coproducts
 
 \ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-coproduct}
 
+and the unit type
+
+\ExecuteMetaData[../agda/latex/ThesisUnit.tex]{unit-unit}
+
+
+and the void type
+
+\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-empty}
+
+Negation takes the appropriate definition within the intuitionistic setting
+
+\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-negation}
+
 Instead of introducing induction and recursion principles for inductive data
 types, Agda instead opts for deep pattern matching whereby an inductive datatype
 can be expanded into its constitutent components. This is justified by the fact
 that all inductive data types possible of being defined within (normal) Agda
-correspond to W types i.e. types that admit a well-founded induction principle.
+correspond to W-types i.e. types that admit a well-founded induction principle.
 An example of pattern matching can be used to define a projection out of product
 types.
 
 \ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-projl}
 
-\todo{pattern match that introduces information}
 
 The final type needed before propositions-as-types can be employed is the
 equality type which is defined as follows
@@ -379,7 +421,7 @@ example is the definition of a monoid, $(S \, , \, \bullet , \, e)$, within Agda
 \ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-monoid}
 
 where \AgdaDatatype{lsuc} is the equivalent of \AgdaDatatype{suc} but for
-levels. \todo{underscore}This is required due to \AgdaField{$\bullet$} which
+levels. This is required due to \AgdaField{$\bullet$} which
 forces the implicit constructor for the type to be of a higher sort than
 \AgdaField{S} itself, due to the predicativity of the underlying type theory.
 The identifiers to the left hand side of the colon under the \AgdaKeyword{field}
@@ -460,8 +502,7 @@ category theory as, often, structures like monoids and monoid homorphisms are
 the subject of examination and a useful notion of equality is essential for
 making progress. Proofs with respect to the equivalence relation can be done in
 a largely similar way to using propositional equality using the properties of
-reflexivity, transitivity and symmetry of the equivalence relation \todo{monoid
-example}.  Other situations in which it is preferable to use setoids is when
+reflexivity, transitivity and symmetry of the equivalence relation. Other situations in which it is preferable to use setoids is when
 working with algebraic structures where the underlying equality is not truly
 propositional equality for example the monoid consisting of the rational numbers
 under addition. Commonly the rational numbers are defined as a pair of integers
@@ -494,7 +535,7 @@ defining categories and the objects and arrows of categories as types. By paying
 closer attention to what is in the metatheory versus internal to theory i.e. set
 membership versus a typing judgement and by paying closer attention to the
 predicativity of the system in question, \textit{larger} objects can safely be
-embedded in the system\todo{explain more}. In the informal presentation of
+embedded in the system. In the informal presentation of
 category theory, as is prevelant in the literature, no firm foundations will be
 provided so as to aid in understanding. This will be followed by a formal
 presentation of the constructions within Agda. To repeat, a category is a
@@ -570,7 +611,7 @@ compositions in a large categorical term to apply an equality. This is given for
 free when using propositional equality as functions are unable to distinguish
 terms with the same normal form. This can be seen as one of the downsides to
 using equivalence relations as congruence must be proven for every each
-individual equivalence relation.\todo{congruence}
+individual equivalence relation.\todo{add congruence}
 
 There are many examples of categories throughout mathematics and computing. The
 category of groups, \textbf{Group}, has as its objects groups and its morphisms

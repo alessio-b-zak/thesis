@@ -54,6 +54,21 @@ open import Level renaming (zero to lzero ; suc to lsuc)
 infix 9 _≡_
 \end{code}
 
+
+%<*misc-empty>
+\begin{code}
+data ⊥ : Set where
+\end{code}
+%</misc-empty>
+
+
+%<*misc-negation>
+\begin{code}
+¬_ : ∀ {l} → Set l → Set l
+¬ P = P → ⊥
+\end{code}
+%</misc-negation>
+
 %<*misc-inductive1>
 \begin{code}
 data InductiveType (Parameter : Set) : (Index : ℕ) → Set where

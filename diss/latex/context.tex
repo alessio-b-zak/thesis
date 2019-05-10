@@ -56,7 +56,7 @@ cardinality of a set is strictly smaller than the cardinality of its powerset.
 Cantor's proof of this theorem made use of a so-called \textit{diagonal
 argument}, one of the first of its kind which, repeated through time in
 different fields, was abstracted by Lawvere to give his fixed point theorem in
-category theory subsuming previous instances. Cantor's theorem proceeds has
+category theory subsuming previous instances. Cantor's theorem proceeds as
 follows:
 
 \begin{theorem*}[\textbf{Cantor's Theorem}]
@@ -79,7 +79,7 @@ the real numbers, and considering this as a table, see Figure
 table flipping the $n^{th}$ digit of the $n^{th}$ number going down the table to
 produce a new real number not in the table. The repetition of the argument in
 two places in the definition yields a familiar structure repeated in many
-theorems in mathematical logic known as \textit{diagonal arguments}. The set
+theorems in mathematical logic known as \textit{diagonal arguments}.
 
 \begin{figure}[h]
     \includegraphics[width=5cm]{diagonal.png}
@@ -206,10 +206,10 @@ as substitution. This computation is known as $\beta$-reduction.
 
 
 \begin{definition*}[$\bm{\beta}$\textbf{-reduction}] A term $t$ applied to
-    $\lambda$-abstraction $(\lambda x . s \; t)$, $\beta$\textit{-reduces} to
+    $\lambda$-abstraction $(\lambda x . s) \; t$, $\beta$\textit{-reduces} to
     $s[t/x]$ denoting the substitution of $t$ for $x$ in $s$ written
     \begin{align*}
-        (\lambda x . s \; t) \rightarrow_{\beta} s[t/x]
+        (\lambda x . s) \; t \rightarrow_{\beta} s[t/x]
     \end{align*}
 \end{definition*}
 With this notion of reduction an equational theory can be produced capturing the
