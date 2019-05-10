@@ -167,8 +167,8 @@
                               \vspace*{1.0cm}
                           DEPARTMENT OF COMPUTER SCIENCE                        \\
                               \vspace*{2.0cm}
-  \mbox{\IfEq{\dissertation@title@major}{}{}{\LARGE \dissertation@title@major}} \\
-                              \vspace*{0.5cm}
+    \LARGE \dissertation@title@major
+                                \vspace*{0.5cm}
   \mbox{\IfEq{\dissertation@title@minor}{}{}{\Large \dissertation@title@minor}} \\
                               \vspace*{1.0cm}
                           {\Large \dissertation@author}                         \\
