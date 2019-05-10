@@ -127,12 +127,24 @@ mathematical reasoning is done informally and even in published proofs many
 steps are left for the reader to internally fill in. There is no shortage of
 mathematical proofs that have been published only for mistakes to have been
 found. The Russian Mathematician Vladimir Voevodsky, a central figure behind the
-development of Homotopy type theory, began his career in algebraic topology. A
-main motivation behind his development of Homotopy type theory was due to
-mistakes in published papers throughout the 1970s within algebraic topology.
-Homotopy type theory was aimed at allowing mathematicians to use informal
-reasoning within a vigorous setting. More can be found of voevodsky's opinions
-within \todo{voevodsky}
+development of Homotopy type theory, began his career in algebraic topology.  In
+an open letter entitled \textit{The Origins and Motivations of Univalent
+Foundations} as part of the  Institute for Advanced Study Letter published in 2014 \cite{sorlin2014iasthe}, Voevodsky outlined his
+motivations for creating more advanced tools in which \textit{do} mathematics.
+He outlines the mistakes and fear at discovering mistakes in theorems he had
+published and minor conflicts between mathematicians over the existence of
+counter examples. The motivations behind the programme of theorem proving can be
+neatly summed up by Voevodsky:
+
+\begin{displayquote}
+    \textit{And I now do my mathematics with a proof assistant. I have a lot of wishes
+    in terms of getting this proof assistant to work better, but at least I
+    don’t have to go home and worry about having made a mistake in my work. I
+    know that if I did something, I did it, and I don’t have to come back to it
+    nor do I have to worry about my arguments being too complicated or about how
+    to convince others that my arguments are correct. I can just trust the
+    computer.}
+\end{displayquote}
 
 In attempts to investigate the relationship between the $\lambda$-calculus and
 Lawvere's fixed point theorem, two informal attempts to outline the relation
@@ -142,18 +154,19 @@ setting, there is very little doubt that relation outlined within this thesis is
 incorrect. Although not all the relationships have been investigated end-to-end,
 the tricky aspect of most proof (i.e. the algebraic manipulation) has been
 formalised and checked. The work formalising Lawvere's theorem was vital to
-observing its connection to the $\lambda$-calculus. Insf
+observing its connection to the $\lambda$-calculus. In
 theorem proving, none of the details can be elided so a subtle and deep
 understanding of the intricacies of the theorem is developed. Below are the two
 proofs that were found, with commentary on their aims and developments.
 
+\todo{fix ias citation}
 \subsection{Prior Unifications of the Untyped $\lambda$-calculus and
 Lawvere's Theorem}
 \label{quote:prior}
 \subsubsection{The CCC generated from a simply-typed $\lambda$-calculus}
 
 
-A recent Ph.D. thesis, \textit{Category Theory and the Lambda Calculus} by Mario
+A recent Bachelors thesis, \textit{Category Theory and the Lambda Calculus} by Mario
 Rom\'an Garcia provides an attempt to integrate Lawvere's theorem into the
 theory of the untyped $\lambda$-calculus as follows
 
@@ -161,8 +174,8 @@ Garcia uses Joachim Lambek's observation that every simply-typed
 $\lambda$-calculus has an associated cartesian closed category which is obtained
 by considering the objects of the category to be the types of the
 $\lambda$-calculus and the morphisms to be the functions between types. Lambek
-showed in \todo{here} that these categories were cartesian closed. Through the
-familiar argument from \todo{bob} Bob Harper the untyped $\lambda$-calculus can
+showed in \cite{lambek1985cartesian} that these categories were cartesian closed. Through the
+familiar argument that the untyped $\lambda$-calculus can
 be viewed as a simply typed calculus i.e.  that untyped is uni-typed - the
 untyped $\lambda$-calculus can be viewed as a simply typed $\lambda$-calculus
 with one type, \textsf{D}. Garcia uses this argument and also provides a
@@ -186,9 +199,8 @@ definition of a category every object must have a terminal object and therefore
 the only arror from the terminal object to itself can be the identity arrow.
 With this reading it is clear that there can be no syntactic interpretation of
 this arrow that yields the terms of the untyped $\lambda$-calculus. A key
-component of the proof provided in \todo{section} was that it gave a fixed point
-theorem in every $\lambda$-algebra which included the term models which give a
-syntactic fixed point theorem which translates to the untyped
+component of result in Section \ref{quote:lambda}  was that it gave a fixed point
+theorem in every $\lambda$-algebra which allowed a route back to the untyped
 $\lambda$-calculus.
 
 \subsubsection{Interpretation in the reflexive cpo in the CCC -
@@ -203,7 +215,8 @@ their argument by considering the category \textbf{CPO}$_{\bot}$. The objects of
 this category are directed complete partial orders (cpos) with a least element
 and arrows are scott-continuous functions. \textbf{Theorem 1.2.16} in the
 Barendregt shows that this category is cartesian closed. Frumin and Massas begin
-by stating without proof that there is a reflexive object in \textbf{CPO}$\bot$.
+by stating without proof that there is a reflexive object in
+\textbf{CPO}$_{\bot}$.
 Using Lawvere's theorem, Frumin and Massas conclude that every endomap on this
 object has a fixed point in the categorical sense. \textbf{Section 5.4} of the
 Barendregt outlines how every reflexive cpo with maps $F : D \rightarrow (D
@@ -233,16 +246,13 @@ theorem could be used to instantiate these paradoxes if the appropriate
 categories are constructed within the type theory. Many of the applications and
 paradoxes are within the category of sets or a set-like category.
 
-\todo{paradoxes}
-\todo{lindenbaum tarski algebras}
-
 
 With this in mind the most practical next step would be to reformalise the work
 done within this thesis within a language that supports homotopy type theory
 taking advantage of univaence and higher inductive types. There is much
 groundwork in place to assist in this endeavour, \textbf{Chapter 9} of
 the HoTT book details how category theory can be constructed within HoTT and
-there exist implementations of this within cubical Agda \todo{fredefox}. The
+there exist implementations of this within Cubical Agda \todo{fredefox}. The
 process of reimplementing the proofs within this thesis in a cubical setting
 would be an interesting process itself to examine. Working within Agda during
 this thesis was at times tedious but ultimately an intellectually tractable
@@ -253,20 +263,38 @@ it would be possible to work within a category of sets where the aformentioned
 questions could be formalised.
 
 
-As was mentioned in \ldots to which computational calculi point surjectivity
-corresponds is left as an open question. The structure in question yields a
-fixed point theorem and several interesting combinators. Similar structures
-appear in the application of Lawvere's theorem to derive godels incompleteness
-theorem and other computability related paradoxes. Analysing the applicative
-structure generated by point-surjectivity could further illuminate the
-similarities between notions of incompleteness and undecidability.
+As was mentioned at the end of Section \ref{quote:lambda} to which computational
+calculi point surjectivity corresponds is left as an open question. The
+structure in question yields a fixed point theorem and several interesting
+combinators. Whether or not point-surjectivity yields a functionally complete
+set of combinators in its generated applicated structure is predicated on the
+categorical analog of models of combinatory logic, combinatory algebras.
 
-\subsection{Combinatory Algebras}
+\subsection{Combinatory Algebras and Lawvere's Theorem}
 \label{section:combin}
-Longo and Moggi provide the categorical analogue of the combinatory models, the
-class of models of combinatory logic. An interesting observation is that, to
-model combinatory algebras, the category does not have to be cartesian closed.
-Moggi and Longo provide a formulation within a cartesian category that suffices.
-This is noteworthy as Lawvere's theorem also has an interpretation solely within
-a cartesian category. This is the version of the theorem preferred by Yanofsky
-in \ldots
+Longo and Moggi \cite{longo1990category} provide the categorical analogue of the combinatory models, the
+class of models of combinatory logic. A combinatory algebra is a 4-tuple
+$(A, \bullet, k, s)$ where $A$ is a set, $\bullet$ is a binary operation on
+$A$, and $k$ and $s$ are distinguished elements of $A$ that satisfy
+
+\begin{align*}
+    &k \bullet x \bullet y = x \\
+    & s \bullet x \bullet y \bullet z = x \bullet z \bullet (y \bullet z)
+\end{align*}
+
+An interesting observation is that, to model combinatory algebras, the category
+does not have to be cartesian closed.  This is noteworthy as Lawvere's theorem
+also has an interpretation solely within a cartesian category. Longo and Moggi
+establish that all combinatory algebras can be obtained from a cartesian
+category with an object $U$ such that there exist arrows $f : U \times U
+\rightarrow U$ and $g : U \rightarrow U \times U$ such that $g \circ f = id$
+\textit{and} that there exists a K-universal arrow $u :U \times U
+\rightarrow U$.
+
+In a cartesian category, an arrow $u : X \times Y \rightarrow Z$ is K-universal
+if for all $f : X \times Y \rightarrow Z$ there exists a unique $s : X
+\rightarrow X$ such that $f = u \circ \langle \, s \times id \, \rangle$.
+
+By transporting the definition of Lawvere's theorem outlined within this thesis
+through the adjunction between 
+
