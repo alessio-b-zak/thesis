@@ -341,7 +341,6 @@ Many constructions within Agda are common enough that they are desirable at all
 levels of universe. Agda does not have cumulativity so, to assist universe
 generic programming, universe polymorphism can be used.
 
-\todo{unit and void}
 
 A more useful example to consider is the sized list type, or vector
 
@@ -361,12 +360,12 @@ type i.e for the empty list has size \AgdaInductiveConstructor{zero} and in the
 inductive case that the list has size \AgdaInductiveConstructor{suc} \verb|n|
 for some \verb|n|. The remaining important types of \mlt{} type theory can
 now be introduced as inductive types beginning with Sigma types.
-\todo{mixfix syntax}
 
-\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-sigma}
-
-The output universe for sigma must be the maximum of the levels of the first and
-second components of the sigma type which can be done using \todo{lub}. The
+\ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-sigma} Names can be defined
+with underscores which are taken as positoinal arguments.  The output universe
+for sigma must be the maximum of the levels of the first and second components
+of the sigma type which can be done using \AgdaOperator{\AgdaPrimitive{⊔}} which
+takes two \AgdaPrimitive{Level}s and returns the larger. The
 product type is defined similarly.
 
 \ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-product}
@@ -611,7 +610,7 @@ compositions in a large categorical term to apply an equality. This is given for
 free when using propositional equality as functions are unable to distinguish
 terms with the same normal form. This can be seen as one of the downsides to
 using equivalence relations as congruence must be proven for every each
-individual equivalence relation.\todo{add congruence}
+individual equivalence relation.
 
 There are many examples of categories throughout mathematics and computing. The
 category of groups, \textbf{Group}, has as its objects groups and its morphisms
@@ -660,7 +659,7 @@ uniqueness
 
 Agda has support for custom syntax directives which can be used to create a
 universal mapping type postulating the existence of a unique arrow. Below is an
-example of defining products using this where \todo{grab exists}, desugars to
+example of defining products using this where \AgdaFunction{∃!}, desugars to
 the universal property type above.
 
 \ExecuteMetaData[../agda/latex/ThesisUnique.tex]{unique-def-terminal}
@@ -810,5 +809,3 @@ and \AgdaFunction{curry} and \AgdaFunction{uncurry} as isomorphisms
 
 In \textbf{Set}, the exponential object for two sets is the set of all functions
 between them.
-
-\todo{add ending}
