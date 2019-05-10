@@ -104,13 +104,13 @@ applied to $f$ to obtain a value of type $B(a)$ written
 \begin{align*}
     f(a) : B(a)
 \end{align*}
-The expression that the the application yields is the result of replacing all
+The expression that the application yields is the result of replacing all
 instances of $x$ in $M$ with $a$. When $B$ returns a constant type for input
 types the normal function arrow, $\rightarrow$, can be used. The other types to
 be introduced in this section can be written as inductive types. Inductive types
 can be introduced by supplying constructors with build elements of the type from
 other types. Inductive types can be computed with using induction principles
-which describe how to compute with abitrary structures of the type based on the
+which describe how to compute with arbitrary structures of the type based on the
 constituent parts. Induction principles can be seen as an alternative to pattern
 matching, a more common feature of functional programming languages. A simple
 type to illustrate this is the product type, which is the type theoretic analogue of
@@ -166,7 +166,7 @@ with the same defining equation
 The unit type, $\textbf{1} : U$ is inhabited by only a single element $\star :
 \textbf{1}$.
 
-The inducton principle for the unit type captures the notion that, to compute
+The induction principle for the unit type captures the notion that, to compute
 with the unit type, it is only necessary to consider the element $\star$.
 
 \begin{align*}
@@ -244,15 +244,15 @@ The basis upon which MLTT can be used as a foundation for mathematics is via the
 propositions-as-types.
 
 \subsection{Propositions-as-types}
-Propositions-as-types hinges on intepreting a proof of a proposition as an
-inhabitant of a correponding type. The types presented in the previous section
-are the types with which higher order intutionistic logic can be intepreted.
+Propositions-as-types hinges on interpreting a proof of a proposition as an
+inhabitant of a corresponding type. The types presented in the previous section
+are the types with which higher order intutionistic logic can be interpreter.
 With types instead of sets, universal quantification over a type can be
 simulated using $\Pi$-types where the output type of the dependent function is
 the proposition being quantified over. Existential quantification can be
-intepreted as $\Sigma$ types where the second argument is the proposition being
+interpreted as $\Sigma$ types where the second argument is the proposition being
 quantified over and the first argument is the object that satisfies said
-proposition. Implication is a non-dependent function type, logical conjuction
+proposition. Implication is a non-dependent function type, logical conjunction
 corresponds to product types, coproduct types to logical disjunction. Truth is
 inhabitation of the unit type and falsity as an inhabitant of the void type. The
 void type has no inhabitants and so any such inhabitant would constitute a proof
@@ -265,7 +265,7 @@ A proof of $A \land B$ consists of providing a proof of $A$ \textit{and}
 providing a proof of $B$. This constructive approach to logic weakens the
 deductive framework compared to classical logic.
 
-The propositions-as-types intepretation of logic is
+The propositions-as-types interpretation of logic is
 proof-relevant, proving, within the type theory, that two things are equal uses
 the identity type. An inhabitant of the identity type is an object within the
 type-theory presenting a equality between two things.
@@ -275,7 +275,7 @@ type-theory presenting a equality between two things.
 
 Agda is a dependently typed functional language in which theorem can be done.
 Agda can be used as a proof assistant through the lens of the \cuho{}
-correspondance given it's type system. Agda uses Haskell like syntax and its
+correspondence given it's type system. Agda uses Haskell like syntax and its
 underlying type theory is based of that of Per \mlt. The following
 describes features of Agda available in version 2.52, the version employed in
 this thesis. Agda uses a predicative hierarchy of universes,
@@ -334,7 +334,7 @@ constructor. In the example given the index is an inhabitant of the natural
 number type and the first constructor dictates the inhabitant of the natural
 number type is \AgdaInductiveConstructor{0} and in the second constructor that
 the inhabitant is \AgdaInductiveConstructor{1}. The final term before the
-\AgdaKeyword{where} statement is the output univerese of the type i.e. to which
+\AgdaKeyword{where} statement is the output universe of the type i.e. to which
 \AgdaDatatype{Set} the type belongs. The constructors of the Inductive data type
 are the possible inhabitants of the type. When pattern matching onto an
 inductive data type, information is gained about the type based on the index
@@ -365,7 +365,7 @@ for some \verb|n|. The remaining important types of \mlt{} type theory can
 now be introduced as inductive types beginning with Sigma types.
 
 \ExecuteMetaData[../agda/latex/ThesisMisc.tex]{misc-sigma} Names can be defined
-with underscores which are taken as positoinal arguments.  The output universe
+with underscores which are taken as positional arguments.  The output universe
 for sigma must be the maximum of the levels of the first and second components
 of the sigma type which can be done using \AgdaOperator{\AgdaPrimitive{⊔}} which
 takes two \AgdaPrimitive{Level}s and returns the larger. The
@@ -392,7 +392,7 @@ Negation takes the appropriate definition within the intuitionistic setting
 
 Instead of introducing induction and recursion principles for inductive data
 types, Agda instead opts for deep pattern matching whereby an inductive datatype
-can be expanded into its constitutent components. This is justified by the fact
+can be expanded into its constituent components. This is justified by the fact
 that all inductive data types possible of being defined within (normal) Agda
 correspond to W-types i.e. types that admit a well-founded induction principle.
 An example of pattern matching can be used to define a projection out of product
@@ -447,7 +447,7 @@ by considering a homomorphism type for the above definition of monoid
 where the fields of the second monoid are postfixed with an apostrophe. Consider
 showing two monoids are propositionally equal. For records, this amounts to
 showing that its fields are equal i.e that the underlying functions are the
-same but \textit{also} the proofs of preservation of identity and and operation
+same but \textit{also} the proofs of preservation of identity and operation
 are the same. The proof-relevant nature of the underlying type theory enables
 two different proofs to be distinguished by their normal form. It would be
 unreasonable and beside-the-point to demand this when equating two monoids but
@@ -460,7 +460,7 @@ turns the theory into a proof-irrelevant one. The proofs for both structures
 can be reduced to refl and then equated propositionally and all that remains is
 showing equality of functions. Introducing \textsf{Axiom K} is not without its
 downsides however. Recent advancements in type theory \cite{hottbook}
-show that there are signifcant advantages to working within a proof-relevant
+show that there are significant advantages to working within a proof-relevant
 setting which are inconsistent with \textsf{Axiom K}. These are discussed in
 Section \ref{section:hott}.
 
@@ -538,7 +538,7 @@ closer attention to what is in the metatheory versus internal to theory i.e. set
 membership versus a typing judgement and by paying closer attention to the
 predicativity of the system in question, \textit{larger} objects can safely be
 embedded in the system. In the informal presentation of
-category theory, as is prevelant in the literature, no firm foundations will be
+category theory, as is prevalent in the literature, no firm foundations will be
 provided so as to aid in understanding. This will be followed by a formal
 presentation of the constructions within Agda. To repeat, a category is a
 collection of objects and a collection of arrows between objects.
@@ -548,8 +548,8 @@ collection of objects and a collection of arrows between objects.
 \end{align*}
 
 In Agda, categories can be constructed in with relative simplicity. The initial
-concepts introduced here are taken from \verb|cats|, a Category Theory library
-in Agda by Jannis Limpberg. \AgdaBound{lo}, \AgdaBound{la} and \AgdaBound{l≈}
+concepts introduced here are taken from \verb|cats| \cite{limperg2019cats}, a Category Theory library
+in Agda by Jannis Limperg. \AgdaBound{lo}, \AgdaBound{la} and \AgdaBound{l≈}
 are used in the following section as variables of type \AgdaDatatype{Level}.
 
 Categories can be introduced as a record parameterised by the level of their
@@ -562,7 +562,7 @@ equalities in order to present equality on morphisms as relations on types as
 per the Agda standard library. In addition to objects and arrows, there exists a
 binary operation on morphisms known as composition which takes two morphisms,
 $f : A \rightarrow B$ and $g : B \rightarrow C$ and produces a third morphism
-$g \circ f : A \rightarrow C$. Furthemore, for each object, $A$, in the
+$g \circ f : A \rightarrow C$. Furthermore, for each object, $A$, in the
 category, there exists an identity arrow $id_{A} : A \rightarrow A$.
 \begin{align*}
     &\textrm{Identity} : \forall A \in \textrm{Obj}(\textbf{C}) \, \, \exists \, \, id : A \rightarrow A \\
@@ -606,8 +606,8 @@ properties of composition and identity
 
 \ExecuteMetaData[../agda/latex/ThesisCategory.tex]{cat-field-comp}
 
-The field \AgdaField{∘{-}resp} is the result of the aformentioned lack of
-fongruence for equivalence relations. Preserves2 indicates that composition is
+The field \AgdaField{∘{-}resp} is the result of the aforementioned lack of
+congruence for equivalence relations. Preserves2 indicates that composition is
 congruent in both of its arguments. This allows us to target individual
 compositions in a large categorical term to apply an equality. This is given for
 free when using propositional equality as functions are unable to distinguish
@@ -619,7 +619,7 @@ There are many examples of categories throughout mathematics and computing. The
 category of groups, \textbf{Group}, has as its objects groups and its morphisms
 group homomorphisms. The category of sets, \textbf{Set}, has as its objects sets
 and its morphsisms total functions. A category of types will be introduced in
-\ldots which will be used to explore an application of lawvere's theorem
+\ldots which will be used to explore an application of Lawvere's theorem
 \subsection{Universal Constructions}
 
 A key idea of category theory are universal constructions. Universal
@@ -713,7 +713,7 @@ with the uniqueness principle for products
 projections out of the product into the components of the indexing category.
 \AgdaFunction{IsProduct} returns a function type which, upon being supplied a
 set of projections from an object to the indexing set, returns a unique arrow
-from the the object to the previously supplied product object satisfying the
+from the object to the previously supplied product object satisfying the
 commuting diagrams for the product. A product object for a given indexed family
 of objects \verb|O| can be defined as the product object itself,
 \AgdaField{prod}, the projections out of the product object, \AgdaField{proj},
@@ -722,7 +722,7 @@ and the proof of uniqueness, \AgdaField{isProduct}.
 \ExecuteMetaData[../agda/latex/ThesisProduct.tex]{product-def-prod}
 
 A binary product is a product where the function that indexes the family of
-objects is the a boolean elimination function
+objects is the  boolean elimination function
 
 \ExecuteMetaData[../agda/latex/ThesisProduct.tex]{product-def-bool}
 \ExecuteMetaData[../agda/latex/ThesisProduct.tex]{product-def-binprod}
@@ -781,14 +781,14 @@ the evaluation map
 \\
 \ExecuteMetaData[../agda/latex/ThesisExponential.tex]{expon-eval}
 \\
-and the uniquness principle for products
+and the uniqueness principle for products
 \\
 \ExecuteMetaData[../agda/latex/ThesisExponential.tex]{expon-unique}\\
 For ease of use the function producing the unique arrow can be extracted.\\
 \ExecuteMetaData[../agda/latex/ThesisExponential.tex]{expon-curry}
 \end{AgdaMultiCode}
 
-A category that has exponentials is one that  where the exponetial object can be
+A category that has exponentials is one that  where the exponential object can be
 formed for every pair of objects
 
 \begin{AgdaMultiCode}

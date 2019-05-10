@@ -2,8 +2,8 @@
 
 \section{Alternative Theorem Provers}
 \label{sec:altthmprov}
-A relatively abitrary decision was the choice of proof-assitant to use. Of the
-plethora that exist, the the two most popular in use today are Coq
+A relatively arbitrary decision was the choice of proof-assitant to use. Of the
+plethora that exist, the two most popular in use today are Coq
 \cite{coq}
 and Agda. The reasons for choosing Agda were largely convenience. Agda
 closely resembles strongly typed functional programming languages like Haskell
@@ -15,7 +15,7 @@ developed by Gerard Huet and Thierry Coquand based on an alternative to MLTT
 called the Calculus of Inductive Constructions \cite{pfenning1989inductively}. Proving in Coq does not consist
 of pattern matching and manipulating proof objects but instead through the
 refinement of goals through \textit{tactics}. Tactics are procedures which take
-a goal (proof) and apply a deductive step in reverse to produce subgoal which
+a goal (proof) and apply a deductive step in reverse to produce subgoals which
 themselves must be solved. This procedure continues until all goals have been
 satisfied and the proof is complete. In this way, the direct manipulation of
 terms can be avoided and large steps of proofs can be automated. Users are able
@@ -24,7 +24,7 @@ style is not without its disadvantages. Coq proofs consist of a list of
 the tactics used. These can be difficult to read and can require more cognitive
 effort to understand. The timeframe for this project favoured the more intuitive
 and familiar interface Agda offered. Declarative style proofs i.e.
-\AgdaFunction{begin}, however, are not well supported in Agda, with no editor
+\AgdaFunction{begin}-style, however, are not well supported in Agda, with no editor
 integration.
 
 \section{Limitations}
@@ -33,7 +33,7 @@ was taken towards modelling categories where categories were parameterised by an
 equivalence relation on morphisms. This limitation arose due to the inability to
 represent quotient sets within the type theory of plain Agda. This was a
 limitation in several different ways. As previously mentioned, for arbitrary
-equivalence relations, there is no support for indercinability of identicals and
+equivalence relations, there is no support for indiscernibility of identicals and
 congruence must therefore be proved for every type individually. This did not
 prove to be a particularly annoying component of proving within the scope of
 this thesis.  This, however, is primarily due to not working in any instances of
@@ -56,13 +56,13 @@ sets it is necessary to work within a different type theory.
 
 A type theory which is supported by Agda and provides a solution to both of the
 problems outlined above is the new and radically different type theory known as
-Homotopy Type Theory.
+homotopy type theory.
 
 \subsection{Homotopy Type Theory}
 \label{section:hott}
 Homotopy type theory (HoTT) \cite{hottbook} is an extension of MLTT in which the
-higher dimensional structure of the equality type is embraced. Homotopy type
-theory rejects \textsf{Axiom K} which implies UIP. By doing so the so-called higher
+higher dimensional structure of the equality type is embraced. homotopy type
+theory rejects \textsf{Axiom K} which implies uniqueness of identity proofs. By doing so the so-called higher
 homotopy structure of the identity type can be exploited. This is achieved by
 viewing equality between two types as a path in space between two points. Two
 different paths can be considered as well as homotopies (continuous
@@ -102,19 +102,19 @@ types by abitrary equivalence relations as a higher inductive type.
 types behave the same as \textsf{refl}, meaning that indecernability of identicals
 is preserved. This allows categories to be defined with propositional equality
 without the additional requirement of congruence for the equivalence relation.
-Within Homotopy type theory it is possible to define a set type which
+Within homotopy type theory it is possible to define a set type which
 corresponds to the rules of ZFC with a coherent notion of set membership. This
 is outlined in \textbf{Chapter 10} of the HoTT book \cite{hottbook} . Using this construction, a coherent category of sets
 could be produced within the type theory and Lawvere's fixed point theorem could
 be applied appropriately.
 
-Univalence is posited as an axiom within Homotopy Type theory but work has been
+Univalence is posited as an axiom within homotopy Type theory but work has been
 done recently to provide a constructive interpretation of the univalence axiom
 in a type theory known as Cubical type theory \cite{cohen2016cubical}.  Support for Cubical type theory exists in Agda as of version
 2.6 providing support for higher inductive types and an equality path type.
 
 From the above remarks it is clear that almost all the limitations of the
-current formalisation of categories would be solved by moving towards a Homotopy
+current formalisation of categories would be solved by moving towards a homotopy
 type theory setting, hopefully resulting in a simpler and more satisfying
 proving experience.
 \section{Importance of Theorem Proving}
@@ -127,10 +127,10 @@ mathematical reasoning is done informally and even in published proofs many
 steps are left for the reader to internally fill in. There is no shortage of
 mathematical proofs that have been published only for mistakes to have been
 found. The Russian Mathematician Vladimir Voevodsky, a central figure behind the
-development of Homotopy type theory, began his career in algebraic topology.  In
+development of homotopy type theory, began his career in algebraic topology.  In
 an open letter entitled \textit{The Origins and Motivations of Univalent
 Foundations} as part of the  Institute for Advanced Study Letter published in 2014 \cite{sorlin2014iasthe}, Voevodsky outlined his
-motivations for creating more advanced tools in which \textit{do} mathematics.
+motivations for creating more advanced tools in which to \textit{do} mathematics.
 He outlines the mistakes and fear at discovering mistakes in theorems he had
 published and minor conflicts between mathematicians over the existence of
 counter examples. The motivations behind the programme of theorem proving can be
@@ -150,16 +150,15 @@ In attempts to investigate the relationship between the $\lambda$-calculus and
 Lawvere's fixed point theorem, two informal attempts to outline the relation
 were found. These attempted proofs did not fully link the untyped
 $\lambda$-calculus to Lawvere's theorem. Through working in a highly rigorous
-setting, there is very little doubt that relation outlined within this thesis is
-incorrect. Although not all the relationships have been investigated end-to-end,
-the tricky aspect of most proof (i.e. the algebraic manipulation) has been
+setting, there is no reason to doubt that the relation ship outlined within this thesis is
+correct. Although not all the relationships have been investigated end-to-end,
+the tricky aspect of most proofs (i.e. the algebraic manipulation) has been
 formalised and checked. The work formalising Lawvere's theorem was vital to
 observing its connection to the $\lambda$-calculus. In
 theorem proving, none of the details can be elided so a subtle and deep
 understanding of the intricacies of the theorem is developed. Below are the two
 proofs that were found, with commentary on their aims and developments.
 
-\todo{fix ias citation}
 \subsection{Prior Unifications of the Untyped $\lambda$-calculus and
 Lawvere's Theorem}
 \label{quote:prior}
@@ -167,7 +166,7 @@ Lawvere's Theorem}
 
 
 A recent Bachelors thesis, \textit{Category Theory and the Lambda Calculus} by Mario
-Rom\'an Garcia provides an attempt to integrate Lawvere's theorem into the
+Rom\'an Garcia \cite{garcia2018thesis} provides an attempt to integrate Lawvere's theorem into the
 theory of the untyped $\lambda$-calculus.
 
 Garcia uses Joachim Lambek's observation that every simply-typed
@@ -194,9 +193,9 @@ definition of a cartesian closed category this object \textit{must} be the
 terminal object. To recap, the definition of a terminal object is that for all
 objects in the category there is a unique arrow from the object to the terminal
 object. This condition applies to the terminal object itself and therefore there
-is a unqiue arrow from the terminal object to the terminal object. By the
+is a unique arrow from the terminal object to the terminal object. By the
 definition of a category every object must have a terminal object and therefore
-the only arror from the terminal object to itself can be the identity arrow.
+the only arrow from the terminal object to itself can be the identity arrow.
 With this reading it is clear that there can be no syntactic interpretation of
 this arrow that yields the terms of the untyped $\lambda$-calculus. A key
 component of result in Section \ref{quote:lambda}  was that it gave a fixed point
@@ -209,7 +208,7 @@ The argument that follows is not incorrect but is derivable as a corollary via
 the result in this thesis.
 
 The argument from a note published by Dan Frumin and Guillaume
-Massas. Their arguments draw on material from throughout the Barendregt
+Massas \cite{frumin2017note}. Their arguments draw on material from throughout the Barendregt
 \cite{barendregt1992lambda} which will be made clear when necessary. They begin
 their argument by considering the category \textbf{CPO}$_{\bot}$. The objects of
 this category are directed complete partial orders (cpos) with a least element
@@ -249,17 +248,17 @@ paradoxes are within the category of sets or a set-like category.
 
 With this in mind the most practical next step would be to reformalise the work
 done within this thesis within a language that supports homotopy type theory
-taking advantage of univaence and higher inductive types. There is much
+taking advantage of univalence and higher inductive types. There is much
 groundwork in place to assist in this endeavour, \textbf{Chapter 9} of
 the HoTT book details how category theory can be constructed within HoTT and
-there exist implementations of this within Cubical Agda \todo{fredefox}. The
+there exist implementations of this within Cubical Agda \cite{iverson2018cat}. The
 process of reimplementing the proofs within this thesis in a cubical setting
 would be an interesting process itself to examine. Working within Agda during
 this thesis was at times tedious but ultimately an intellectually tractable
 process. HoTT represents a significant shift in the viewpoint of theorem proving
 and its practicality is still worth being assessed. Does the cognitive overhead
 outweigh the practical advantages that univalence provides. Once reformalised, a
-it would be possible to work within a category of sets where the aformentioned
+it would be possible to work within a category of sets where the aforementioned
 questions could be formalised.
 
 
@@ -267,7 +266,7 @@ As was mentioned at the end of Section \ref{quote:lambda} to which computational
 calculi point surjectivity corresponds is left as an open question. The
 structure in question yields a fixed point theorem and several interesting
 combinators. Whether or not point-surjectivity yields a functionally complete
-set of combinators in its generated applicated structure is predicated on the
+set of combinators in its generated applicative structure is predicated on the
 categorical analog of models of combinatory logic, combinatory algebras.
 
 \subsection{Combinatory Algebras and Lawvere's Theorem}
@@ -308,5 +307,5 @@ that for all $a : 1 \rightarrow A$
 \end{align*}
 
 The interplay between the two definitions in this section will do much to
-enlighten the relationshp between functional completeness and Lawvere's fixed
+enlighten the relationship between functional completeness and Lawvere's fixed
 point theorem and is a topic for future study.

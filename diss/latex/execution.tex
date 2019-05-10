@@ -5,7 +5,7 @@ properties of points to objects will be explored. Following this, a detailed
 proof of Lawvere's theorem will be presented in Agda. This will then be applied
 to two separate domains: a category of types, and models of the untyped
 $\lambda$-calculus. Within the category of types an analog of Cantor's theorem
-will be derived after establishing its cartesian closedness. After The interplay
+will be derived after establishing its cartesian closedness. After, the interplay
 between cartesian closed categories and models of the untyped $\lambda$-calculus
 will be examined and a novel result will be derived.
 \section{Points}
@@ -29,14 +29,14 @@ a fixed point
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-has-fixed-point}
 
 Now, the fixed point property, something which features in Lawvere's theorem, can be
-formalised as a predicate on a object in a category expressing that all
+formalised as a predicate on an object in a category expressing that all
 endomorphisms on the object have a fixed point.
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-fixed-point-property}
 
 Another concept that needs to be understood is the notion of point surjectivity
-which itself requires some machinery. First the notion of a solved equation with
-points
+which itself requires some machinery. First, the notion of a solved equation with
+points is required
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-solution}
 
@@ -44,9 +44,10 @@ Point surjectivity expresses the notion that given a point to $B$, $(b : 1
 \rightarrow B)$, and a morphism $f : A \rightarrow B$, we can produce a point to
 $A$, $(a : 1 \rightarrow A)$, that satisfies the equation $f \circ a = b$.
 
-Packaging this up into a sigma type which, given a morphism, \verb|f| from an object
+Packaging this up into a sigma type which, given a morphism, \verb|f|, from an object
 \verb|A| to
-an object \verb|B| and a point to \verb|B|, contains a point to \verb|A| and a proof that is
+an object \verb|B|, and a point to \verb|B|, contains a point to \verb|A| and a
+proof that the point to \verb|A|
 constitutes a solution to the triple.
 
 \ExecuteMetaData[../agda/latex/ThesisPoints.tex]{point-def-has-solution}
@@ -146,7 +147,7 @@ ends with the right-hand side of the equality followed by
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-fix-proof}
 
 The first transformation in the proof is to use the point-surjectivity of
-$\phi$ to expand the the $\phi$ $\circ$ \verb|u| within the definition of
+$\phi$ to expand the $\phi$ $\circ$ \verb|u| within the definition of
 \verb|fixedPoint| to \verb|g'|.
 
 The proof of point-surjectivity is extracted as follows
@@ -170,8 +171,8 @@ wrapped in the two proofs of congruence necessary
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-col-unc-ps}
 
 This can then be used by targeting the lefthand morphism of the outermost
-composition and change this to \verb|g'|. This is done using
-\AgdaFunction{∘-resp-l} which allows a proof to be applied to chang the lefthand
+composition to change this to \verb|g'|. This is done using
+\AgdaFunction{∘-resp-l} which allows a proof to be applied to change the lefthand
 side of a morphism composition.
 
 \begin{AgdaMultiCode}
@@ -187,7 +188,7 @@ followed by expanding \verb|g'|, \\
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-g'-reduc}
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-g'-reduc1}
 \\
-Before begin able to manipulate this expression the expression must be
+Before being able to manipulate this expression the expression must be
 reassociated. This is particularly tedious.\\
 
 \ExecuteMetaData[../agda/latex/ThesisDiagonal.tex]{diagonal-g'-reduc1}
@@ -257,7 +258,7 @@ of the applications.
 Lawvere's fixed point theorem is an incredibly broad ranging theorem that
 generalises many important theorems in mathematical logic and foundational
 computer science. This thesis will formalise and axiomatize two
-specific instances, Cantor's theorem the first fixed point theorem
+specific instances, Cantor's theorem and the first fixed point theorem
 in the untyped $\lambda$-calculus. An analog to Cantor's theorem will be introduced
 alongside a category of small types in place of the category of sets.
 After, categorical models of the $\lambda$-calculus will be explored and the
@@ -279,7 +280,7 @@ functions.
 
 \ExecuteMetaData[../agda/latex/ThesisSets.tex]{sets-instance1}
 
-The remaining axioms are trivially satisfied by the above definitions.Each
+The remaining axioms are trivially satisfied by the above definitions. Each
 instance of \AgdaDatatype{Sets} forms a cartesian closed category. The remainder
 of this section will be done with the lowest of these
 
@@ -323,7 +324,7 @@ arrow satisfies the definition required from the product i.e.
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-proj-sat}
 
 Or in straightforward mathematical terms that the constructed arrow, \verb|u|,
-satisfies with abuse of notation,
+satisfies (with abuse of notation)
 \begin{align*}
     \pi_{1} \circ \texttt{u} = f \land \pi_{2} \circ \texttt{u} = g
 \end{align*}
@@ -336,7 +337,7 @@ directly placed as an argument to the universal mapping property.
 
 The final field of the universal mapping constructor is the proof that \verb|u|
 is unique which will be elided for brevity but can be found in associated
-proofs. 
+proofs.
 \ExecuteMetaData[../agda/latex/ThesisCantor.tex]{cantor-unique}
 
 
@@ -472,7 +473,7 @@ With \AgdaDatatype{Bool}, Cantor's theorem can be reframed within
 
 Or that, in English, for all types (in \AgdaDatatype{Set}) there does not exist
 a point-surjection from the type to the predicates on the type. It is unclear
-to the author as to whether point-surjectivity has a more coherent intepretation
+to the author as to whether point-surjectivity has a more coherent interpretation
 within \AgdaDatatype{Sets1}.
 
 To prove this  the contrapositive of
@@ -659,11 +660,11 @@ applicative structure is a tuple $M = (A \, , \, \bullet)$ where $A$ is a set
 and $\bullet$ is a binary operation on $A$.
 
 A useful type of models to be considered are the class of syntactic models. A
-syntactic applicative structure adds a method of intepreting terms in the
+syntactic applicative structure adds a method of interpreting terms in the
 $\lambda$-calculus, elements of the set $\Lambda$, into the applicative
-struture. In other words a syntactic applicative structure is a triple $M = (A
+structure. In other words a syntactic applicative structure is a triple $M = (A
 \, , \, \bullet \, , \, \llbracket \, \rrbracket)$ of an underlying set $A$, a
-binary operation $\bullet : A \rightarrow A$ and a syntactical intepretation
+binary operation $\bullet : A \rightarrow A$ and a syntactical interpretation
 function $\llbracket \, \rrbracket$. See \textbf{Definitions 5.3.1} and
 \textbf{5.3.2} for a precise definition of
 $\llbracket \, \, \rrbracket$ and an appropriate definition of satisfaction,
@@ -677,7 +678,7 @@ syntactic $\lambda$-algebra is
 \end{align*}
 
 Or that every two $\lambda$-terms that are equal under $\lambda\beta$ are equal
-under their intepretation within the $\lambda$-algebra. There is a close
+under their interpretation within the $\lambda$-algebra. There is a close
 relationship between $\lambda$-algebras and CCCs. Every $\lambda$-algebra can
 be transformed into a CCC with a reflexive object via a process known as the
 \textit{Karoubi Envelope}, see \textbf{Definition 5.5.11.}. Furthermore, every CCC with a
@@ -686,7 +687,7 @@ $\lambda$-algebra to a CCC and back to $\lambda$-algebra again produces an
 isomorphic $\lambda$-algebra, established in \textbf{Theorem 5.5.13}. This indicates that every $\lambda$-algebra can be
 obtained by a CCC with a reflexive object. The results of applying
 \AgdaFunction{corollary} can be interpreted in both directions of this transformation.
-Intepreting within the context of the transformation from \textit{Karoubi
+Interpreting within the context of the transformation from \textit{Karoubi
 envelope} to CCC yields no sensical results. The construction of the
 \textit{Karoubi envelope} and the investigation of its relationship with
 Lawvere's theorem are detailed in Appendix \ref{appx:karoubi}. Interpreting in
@@ -704,7 +705,7 @@ follows:
     \rangle
 \end{align*}
 
-\textbf{Definition 5.5.3.} defines a semantic intepretation function for
+\textbf{Definition 5.5.3.} defines a semantic interpretation function for
 $\lambda$-terms for which the triple of $( \, |D| \, , \, \star \, , \,
 \llbracket \rrbracket \,)$ is shown to be  a $\lambda$-algebra in
 \textbf{Theorem 5.5.6.}.
@@ -793,11 +794,11 @@ from CCCs with a reflexive object and that all CCCs with a reflexive object
 induce a syntactic applicative structure with a fixed point theorem it is
 possible to conclude, therefore, that the $\lambda$-calculus has a fixed point
 theorem under application. Whilst not the briefest or most insightful proof, it 
- raises further questions concerning categorical intepretations
+ raises further questions concerning categorical interpretations
 of the untyped $\lambda$-calculus. $\lambda$-algebras are all the models that,
 for their interpretation of $\lambda$-terms, satisfy the equations of
 $\lambda\beta$. Other structures exist that aim to characterise all models for
-which other equational theories hold of their intepretation of $\lambda$-terms.
+which other equational theories hold of their interpretation of $\lambda$-terms.
 For instance, $\lambda$-models are an extension of $\lambda$-algebras which also
 satisfy the Meyer-Scott axiom of weak-extensionality. 
 
@@ -829,7 +830,7 @@ structure generated for it a natural question that arises is to what underlying
 structure it might correspond. The notion is certainly weaker than that of
 certainly weaker than that of a $\lambda$-algebra as the arrow from $D^{D}
 \rightarrow D$ for a reflexive object is made use of when defining the semantic
-intepretation function giving rise to $\lambda$-algebras. This thesis does not
+interpretation function giving rise to $\lambda$-algebras. This thesis does not
 provide a concrete answer to this question (see Section \ref{section:combin})
 but provides some combinators that are derivable in any applicative structure
 derived from a CCC with a point surjective object. The derivations of the

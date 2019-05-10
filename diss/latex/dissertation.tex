@@ -17,7 +17,6 @@
 
 \begin{document}
 
-\listoftodos % Creates "Todo list" page at start of doc
 
 % =============================================================================
 
@@ -36,7 +35,6 @@
 % This macro creates the standard UoB declaration; on the printed hard-copy,
 % this must be physically signed by the author in the space indicated.
 \makedecl
-\todo{SIGN DECLARATION}
 
 % LaTeX automatically generates a table of contents, plus associated lists
 % of figures, tables and algorithms.  The former is a compulsory part of the
@@ -53,7 +51,38 @@
 
 % -----------------------------------------------------------------------------
 \chapter*{Acknowledgements}
-Thank you to Jordan Peterson for being an inspiration
+I would like to thank my supervisor, Dr. Nicolas Wu for his continued enthusiasm
+and inspiration. I would like to thank Dr. David Bernhard for enabling me to
+become a mathematician. I would like to thank Csongor Kiss and Jannis Limperg
+for their guidance though all things types and Agda. Thank you to my friends and
+family for being everything.
+\chapter*{Executive Summary}
+
+The research hypothesis of this thesis is that there is a significant advantage
+to employing computer-aided proof assistants in the study of category theory and
+mathematical logic. This was done by implementing a theorem within the study of
+categorical logic in the theorem prover Agda. By doing this, the limitations and
+importance of theorem proving was explored in a practical way.
+
+\begin{itemize}
+    \item I learnt the underlying theory of modern theorem provers
+    \item I learnt the practical usage of the theorem prover Agda
+    \item I formalised Lawvere's fixed point theorem within Agda
+    \item I obtained a novel application of the theorem within the untyped
+        $\lambda$-calculus
+    \item I surveyed modern advancements in type theory that eliminate the
+        limitations of modern theories.
+\end{itemize}
+
+\chapter*{Supporting Technologies}
+
+This thesis made use of two supporting technologies
+
+\begin{itemize}
+    \item version 2.5.4.2 of the theorem prover Adga to formalise theorems
+        within Category Theory
+    \item the \verb|cats| library by Jannis Limperg \cite{limperg2019cats}
+\end{itemize}
 \chapter{Contextual Background}
 \label{chap:context}
 

@@ -151,7 +151,7 @@ proj-unique : {A B X : Set} {x : ∀ i → X → Bool-elim A B i}
 %\end{code}
 
 \begin{code}
-proj-unique {A} {B} {X} {x₁} {g₁} x y with (x true y) | (x false y)
+proj-unique {a} {B} {X} {x₁} {g₁} x y with (x true y) | (x false y)
 ... | p | q  = trans (mkPair-resp p q) (pairPrf {X} {A} {B} {g₁})
 \end{code}
 

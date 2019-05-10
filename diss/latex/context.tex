@@ -32,7 +32,7 @@ point theorem within the theorem prover Agda with additional proofs in the
 theory of cartesian closed categories; a novel application of Lawvere's fixed
 point theorem within the context of the untyped $\lambda$-calculus; and a
 formalisation within Agda of a category of small types with presentations of
-Cantor's Theorem. Given the attempts of this thesis to incoporate a large amount
+Cantor's Theorem. Given the attempts of this thesis to incorporate a large amount
 of related yet distinct fields together the contextual history behind the
 primary areas will be outlined. What follows is a blurred and idealistic
 exposition of 20$^{\textrm{th}}$ century mathematical logic.
@@ -105,8 +105,8 @@ exactly satisfy $\varphi$.
     \end{align*}
     }%
 \end{definition*}
-This lead to perhaps the first signifcant result in the foundations of
-mathematics in the 20$^{\textrm{th}}$ century, Russell's paradox. Betrand Russell (1872-1970),
+This lead to perhaps the first significant result in the foundations of
+mathematics in the 20$^{\textrm{th}}$ century, Russell's paradox. Bertrand Russell (1872-1970),
 an English polymath, showed in \textit{The Principles of Mathematics}
 \cite{russell1903principles} written with Alfred Whitehead in 1903 that, in
 classical logic, the axiom of unrestricted comprehension leads to a
@@ -125,7 +125,7 @@ contradiction.
     $X \in X$. By definition of $\varphi$, $X \not\in X$. Contradiction.
 \end{proof}
 This proof shares the similar diagonal style argument where $x$ appears in the
-postive and negative positions of the set membership relation $\in$. In modern
+positive and negative positions of the set membership relation $\in$. In modern
 set theories, this is disposed of in favour of an axiom of restricted
 comprehension, where all predicates must be defined on an already existing set.
 For a set theory to be consistent it must therefore reject the \textbf{Axiom of
@@ -153,7 +153,7 @@ notion of algorithm.
 
 Devised in 1928 by Hilbert, the \ent{} asked for an effective procedure or
 algorithm which, on an input of a statement in first-order logic plus a finite
-numbers of axioms, could determine its validity in all structures statisfying
+numbers of axioms, could determine its validity in all structures satisfying
 the axioms. Before an answer could be given, the notion of algorithm had to be
 formalised. This was done in the 1930s independently by Alonzo Church and Alan
 Turing. Turing's formalisation \cite{turing1937computable} known as Turing
@@ -194,7 +194,7 @@ names.
 
 $(s \: t)$ denotes the application of $s$ to $t$ and $\lambda x . s $ denotes
 the \textit{capture} or \textit{binding} of the variable $x$ in term $s$, known
-as a $\lambda$-abtraction. Intuitively, application of a term to a
+as a $\lambda$-abstraction. Intuitively, application of a term to a
 $\lambda$-abstraction, when considered as a computation, should replace all
 instances of the abstracted variable with the term being applied a process known
 as substitution. This computation is known as $\beta$-reduction.
@@ -208,7 +208,7 @@ as substitution. This computation is known as $\beta$-reduction.
     \end{align*}
 \end{definition*}
 With this notion of reduction an equational theory, $\lambda\beta$ can be
-defined as the relexive transitive closure of the relation that
+defined as the reflexive transitive closure of the relation that
 $\rightarrow_{\beta}$ defines.
 
 The $\lambda$-calculus originally arose from Church's desire to provide a foundation
@@ -217,7 +217,7 @@ the 1920s and 1930s, Curry worked on a foundation of logic extremely similar to
 the $\lambda$-calculus, his theory of combinators \cite{curry1930grundlagen}.
 Combinatory logic, as defined by Curry, was in correspondence with the
 $\lambda$-calculus. In 1934 Curry observed that, if types were assigned to the
-domains and comdomains of his combinators, the types matched the axioms of
+domains and codomains of his combinators, the types matched the axioms of
 intuitionistic implicational logic \cite{curry1934functionality}. This
 observation proved to be the beginning of theorem provers as they are in their
 current state.
@@ -228,7 +228,7 @@ system for logic, proved to be inconsistent as shown by Kleene and Rosser
 \cite{kleene1935inconsistency} and again by Curry using his fixed point
 combinator \cite{curry1941paradox}. To remedy this inconsistency both Curry and
 Church restricted their logical systems with types, giving typed combinatory logic
-and the simply typed $\lambda$-calculus. Further to Curry's aformentioned
+and the simply typed $\lambda$-calculus. Further to Curry's aforementioned
 observation made of typed combinatory logic, in the 1960s William Alvin Howard
 made a further observation that the typing rules of the simply
 $\lambda$-calculus corresponded to laws of inference for intuitionistic style
@@ -241,11 +241,11 @@ of classical logic, namely the Law of Excluded Middle (LEM), $(\vdash p \lor \ln
 and Double Negation Elimination (DNE) $(\lnot \lnot p \vdash p)$. Intuitionistic Logic
 is highly related to the philosophical position of mathematical constructivism.
 Mathematical constructivism places a higher burden on proof when positing the
-existence of mathematical strucures and demands that a mathematical object be
+existence of mathematical structures and demands that a mathematical object be
 explicitly constructed.  Both LEM and DNE are able to prove the existence of
 objects that have not been explicitly constructed through the use of proof by
 contradiction. Constructivism can be seen as a natural counterpart the
-philophical position of intuitionism which asserts that mathematics is an
+philosophical position of intuitionism which asserts that mathematics is an
 entirely human activity that arises from our mental faculty, contrary to
 platonsism which makes stronger ontological claims about the objective status of
 mathematical structures. The effectiveness of the Curry-Howard correspondence in
@@ -376,7 +376,7 @@ In 2003, Noson Yanofsy released a review paper, \textit{A Universal Approach to
 Self-Referential Paradoxes, Incompleteness and Fixed Points}
 \cite{yanofsky2003universal}, on Lawvere's 1969
 paper.  Yanofsky's paper, in an attempt to make Lawvere's paper more accessible,
-reframed Lawvere's thereom outside of category theory. Yanofsky extended
+reframed Lawvere's theorem outside of category theory. Yanofsky extended
 Lawvere's theorem to explain several of the logical paradoxes that have existed
 for thousands of years including the Liar's paradox and Grelling's paradox.
 Yanofsky also provided accounts of the theorem's applicability to phenomena in
@@ -395,7 +395,7 @@ computable universes and Turing machines, recursion theory and the recursion
 theorem and Rice's theorem, it seems that this would be likely. In spite of this
 the relation between the $\lambda$-calculus and Lawvere's fixed point theorem has
 never been fully developed. The primary contribution of this thesis is an
-explicit account of this relation, primarily that, when intepreted in the
+explicit account of this relation, primarily that, when interpreted in the
 context of cartesian closed categories corresponding to models of the untyped
 $\lambda$-calculus, Lawvere's fixed point theorem is equivalent to the first
 fixed point theorem for the untyped $\lambda$-calculus. In the evaluation of
